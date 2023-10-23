@@ -1,73 +1,73 @@
 # Proje MYME
 
-![Proje MYME Logo](link_to_logo.png) (Eğer varsa oyununuzun logosu ekleyebilirsiniz)
+![Proje MYME Logo](link_to_logo.png) (GAME LOGO)
 
-## Yapım ve Oyun Türü
+## Project Type
 
-- **Tür:** 2D, Roguelite, Platformer
+- **Genre:** 2D, Roguelite, Platformer
 
-## Oyun Tanımı
+## Game Description
 
-Proje MYME, oyuncuları rastgele üretilen odaların labirentini keşfetmeye ve canavarları yok etmeye davet eden bir roguelite platform oyunudur. Oyuncular, seçtikleri karakterle oyun dünyasına adım atarlar. Her biri benzersiz oda düzenlemeleri ve hedefleri olan bir dizi odayı keşfederler. Canavarları öldürerek puanlar kazanır ve görevleri tamamlarlar, böylece daha güçlü yetenekler ve eşyalar elde edebilirler. Oyunu bitirmek için karakterlerini geliştirmeli ve zorlu boss savaşlarına hazırlanmalıdırlar.
+Proje MYME invites players to explore a procedurally generated labyrinth of rooms, eliminate monsters, and complete objectives with their chosen character. Players earn points and accomplish missions to enhance their characters' abilities and collect powerful items. To win the game, you'll need to venture deep into the dungeon, defeat fierce foes, and conquer challenging boss battles.
 
-## Oyuncu Mekanikleri
+## Player Mechanics
 
-- Oyuncular, X ve Y ekseni boyunca hareket edebilirler (sağ, sol, yukarı, aşağı).
-- Oyuncular, Dash, Invinciable Frames, Wall Run, Hook gibi özel yeteneklere sahiptirler.
+- Players can move in the X and Y axes.
+- Players have special abilities such as Dash, Invincible Frames, Wall Run, and Hook.
 
-## Saldırı Mekanikleri
+## Combat Mechanics
 
-- Yakın ve uzak dövüş silahları bulunmaktadır.
-- Silahlar, özel yetenekler ve elementlerle geliştirilebilir, rakiplere dezavantaj sağlayabilir veya ekstra hasar verebilirler.
+- The game features both melee and ranged weapons.
+- Weapons can be enhanced with unique abilities and elements to gain advantages or deal extra damage to foes.
 
-## Yetenek Mekanikleri
+## Ability Mechanics
 
-- Oyuncular, görevleri tamamlayarak çeşitli yetenekler açabilirler.
-- Bu yetenekler, bir çark şeklindeki HUD aracılığıyla seçilebilir.
+- Players can unlock various abilities by completing tasks.
+- These abilities can be selected through a wheel-shaped HUD.
 
-## Harita Mekanikleri
+## Map Mechanics
 
-- Harita, Marching Squares Algoritması ile oluşturulur.
-- Oyuncular, duvarları saldırarak kırabilirler.
-- Harita odaları X ve Y ekseni boyunca dizilir ve merdivenlerle birbirine bağlanır.
+- The map is generated using the Marching Squares Algorithm.
+- Players can break walls with specific moves and uncover hidden secrets.
+- Rooms are interconnected with staircases.
 
-## Yaratık Mekanikleri
+## Enemy Mechanics
 
-- Canavarlar, oyuncunun konumuna göre saldırır veya kaçar.
-- Canavarlar menzilli ve yakın dövüş silahları kullanabilir.
-- Canavarlar bir State Machine sistemine sahiptir.
+- Enemies react to the player's position, choosing to attack or flee.
+- Enemies utilize both ranged and melee weaponry.
+- Enemy behavior is governed by a State Machine system.
 
-## Harita Üzerindeki Oda Çeşitleri
+## Room Types
 
-- Başlangıç Odası: Oyuncuların oyuna başladığı güvenli oda.
-- Boss Odası: Oyunun bitirilmesi gereken ana hedefi içeren en uzak oda.
-- Ganimet Odası: Çeşitli sandıkların bulunduğu ve canavarların olmadığı güvenli odalar.
-- Yaratık Odası: Oyunun büyük çoğunluğunu oluşturan ve canavarlarla dolu odalar.
+- Starting Room: A safe room where players make initial choices before embarking on their adventure.
+- Boss Room: The ultimate challenge room, typically located furthest from the starting room.
+- Loot Room: Safe rooms with chests containing valuable items and no enemies.
+- Monster Room: The majority of the game is spent in these rooms, fighting off various creatures.
 
-## Oyunun Hikayesi
+## Game Story
 
-Üzgünüz, oyunun hikayesi hala bir sır olarak saklıyor.
+Unfortunately, we can't reveal the game's story just yet.
 
-## Ekran Görüntüleri (Opsiyonel)
+## Screenshots (Optional)
 
-![Oyun Ekran Görüntüsü 1](screenshot1.png)
-![Oyun Ekran Görüntüsü 2](screenshot2.png)
+![Game Screenshot 1](screenshot1.png)
+![Game Screenshot 2](screenshot2.png)
 
-## Nasıl Oynanır
+## How to Play
 
-- [Oyunu İndir](link_to_download)
-- Oyunu çalıştırın ve karakterinizi seçin.
-- Odaları keşfederek canavarları öldürün ve görevleri tamamlayın.
-- Yeteneklerinizi geliştirin ve boss'a karşı savaşmak için hazırlanın!
+- [Download the Game](link_to_download)
+- Run the game and select your character.
+- Explore rooms, defeat monsters, and complete objectives.
+- Upgrade your abilities and prepare for the epic boss battle!
 
-## Katkıda Bulunma
+## Contribution
 
-Proje MYME'ye katkıda bulunmak isterseniz, lütfen GitHub deposunu ziyaret edin ve açık sorumluluklarımızı kontrol edin. Katkılarınızı bekliyoruz!
+If you'd like to contribute to Proje MYME, please visit our GitHub repository and check out our open issues. We welcome your contributions!
 
-## Lisans
+## License
 
-Bu proje MIT lisansı altında dağıtılmaktadır. Daha fazla bilgi için [Lisans Dosyası](LICENSE.md) sayfasını inceleyin.
+This project is distributed under the MIT License. For more information, please see the [License File](LICENSE.md).
 
 ---
 
-Oyunumuza hoş geldiniz! Daha fazla bilgi edinmek ve oynamak için [buraya tıklayın](link_to_game)!
+Welcome to our game! To learn more and play, click [here](link_to_game)!
