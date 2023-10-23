@@ -6,12 +6,19 @@ public class MeshGenerator : MonoBehaviour
 	// kirmak icin control nodelari inactive yap. pos ile karsilastir
 
 	public SquareGrid squareGrid;
-
-	List<Vector3> vertices; // noktalarin pozisyonlari
+	List<Vector3> vertices; // noktalarin pozisyonlari vector2 olmasi lazim tutorial 3d diye boyle degisebilir!
 	List<int> triangles;
+
+	Dictionary<int, List<Triangle>> triangleDict = new Dictionary<int, List<Triangle>>(); /* nokta, noktanin dahil oldugu ucgenler. amac dis hatlari bulmak*/
+	List<List<int>> outlines = new List<List<int>>(); /* bir adet outline List<int>. tum outlinelar List<List<int>>. amac bunu bulmak*/
+	HashSet<int> checkedVertices = new HashSet<int>(); /* tum vertexler checklenirken daha once checklenen denk gelmesin diye. hash contains fonksiyonu hizli.*/
 
 	public void GenerateMesh(int[,] map, float squareSize)
 	{
+		triangleDict.Clear();
+		outlines.Clear(); // generate mesh her callandiginda bu verileri resetle
+        checkedVertices.Clear();
+
 		squareGrid = new SquareGrid(map, squareSize);
 
 		vertices = new List<Vector3>();
@@ -21,18 +28,42 @@ public class MeshGenerator : MonoBehaviour
 		{
 			for (int y = 0; y < squareGrid.squares.GetLength(1); y++)
 			{
-				TriangulateSquare(squareGrid.squares[x, y]);
+				TriangulateSquare(squareGrid.squares[x, y]); // griddeki kareleri ucgenlestir mesh icin
 			}
 		}
 
 		Mesh mesh = new Mesh();
 		GetComponent<MeshFilter>().mesh = mesh;
 
-		mesh.vertices = vertices.ToArray();
+		mesh.vertices = vertices.ToArray(); // mesh icin gerekli veriler
 		mesh.triangles = triangles.ToArray();
 		mesh.RecalculateNormals();
 
+		GenerateColliders(); // fizik icin colliderlari olustur
 	}
+
+	void GenerateColliders()
+    {
+		EdgeCollider2D[] currentColliders = gameObject.GetComponents<EdgeCollider2D>(); // halihazirda collider varsa
+        for (int i = 0; i < currentColliders.Length; i++)
+        {
+			Destroy(currentColliders[i]); // onceki colliderlari temizle
+        }
+
+		CalculateMeshOutlines(); // outlinelari hesapla
+        foreach (List<int> outline in outlines) // outlinelar icerisinden her bir outline kumesini dolas. outline noktalari tutuyor.
+        {
+			EdgeCollider2D edgeCollider = gameObject.AddComponent<EdgeCollider2D>(); // unitynin duz cizgi collideri
+			Vector2[] edgePoints = new Vector2[outline.Count]; // edge collidera verilecek nokta konumlari
+
+            for (int i = 0; i < outline.Count; i++)
+            {
+				edgePoints[i] = new Vector2(vertices[outline[i]].x, vertices[outline[i]].y); // 3D den 2D ye cast z yok
+            }
+			edgeCollider.points = edgePoints; // collider icin gereken noktalari ata
+        }
+    }
+
 
 	void TriangulateSquare(Square square)
 	/* A				  B
@@ -55,13 +86,13 @@ public class MeshGenerator : MonoBehaviour
 
 		// 1 points:
 		case 1:
-			MeshFromPoints(square.centreBottom, square.bottomLeft, square.centreLeft); // D
+			MeshFromPoints(square.centreLeft, square.centreBottom, square.bottomLeft); // D
 			break;
 		case 2:
-			MeshFromPoints(square.centreRight, square.bottomRight, square.centreBottom); // C
+			MeshFromPoints(square.bottomRight, square.centreBottom, square.centreRight); // C
 			break;
 		case 4:
-			MeshFromPoints(square.centreTop, square.topRight, square.centreRight); // B
+			MeshFromPoints(square.topRight, square.centreRight, square.centreTop); // B
 			break;
 		case 8:
 			MeshFromPoints(square.topLeft, square.centreTop, square.centreLeft); // A
@@ -104,6 +135,10 @@ public class MeshGenerator : MonoBehaviour
 		// 4 point:
 		case 15:
 			MeshFromPoints(square.topLeft, square.topRight, square.bottomRight, square.bottomLeft); // A + B + C + D
+				checkedVertices.Add(square.topLeft.vertexIndex); /* bu durumda noktalarin her biri meshin icinde kalacak yani disariyla temasi yok yani outline degil. o zaman bunlara outline mi diye hesaplamayý atla*/
+				checkedVertices.Add(square.topRight.vertexIndex);
+				checkedVertices.Add(square.bottomRight.vertexIndex);
+				checkedVertices.Add(square.bottomLeft.vertexIndex);
 			break;
 	}
 
@@ -136,14 +171,123 @@ void MeshFromPoints(params Node[] points) /* params -> fonksiyon cagrilirken poi
 		}
 	}
 
-	void CreateTriangle(Node a, Node b, Node c)
+	void CreateTriangle(Node a, Node b, Node c) // mesh olusturmak icin sadece noktalari vermek yetmiyor. noktalarin sirasi icin triangles arrayi de gerekiyor.
 	{
-		triangles.Add(a.vertexIndex);
+		triangles.Add(a.vertexIndex); // mesh icin
 		triangles.Add(b.vertexIndex);
 		triangles.Add(c.vertexIndex);
+
+		Triangle triangle = new Triangle(a.vertexIndex, b.vertexIndex, c.vertexIndex); // edge detect icin
+		AddTriangleToDict(triangle.vertexIndexA, triangle);
+		AddTriangleToDict(triangle.vertexIndexB, triangle);
+		AddTriangleToDict(triangle.vertexIndexC, triangle);
+	}
+
+	void AddTriangleToDict(int vertexIndexKey, Triangle triangle)
+    {
+		if (triangleDict.ContainsKey(vertexIndexKey)) // nokta key olarak varsa ucgeni valuesuna ekle
+        {
+			triangleDict[vertexIndexKey].Add(triangle);
+        }
+        else // nokta yoksa noktayi key, yeni bir listeye triengle koyup value olarak ekle
+        {
+			List<Triangle> newTriangleList = new List<Triangle>();
+			newTriangleList.Add(triangle);
+			triangleDict.Add(vertexIndexKey,newTriangleList );
+        }
+    }
+	void CalculateMeshOutlines()
+    {
+        for (int vertexIndex = 0; vertexIndex < vertices.Count; vertexIndex++)
+        {
+            if (!checkedVertices.Contains(vertexIndex)) // daha once bu vertex checklenmediyse
+            {
+				int newOutlineVertex = GetConnectedOutlineVertex(vertexIndex); // vertexIndex e outlinela bagli diger vertex
+				if (newOutlineVertex != -1) // boyle bir vertex yoksa -1 varsa devam
+				{
+					checkedVertices.Add(vertexIndex); // vertexIndex checklendi
+
+					List<int> newOutline = new List<int>(); 
+					newOutline.Add(vertexIndex); // outline = [vertexIndex]
+					outlines.Add(newOutline); // outlines List<List<int>> = [[vertexIndex]]
+					FollowOutline(newOutlineVertex, outlines.Count - 1);
+					outlines[outlines.Count - 1].Add(vertexIndex);
+				}
+			}
+        }
+    }
+
+	void FollowOutline(int vertexIndex, int outlineIndex)
+	{
+		outlines[outlineIndex].Add(vertexIndex);
+		checkedVertices.Add(vertexIndex);
+		int nextVertexIndex = GetConnectedOutlineVertex(vertexIndex);
+
+		if (nextVertexIndex != -1)
+		{
+			FollowOutline(nextVertexIndex, outlineIndex);
+		}
 	}
 
 
+	int GetConnectedOutlineVertex(int vertexIndex)
+    {
+        for (int i = 0; i < triangleDict[vertexIndex].Count; i++) // indexi verilen vertexin bulundugu ucgenleri loopla
+        {
+			Triangle triangle = triangleDict[vertexIndex][i];
+            for (int j = 0; j < 3; j++) // her ucgenin kose vertexlerini loopla 3 adet var
+            {
+				int vertexB = triangle.vertices[j]; // sirayla her kose
+                if (vertexB != vertexIndex && !checkedVertices.Contains(vertexB)) // ucgenin kosesinden biri zaten vertexIndex ise veya bu nokta checklendiyse onu atla
+                {
+					if (IsOutlineEdge(vertexIndex, vertexB)) // parametre ile ucgenin herhangi bir kosesi dis cizgi olusturuyor mu
+					{
+						return vertexB; // input parametresi ile dis cizgi olusturan vertex varsa returnle
+					}
+				}
+
+                }
+        }
+		return -1;
+    }
+	bool IsOutlineEdge(int vertexA, int vertexB)
+    {
+		int sharedTriangleCount = 0; // counter
+		for (int i = 0; i < triangleDict[vertexA].Count; i++)
+        {
+			if (triangleDict[vertexA][i].Contains(vertexB)) /* a noktasina sahip ucgenler icerisinde b ye de sahip olan varsa ortak yani shared ++. iki noktanin 1den fazla ortak ucgeni YOKSA
+			                                                 * aralarindaki cizgi dis cizgidir = outline edgedir. */
+            {
+				sharedTriangleCount++;
+				if (sharedTriangleCount > 1)
+                {
+					break;
+                }
+            }
+        }
+		return sharedTriangleCount == 1;
+    }
+	struct Triangle // ucgen. 3 kosesi ile olusturuluyor.
+    {
+		public int vertexIndexA;
+		public int vertexIndexB;
+		public int vertexIndexC;
+		public int[] vertices;
+		public Triangle(int a, int b, int c)
+        {
+			vertexIndexA = a;
+			vertexIndexB = b;
+			vertexIndexC = c;
+			vertices = new int[3];
+			vertices[0] = a;
+			vertices[1] = b;
+			vertices[2] = c;
+		}
+		public bool Contains(int vertexIndex) {
+
+			return vertexIndex == vertexIndexA || vertexIndex == vertexIndexB || vertexIndex == vertexIndexC;
+		}
+	}
 
 	public class SquareGrid // tile benzeri yapi olustur
 	{
