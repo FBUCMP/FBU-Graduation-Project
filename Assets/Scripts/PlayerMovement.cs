@@ -9,8 +9,10 @@ public class PlayerMovement : MonoBehaviour
     [SerializeField] private float jumpingPower = 16f;
     private bool isFacingRight = true;
 
+    [SerializeField] private float velocity_test = 0f;
     [SerializeField] private Rigidbody2D rb;
-    [SerializeField] private Transform groundCheck;
+    [SerializeField] private Transform groundCheckR;
+    [SerializeField] private Transform groundCheckL;
     [SerializeField] private LayerMask groundLayer;
 
     // Update is called once per frame
@@ -21,7 +23,7 @@ public class PlayerMovement : MonoBehaviour
             rb.velocity = new Vector2(rb.velocity.x, jumpingPower);
         }
 
-        if(Input.GetButtonUp("Jump") && rb.velocity.y > 0f)
+        if(Input.GetButtonUp("Jump") && rb.velocity.y > velocity_test)
         {
             rb.velocity = new Vector2 (rb.velocity.x, rb.velocity.y * 0.5f);
         }
@@ -32,7 +34,7 @@ public class PlayerMovement : MonoBehaviour
     
     private bool IsGrounded()
     {
-        return Physics2D.OverlapCircle(groundCheck.position, 0.2f, groundLayer);
+        return Physics2D.OverlapCircle(groundCheckR.position, 0.2f, groundLayer) || Physics2D.OverlapCircle(groundCheckL.position, 0.2f, groundLayer);
     }
 
     private void FixedUpdate()
