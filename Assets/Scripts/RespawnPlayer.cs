@@ -4,7 +4,8 @@ using UnityEngine;
 
 public class RespawnPlayer : MonoBehaviour
 {
-    // Start is called before the first frame update
+    public GameObject respawnPoint;
+    public GameObject player;
     void Start()
     {
         
@@ -15,4 +16,12 @@ public class RespawnPlayer : MonoBehaviour
     {
         
     }
+    private void OnCollisionEnter2D(Collision2D other)
+    {
+        if (other.gameObject.CompareTag("Player"))
+        {
+            player.transform.position = respawnPoint.transform.position;
+        }
+    }
+
 }
