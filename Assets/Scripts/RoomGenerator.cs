@@ -7,6 +7,7 @@ public class RoomGenerator : MonoBehaviour
 
 	public int width;
 	public int height;
+	public int borderSize = 1;
 	[Range(0,10)]
 	public int smoothness;
 	public string seed;
@@ -23,7 +24,7 @@ public class RoomGenerator : MonoBehaviour
 
 	void Update()
 	{
-		if (Input.GetKeyDown(KeyCode.Space))
+		if (Input.GetKeyDown(KeyCode.R))
 		{
 			GenerateMap();
 			Debug.Log(map.Length);
@@ -34,13 +35,30 @@ public class RoomGenerator : MonoBehaviour
 	{
 		map = new int[width, height];
 		RandomFillMap();
-		
+
 		for (int i = 0; i < 5; i++)
 		{
 			SmoothMap();
 		}
+
+		int[,] borderedMap = new int[width + (borderSize * 2), height + (borderSize * 2)];
+		for (int x = 0; x < borderedMap.GetLength(0); x++)
+		{
+			for (int y = 0; y < borderedMap.GetLength(1); y++)
+			{
+				if (x >= borderSize && x < width + borderSize && y >= borderSize && y < height + borderSize)
+                {
+					borderedMap[x, y] = map[x - borderSize, y - borderSize];
+                }
+                else
+                {
+					borderedMap[x, y] = 1;
+                }
+			}
+		}
+				
 		MeshGenerator meshGenerator = GetComponent<MeshGenerator>();
-		meshGenerator.GenerateMesh(map, 1); // MeshGenerator scriptinden fonksiyon. map gonderiliyor.
+		meshGenerator.GenerateMesh(borderedMap, 1); // MeshGenerator scriptinden fonksiyon. map gonderiliyor.
 	}
 
 
@@ -115,21 +133,5 @@ public class RoomGenerator : MonoBehaviour
 		return wallCount;
 	}
 
-	/*
-	void OnDrawGizmos()
-	{
-		if (map != null)
-		{
-			for (int x = 0; x < width; x++)
-			{
-				for (int y = 0; y < height; y++)
-				{
-					Gizmos.color = (map[x, y] == 1) ? Color.black : Color.white;
-					Vector3 pos = new Vector3(-width/2 + x + .5f, -height/2 + y + .5f, 0);
-					Gizmos.DrawCube(pos, Vector3.one);
-				}
-			}
-		}
-	}
-	*/
+
 }
