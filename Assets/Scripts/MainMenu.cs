@@ -9,4 +9,10 @@ public class MainMenu : MonoBehaviour
     {
         SceneManager.LoadSceneAsync(1); // Play Butonuna basýldýðýnda file->build settings -> kaç nolu indeks sahnesi gelsin örn: 1
     }
+
+    public void QuitGame() // Quit Button
+    {
+        Application.Quit(); // Uygulamayý Kapatýr.
+    }
+
 }
