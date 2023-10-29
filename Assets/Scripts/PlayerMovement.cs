@@ -15,8 +15,7 @@ public class PlayerMovement : MonoBehaviour
     [SerializeField] private Transform groundCheckL;
     [SerializeField] private LayerMask groundLayer;
 
-    // Update is called once per frame
-    void Update()
+    private void Update()
     {
         if(Input.GetButtonDown("Jump") && IsGrounded())
         {
