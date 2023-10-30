@@ -242,7 +242,7 @@ MonoBehaviour:
   width: 100
   height: 80
   canvas: {fileID: 619455536}
-  roomName: Room_0
+  roomName: Room_2
 --- !u!4 &661792458
 Transform:
   m_ObjectHideFlags: 0
