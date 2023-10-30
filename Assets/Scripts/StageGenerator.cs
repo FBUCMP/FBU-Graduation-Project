@@ -21,7 +21,7 @@ public class StageGenerator : MonoBehaviour
     public TileBase bossRoomTile;
     public TileBase selectedRoomTile;
 
-    private int[,] roomArray;
+    private int[,] roomData;
     private List<Vector2Int> roomQueue;
     private List<Vector2Int> roomsList;
 
@@ -45,73 +45,74 @@ public class StageGenerator : MonoBehaviour
             GenerateRooms();
             UpdateTilemap();
             StartCoroutine(VisualizeTiles());
-            foreach (Vector2Int room in roomsList)
-            {
-                Debug.Log(room);
-            }
+            Debug.Log($"Starting: ({roomsList[0].x},{ roomsList[0].y}) | Boss: ({roomsList[roomsList.Count - 1].x},{roomsList[roomsList.Count-1].y})");
         }
     }
 
     void InitializeArray() // odanin arrayini once 0larla doldur
     {
-        roomArray = new int[width, height];
+        roomData = new int[width, height];
         roomQueue = new List<Vector2Int>();
         roomsList = new List<Vector2Int>();
-        // fill roomArray with 0
+        // fill roomData with 0
         for (int x = 0; x < width; x++)
         {
             for (int y = 0; y < height; y++)
             {
-                roomArray[x, y] = 0;
+                roomData[x, y] = 0;
             }
         }
     }
 
     void GenerateRooms() // asil odalari secen algoritma
     {
-        int startX = Random.Range(0, width);
-        int startY = Random.Range(0, height);
-        Vector2Int startCell = new Vector2Int(startX, startY);
-
-        roomQueue.Add(startCell);
-        roomsList.Add(startCell);
-        roomArray[startX, startY] = 1;
-        int generatedRooms = 1;
-
-        while (roomQueue.Count > 0 && generatedRooms < maxRooms)
+        while (roomsList.Count < minRooms)
         {
+            
+            int startX = (int)(width / 2); //Random.Range(0, width);
+            int startY = (int)height -1;//(int)(height / 2); //Random.Range(0, height);
+            Vector2Int startCell = new Vector2Int(startX, startY);
 
-            Vector2Int currentCell = roomQueue[0];
-            roomQueue.RemoveAt(0);
+            roomQueue.Add(startCell);
+            roomsList.Add(startCell);
+            roomData[startX, startY] = 1;
+            int generatedRooms = 1;
+
+            while (roomQueue.Count > 0 && generatedRooms < maxRooms)
+            {
+
+                Vector2Int currentCell = roomQueue[0];
+                roomQueue.RemoveAt(0);
             
 
-            Vector2Int[] directions = { Vector2Int.up, Vector2Int.down, Vector2Int.left, Vector2Int.right };
+                Vector2Int[] directions = { Vector2Int.up, Vector2Int.down, Vector2Int.left, Vector2Int.right };
 
-            foreach (Vector2Int direction in directions)
-            {
-                Vector2Int neighborCell = currentCell + direction;
-
-                if (IsValidCell(neighborCell) && roomArray[neighborCell.x, neighborCell.y] == 0)
+                foreach (Vector2Int direction in directions)
                 {
-                    int neighborRoomCount = CountFilledNeighbors(neighborCell);
+                    Vector2Int neighborCell = currentCell + direction;
 
-                    if (neighborRoomCount == 1 && (Random.Range(0f, 1f) < randomness || generatedRooms < minRooms)) // rastgelelik var randomness 0.5 ise %50 ihtimal
+                    if (IsValidCell(neighborCell) && roomData[neighborCell.x, neighborCell.y] == 0)
                     {
-                        roomArray[neighborCell.x, neighborCell.y] = 1; //burada secilen oda 0 -> 1 e degistiriliyor
-                        roomQueue.Add(neighborCell);
-                        roomsList.Add(neighborCell);
-                        generatedRooms++;
-                    }
+                        int neighborRoomCount = CountFilledNeighbors(neighborCell);
 
+                        if (neighborRoomCount == 1 && (Random.Range(0f, 1f) < randomness )) // rastgelelik var randomness 0.5 ise %50 ihtimal , || generatedRooms < minRooms
+                        {
+                            roomData[neighborCell.x, neighborCell.y] = 1; //burada secilen oda 0 -> 1 e degistiriliyor
+                            roomQueue.Add(neighborCell);
+                            roomsList.Add(neighborCell);
+                            generatedRooms++;
+                        }
+
+                    }
                 }
             }
-        }
-        // room cesitlerinin numaralari roomArrayde duzenlenir
-        if (roomsList.Count > 0)
-        {
-            roomArray[roomsList[0].x, roomsList[0].y] = 2; // start room 2
-                                                           //chest room 3 
-            roomArray[roomsList[roomsList.Count - 1].x, roomsList[roomsList.Count - 1].y] = 4; // boss room 4
+            // room cesitlerinin numaralari roomDatada duzenlenir
+            if (roomsList.Count > 0)
+            {
+                roomData[roomsList[0].x, roomsList[0].y] = 2; // start room 2
+                                                               //chest room 3 
+                roomData[roomsList[roomsList.Count - 1].x, roomsList[roomsList.Count - 1].y] = 4; // boss room 4
+            }
         }
     }
 
@@ -129,7 +130,7 @@ public class StageGenerator : MonoBehaviour
         {
             Vector2Int neighborCell = cell + direction;
 
-            if (IsValidCell(neighborCell) && roomArray[neighborCell.x, neighborCell.y] != 0)
+            if (IsValidCell(neighborCell) && roomData[neighborCell.x, neighborCell.y] != 0)
             {
                 count++;
             }
@@ -147,7 +148,7 @@ public class StageGenerator : MonoBehaviour
             for (int y = 0; y < height; y++)
             {
                 TileBase tile;
-                switch (roomArray[x, y])
+                switch (roomData[x, y])
                 {
                     case 1:
                         tile = filledRoomTile;
