@@ -38,6 +38,15 @@ public class PlayerMovement : MonoBehaviour
     [SerializeField] private Transform wallCheck;
     [SerializeField] private LayerMask wallLayer;
 
+    // AUDIO MANAGER
+    AudioManager audioManager;
+
+    private void Awake()
+    {
+        audioManager = GameObject.FindGameObjectWithTag("Audio").GetComponent<AudioManager>(); // Audio taglý componenta eriþim saðlýyoruz
+    }
+
+
     // Update is called once per frame
     void Update()
     {
@@ -162,6 +171,9 @@ public class PlayerMovement : MonoBehaviour
         float originalGravity = rb.gravityScale;
         rb.gravityScale = 0f;
         rb.velocity = new Vector2 (transform.localScale.x * dashingPower, 0f);
+        //DASH SOUND
+        audioManager.PlaySFX(audioManager.dash);     
+        //
         tr.emitting = true;
         yield return new WaitForSeconds(dashingTime);
         tr.emitting = false;
