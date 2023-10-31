@@ -24,7 +24,7 @@ public class RoomGenerator : MonoBehaviour
 
 	void Update()
 	{
-		if (Input.GetKeyDown(KeyCode.Space))
+		if (Input.GetKeyDown(KeyCode.R))
 		{
 			GenerateMap();
 			Debug.Log(map.Length);
