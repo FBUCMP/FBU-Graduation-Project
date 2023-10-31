@@ -31,12 +31,16 @@ public class PlayerMovement : MonoBehaviour
     [SerializeField] private float velocity_test = 0f;
     [SerializeField] private Rigidbody2D rb;
     [SerializeField] private Transform groundCheck;
+    [SerializeField] private Transform groundCheck1;
     //[SerializeField] private Transform groundCheckR;
     //[SerializeField] private Transform groundCheckL;
     [SerializeField] private LayerMask groundLayer;
 
     [SerializeField] private Transform wallCheck;
     [SerializeField] private LayerMask wallLayer;
+
+    //double jump
+    private bool doubleJump;
 
     // AUDIO MANAGER
     AudioManager audioManager;
@@ -56,9 +60,20 @@ public class PlayerMovement : MonoBehaviour
         }
         horizontal = Input.GetAxisRaw("Horizontal");
 
-        if (Input.GetButtonDown("Jump") && IsGrounded())
+        if(IsGrounded() && !Input.GetButton("Jump"))
         {
-            rb.velocity = new Vector2(rb.velocity.x, jumpingPower);
+            doubleJump = false;
+        }
+
+        if (Input.GetButtonDown("Jump"))
+        {
+            if(IsGrounded() || doubleJump)
+            {
+                rb.velocity = new Vector2(rb.velocity.x, jumpingPower);
+                
+                doubleJump = !doubleJump;
+            }
+            
         }
 
         if(Input.GetButtonUp("Jump") && rb.velocity.y > velocity_test)
@@ -79,7 +94,8 @@ public class PlayerMovement : MonoBehaviour
     
     private bool IsGrounded()
     {
-        return Physics2D.OverlapCircle(groundCheck.position, 0.2f, groundLayer);
+        //return Physics2D.OverlapCircle(groundCheck.position, 0.2f, groundLayer);
+        return Physics2D.OverlapCircle(groundCheck.position, 0.2f, groundLayer) || Physics2D.OverlapCircle(groundCheck1.position, 0.2f, groundLayer);
     }
 
     private void FixedUpdate()
@@ -106,6 +122,8 @@ public class PlayerMovement : MonoBehaviour
         {
             isWallSliding = true;
             rb.velocity = new Vector2(rb.velocity.x, Mathf.Clamp(rb.velocity.y, -wallSlidingSpeed, float.MaxValue));
+            //--------------------------------------
+            doubleJump = !doubleJump;
         }
         else
         {
