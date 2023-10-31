@@ -39,6 +39,8 @@ public class PlayerMovement : MonoBehaviour
     [SerializeField] private Transform wallCheck;
     [SerializeField] private LayerMask wallLayer;
 
+
+
     //double jump
     private bool doubleJump;
 
