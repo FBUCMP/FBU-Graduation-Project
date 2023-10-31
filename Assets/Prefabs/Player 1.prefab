@@ -75,7 +75,6 @@ GameObject:
   - component: {fileID: 2300254057313476750}
   - component: {fileID: 674734279960390426}
   - component: {fileID: 5504685744047295958}
-  - component: {fileID: 450348378129159952}
   - component: {fileID: 6311657264688382926}
   - component: {fileID: 2141209435423669764}
   m_Layer: 0
@@ -255,22 +254,6 @@ MonoBehaviour:
   wallLayer:
     serializedVersion: 2
     m_Bits: 192
---- !u!114 &450348378129159952
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 7140912594573197821}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 7435ad860a0a1b4468eb2b9f4c0859a0, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  targetObject: {fileID: 0}
-  cameraOffset: {x: 0, y: 0, z: 0}
-  targetedPosition: {x: 0, y: 0, z: 0}
-  smoothTime: 0.25
 --- !u!96 &6311657264688382926
 TrailRenderer:
   serializedVersion: 3

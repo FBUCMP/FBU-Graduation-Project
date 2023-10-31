@@ -5,6 +5,8 @@ using UnityEngine;
 public class CameraFollow : MonoBehaviour
 {
     public GameObject targetObject;
+
+    // proje 2d olduðu için kamera Z'yi -10dan baslattim. Yoksa goruntu alamiyorduk
     public Vector3 cameraOffset = new Vector3(0, 0, -10f);
     public Vector3 targetedPosition;
     private Vector3 velocity = Vector3.zero;
