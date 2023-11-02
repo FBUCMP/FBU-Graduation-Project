@@ -15,6 +15,7 @@ public class CameraFollow : MonoBehaviour
 
     private void Start()
     {
+        targetObject = GameObject.FindGameObjectWithTag("Player"); // baslangiçtaki sahnede bulunan playeri otomatik secmesi icin.
         cameraOffset.x = transform.localPosition.x;
         cameraOffset.y = transform.localPosition.y;
         cameraOffset.z = -10f;

@@ -51,7 +51,10 @@ public class PlayerMovement : MonoBehaviour
 
     private void Awake()
     {
-        audioManager = GameObject.FindGameObjectWithTag("Audio").GetComponent<AudioManager>(); // Audio taglý componenta eriþim saðlýyoruz
+        if (GameObject.FindGameObjectWithTag("Audio"))
+        {
+            audioManager = GameObject.FindGameObjectWithTag("Audio").GetComponent<AudioManager>(); // Audio taglý componenta eriþim saðlýyoruz
+        }
     }
 
 
@@ -64,28 +67,28 @@ public class PlayerMovement : MonoBehaviour
         }
         horizontal = Input.GetAxisRaw("Horizontal");
 
-        if(IsGrounded() && !Input.GetButton("Jump"))
+        if (IsGrounded() && !Input.GetButton("Jump"))
         {
             doubleJump = false;
         }
 
         if (Input.GetButtonDown("Jump"))
         {
-            if(IsGrounded() || doubleJump)
+            if (IsGrounded() || doubleJump)
             {
                 rb.velocity = new Vector2(rb.velocity.x, jumpingPower);
-                
+
                 doubleJump = !doubleJump;
             }
-            
+
         }
 
-        if(Input.GetButtonUp("Jump") && rb.velocity.y > velocity_test)
+        if (Input.GetButtonUp("Jump") && rb.velocity.y > velocity_test)
         {
-            rb.velocity = new Vector2 (rb.velocity.x, rb.velocity.y * 0.5f);
+            rb.velocity = new Vector2(rb.velocity.x, rb.velocity.y * 0.5f);
         }
 
-        if(Input.GetKeyDown(KeyCode.LeftShift) && canDash)
+        if (Input.GetKeyDown(KeyCode.LeftShift) && canDash)
         {
             StartCoroutine(Dash());
         }
@@ -93,9 +96,9 @@ public class PlayerMovement : MonoBehaviour
         WallSlide();
         WallJump();
 
-        if(!isWallJumping) {Flip();}
+        if (!isWallJumping) { Flip(); }
     }
-    
+
     private bool IsGrounded()
     {
         //return Physics2D.OverlapCircle(groundCheck.position, 0.2f, groundLayer);
@@ -114,7 +117,7 @@ public class PlayerMovement : MonoBehaviour
         {
             rb.velocity = new Vector2(horizontal * speed, rb.velocity.y);
         }
-        
+
     }
 
     private bool IsWalled()
@@ -123,8 +126,8 @@ public class PlayerMovement : MonoBehaviour
     }
 
     private void WallSlide()
-    { 
-        if(IsWalled() && !IsGrounded() && horizontal != 0f)
+    {
+        if (IsWalled() && !IsGrounded() && horizontal != 0f)
         {
             isWallSliding = true;
             rb.velocity = new Vector2(rb.velocity.x, Mathf.Clamp(rb.velocity.y, -wallSlidingSpeed, float.MaxValue));
@@ -133,7 +136,7 @@ public class PlayerMovement : MonoBehaviour
         }
         else
         {
-            isWallSliding=false;
+            isWallSliding = false;
         }
     }
 
@@ -152,13 +155,13 @@ public class PlayerMovement : MonoBehaviour
             wallJumpingCounter -= Time.deltaTime;
         }
 
-        if(Input.GetButtonDown("Jump") && wallJumpingCounter > 0f)
+        if (Input.GetButtonDown("Jump") && wallJumpingCounter > 0f)
         {
             isWallJumping = true;
             rb.velocity = new Vector2(wallJumpingDirection * wallJumpingPower.x, wallJumpingPower.y);
             wallJumpingCounter = 0f;
 
-            if(transform.localScale.x != wallJumpingDirection)
+            if (transform.localScale.x != wallJumpingDirection)
             {
                 isFacingRight = !isFacingRight;
                 Vector3 localScale = transform.localScale;
@@ -178,7 +181,7 @@ public class PlayerMovement : MonoBehaviour
 
     private void Flip()
     {
-        if(isFacingRight && horizontal < 0f || !isFacingRight && horizontal > 0f)
+        if (isFacingRight && horizontal < 0f || !isFacingRight && horizontal > 0f)
         {
             isFacingRight = !isFacingRight;
             Vector3 localScale = transform.localScale;
@@ -186,7 +189,7 @@ public class PlayerMovement : MonoBehaviour
             transform.localScale = localScale;
 
         }
-        
+
     }
 
 
@@ -200,9 +203,13 @@ public class PlayerMovement : MonoBehaviour
         isDashing = true;
         float originalGravity = rb.gravityScale;
         rb.gravityScale = 0f;
-        rb.velocity = new Vector2 (transform.localScale.x * dashingPower, 0f);
+        rb.velocity = new Vector2(transform.localScale.x * dashingPower, 0f);
         //DASH SOUND
-        audioManager.PlaySFX(audioManager.dash);     
+        if (audioManager)
+        {
+            audioManager.PlaySFX(audioManager.dash);
+        }
+
         //
         tr.emitting = true;
         yield return new WaitForSeconds(dashingTime);
