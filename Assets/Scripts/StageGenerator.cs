@@ -88,6 +88,18 @@ public class StageGenerator : MonoBehaviour
         Debug.Log("Player Placed at: "+ new Vector3(roomsList[0].x * roomWidth, roomsList[0].y * roomHeight, 0));
 
     }
+    /*
+    private void OnDrawGizmos()
+    {
+        if (roomsList.Count > 0)
+        {
+            foreach (Vector2Int roomCoord in roomsList)
+            {
+                Gizmos.color = Color.red;
+                Gizmos.DrawCube(new Vector3(roomCoord.x * roomWidth, roomCoord.y * roomHeight, 0), new Vector3(10, 10, 0));
+            }
+        }
+    }*/
     void InitializeArray() // odanin arrayini once 0larla doldur
     {
         roomData = new int[width, height];
