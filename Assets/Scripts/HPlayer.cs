@@ -1,10 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
-<<<<<<< HEAD
 using Unity.VisualScripting;
-=======
 using UnityEditor.Rendering.Universal;
->>>>>>> origin/myme-erdo
 using UnityEngine;
 
 public class HPlayer : MonoBehaviour

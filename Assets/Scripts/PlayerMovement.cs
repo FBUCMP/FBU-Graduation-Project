@@ -55,11 +55,7 @@ public class PlayerMovement : MonoBehaviour
     {
         if (GameObject.FindGameObjectWithTag("Audio"))
         {
-<<<<<<< HEAD
-        audioManager = GameObject.FindGameObjectWithTag("Audio").GetComponent<AudioManager>(); // Audio taglý componenta eriþim saðlýyoruz
-=======
             audioManager = GameObject.FindGameObjectWithTag("Audio").GetComponent<AudioManager>(); // Audio taglý componenta eriþim saðlýyoruz
->>>>>>> origin/myme-erdo
         }
     }
 
@@ -210,18 +206,14 @@ public class PlayerMovement : MonoBehaviour
         float originalGravity = rb.gravityScale;
         rb.gravityScale = 0f;
         rb.velocity = new Vector2(transform.localScale.x * dashingPower, 0f);
+
         //DASH SOUND
+
         if (audioManager)
         {
-<<<<<<< HEAD
             audioManager.PlaySFX(audioManager.dash);    
         }
-         
-=======
-            audioManager.PlaySFX(audioManager.dash);
-        }
 
->>>>>>> origin/myme-erdo
         //
         tr.emitting = true;
         yield return new WaitForSeconds(dashingTime);

@@ -15,21 +15,16 @@ public class CameraFollow : MonoBehaviour
 
     private void Start()
     {
-<<<<<<< HEAD
-        targetObject = GameObject.FindGameObjectWithTag("Player");
-        if (targetObject)
+
+        if (GameObject.FindGameObjectWithTag("Player"))
         {
-            Debug.Log("targetObject Found in cam follow script");
+            targetObject = GameObject.FindGameObjectWithTag("Player");
 
         }
-        /*cameraOffset.x = transform.localPosition.x;
-=======
-        targetObject = GameObject.FindGameObjectWithTag("Player"); // baslangiçtaki sahnede bulunan playeri otomatik secmesi icin.
-        cameraOffset.x = transform.localPosition.x;
->>>>>>> origin/myme-erdo
-        cameraOffset.y = transform.localPosition.y;
-        cameraOffset.z = -10f;
-        */
+        else
+        {
+            Debug.Log("Player not found");
+        }
     }
     private void LateUpdate()
     {
