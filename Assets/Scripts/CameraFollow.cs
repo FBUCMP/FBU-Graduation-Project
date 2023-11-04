@@ -32,7 +32,7 @@ public class CameraFollow : MonoBehaviour
         if (targetObject)
         {
             targetedPosition = targetObject.transform.position + cameraOffset;
-            Debug.Log("targetedPosition: " + targetedPosition);
+            //Debug.Log("targetedPosition: " + targetedPosition);
             transform.position = Vector3.SmoothDamp(transform.position, targetedPosition, ref velocity, smoothTime);
 
         }
