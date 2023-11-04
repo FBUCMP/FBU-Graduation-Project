@@ -8,21 +8,24 @@ public class HPlayer : MonoBehaviour
     
 {
 
-    [SerializeField] private int maxHealth = 100;
+    [SerializeField] private int maxHealth;
     [SerializeField] private int currentHealth;
     
     public HealthBar healthBar;
     // Start is called before the first frame update
     void Start()
     {
+        // burda biþey denedik olmadý
+        //healthBar = GameObject.FindGameObjectWithTag("HealthBar").GetComponent<HealthBar>();
         if (healthBar == null)
         {
             this.AddComponent<HealthBar>();
             healthBar = GetComponent<HealthBar>();
         }
         currentHealth = maxHealth;
-        healthBar.SetMaxHealth(maxHealth);
-    }
+        healthBar.SetMaxHealth(currentHealth,maxHealth);
+        healthBar.SetHealth(currentHealth, maxHealth); // baþlangýçta texti maxhp/maxhp yazsýn diye
+    } 
 
     // Update is called once per frame
     void Update()
@@ -41,6 +44,7 @@ public class HPlayer : MonoBehaviour
             currentHealth = 0;
         }
          
-        healthBar.SetHealth(currentHealth);
+        healthBar.SetHealth(currentHealth,maxHealth);
     }
+
 }
