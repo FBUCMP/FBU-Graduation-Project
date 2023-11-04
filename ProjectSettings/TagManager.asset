@@ -6,6 +6,7 @@ TagManager:
   tags:
   - Wall
   - Audio
+  - Room
   layers:
   - Default
   - TransparentFX

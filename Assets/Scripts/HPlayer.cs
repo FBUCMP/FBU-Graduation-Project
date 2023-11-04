@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using Unity.VisualScripting;
 using UnityEngine;
 
 public class HPlayer : MonoBehaviour
@@ -13,6 +14,11 @@ public class HPlayer : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
+        if (healthBar == null)
+        {
+            this.AddComponent<HealthBar>();
+            healthBar = GetComponent<HealthBar>();
+        }
         currentHealth = maxHealth;
         healthBar.SetMaxHealth(maxHealth);
     }

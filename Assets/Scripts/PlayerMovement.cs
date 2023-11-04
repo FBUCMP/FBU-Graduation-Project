@@ -47,7 +47,10 @@ public class PlayerMovement : MonoBehaviour
 
     private void Awake()
     {
+        if (GameObject.FindGameObjectWithTag("Audio"))
+        {
         audioManager = GameObject.FindGameObjectWithTag("Audio").GetComponent<AudioManager>(); // Audio taglý componenta eriþim saðlýyoruz
+        }
     }
 
 
@@ -190,7 +193,11 @@ public class PlayerMovement : MonoBehaviour
         rb.gravityScale = 0f;
         rb.velocity = new Vector2 (transform.localScale.x * dashingPower, 0f);
         //DASH SOUND
-        audioManager.PlaySFX(audioManager.dash);     
+        if (audioManager)
+        {
+            audioManager.PlaySFX(audioManager.dash);    
+        }
+         
         //
         tr.emitting = true;
         yield return new WaitForSeconds(dashingTime);
@@ -199,5 +206,13 @@ public class PlayerMovement : MonoBehaviour
         isDashing = false;
         yield return new WaitForSeconds(dashingCooldown);
         canDash = true;
+    }
+
+    private void OnDrawGizmos()
+    {
+        Gizmos.color = Color.red;
+        Gizmos.DrawWireSphere(groundCheck.position, 0.2f);
+        Gizmos.DrawWireSphere(groundCheck1.position, 0.2f);
+        Gizmos.DrawWireSphere(wallCheck.position, 0.2f);
     }
 }
