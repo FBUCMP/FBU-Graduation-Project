@@ -5,8 +5,16 @@ using System;
 public class RoomGenerator : MonoBehaviour
 {
 
-	public int width;
-	public int height;
+	/*
+	 * room generator zorluk vb datayi da tutabilir. room prefableri kaydederiz. random rooom icin 1 prefab,
+	 * her bir boss room icin ayri ayi prefableri olustururuz.
+	 * yani room jsonunu okuyan kisim olustur. room jsonu yoksa random olsun.
+	 */
+
+	public int width = 50;
+	public int height = 30;
+	public int roomIndex = 0;
+	public int difficulty = 1;
 	public int borderSize = 1;
 	[Range(0,10)]
 	public int smoothness;
@@ -24,7 +32,7 @@ public class RoomGenerator : MonoBehaviour
 
 	void Update()
 	{
-		if (Input.GetKeyDown(KeyCode.R))
+		if (Input.GetKeyDown(KeyCode.U))
 		{
 			GenerateMap();
 			Debug.Log(map.Length);
@@ -66,7 +74,8 @@ public class RoomGenerator : MonoBehaviour
 	{
 		if (useRandomSeed)
 		{
-			seed = Time.time.ToString();
+			
+			seed = Time.time.ToString() + roomIndex.ToString();
 		}
 
 		System.Random pseudoRandom = new System.Random(seed.GetHashCode());

@@ -75,7 +75,6 @@ GameObject:
   - component: {fileID: 2300254057313476750}
   - component: {fileID: 674734279960390426}
   - component: {fileID: 5504685744047295958}
-  - component: {fileID: 450348378129159952}
   - component: {fileID: 6311657264688382926}
   - component: {fileID: 2141209435423669764}
   m_Layer: 0
@@ -94,7 +93,7 @@ Transform:
   m_GameObject: {fileID: 7140912594573197821}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 11.14, y: 21.85, z: 0}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
@@ -255,22 +254,6 @@ MonoBehaviour:
   wallLayer:
     serializedVersion: 2
     m_Bits: 192
---- !u!114 &450348378129159952
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 7140912594573197821}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 7435ad860a0a1b4468eb2b9f4c0859a0, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  targetObject: {fileID: 0}
-  cameraOffset: {x: 0, y: 0, z: 0}
-  targetedPosition: {x: 0, y: 0, z: 0}
-  smoothTime: 0.25
 --- !u!96 &6311657264688382926
 TrailRenderer:
   serializedVersion: 3
@@ -398,7 +381,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   maxHealth: 100
   currentHealth: 0
-  healthBar: {fileID: 0}
+  healthBar: {fileID: 6824869531246826188, guid: 2fcd3759d13c4bb4fb673bd6d7d77017, type: 3}
 --- !u!1 &8410302533635781786
 GameObject:
   m_ObjectHideFlags: 0

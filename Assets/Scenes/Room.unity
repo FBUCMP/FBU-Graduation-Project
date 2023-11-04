@@ -135,6 +135,7 @@ GameObject:
   - component: {fileID: 296655593}
   - component: {fileID: 296655592}
   - component: {fileID: 296655595}
+  - component: {fileID: 296655597}
   - component: {fileID: 296655596}
   m_Layer: 0
   m_Name: Main Camera
@@ -273,8 +274,23 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 7435ad860a0a1b4468eb2b9f4c0859a0, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  FollowSpeed: 2
-  target: {fileID: 0}
+  targetObject: {fileID: 0}
+  cameraOffset: {x: 0, y: 0, z: -10}
+  targetedPosition: {x: 0, y: 0, z: 0}
+  smoothTime: 0.25
+--- !u!114 &296655597
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 296655591}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 61b0bb259ec6d5a47b620aa6444c7055, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  cam: {fileID: 296655593}
 --- !u!1 &1589993050
 GameObject:
   m_ObjectHideFlags: 0
@@ -290,7 +306,7 @@ GameObject:
   - component: {fileID: 1589993054}
   m_Layer: 6
   m_Name: RoomGen
-  m_TagString: Untagged
+  m_TagString: Room
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -309,6 +325,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   width: 100
   height: 60
+  difficulty: 1
   borderSize: 1
   smoothness: 10
   seed: 
