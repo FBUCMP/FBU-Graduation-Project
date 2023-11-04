@@ -32,9 +32,28 @@ public class StageGenerator : MonoBehaviour
     [Header("------- Player Prefab ------------")]
     public GameObject playerPrefab;
 
-    private int[,] roomData;
-    private List<Vector2Int> tempQueue;
-    private List<Vector2Int> roomsList;
+    private int[,] roomData; /* orn:
+                              * 0 0 1 0 2 0 0 0 0 0
+                              * 0 0 1 1 1 1 0 0 0 0
+                              * 0 0 0 1 0 1 1 1 0 0
+                              * 0 0 1 1 0 1 0 0 0 0
+                              * 0 0 1 0 0 1 1 0 0 0
+                              * 0 0 4 0 0 1 0 0 0 0
+                              * 0 0 0 0 0 0 0 0 0 0
+                              * 0 0 0 0 0 0 0 0 0 0
+                              * 0 0 0 0 0 0 0 0 0 0
+                              * 0 0 0 0 0 0 0 0 0 0
+                              * 
+                              * 
+                              */
+
+
+
+    private List<Vector2Int> tempQueue; // ustunde calisilan odayi aliyor is bitince siliyor
+
+    private List<Vector2Int> roomsList; /* olusturulan tum odalarin kordinatlari
+                                         * orn: [4,9], [4,8], [3,8], [2,8], [4,7] ...
+                                         */
 
     // Start is called before the first frame update
     void Awake()
@@ -42,12 +61,12 @@ public class StageGenerator : MonoBehaviour
         
         if (!roomPrefab && Resources.Load<GameObject>("Prefabs/RandomRoom"))
         {
-            roomPrefab = Resources.Load<GameObject>("Prefabs/RandomRoom");
+            roomPrefab = Resources.Load<GameObject>("Prefabs/RandomRoom"); // room prefabini yukle
 
         }
         if (!playerPrefab && Resources.Load<GameObject>("Prefabs/Player 1"))
         {
-            playerPrefab = Resources.Load<GameObject>("Prefabs/Player 1");
+            playerPrefab = Resources.Load<GameObject>("Prefabs/Player 1"); // player prefabini yukle
 
         }
         roomWidth = roomPrefab.GetComponent<RoomGenerator>().width;
@@ -79,16 +98,18 @@ public class StageGenerator : MonoBehaviour
     }
     void PlacePlayer()
     {
-        // TODO: fonksiyon her cagrildiginda yeni instance olusturma. konumunu degistir.
-        if (GameObject.FindGameObjectWithTag("Player"))
+        
+        if (GameObject.FindGameObjectWithTag("Player")) // player varsa sil
         {
             Destroy(GameObject.FindGameObjectWithTag("Player"));
         }
-        Instantiate(playerPrefab, new Vector3(roomsList[0].x * roomWidth, roomsList[0].y * roomHeight, 0), Quaternion.identity);
+        Instantiate(playerPrefab, new Vector3(roomsList[0].x * roomWidth, roomsList[0].y * roomHeight, 0), Quaternion.identity); // prefabdan player instance olustur
         Debug.Log("Player Placed at: "+ new Vector3(roomsList[0].x * roomWidth, roomsList[0].y * roomHeight, 0));
 
     }
     /*
+    
+    // devam edilecek
     private void OnDrawGizmos()
     {
         if (roomsList.Count > 0)
@@ -125,7 +146,7 @@ public class StageGenerator : MonoBehaviour
             Vector2Int startCell = new Vector2Int(startX, startY);
 
             tempQueue.Add(startCell);
-            roomsList.Add(startCell);
+            roomsList.Add(startCell); 
             roomData[startX, startY] = 1;
             int generatedRooms = 1;
 
@@ -144,19 +165,21 @@ public class StageGenerator : MonoBehaviour
 
                     if (IsValidCell(neighborCell) && roomData[neighborCell.x, neighborCell.y] == 0)
                     {
-                        int neighborRoomCount = CountFilledNeighbors(neighborCell);
+                        int neighborRoomCount = CountFilledNeighbors(neighborCell); // komsu cell'leri say (caprazlar yok !)
 
-                        if (neighborRoomCount == 1 && (Random.Range(0f, 1f) < randomness )) // rastgelelik var randomness 0.5 ise %50 ihtimal , || generatedRooms < minRooms
+                        if (neighborRoomCount == 1 && (Random.Range(0f, 1f) < randomness )) // rastgelelik var randomness 0.5 ise %50 ihtimal. komsu sayisi 1se
                         {
                             roomData[neighborCell.x, neighborCell.y] = 1; //burada secilen oda 0 -> 1 e degistiriliyor
-                            tempQueue.Add(neighborCell);
-                            roomsList.Add(neighborCell);
+                            tempQueue.Add(neighborCell); // tempQueue alinip siliyor gecici
+                            roomsList.Add(neighborCell); // roomsList bastan olusma sirasina gore ekliyor ve kalici. oda kordinatlari
                             generatedRooms++;
                         }
 
                     }
                 }
             }
+
+
             // room cesitlerinin numaralari roomDatada duzenlenir
             if (roomsList.Count > 0)
             {
@@ -177,7 +200,7 @@ public class StageGenerator : MonoBehaviour
         int count = 0;
         Vector2Int[] directions = { Vector2Int.up, Vector2Int.down, Vector2Int.left, Vector2Int.right };
 
-        foreach (Vector2Int direction in directions)
+        foreach (Vector2Int direction in directions) // sirayla etrafina bak
         {
             Vector2Int neighborCell = cell + direction;
 
@@ -207,10 +230,10 @@ public class StageGenerator : MonoBehaviour
 
 
             }
-            spawnedRoom.transform.parent = gameObject.transform;
+            spawnedRoom.transform.parent = gameObject.transform; // her bir eklenen oda stage generatorun childi oluyor
             
         }
-        //Camera.main.transform.position = new Vector3(roomsList[0].x * roomWidth, roomsList[0].y * roomHeight, -10) + new Vector3(0,- 2*roomHeight,0); // kamerayi start rooma getir biraz da asagi kaydir.
+        
     }
 
     //-----------------------------------sonrasi gereksiz----------------------------------

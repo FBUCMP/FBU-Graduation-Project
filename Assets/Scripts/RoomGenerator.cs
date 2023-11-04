@@ -39,10 +39,10 @@ public class RoomGenerator : MonoBehaviour
 		}
 	}
 
-	void GenerateMap()
+	void GenerateMap() // bu bir room datasi olusturuyor
 	{
 		map = new int[width, height];
-		RandomFillMap();
+		RandomFillMap(); // indexe bagli rastgelelikle doldur
 
 		for (int i = 0; i < 5; i++)
 		{
@@ -75,7 +75,7 @@ public class RoomGenerator : MonoBehaviour
 		if (useRandomSeed)
 		{
 			
-			seed = Time.time.ToString() + roomIndex.ToString();
+			seed = Time.time.ToString() + roomIndex.ToString(); // time random icin, aynanda olusan odalar farkli olsun diye index eklendi
 		}
 
 		System.Random pseudoRandom = new System.Random(seed.GetHashCode());
@@ -84,19 +84,19 @@ public class RoomGenerator : MonoBehaviour
 		{
 			for (int y = 0; y < height; y++)
 			{
-				if (x == 0 || x == width - 1 || y == 0 || y == height - 1) // dis sinirlari kesin duvar yap
+				if (x == 0 || x == width - 1 || y == 0 || y == height - 1) // odanin en dis sinirlari kesin duvar yap
 				{
 					map[x, y] = 1;
 				}
 				else
 				{
-					map[x, y] = (pseudoRandom.Next(0, 100) < randomFillPercent) ? 1 : 0; // rastgele 1 veya 0 ver random noise üret
+					map[x, y] = (pseudoRandom.Next(0, 100) < randomFillPercent) ? 1 : 0; // kalani rastgele 1 veya 0 ver random noise üret
 				}
 			}
 		}
 	}
 
-	void SmoothMap()
+	void SmoothMap() // rastgelelik duzgun hale getiriliyor
 	{
 
 		int[,] newMap = (int[,])map.Clone(); 
@@ -104,14 +104,14 @@ public class RoomGenerator : MonoBehaviour
 		{
 			for (int y = 0; y < height; y++)
 			{
-				int neighbourWallTiles = GetSurroundingWallCount(x, y);
+				int neighbourWallTiles = GetSurroundingWallCount(x, y); // komsu duvar sayisi
 
-				if (neighbourWallTiles > 4)
+				if (neighbourWallTiles > 4)	// komsu duvar sayisi 4ten fazla ise duvar yap
 					newMap[x, y] = 1;
-					//map[x, y] = 1;
-				else if (neighbourWallTiles < 4)
+					
+				else if (neighbourWallTiles < 4) // komsu duvar sayisi 4ten az ise bosluk yap
 					newMap[x, y] = 0;
-					//map[x, y] = 0;
+					
 			}
 		}
 		map = newMap;
