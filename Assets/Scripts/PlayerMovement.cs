@@ -5,19 +5,23 @@ using UnityEngine;
 
 public class PlayerMovement : MonoBehaviour
 {
+
+    // Movement kismi
     private float horizontal;
     [SerializeField] private float speed = 8f;
     [SerializeField] private float jumpingPower = 16f;
     private bool isFacingRight = true;
 
+    // Dash kismi
     private bool canDash = true;
     private bool isDashing;
     private float dashingPower = 24f;
     private float dashingTime = 0.2f;
     private float dashingCooldown = 1f;
-
+    // dash sonrasi arkada iz birakmasi için 
     [SerializeField] private TrailRenderer tr;
 
+    // wall sliding ve wall jumping kismi
     private bool isWallSliding;
     private float wallSlidingSpeed = 2f;
 
@@ -51,7 +55,11 @@ public class PlayerMovement : MonoBehaviour
     {
         if (GameObject.FindGameObjectWithTag("Audio"))
         {
+<<<<<<< HEAD
         audioManager = GameObject.FindGameObjectWithTag("Audio").GetComponent<AudioManager>(); // Audio taglý componenta eriþim saðlýyoruz
+=======
+            audioManager = GameObject.FindGameObjectWithTag("Audio").GetComponent<AudioManager>(); // Audio taglý componenta eriþim saðlýyoruz
+>>>>>>> origin/myme-erdo
         }
     }
 
@@ -65,28 +73,28 @@ public class PlayerMovement : MonoBehaviour
         }
         horizontal = Input.GetAxisRaw("Horizontal");
 
-        if(IsGrounded() && !Input.GetButton("Jump"))
+        if (IsGrounded() && !Input.GetButton("Jump"))
         {
             doubleJump = false;
         }
 
         if (Input.GetButtonDown("Jump"))
         {
-            if(IsGrounded() || doubleJump)
+            if (IsGrounded() || doubleJump)
             {
                 rb.velocity = new Vector2(rb.velocity.x, jumpingPower);
-                
+
                 doubleJump = !doubleJump;
             }
-            
+
         }
 
-        if(Input.GetButtonUp("Jump") && rb.velocity.y > velocity_test)
+        if (Input.GetButtonUp("Jump") && rb.velocity.y > velocity_test)
         {
-            rb.velocity = new Vector2 (rb.velocity.x, rb.velocity.y * 0.5f);
+            rb.velocity = new Vector2(rb.velocity.x, rb.velocity.y * 0.5f);
         }
 
-        if(Input.GetKeyDown(KeyCode.LeftShift) && canDash)
+        if (Input.GetKeyDown(KeyCode.LeftShift) && canDash)
         {
             StartCoroutine(Dash());
         }
@@ -94,12 +102,14 @@ public class PlayerMovement : MonoBehaviour
         WallSlide();
         WallJump();
 
-        if(!isWallJumping) {Flip();}
+        if (!isWallJumping) { Flip(); }
     }
-    
+
     private bool IsGrounded()
     {
         //return Physics2D.OverlapCircle(groundCheck.position, 0.2f, groundLayer);
+
+        // rampa gibi þekillerde yürüme ve zýplama sýkýntýsý yaþanýyordu bunun için yapýldý
         return Physics2D.OverlapCircle(groundCheck.position, 0.2f, groundLayer) || Physics2D.OverlapCircle(groundCheck1.position, 0.2f, groundLayer);
     }
 
@@ -113,7 +123,7 @@ public class PlayerMovement : MonoBehaviour
         {
             rb.velocity = new Vector2(horizontal * speed, rb.velocity.y);
         }
-        
+
     }
 
     private bool IsWalled()
@@ -122,8 +132,8 @@ public class PlayerMovement : MonoBehaviour
     }
 
     private void WallSlide()
-    { 
-        if(IsWalled() && !IsGrounded() && horizontal != 0f)
+    {
+        if (IsWalled() && !IsGrounded() && horizontal != 0f)
         {
             isWallSliding = true;
             rb.velocity = new Vector2(rb.velocity.x, Mathf.Clamp(rb.velocity.y, -wallSlidingSpeed, float.MaxValue));
@@ -132,7 +142,7 @@ public class PlayerMovement : MonoBehaviour
         }
         else
         {
-            isWallSliding=false;
+            isWallSliding = false;
         }
     }
 
@@ -151,19 +161,20 @@ public class PlayerMovement : MonoBehaviour
             wallJumpingCounter -= Time.deltaTime;
         }
 
-        if(Input.GetButtonDown("Jump") && wallJumpingCounter > 0f)
+        if (Input.GetButtonDown("Jump") && wallJumpingCounter > 0f)
         {
             isWallJumping = true;
             rb.velocity = new Vector2(wallJumpingDirection * wallJumpingPower.x, wallJumpingPower.y);
             wallJumpingCounter = 0f;
 
-            if(transform.localScale.x != wallJumpingDirection)
+            if (transform.localScale.x != wallJumpingDirection)
             {
                 isFacingRight = !isFacingRight;
                 Vector3 localScale = transform.localScale;
                 localScale.x *= -1f;
                 transform.localScale = localScale;
             }
+            // Invoke fonksiyonu, belirli bir süre sonra veya belirli bir periyotta bir fonksiyonu çaðýrmak için kullanýlýr.
             Invoke(nameof(StopWallJumping), wallJumpingDuration);
         }
     }
@@ -176,7 +187,7 @@ public class PlayerMovement : MonoBehaviour
 
     private void Flip()
     {
-        if(isFacingRight && horizontal < 0f || !isFacingRight && horizontal > 0f)
+        if (isFacingRight && horizontal < 0f || !isFacingRight && horizontal > 0f)
         {
             isFacingRight = !isFacingRight;
             Vector3 localScale = transform.localScale;
@@ -184,22 +195,33 @@ public class PlayerMovement : MonoBehaviour
             transform.localScale = localScale;
 
         }
-        
+
     }
 
+
+    // Dash özelliði için Coroutine kullandýk burada karakter dash atabiliyorsa anlýk olarak yatay düzlemde dashingPower kadar 
+    // |   gravity'den etkilenmeyerek ilerleyecek ve sonra hareket bittiðinde gravity tekrar olmasý gereken deðerine dönecek
+    // |    
+    // •--> Dash süresini ve dash dolum süresini daha iyi kontrol edebilmek adýna
     private IEnumerator Dash()
     {
         canDash = false;
         isDashing = true;
         float originalGravity = rb.gravityScale;
         rb.gravityScale = 0f;
-        rb.velocity = new Vector2 (transform.localScale.x * dashingPower, 0f);
+        rb.velocity = new Vector2(transform.localScale.x * dashingPower, 0f);
         //DASH SOUND
         if (audioManager)
         {
+<<<<<<< HEAD
             audioManager.PlaySFX(audioManager.dash);    
         }
          
+=======
+            audioManager.PlaySFX(audioManager.dash);
+        }
+
+>>>>>>> origin/myme-erdo
         //
         tr.emitting = true;
         yield return new WaitForSeconds(dashingTime);

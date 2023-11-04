@@ -1,6 +1,10 @@
 using System.Collections;
 using System.Collections.Generic;
+<<<<<<< HEAD
 using Unity.VisualScripting;
+=======
+using UnityEditor.Rendering.Universal;
+>>>>>>> origin/myme-erdo
 using UnityEngine;
 
 public class HPlayer : MonoBehaviour
@@ -35,7 +39,11 @@ public class HPlayer : MonoBehaviour
     void TakeDamage(int damage)
     {
         currentHealth -= damage;
-
+        if(currentHealth < 0)
+        {
+            currentHealth = 0;
+        }
+         
         healthBar.SetHealth(currentHealth);
     }
 }

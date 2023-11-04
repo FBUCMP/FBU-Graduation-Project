@@ -15,6 +15,7 @@ public class CameraFollow : MonoBehaviour
 
     private void Start()
     {
+<<<<<<< HEAD
         targetObject = GameObject.FindGameObjectWithTag("Player");
         if (targetObject)
         {
@@ -22,6 +23,10 @@ public class CameraFollow : MonoBehaviour
 
         }
         /*cameraOffset.x = transform.localPosition.x;
+=======
+        targetObject = GameObject.FindGameObjectWithTag("Player"); // baslangiçtaki sahnede bulunan playeri otomatik secmesi icin.
+        cameraOffset.x = transform.localPosition.x;
+>>>>>>> origin/myme-erdo
         cameraOffset.y = transform.localPosition.y;
         cameraOffset.z = -10f;
         */
