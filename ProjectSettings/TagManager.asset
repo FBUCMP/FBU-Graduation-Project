@@ -7,6 +7,7 @@ TagManager:
   - Wall
   - Audio
   - Room
+  - healthBar
   layers:
   - Default
   - TransparentFX
