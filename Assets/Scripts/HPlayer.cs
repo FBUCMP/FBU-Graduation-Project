@@ -7,6 +7,8 @@ using UnityEngine;
 public class HPlayer : MonoBehaviour
     
 {
+    private bool isDead = false;
+    public GameManagerScript gameManager; //Death Screen için gameManager çaðýrýyoruz
 
     [SerializeField] private int maxHealth;
     [SerializeField] private int currentHealth;
@@ -30,6 +32,7 @@ public class HPlayer : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
+        Debug.Log("Ölü mü: " + isDead);
         if(Input.GetKeyDown(KeyCode.B))
         {
             TakeDamage(20);
@@ -39,11 +42,16 @@ public class HPlayer : MonoBehaviour
     void TakeDamage(int damage)
     {
         currentHealth -= damage;
-        if(currentHealth < 0)
+        if (currentHealth <= 0)
         {
             currentHealth = 0;
+            if (!isDead)
+            {
+                isDead = true;
+                gameManager.gameOver();
+                Debug.Log("Dead");
+            }
         }
-         
         healthBar.SetHealth(currentHealth,maxHealth);
     }
 
