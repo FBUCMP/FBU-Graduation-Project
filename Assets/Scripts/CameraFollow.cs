@@ -15,16 +15,16 @@ public class CameraFollow : MonoBehaviour
 
     private void Start()
     {
-        targetObject = GameObject.FindGameObjectWithTag("Player");
-        if (targetObject)
+
+        if (GameObject.FindGameObjectWithTag("Player"))
         {
-            Debug.Log("targetObject Found in cam follow script");
+            targetObject = GameObject.FindGameObjectWithTag("Player");
 
         }
-        /*cameraOffset.x = transform.localPosition.x;
-        cameraOffset.y = transform.localPosition.y;
-        cameraOffset.z = -10f;
-        */
+        else
+        {
+            Debug.Log("Player not found");
+        }
     }
     private void LateUpdate()
     {
@@ -32,7 +32,7 @@ public class CameraFollow : MonoBehaviour
         if (targetObject)
         {
             targetedPosition = targetObject.transform.position + cameraOffset;
-            Debug.Log("targetedPosition: " + targetedPosition);
+            //Debug.Log("targetedPosition: " + targetedPosition);
             transform.position = Vector3.SmoothDamp(transform.position, targetedPosition, ref velocity, smoothTime);
 
         }
