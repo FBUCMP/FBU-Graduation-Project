@@ -18,6 +18,7 @@ public class CameraZoom : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
+        cam = gameObject.GetComponent<Camera>();
         zoom = cam.orthographicSize;
     }
 
