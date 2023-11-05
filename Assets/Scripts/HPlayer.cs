@@ -32,7 +32,7 @@ public class HPlayer : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        Debug.Log("Ölü mü: " + isDead);
+        //Debug.Log("Ölü mü: " + isDead);
         if(Input.GetKeyDown(KeyCode.B))
         {
             TakeDamage(20);
@@ -42,9 +42,11 @@ public class HPlayer : MonoBehaviour
     void TakeDamage(int damage)
     {
         currentHealth -= damage;
+
         if (currentHealth <= 0)
         {
             currentHealth = 0;
+            healthBar.SetHealth(currentHealth,maxHealth);
             if (!isDead)
             {
                 isDead = true;
@@ -52,7 +54,7 @@ public class HPlayer : MonoBehaviour
                 Debug.Log("Dead");
             }
         }
-        healthBar.SetHealth(currentHealth,maxHealth);
+        healthBar.SetHealth(currentHealth, maxHealth);
     }
 
 }
