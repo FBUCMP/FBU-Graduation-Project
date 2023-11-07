@@ -9,7 +9,7 @@ public class PlayerMovement : MonoBehaviour
     // Movement kismi
     private float horizontal;
     [SerializeField] private float speed = 8f;
-    [SerializeField] private float jumpingPower = 16f;
+    [SerializeField] public float jumpingPower = 16f;
     private bool isFacingRight = true;
 
     // Dash kismi

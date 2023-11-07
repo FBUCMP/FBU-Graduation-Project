@@ -8,6 +8,7 @@ TagManager:
   - Audio
   - Room
   - healthBar
+  - JumpPad
   layers:
   - Default
   - TransparentFX
