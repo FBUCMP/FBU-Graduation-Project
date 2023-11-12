@@ -66,8 +66,8 @@ public class HealthBar : MonoBehaviour
     public void SetHealth(int health, int maxHealth)
     {
         slider.value = (float)health / maxHealth * 100;
-        Debug.Log("slider.value: " + slider.value);
-        Debug.Log("slider.normalizedValue " + slider.normalizedValue);
+        //Debug.Log("slider.value: " + slider.value);
+        //Debug.Log("slider.normalizedValue " + slider.normalizedValue);
         // canýn deðiþmesi durumunda rengi ayarlar
         fill.color = gradient.Evaluate(slider.normalizedValue);
 

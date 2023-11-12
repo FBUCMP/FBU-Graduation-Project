@@ -29,8 +29,11 @@ public class StageGenerator : MonoBehaviour
     private int roomWidth; // room prefabin boyutlari
     private int roomHeight;
 
+    private List<bool[]> gatesList; // bool[] = 0: up, 1: right, 2: down, 3: left
+
     [Header("------- Player Prefab ------------")]
     public GameObject playerPrefab;
+    private GameObject player;
 
     private int[,] roomData; /* orn:
                               * 0 0 1 0 2 0 0 0 0 0
@@ -69,8 +72,10 @@ public class StageGenerator : MonoBehaviour
             playerPrefab = Resources.Load<GameObject>("Prefabs/Player 1"); // player prefabini yukle
 
         }
-        roomWidth = roomPrefab.GetComponent<RoomGenerator>().width;
-        roomHeight = roomPrefab.GetComponent<RoomGenerator>().height;
+        RoomGenerator prefabsGen = roomPrefab.GetComponent<RoomGenerator>();
+        roomWidth = prefabsGen.width + prefabsGen.borderSize ;
+        roomHeight = prefabsGen.height + prefabsGen.borderSize;
+        
 
         Init();
     }
@@ -83,44 +88,122 @@ public class StageGenerator : MonoBehaviour
         {
             Init();
         }
+        
     }
 
     void Init()
     {
-        //StopCoroutine(VisualizeTiles());
         InitializeArray();
-        GenerateRooms();
+        GenerateStage();
         PlaceRooms();
         PlacePlayer();
-        //UpdateTilemap();
-        //StartCoroutine(VisualizeTiles());
-        Debug.Log($"Starting: ({roomsList[0].x},{roomsList[0].y}) | Boss: ({roomsList[roomsList.Count - 1].x},{roomsList[roomsList.Count - 1].y}) | RoomCount: {roomsList.Count}");
-    }
-    void PlacePlayer()
-    {
         
+        //Debug.Log($"Starting: ({roomsList[0].x},{roomsList[0].y}) | Boss: ({roomsList[roomsList.Count - 1].x},{roomsList[roomsList.Count - 1].y}) | RoomCount: {roomsList.Count}");
+    }
+    void PlacePlayer(int roomIndex, Vector2 position)
+    {
+        if(roomIndex > roomsList.Count)
+        {
+            Debug.Log($"Cannot place player at index: {roomIndex}, bounds exceeded");
+            return;
+        }
         if (GameObject.FindGameObjectWithTag("Player")) // player varsa sil
         {
             Destroy(GameObject.FindGameObjectWithTag("Player"));
         }
-        Instantiate(playerPrefab, new Vector3(roomsList[0].x * roomWidth, roomsList[0].y * roomHeight, 0), Quaternion.identity); // prefabdan player instance olustur
-        Debug.Log("Player Placed at: "+ new Vector3(roomsList[0].x * roomWidth, roomsList[0].y * roomHeight, 0));
+        player = Instantiate(playerPrefab, new Vector3((roomsList[roomIndex].x * roomWidth) - (roomWidth/2) + position.x, (roomsList[roomIndex].y * roomHeight) - (roomHeight/2) + position.y, 0), Quaternion.identity); // prefabdan player instance olustur
+        Debug.Log("Player Placed at: "+ new Vector3(roomsList[roomIndex].x * roomWidth, roomsList[roomIndex].y * roomHeight, 0));
 
     }
-    /*
-    
-    // devam edilecek
+    void PlacePlayer(int roomIndex = 0)
+    {
+
+        if (GameObject.FindGameObjectWithTag("Player")) // player varsa sil
+        {
+            Destroy(GameObject.FindGameObjectWithTag("Player"));
+        }
+        player = Instantiate(playerPrefab, new Vector3((roomsList[roomIndex].x * roomWidth), (roomsList[roomIndex].y * roomHeight), 0), Quaternion.identity); // prefabdan player instance olustur
+        Debug.Log("Player Placed at: " + new Vector3(roomsList[roomIndex].x * roomWidth, roomsList[roomIndex].y * roomHeight, 0));
+
+    }
+
+
     private void OnDrawGizmos()
     {
-        if (roomsList.Count > 0)
-        {
-            foreach (Vector2Int roomCoord in roomsList)
+        Gizmos.color = Color.red;
+
+        if (roomsList != null && roomsList.Count > 0) {
+            foreach (Transform child in transform) 
             {
-                Gizmos.color = Color.red;
-                Gizmos.DrawCube(new Vector3(roomCoord.x * roomWidth, roomCoord.y * roomHeight, 0), new Vector3(10, 10, 0));
+
+                if (child.gameObject.GetComponent<RoomGenerator>())
+                {
+                    RoomGenerator roomGen = child.gameObject.GetComponent<RoomGenerator>();
+                    bool[] gateDirs = roomGen.gates; // 0: up, 1: right, 2: down, 3: left
+
+                    // draw squares of 8 by 8 sizes at the gates. so that we can see the gates
+                    if (gateDirs[0])
+                    {
+                        Gizmos.DrawWireCube(new Vector3(child.position.x, child.position.y + roomHeight / 2, 0), new Vector3(8, 8, 0));
+                        
+                    }
+                    if (gateDirs[1])
+                    {
+                        Gizmos.DrawWireCube(new Vector3(child.position.x + roomWidth / 2, child.position.y, 0), new Vector3(8, 8, 0));
+                        
+                    }
+                    if (gateDirs[2])
+                    {
+                        Gizmos.DrawWireCube(new Vector3(child.position.x, child.position.y - roomHeight / 2, 0), new Vector3(8, 8, 0));
+                        
+                    }
+                    if (gateDirs[3])
+                    {
+                        Gizmos.DrawWireCube(new Vector3(child.position.x - roomWidth / 2, child.position.y, 0), new Vector3(8, 8, 0));
+                        
+                    }
+
+
+                }
+
+
+                
             }
+
+        }            
+        
+    }
+
+    void CalculateConnectedSides() // 0: up, 1: right, 2: down, 3: left
+    {
+        gatesList = new List<bool[]>(); // 0: up, 1: right, 2: down, 3: left
+        
+        for (int i = 0; i < roomsList.Count; i++)
+        {
+            bool[] connectedSides = new bool[4];
+            Vector2Int room = roomsList[i];
+            if(roomsList.Contains(new Vector2Int(room.x, room.y + 1)))
+            {
+                connectedSides[0] = true;
+            }
+            if (roomsList.Contains(new Vector2Int(room.x + 1, room.y)))
+            {
+                connectedSides[1] = true;
+            }
+            if (roomsList.Contains(new Vector2Int(room.x, room.y - 1)))
+            {
+                connectedSides[2] = true;
+            }
+            if (roomsList.Contains(new Vector2Int(room.x - 1, room.y)))
+            {
+                connectedSides[3] = true;
+            }
+            gatesList.Add(connectedSides); // all bools have all true values
+
         }
-    }*/
+
+    }
+
     void InitializeArray() // odanin arrayini once 0larla doldur
     {
         roomData = new int[width, height];
@@ -136,7 +219,7 @@ public class StageGenerator : MonoBehaviour
         }
     }
 
-    void GenerateRooms() // asil odalari secen algoritma
+    void GenerateStage() // odalarin olacagi konumu hesaplayan algoritma
     {
         while (roomsList.Count < minRooms)
         {
@@ -215,6 +298,7 @@ public class StageGenerator : MonoBehaviour
 
     void PlaceRooms()
     {
+        CalculateConnectedSides();
         foreach (Transform child in transform) // onceki odalari sil
         {
             Destroy(child.gameObject);
@@ -225,7 +309,11 @@ public class StageGenerator : MonoBehaviour
             if (spawnedRoom.GetComponent<RoomGenerator>())
             {
                 RoomGenerator roomsGen = spawnedRoom.GetComponent<RoomGenerator>();
-                roomsGen.roomIndex = roomsList.IndexOf(roomCoord); // burdan sonra manuel generatelemek gerekebilir
+                roomsGen.roomIndex = roomsList.IndexOf(roomCoord); 
+                roomsGen.gates = gatesList[roomsList.IndexOf(roomCoord)];
+                roomsGen.difficulty = stageDifficulty + Random.Range(0,3);
+                
+                roomsGen.GenerateMap(); // generate mapi elle cagiriyoruz.
 
 
 
@@ -236,49 +324,4 @@ public class StageGenerator : MonoBehaviour
         
     }
 
-    //-----------------------------------sonrasi gereksiz----------------------------------
-    /*
-    void UpdateTilemap()// tile cizimleri burada
-    {
-
-        for (int x = 0; x < width; x++)
-        {
-            for (int y = 0; y < height; y++)
-            {
-                TileBase tile;
-                switch (roomData[x, y])
-                {
-                    case 1:
-                        tile = filledRoomTile;
-                        break;
-                    case 2:
-                        tile = startRoomTile;
-                        break;
-                    case 3:
-                        tile = chestRoomTile;
-                        break;
-                    case 4:
-                        tile = bossRoomTile;
-                        break;
-                    default:
-                        tile = emptyRoomTile;
-                        break;
-                }
-                tilemap.SetTile(new Vector3Int(x, y, 0), tile);
-            }
-        }
-        
-        
-
-    }
-    IEnumerator VisualizeTiles()
-    {
-        for (int i = 1; i < roomsList.Count-1; i++) 
-        {
-            tilemap.SetTile(new Vector3Int(roomsList[i].x, roomsList[i].y, 0), selectedRoomTile);
-            yield return new WaitForSeconds(0.5f);
-        }
-    }
-
-    */
 }
