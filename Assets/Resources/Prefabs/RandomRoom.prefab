@@ -49,8 +49,11 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   width: 60
   height: 40
+  roomIndex: 0
   difficulty: 1
   borderSize: 1
+  gates: 00000000
+  gatePrefab: {fileID: 6854857394847769645, guid: b975325b4c15fbf43850313eb62d01b5, type: 3}
   smoothness: 10
   seed: 
   useRandomSeed: 1
