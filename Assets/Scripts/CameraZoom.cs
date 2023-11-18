@@ -14,10 +14,11 @@ public class CameraZoom : MonoBehaviour
     private float smoothTime = 0.25f;
 
 
-    [SerializeField] private Camera cam;
+    private Camera cam;
     // Start is called before the first frame update
     void Start()
     {
+        cam = gameObject.GetComponent<Camera>();
         zoom = cam.orthographicSize;
     }
 
