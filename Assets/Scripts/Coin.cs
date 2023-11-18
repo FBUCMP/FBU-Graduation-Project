@@ -7,19 +7,19 @@ using UnityEngine.UI;
 
 public class Coin : MonoBehaviour
 {
-    public Text scoreText; 
-    private int score = 0; 
+    public Text scoreText;
+    private int score = 0;
 
-    
+
     void Start()
     {
-        UpdateScoreText(); 
+
     }
 
-    
+
     void Update()
     {
-        
+
         transform.position = new Vector2(transform.position.x, transform.position.y + ((Mathf.Sin(Time.time)) * 0.001f));
     }
 
@@ -27,28 +27,9 @@ public class Coin : MonoBehaviour
     {
         if (other.CompareTag("Player"))
         {
-            CollectCoin();
+            other.GetComponent<CollectibleManager>().AddCoin();
+            gameObject.SetActive(false);
         }
     }
 
-    void CollectCoin()
-    {
-        
-        score += 1;
-
-        
-        gameObject.SetActive(false);
-
-       
-        UpdateScoreText();
-    }
-
-    void UpdateScoreText()
-    {
-       
-        if (scoreText != null)
-        {
-            scoreText.text = "Score: " + score.ToString();
-        }
-    }
 }
