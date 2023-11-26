@@ -8,7 +8,7 @@ public class CameraZoom : MonoBehaviour
 
     private float zoom;
     private float zoomMultiplier = 4f;
-    private float minZoom = 4f;
+    private float minZoom = 4f; 
     private float maxZoom = 16f;
     private float velocity = 0;
     private float smoothTime = 0.25f;
@@ -19,7 +19,8 @@ public class CameraZoom : MonoBehaviour
     void Start()
     {
         cam = gameObject.GetComponent<Camera>();
-        zoom = cam.orthographicSize;
+        zoom = 8f;
+        //zoom = cam.orthographicSize;
     }
 
     // Update is called once per frame
