@@ -71,10 +71,11 @@ public class RoomGenerator : MonoBehaviour
 			}
 		}
 		
+		DrawCicle(borderedMap, new Vector2Int(width / 2, height / 2), 0, 5); // odanin ortasini bosalt
 		
         // 0: up, 1: right, 2: down, 3: left
 		int platformLength = 7;
-		int gateSpaceSize = 7;
+		int gateSpaceSize = 8;
 		float gateDistanceToWall = 1.25f;
 		Vector3 roomBottomLeft = new Vector3(transform.position.x - (width/2), transform.position.y - (height/2), 0);
         if (gates[0]) // up

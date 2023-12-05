@@ -58,6 +58,10 @@ public class PlayerMovement : MonoBehaviour
     private void Awake()
     {
         boxCollider = GetComponent<BoxCollider2D>();
+        //dashingPower *= Mathf.Sqrt(transform.localScale.x);
+        dashingTime /= Mathf.Sqrt(transform.localScale.x);
+        Debug.Log(dashingPower);
+        Debug.Log(dashingTime);
         speed *= Mathf.Sqrt(transform.localScale.x);
         jumpingPower *= Mathf.Sqrt(transform.localScale.x);
         wallJumpingPower *= Mathf.Sqrt(transform.localScale.x);
@@ -149,6 +153,8 @@ public class PlayerMovement : MonoBehaviour
                 localScale.x = Mathf.Abs(localScale.x);
                 transform.localScale = localScale;
             }
+
+
             if (isFacingRight == (horizontal > 0)) // ileri kosuyor
             {
                 lower_anim.SetFloat("RunDir", 1f); // lower animasyonuna duz gitsin diye pozitif yolluyoruz
