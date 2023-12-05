@@ -7,7 +7,7 @@ public class GameOver : MonoBehaviour
 {
     public void RestartGame() //Play Button
     {
-        SceneManager.LoadSceneAsync(1); // Restart Butonuna basýldýðýnda file->build settings -> kaç nolu indeks sahnesi gelsin örn: 1
+        SceneManager.LoadSceneAsync(2); // Restart Butonuna basýldýðýnda file->build settings -> kaç nolu indeks sahnesi gelsin örn: 1
     }
     public void MainMenu() //Play Button
     {

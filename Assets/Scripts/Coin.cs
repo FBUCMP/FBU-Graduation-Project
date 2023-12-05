@@ -3,53 +3,31 @@ using System.Collections.Generic;
 using Unity.Mathematics;
 using UnityEngine;
 using UnityEngine.UI;
-
+using System;
 
 public class Coin : MonoBehaviour
 {
-    public Text scoreText; 
-    private int score = 0;
-    [SerializeField] float value = 0.002f;
-    [SerializeField] float float_offset = 0f;
+    [SerializeField] float y_range = 0.002f; //Y eksenindeki gideceði miktar
+    [SerializeField] float float_offset = 0f; // Coinlerin farklý konumlarda baþlamasý asenkron çalýþmasý
 
-    void Start()
+    private void Start()
     {
-        UpdateScoreText(); 
-    }
+        System.Random random = new System.Random(); //Rastgele Sayý alýyor
 
-    
+        float_offset = random.Next(1,90); // 1 ile 90 arasý ki random yerde dolaþsýn asenkron olsun.
+
+    }
     void Update()
     {
-        
-        transform.position = new Vector2(transform.position.x, transform.position.y + ((Mathf.Sin(Time.time + float_offset)) * value));
+        transform.position = new Vector2(transform.position.x, transform.position.y + ((Mathf.Sin(Time.time + float_offset)) * y_range));
     }
 
     private void OnTriggerEnter2D(Collider2D other)
     {
         if (other.CompareTag("Player"))
         {
-            CollectCoin();
-        }
-    }
-
-    void CollectCoin()
-    {
-        
-        score += 1;
-
-        
-        gameObject.SetActive(false);
-
-       
-        UpdateScoreText();
-    }
-
-    void UpdateScoreText()
-    {
-       
-        if (scoreText != null)
-        {
-            scoreText.text = "Score: " + score.ToString();
+            other.GetComponent<CollectibleManager>().AddCoin();
+            gameObject.SetActive(false);
         }
     }
 }

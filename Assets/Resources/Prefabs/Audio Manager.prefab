@@ -177,7 +177,7 @@ MonoBehaviour:
   musicSource: {fileID: 8662048821618574609}
   sfxSource: {fileID: 5128972824197693748}
   background: {fileID: 8300000, guid: 089f1ccfc0af9244b881132ea8199080, type: 3}
-  death: {fileID: 0}
+  death: {fileID: 8300000, guid: abf19601b0fa71248834d29cf88123cd, type: 3}
   dash: {fileID: 8300000, guid: 196758a97ca448041bd6be4d714d86db, type: 3}
   wallTouch: {fileID: 0}
   jump: {fileID: 0}
