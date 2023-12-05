@@ -315,7 +315,7 @@ public class StageGenerator : MonoBehaviour
                 // if the first generated room
                 if (roomsList.IndexOf(roomCoord) == 0)
                 {
-                    roomsGen.randomFillPercent = 40;
+                    roomsGen.randomFillPercent -= 5;
                 }
                 roomsGen.GenerateMap(); // generate mapi elle cagiriyoruz.
 
