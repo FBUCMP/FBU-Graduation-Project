@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using System.IO;
+using Unity.VisualScripting;
 using UnityEngine;
 
 public class PlayerMovement : MonoBehaviour
@@ -34,16 +35,15 @@ public class PlayerMovement : MonoBehaviour
 
     [SerializeField] private float velocity_test = 0f;
     [SerializeField] private Rigidbody2D rb;
+    private BoxCollider2D boxCollider;
     [SerializeField] private Transform groundCheck;
-    [SerializeField] private Transform groundCheck1;
-    //[SerializeField] private Transform groundCheckR;
-    //[SerializeField] private Transform groundCheckL;
+
     [SerializeField] private LayerMask groundLayer;
 
     [SerializeField] private Transform wallCheck;
     [SerializeField] private LayerMask wallLayer;
 
-
+    
 
     //double jump
     private bool doubleJump;
@@ -51,12 +51,32 @@ public class PlayerMovement : MonoBehaviour
     // AUDIO MANAGER
     AudioManager audioManager;
 
+    //animator
+    [SerializeField] private Transform center; // playerin orta noktasi
+    private Animator lower_anim; // belden asagi
+    private Animator upper_anim; // belden yukari
     private void Awake()
     {
+        boxCollider = GetComponent<BoxCollider2D>();
+        //dashingPower *= Mathf.Sqrt(transform.localScale.x);
+        dashingTime /= Mathf.Sqrt(transform.localScale.x);
+        Debug.Log(dashingPower);
+        Debug.Log(dashingTime);
+        speed *= Mathf.Sqrt(transform.localScale.x);
+        jumpingPower *= Mathf.Sqrt(transform.localScale.x);
+        wallJumpingPower *= Mathf.Sqrt(transform.localScale.x);
+        wallSlidingSpeed *= Mathf.Sqrt(transform.localScale.x);
         if (GameObject.FindGameObjectWithTag("Audio"))
         {
             audioManager = GameObject.FindGameObjectWithTag("Audio").GetComponent<AudioManager>(); // Audio taglý componenta eriþim saðlýyoruz
         }
+        if (GetComponentsInChildren<Animator>().Length > 0) // upper body ve lower body childlarinin animatorleri
+        {
+            lower_anim = GetComponentsInChildren<Animator>()[0];
+            upper_anim = GetComponentsInChildren<Animator>()[1];
+
+        }
+        
     }
 
 
@@ -98,15 +118,60 @@ public class PlayerMovement : MonoBehaviour
         WallSlide();
         WallJump();
 
-        if (!isWallJumping) { Flip(); }
+        //if (!isWallJumping) { Flip(); }
+
+        if (lower_anim && upper_anim) // animatorler varsa
+        {
+            Vector3 mousePosition = Camera.main.ScreenToWorldPoint(Input.mousePosition); 
+            Vector3 lookDirection = mousePosition - center.position; // karakterin ortasindan mousea dogru bir vektor
+            float angle = Mathf.Atan2(lookDirection.y, Mathf.Abs(lookDirection.x)) * Mathf.Rad2Deg; // aci hesabi, aci negatif olamaz
+            //upper_anim.transform.rotation = Quaternion.AngleAxis(angle, Vector3.forward); // upper body animasyonu mousea dogru donsun
+            angle += 90; // aciyi 0-180 arasi yapmak icin
+            angle = Mathf.Abs(angle);
+            upper_anim.SetFloat("New Float", angle); // upper body animasyonuna aciyi gonderiyoruz. adi default new float degisebilir.
+
+            if (horizontal != 0) // horizontal harakette kos animasyonu
+            {
+                lower_anim.Play("LowerBodyRun");
+            }
+            else // degilse dur
+            {
+                lower_anim.Play("LowerBodyIdle");
+            }
+            if (lookDirection.x < 0 ) // mouse yonune don
+            {
+                isFacingRight = false;
+                lower_anim.SetFloat("RunDir", -1f);
+                Vector3 localScale = transform.localScale;
+                localScale.x = - Mathf.Abs(localScale.x);
+                transform.localScale = localScale;
+            }
+            else if (lookDirection.x > 0)
+            {
+                isFacingRight = true;
+                Vector3 localScale = transform.localScale;
+                localScale.x = Mathf.Abs(localScale.x);
+                transform.localScale = localScale;
+            }
+
+
+            if (isFacingRight == (horizontal > 0)) // ileri kosuyor
+            {
+                lower_anim.SetFloat("RunDir", 1f); // lower animasyonuna duz gitsin diye pozitif yolluyoruz
+            }
+            else // geri geri kosuyor
+            {
+                lower_anim.SetFloat("RunDir", -1f); // lower animasyonuna ters gitsin diye negatif yolluyoruz
+            }
+            
+        }
+        
     }
 
     private bool IsGrounded()
     {
-        //return Physics2D.OverlapCircle(groundCheck.position, 0.2f, groundLayer);
-
-        // rampa gibi þekillerde yürüme ve zýplama sýkýntýsý yaþanýyordu bunun için yapýldý
-        return Physics2D.OverlapCircle(groundCheck.position, 0.2f, groundLayer) || Physics2D.OverlapCircle(groundCheck1.position, 0.2f, groundLayer);
+        // iki noktada daire olusturup checklemek yerine box ile daha etkili bir sekilde checkliyoruz
+        return Physics2D.OverlapBox(groundCheck.position, new Vector2(boxCollider.size.x * transform.localScale.x, 0.2f * transform.localScale.y), 0f, groundLayer);
     }
 
     private void FixedUpdate()
@@ -226,9 +291,8 @@ public class PlayerMovement : MonoBehaviour
 
     private void OnDrawGizmos()
     {
+        //Physics2D.OverlapBox(groundCheck.position, new Vector2(0.2f, 0.1f), 0f, groundLayer);
         Gizmos.color = Color.red;
-        Gizmos.DrawWireSphere(groundCheck.position, 0.2f);
-        Gizmos.DrawWireSphere(groundCheck1.position, 0.2f);
-        Gizmos.DrawWireSphere(wallCheck.position, 0.2f);
+        Gizmos.DrawWireCube(groundCheck.position, new Vector2(boxCollider.size.x * transform.localScale.x, 0.2f * transform.localScale.y));
     }
 }

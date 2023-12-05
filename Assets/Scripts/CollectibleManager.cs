@@ -10,7 +10,7 @@ public class CollectibleManager : MonoBehaviour // Monobehaviour arastir. Gerekl
 
 
     private int bombCounter;
-    private int coinCounter;
+    private int coinCounter=0;
     private int keyCounter;
     
 
@@ -34,9 +34,17 @@ public class CollectibleManager : MonoBehaviour // Monobehaviour arastir. Gerekl
 
     public void SetCoinCounter(int amount)
     {
+        coinCounter = amount;
 
     }
 
+    public void AddCoin()
+    {
+       
+        coinCounter++;
+
+        Debug.Log("coincounter"+coinCounter);
+    }
 
     public void SetKeyCounter(int amount)
     {
