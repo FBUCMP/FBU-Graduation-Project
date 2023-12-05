@@ -69,7 +69,7 @@ public class StageGenerator : MonoBehaviour
         }
         if (!playerPrefab && Resources.Load<GameObject>("Prefabs/Player 1"))
         {
-            playerPrefab = Resources.Load<GameObject>("Prefabs/Player 1"); // player prefabini yukle
+            playerPrefab = Resources.Load<GameObject>("Prefabs/Player 2"); // player prefabini yukle
 
         }
         RoomGenerator prefabsGen = roomPrefab.GetComponent<RoomGenerator>();
@@ -312,7 +312,11 @@ public class StageGenerator : MonoBehaviour
                 roomsGen.roomIndex = roomsList.IndexOf(roomCoord); 
                 roomsGen.gates = gatesList[roomsList.IndexOf(roomCoord)];
                 roomsGen.difficulty = stageDifficulty + Random.Range(0,3);
-                
+                // if the first generated room
+                if (roomsList.IndexOf(roomCoord) == 0)
+                {
+                    roomsGen.randomFillPercent = 40;
+                }
                 roomsGen.GenerateMap(); // generate mapi elle cagiriyoruz.
 
 

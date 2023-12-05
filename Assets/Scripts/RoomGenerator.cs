@@ -127,7 +127,7 @@ public class RoomGenerator : MonoBehaviour
         
 				
 		MeshGenerator meshGenerator = GetComponent<MeshGenerator>();
-		meshGenerator.GenerateMesh(borderedMap, 1); // MeshGenerator scriptinden fonksiyon. map gonderiliyor.
+		meshGenerator.GenerateMesh(borderedMap, 1f); // MeshGenerator scriptinden fonksiyon. map gonderiliyor.
 	}
 
 
