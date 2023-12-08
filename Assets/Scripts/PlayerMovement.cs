@@ -36,14 +36,19 @@ public class PlayerMovement : MonoBehaviour
     [SerializeField] private float velocity_test = 0f;
     [SerializeField] private Rigidbody2D rb;
     private BoxCollider2D boxCollider;
-    [SerializeField] private Transform groundCheck;
+    
+    //[SerializeField] private Transform groundCheck;
 
-    [SerializeField] private LayerMask groundLayer;
+   [SerializeField] private LayerMask groundLayer;
 
     [SerializeField] private Transform wallCheck;
     [SerializeField] private LayerMask wallLayer;
 
-    
+    // erdo duvar denemesi tekrar
+    [SerializeField] private Transform groundCheckR;
+    [SerializeField] private Transform groundCheckL;
+
+
 
     //double jump
     private bool doubleJump;
@@ -57,6 +62,7 @@ public class PlayerMovement : MonoBehaviour
     private Animator upper_anim; // belden yukari
     private void Awake()
     {
+        // yunus - sayisal islemler
         boxCollider = GetComponent<BoxCollider2D>();
         //dashingPower *= Mathf.Sqrt(transform.localScale.x);
         dashingTime /= Mathf.Sqrt(transform.localScale.x);
@@ -108,6 +114,8 @@ public class PlayerMovement : MonoBehaviour
         if (Input.GetButtonUp("Jump") && rb.velocity.y > velocity_test)
         {
             rb.velocity = new Vector2(rb.velocity.x, rb.velocity.y * 0.5f);
+            // tuþa basýldýðý anda ve basýlý tutulduðu anda olan
+            // zýplama deðiþimi
         }
 
         if (Input.GetKeyDown(KeyCode.LeftShift) && canDash)
@@ -118,6 +126,7 @@ public class PlayerMovement : MonoBehaviour
         WallSlide();
         WallJump();
 
+        // Buraya artik anim girdigi icin ihtiyac yok
         //if (!isWallJumping) { Flip(); }
 
         if (lower_anim && upper_anim) // animatorler varsa
@@ -168,11 +177,24 @@ public class PlayerMovement : MonoBehaviour
         
     }
 
+    // yunus isgrounded
+    /*
     private bool IsGrounded()
     {
         // iki noktada daire olusturup checklemek yerine box ile daha etkili bir sekilde checkliyoruz
-        return Physics2D.OverlapBox(groundCheck.position, new Vector2(boxCollider.size.x * transform.localScale.x, 0.2f * transform.localScale.y), 0f, groundLayer);
+        return Physics2D.OverlapBox(groundCheck.position, new Vector2(boxCollider.size.x * transform.localScale.x * 1.2f, 0.3f * transform.localScale.y), 0f, groundLayer);
     }
+    */
+    //erdo isgrounded
+    
+    private bool IsGrounded()
+    {
+        //return Physics2D.OverlapCircle(groundCheck.position, 0.2f, groundLayer);
+
+        // rampa gibi þekillerde yürüme ve zýplama sýkýntýsý yaþanýyordu bunun için yapýldý
+        return Physics2D.OverlapCircle(groundCheckR.position, 0.2f, groundLayer) || Physics2D.OverlapCircle(groundCheckL.position, 0.2f, groundLayer);
+    }
+
 
     private void FixedUpdate()
     {
@@ -289,10 +311,13 @@ public class PlayerMovement : MonoBehaviour
         canDash = true;
     }
 
+    // hata veriyordu ve gerek yoktu dendi o yüzden simdilik kapattim
+    /*
     private void OnDrawGizmos()
     {
         //Physics2D.OverlapBox(groundCheck.position, new Vector2(0.2f, 0.1f), 0f, groundLayer);
         Gizmos.color = Color.red;
         Gizmos.DrawWireCube(groundCheck.position, new Vector2(boxCollider.size.x * transform.localScale.x, 0.2f * transform.localScale.y));
     }
+    */
 }
