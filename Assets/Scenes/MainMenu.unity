@@ -318,8 +318,8 @@ MonoBehaviour:
   m_Transition: 1
   m_Colors:
     m_NormalColor: {r: 1, g: 1, b: 1, a: 1}
-    m_HighlightedColor: {r: 0.9607843, g: 0.9607843, b: 0.9607843, a: 1}
-    m_PressedColor: {r: 0.78431374, g: 0.78431374, b: 0.78431374, a: 1}
+    m_HighlightedColor: {r: 0.9502846, g: 1, b: 0, a: 1}
+    m_PressedColor: {r: 0.76607984, g: 0.8584906, b: 0.10123708, a: 1}
     m_SelectedColor: {r: 0.9607843, g: 0.9607843, b: 0.9607843, a: 1}
     m_DisabledColor: {r: 0.78431374, g: 0.78431374, b: 0.78431374, a: 0.5019608}
     m_ColorMultiplier: 1
@@ -336,7 +336,7 @@ MonoBehaviour:
     m_SelectedTrigger: Selected
     m_DisabledTrigger: Disabled
   m_Interactable: 1
-  m_TargetGraphic: {fileID: 132320371}
+  m_TargetGraphic: {fileID: 2074742564}
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
@@ -840,6 +840,17 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 748735119}
   m_CullTransparentMesh: 1
+--- !u!114 &777282502 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 4713521904453785311, guid: 0863610fd7fca99429944a5dad16798b, type: 3}
+  m_PrefabInstance: {fileID: 5844528649349353127}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f4688fdb7df04437aeb418b961361dc5, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &837697431
 GameObject:
   m_ObjectHideFlags: 0
@@ -1649,7 +1660,7 @@ MonoBehaviour:
   m_Transition: 1
   m_Colors:
     m_NormalColor: {r: 1, g: 1, b: 1, a: 1}
-    m_HighlightedColor: {r: 0.9607843, g: 0.9607843, b: 0.9607843, a: 1}
+    m_HighlightedColor: {r: 1, g: 1, b: 1, a: 1}
     m_PressedColor: {r: 0.78431374, g: 0.78431374, b: 0.78431374, a: 1}
     m_SelectedColor: {r: 0.9607843, g: 0.9607843, b: 0.9607843, a: 1}
     m_DisabledColor: {r: 0.78431374, g: 0.78431374, b: 0.78431374, a: 0.5019608}
@@ -2542,8 +2553,8 @@ MonoBehaviour:
   m_Transition: 1
   m_Colors:
     m_NormalColor: {r: 1, g: 1, b: 1, a: 1}
-    m_HighlightedColor: {r: 0.9607843, g: 0.9607843, b: 0.9607843, a: 1}
-    m_PressedColor: {r: 0.78431374, g: 0.78431374, b: 0.78431374, a: 1}
+    m_HighlightedColor: {r: 0.9238435, g: 1, b: 0, a: 1}
+    m_PressedColor: {r: 0.7647059, g: 0.85882354, b: 0.101960786, a: 1}
     m_SelectedColor: {r: 0.9607843, g: 0.9607843, b: 0.9607843, a: 1}
     m_DisabledColor: {r: 0.78431374, g: 0.78431374, b: 0.78431374, a: 0.5019608}
     m_ColorMultiplier: 1
@@ -2560,7 +2571,7 @@ MonoBehaviour:
     m_SelectedTrigger: Selected
     m_DisabledTrigger: Disabled
   m_Interactable: 1
-  m_TargetGraphic: {fileID: 1933944372}
+  m_TargetGraphic: {fileID: 1762233584}
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
@@ -2948,6 +2959,34 @@ PrefabInstance:
       value: EXIT
       objectReference: {fileID: 0}
     - target: {fileID: 5115368760490103193, guid: 0863610fd7fca99429944a5dad16798b, type: 3}
+      propertyPath: m_TargetGraphic
+      value: 
+      objectReference: {fileID: 777282502}
+    - target: {fileID: 5115368760490103193, guid: 0863610fd7fca99429944a5dad16798b, type: 3}
+      propertyPath: m_Colors.m_PressedColor.b
+      value: 0.101960786
+      objectReference: {fileID: 0}
+    - target: {fileID: 5115368760490103193, guid: 0863610fd7fca99429944a5dad16798b, type: 3}
+      propertyPath: m_Colors.m_PressedColor.g
+      value: 0.85882354
+      objectReference: {fileID: 0}
+    - target: {fileID: 5115368760490103193, guid: 0863610fd7fca99429944a5dad16798b, type: 3}
+      propertyPath: m_Colors.m_PressedColor.r
+      value: 0.7647059
+      objectReference: {fileID: 0}
+    - target: {fileID: 5115368760490103193, guid: 0863610fd7fca99429944a5dad16798b, type: 3}
+      propertyPath: m_Colors.m_HighlightedColor.b
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 5115368760490103193, guid: 0863610fd7fca99429944a5dad16798b, type: 3}
+      propertyPath: m_Colors.m_HighlightedColor.g
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 5115368760490103193, guid: 0863610fd7fca99429944a5dad16798b, type: 3}
+      propertyPath: m_Colors.m_HighlightedColor.r
+      value: 0.9037957
+      objectReference: {fileID: 0}
+    - target: {fileID: 5115368760490103193, guid: 0863610fd7fca99429944a5dad16798b, type: 3}
       propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Target
       value: 
       objectReference: {fileID: 1336152113}
@@ -3012,6 +3051,10 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 8448493488274672026, guid: 4c32ade72d6bcb6499620ec877589126, type: 3}
+      propertyPath: death
+      value: 
+      objectReference: {fileID: 8300000, guid: abf19601b0fa71248834d29cf88123cd, type: 3}
     - target: {fileID: 8662048821618574609, guid: 4c32ade72d6bcb6499620ec877589126, type: 3}
       propertyPath: OutputAudioMixerGroup
       value: 

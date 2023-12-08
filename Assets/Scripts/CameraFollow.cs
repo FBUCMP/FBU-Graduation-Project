@@ -15,7 +15,8 @@ public class CameraFollow : MonoBehaviour
 
     private void Start()
     {
-
+        // baþlangýçta target objecti tag üzerinden player seçmek için 
+        // cameranýn takip edeceði obje haliyle player
         if (GameObject.FindGameObjectWithTag("Player"))
         {
             targetObject = GameObject.FindGameObjectWithTag("Player");
@@ -26,13 +27,23 @@ public class CameraFollow : MonoBehaviour
             Debug.Log("Player not found");
         }
     }
+
+
+    /*
+        Late Update, Update fonksiyonundan sonra çaðrýlýr ve kamera iþlemleri için kullanýlmaya uygundur.
+    */
     private void LateUpdate()
     {
         targetObject = GameObject.FindGameObjectWithTag("Player");
         if (targetObject)
         {
-            targetedPosition = targetObject.transform.position + cameraOffset;
+            targetedPosition = targetObject.transform.position + cameraOffset; // kameranýn hedef pozisyonunu hesaplar
             //Debug.Log("targetedPosition: " + targetedPosition);
+            // soft bir kamera takibi için SmoothDamp kullandýk.
+            // Vector3.SmoothDamp, 
+            // bir vektörün diðer bir vektöre yumuþak bir þekilde (smoothTime) geçiþini saðlar.
+            // transform.position'dan targetedPosition'a doðru geçiþ yapýlýr
+            // referans vektörü velocity ve geçiþin süresi smoothTime.
             transform.position = Vector3.SmoothDamp(transform.position, targetedPosition, ref velocity, smoothTime);
 
         }
