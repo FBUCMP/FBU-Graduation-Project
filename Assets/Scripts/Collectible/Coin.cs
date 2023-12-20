@@ -7,9 +7,7 @@ using UnityEngine.UI;
 
 public class Coin : MonoBehaviour
 {
-    public Text scoreText;
-    private int score = 0;
-
+    
 
     void Start()
     {
