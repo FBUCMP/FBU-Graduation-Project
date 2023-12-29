@@ -31,7 +31,7 @@ public class PlayerGunSelector : MonoBehaviour
         ActiveGun = gun;
         gun.Spawn(GunParent, this);
 
-        // some magic for IK
+        // IK
         /*
         Transform[] allChildren = GunParent.GetComponentsInChildren<Transform>();
         InverseKinematics.LeftElbowIKTarget = allChildren.FirstOrDefault(child => child.name == "LeftElbow");

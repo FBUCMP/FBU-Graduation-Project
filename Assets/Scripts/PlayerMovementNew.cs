@@ -128,7 +128,7 @@ public class PlayerMovementNew : MonoBehaviour
         // Buraya artik anim girdigi icin ihtiyac yok
         if (!isWallJumping) { Flip(); }
 
-        if (animator) // animatorler varsa
+        if (animator) // animator varsa
         {
             // TODO: mousea bakma yeniden yazilacak
             Vector3 mousePosition = Camera.main.ScreenToWorldPoint(Input.mousePosition); 
@@ -136,8 +136,8 @@ public class PlayerMovementNew : MonoBehaviour
             float angle = Mathf.Atan2(lookDirection.y, Mathf.Abs(lookDirection.x)) * Mathf.Rad2Deg; // aci hesabi, aci negatif olamaz
             //upper_anim.transform.rotation = Quaternion.AngleAxis(angle, Vector3.forward); // upper body animasyonu mousea dogru donsun
             angle += 90; // aciyi 0-180 arasi yapmak icin
-            angle = Mathf.Abs(angle);
-            animator.SetFloat("Angle", angle); 
+                angle = Mathf.Abs(angle);
+            //animator.SetFloat("Angle", angle); 
 
             if (horizontal != 0) // horizontal harakette kos animasyonu
             {
