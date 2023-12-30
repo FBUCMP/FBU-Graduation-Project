@@ -14,6 +14,7 @@ public class GunSO : ScriptableObject
     public Vector3 spawnRotation;
 
     public DamageConfigurationSO damageConfig;
+    public AmmoConfigurationSO ammoConfig;
     public ShootConfigurationSO shootConfig;
     public TrailConfigurationSO trailConfig;
 
@@ -61,6 +62,9 @@ public class GunSO : ScriptableObject
             model.transform.up += model.transform.TransformDirection(spreadAmount);
             Vector3 shootDirection = shootSystem.transform.forward + spreadAmount;                 
             shootDirection.Normalize();
+
+            ammoConfig.currentClipAmmo--;
+
             RaycastHit2D hit = Physics2D.Raycast(
                     shootSystem.transform.position,
                     shootDirection,
@@ -98,7 +102,10 @@ public class GunSO : ScriptableObject
             Time.deltaTime * shootConfig.recoilRecoverySpeed);
         if (shootRequest)
         {
-            Shoot();
+            if (ammoConfig.currentClipAmmo > 0)
+            {
+                Shoot();
+            }
         }
     }
     private IEnumerator PlayTrail(Vector3 StartPoint, Vector3 EndPoint, RaycastHit2D Hit)

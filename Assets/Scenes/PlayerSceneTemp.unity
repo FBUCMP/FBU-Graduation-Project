@@ -1336,6 +1336,10 @@ PrefabInstance:
       propertyPath: m_LocalRotation.z
       value: 0.41715634
       objectReference: {fileID: 0}
+    - target: {fileID: 4726363626046121435, guid: 38706b82ce779444e981b979785a554a, type: 3}
+      propertyPath: GunSelector
+      value: 
+      objectReference: {fileID: 678778221}
     - target: {fileID: 5456007605420275895, guid: 38706b82ce779444e981b979785a554a, type: 3}
       propertyPath: m_LocalRotation.w
       value: 0.38349766
@@ -1693,6 +1697,17 @@ SpriteRenderer:
   m_WasSpriteAssigned: 1
   m_MaskInteraction: 0
   m_SpriteSortPoint: 0
+--- !u!114 &678778221 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 5788830053130607927, guid: 38706b82ce779444e981b979785a554a, type: 3}
+  m_PrefabInstance: {fileID: 532992799}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d4b3b5d80a6c1874987c8e3fe54306c4, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &861617520
 GameObject:
   m_ObjectHideFlags: 0
