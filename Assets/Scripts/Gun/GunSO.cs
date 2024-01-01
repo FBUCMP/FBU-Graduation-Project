@@ -18,8 +18,12 @@ public class GunSO : ScriptableObject
     public ShootConfigurationSO shootConfig;
     public TrailConfigurationSO trailConfig;
 
+    public AudioConfigurationSO audioConfig;
+
     private MonoBehaviour activeMonoBehaviour; // bullet
-    private GameObject model; 
+    private GameObject model;
+    private AudioSource shootingAudioSource;
+
     private float lastShootTime;
     private ParticleSystem shootSystem; // gun muzzle flash
     private ObjectPool<TrailRenderer> trailPool; // bullet trail
@@ -36,14 +40,26 @@ public class GunSO : ScriptableObject
         model.transform.localRotation = Quaternion.Euler(spawnRotation);
 
         shootSystem = model.GetComponentInChildren<ParticleSystem>();
+        shootingAudioSource = model.GetComponent<AudioSource>();
     }
 
-    public void Shoot()
+    public void TryToShoot()
     {
         if (Time.time > shootConfig.fireRate + lastShootTime)
         {
             lastShootTime = Time.time;
+
+            if (ammoConfig.currentClipAmmo == 0)
+            {
+                // handled the no ammo sound here because of shoot timer
+                audioConfig.PlayOutOfAmmoClip(shootingAudioSource);
+                return;
+            }
+
+
             shootSystem.Play();
+            audioConfig.PlayShootingClip(shootingAudioSource); // , ammoConfig.currentClipAmmo == 1
+
             // controlled random amount of bullet spread
             Vector3 spreadAmount = new Vector3(
                     Random.Range(
@@ -102,12 +118,22 @@ public class GunSO : ScriptableObject
             Time.deltaTime * shootConfig.recoilRecoverySpeed);
         if (shootRequest)
         {
-            if (ammoConfig.currentClipAmmo > 0)
-            {
-                Shoot();
-            }
+            TryToShoot();            
         }
     }
+
+    public void StartReloading()
+    {
+        audioConfig.PlayReloadClip(shootingAudioSource);
+    }
+
+  
+    public void EndReload()
+    {
+        ammoConfig.Reload(); // actual ammo reload
+    }
+
+
     private IEnumerator PlayTrail(Vector3 StartPoint, Vector3 EndPoint, RaycastHit2D Hit)
     {
         TrailRenderer instance = trailPool.Get();

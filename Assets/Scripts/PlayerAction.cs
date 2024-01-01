@@ -22,6 +22,7 @@ public class PlayerAction : MonoBehaviour
         if (ShouldAutoReload() || ShouldManualReload())
         {
             // play animations here in the future
+            GunSelector.ActiveGun.StartReloading();
             GunSelector.ActiveGun.ammoConfig.Reload();
         }
 
