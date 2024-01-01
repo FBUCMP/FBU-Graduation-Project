@@ -20,6 +20,7 @@ public class JumpPad : MonoBehaviour
         else
         {
             Debug.Log("PlayerMovement component not found.");
+            bounce = 16f;
         }
     }
 

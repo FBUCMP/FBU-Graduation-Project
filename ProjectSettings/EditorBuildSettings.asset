@@ -9,6 +9,9 @@ EditorBuildSettings:
     path: Assets/Scenes/MainMenu.unity
     guid: 1d0245a93f291234181cb47ba0bf3ee0
   - enabled: 1
+    path: Assets/Scenes/DersSunum.unity
+    guid: c72726d6623469642b40f22885bba9e7
+  - enabled: 1
     path: Assets/Scenes/StageScene.unity
     guid: 8c9cfa26abfee488c85f1582747f6a02
   - enabled: 1

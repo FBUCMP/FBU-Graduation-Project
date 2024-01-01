@@ -49,6 +49,14 @@ public class PlayerMovement : MonoBehaviour
     [SerializeField] private Transform groundCheckL;
 
 
+    // coyote time and jump buffer
+    private float coyoteTime = 2f; // test için 2f verildi def 0.2f ayarlanabilir
+    private float coyoteCounter;
+
+    private float jumpBufferTime = 3f; // test için 3f verildi def 0.2f ayarlanabilir
+    private float jumpBufferCounter;
+
+
 
     //double jump
     private bool doubleJump;
@@ -95,18 +103,39 @@ public class PlayerMovement : MonoBehaviour
         }
         horizontal = Input.GetAxisRaw("Horizontal");
 
+        //-------------------------------------- coyote time and jump buffer
+        if (IsGrounded())
+        {
+            coyoteCounter = coyoteTime;
+        }
+        else
+        {
+            coyoteCounter -= Time.deltaTime;
+        }
+        if(Input.GetButtonDown("Jump"))
+        {
+            jumpBufferCounter = jumpBufferTime;
+        }
+        else
+        {
+            jumpBufferCounter -= Time.deltaTime;
+        }
+
+        //-------------------------------------- 
         if (IsGrounded() && !Input.GetButton("Jump"))
         {
             doubleJump = false;
         }
 
-        if (Input.GetButtonDown("Jump"))
+        if (jumpBufferCounter > 0f)
         {
-            if (IsGrounded() || doubleJump)
+            if (coyoteCounter > 0f || doubleJump)
             {
                 rb.velocity = new Vector2(rb.velocity.x, jumpingPower);
 
                 doubleJump = !doubleJump;
+
+                jumpBufferCounter = 0f;
             }
 
         }
@@ -116,6 +145,7 @@ public class PlayerMovement : MonoBehaviour
             rb.velocity = new Vector2(rb.velocity.x, rb.velocity.y * 0.5f);
             // tuþa basýldýðý anda ve basýlý tutulduðu anda olan
             // zýplama deðiþimi
+            coyoteCounter = 0f;
         }
 
         if (Input.GetKeyDown(KeyCode.LeftShift) && canDash)
