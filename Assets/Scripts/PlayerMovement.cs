@@ -1,45 +1,28 @@
 using System.Collections;
 using System.Collections.Generic;
 using System.IO;
+using Unity.VisualScripting;
 using UnityEngine;
 
-
-/* 
-	Player movement için farklý yöntemler:
-	1- Input manager kullanma
-	2- Rigidbody fizik tabanlý kontroller
-	3- transform ile doðrudan kontrol
-	4- animasyon ve state machine ile hareket saðlama
-
-	Biz þuan rigidbody ve input manager kullanýyoruz, ileride New input system package'ýna geçmek isteyebiliriz.
-	
-	
-	Mathf.Clamp, belirli bir deðeri belirli bir aralýk içinde sýnýrlamak için kullanýlýr.
-	Mathf.Clamp(deðer, minimum, maksimum);
-	
-	
-*/
 public class PlayerMovement : MonoBehaviour
 {
 
-    // Movement part
-    // Yatayda hareket
+    // Movement kismi
     private float horizontal;
     [SerializeField] private float speed = 8f;
     [SerializeField] public float jumpingPower = 16f;
     private bool isFacingRight = true;
 
-    // Dash part
+    // Dash kismi
     private bool canDash = true;
     private bool isDashing;
     private float dashingPower = 24f;
     private float dashingTime = 0.2f;
     private float dashingCooldown = 1f;
-
-    // Dash trailer
+    // dash sonrasi arkada iz birakmasi için 
     [SerializeField] private TrailRenderer tr;
 
-    // wall sliding ve wall jumping part
+    // wall sliding ve wall jumping kismi
     private bool isWallSliding;
     private float wallSlidingSpeed = 2f;
 
@@ -48,18 +31,30 @@ public class PlayerMovement : MonoBehaviour
     private float wallJumpingTime = 0.2f;
     private float wallJumpingCounter;
     private float wallJumpingDuration = 0.15f; // ne kadar surede tekrar walljump yapacagiyla ilgili 0.1f civari biraz hýzlý oluyor ama tam Transformice'deki wj gibi hosuma gitti.
-    private Vector2 wallJumpingPower = new Vector2(8f, 16f); // bu kýsým speed ve jumpingPower degerlerini alýyor
+    private Vector2 wallJumpingPower = new Vector2(8f, 16f);
 
-    //--------------------------------------------------------
     [SerializeField] private float velocity_test = 0f;
     [SerializeField] private Rigidbody2D rb;
-    [SerializeField] private Transform groundCheck; // rampalarda sorun yaþamamak için saða yakýn ve sola yakýn olarak 2 tane gCheck var
-    [SerializeField] private Transform groundCheck1;
+    private BoxCollider2D boxCollider;
+    
+    //[SerializeField] private Transform groundCheck;
 
-    [SerializeField] private LayerMask groundLayer;
+   [SerializeField] private LayerMask groundLayer;
 
-    [SerializeField] private Transform wallCheck; // duvarlarý tanýmamýz için
+    [SerializeField] private Transform wallCheck;
     [SerializeField] private LayerMask wallLayer;
+
+    // erdo duvar denemesi tekrar
+    [SerializeField] private Transform groundCheckR;
+    [SerializeField] private Transform groundCheckL;
+
+
+    // coyote time and jump buffer
+    private float coyoteTime = 2f; // test için 2f verildi def 0.2f ayarlanabilir
+    private float coyoteCounter;
+
+    private float jumpBufferTime = 3f; // test için 3f verildi def 0.2f ayarlanabilir
+    private float jumpBufferCounter;
 
 
 
@@ -69,37 +64,78 @@ public class PlayerMovement : MonoBehaviour
     // AUDIO MANAGER
     AudioManager audioManager;
 
+    //animator
+    [SerializeField] private Transform center; // playerin orta noktasi
+    private Animator lower_anim; // belden asagi
+    private Animator upper_anim; // belden yukari
     private void Awake()
     {
+        // yunus - sayisal islemler
+        boxCollider = GetComponent<BoxCollider2D>();
+        //dashingPower *= Mathf.Sqrt(transform.localScale.x);
+        dashingTime /= Mathf.Sqrt(transform.localScale.x);
+        Debug.Log(dashingPower);
+        Debug.Log(dashingTime);
+        speed *= Mathf.Sqrt(transform.localScale.x);
+        jumpingPower *= Mathf.Sqrt(transform.localScale.x);
+        wallJumpingPower *= Mathf.Sqrt(transform.localScale.x);
+        wallSlidingSpeed *= Mathf.Sqrt(transform.localScale.x);
         if (GameObject.FindGameObjectWithTag("Audio"))
         {
             audioManager = GameObject.FindGameObjectWithTag("Audio").GetComponent<AudioManager>(); // Audio taglý componenta eriþim saðlýyoruz
         }
+        if (GetComponentsInChildren<Animator>().Length > 0) // upper body ve lower body childlarinin animatorleri
+        {
+            lower_anim = GetComponentsInChildren<Animator>()[0];
+            upper_anim = GetComponentsInChildren<Animator>()[1];
+
+        }
+        
     }
 
 
     // Update is called once per frame
     void Update()
     {
-        if (isDashing) // Karakter dash durumundaysa bu kýsmýn atlanmasý için
+        if (isDashing)
         {
             return;
         }
+        horizontal = Input.GetAxisRaw("Horizontal");
 
-        horizontal = Input.GetAxisRaw("Horizontal"); // oyuncudan alýnan yatay giriþ deðeri
+        //-------------------------------------- coyote time and jump buffer
+        if (IsGrounded())
+        {
+            coyoteCounter = coyoteTime;
+        }
+        else
+        {
+            coyoteCounter -= Time.deltaTime;
+        }
+        if(Input.GetButtonDown("Jump"))
+        {
+            jumpBufferCounter = jumpBufferTime;
+        }
+        else
+        {
+            jumpBufferCounter -= Time.deltaTime;
+        }
 
-        if (IsGrounded() && !Input.GetButton("Jump")) // oyuncumuz yerde ve zýplamýyorsa dJump yapmaz
+        //-------------------------------------- 
+        if (IsGrounded() && !Input.GetButton("Jump"))
         {
             doubleJump = false;
         }
 
-        if (Input.GetButtonDown("Jump")) // oyuncu zýpladýysa
+        if (jumpBufferCounter > 0f)
         {
-            if (IsGrounded() || doubleJump) // yerde veya double jump halindeyse
+            if (coyoteCounter > 0f || doubleJump)
             {
-                rb.velocity = new Vector2(rb.velocity.x, jumpingPower); // zýpladý
+                rb.velocity = new Vector2(rb.velocity.x, jumpingPower);
 
-                doubleJump = !doubleJump; // double jump yaptý/yapmadý
+                doubleJump = !doubleJump;
+
+                jumpBufferCounter = 0f;
             }
 
         }
@@ -109,37 +145,96 @@ public class PlayerMovement : MonoBehaviour
             rb.velocity = new Vector2(rb.velocity.x, rb.velocity.y * 0.5f);
             // tuþa basýldýðý anda ve basýlý tutulduðu anda olan
             // zýplama deðiþimi
+            coyoteCounter = 0f;
         }
 
         if (Input.GetKeyDown(KeyCode.LeftShift) && canDash)
         {
-            StartCoroutine(Dash()); //dash coroutine baþlangýcý
+            StartCoroutine(Dash());
         }
 
         WallSlide();
         WallJump();
 
-        if (!isWallJumping) { Flip(); } // eðer duvarda zýplama modunda deðilse karakterin yüzünü ayarlamasý için
+        // Buraya artik anim girdigi icin ihtiyac yok
+        //if (!isWallJumping) { Flip(); }
+
+        if (lower_anim && upper_anim) // animatorler varsa
+        {
+            Vector3 mousePosition = Camera.main.ScreenToWorldPoint(Input.mousePosition); 
+            Vector3 lookDirection = mousePosition - center.position; // karakterin ortasindan mousea dogru bir vektor
+            float angle = Mathf.Atan2(lookDirection.y, Mathf.Abs(lookDirection.x)) * Mathf.Rad2Deg; // aci hesabi, aci negatif olamaz
+            //upper_anim.transform.rotation = Quaternion.AngleAxis(angle, Vector3.forward); // upper body animasyonu mousea dogru donsun
+            angle += 90; // aciyi 0-180 arasi yapmak icin
+            angle = Mathf.Abs(angle);
+            upper_anim.SetFloat("New Float", angle); // upper body animasyonuna aciyi gonderiyoruz. adi default new float degisebilir.
+
+            if (horizontal != 0) // horizontal harakette kos animasyonu
+            {
+                lower_anim.Play("LowerBodyRun");
+            }
+            else // degilse dur
+            {
+                lower_anim.Play("LowerBodyIdle");
+            }
+            if (lookDirection.x < 0 ) // mouse yonune don
+            {
+                isFacingRight = false;
+                lower_anim.SetFloat("RunDir", -1f);
+                Vector3 localScale = transform.localScale;
+                localScale.x = - Mathf.Abs(localScale.x);
+                transform.localScale = localScale;
+            }
+            else if (lookDirection.x > 0)
+            {
+                isFacingRight = true;
+                Vector3 localScale = transform.localScale;
+                localScale.x = Mathf.Abs(localScale.x);
+                transform.localScale = localScale;
+            }
+
+
+            if (isFacingRight == (horizontal > 0)) // ileri kosuyor
+            {
+                lower_anim.SetFloat("RunDir", 1f); // lower animasyonuna duz gitsin diye pozitif yolluyoruz
+            }
+            else // geri geri kosuyor
+            {
+                lower_anim.SetFloat("RunDir", -1f); // lower animasyonuna ters gitsin diye negatif yolluyoruz
+            }
+            
+        }
+        
     }
 
+    // yunus isgrounded
+    /*
+    private bool IsGrounded()
+    {
+        // iki noktada daire olusturup checklemek yerine box ile daha etkili bir sekilde checkliyoruz
+        return Physics2D.OverlapBox(groundCheck.position, new Vector2(boxCollider.size.x * transform.localScale.x * 1.2f, 0.3f * transform.localScale.y), 0f, groundLayer);
+    }
+    */
+    //erdo isgrounded
+    
     private bool IsGrounded()
     {
         //return Physics2D.OverlapCircle(groundCheck.position, 0.2f, groundLayer);
 
         // rampa gibi þekillerde yürüme ve zýplama sýkýntýsý yaþanýyordu bunun için yapýldý
-        // 2 yönlü gCheck yapýlýyor
-        return Physics2D.OverlapCircle(groundCheck.position, 0.2f, groundLayer) || Physics2D.OverlapCircle(groundCheck1.position, 0.2f, groundLayer);
+        return Physics2D.OverlapCircle(groundCheckR.position, 0.2f, groundLayer) || Physics2D.OverlapCircle(groundCheckL.position, 0.2f, groundLayer);
     }
 
-    private void FixedUpdate() //Fiziksel iþlemlerin çalýþtýðý anlarýn güncellenmesi için kullanýlýyor
+
+    private void FixedUpdate()
     {
-        if (isDashing) // eðer dash atabiliyorsak bu kýsým (FixedUpdate) atlanýr
+        if (isDashing)
         {
             return;
         }
         if (!isWallJumping)
         {
-            rb.velocity = new Vector2(horizontal * speed, rb.velocity.y); // wall jump yoksa yatayda hýzý ayarlar
+            rb.velocity = new Vector2(horizontal * speed, rb.velocity.y);
         }
 
     }
@@ -147,8 +242,6 @@ public class PlayerMovement : MonoBehaviour
     private bool IsWalled()
     {
         return Physics2D.OverlapCircle(wallCheck.position, 0.2f, wallLayer);
-        // 0.2f >> çemberin yarýçapý
-        // duvarýn deðerini döndürür
     }
 
     private void WallSlide()
@@ -157,7 +250,6 @@ public class PlayerMovement : MonoBehaviour
         {
             isWallSliding = true;
             rb.velocity = new Vector2(rb.velocity.x, Mathf.Clamp(rb.velocity.y, -wallSlidingSpeed, float.MaxValue));
-            // aþaðý kayýþ hýzýný ayarlamak için kullanýldý
             //--------------------------------------
             doubleJump = !doubleJump;
         }
@@ -171,35 +263,30 @@ public class PlayerMovement : MonoBehaviour
     {
         if (isWallSliding)
         {
-            isWallJumping = false; // zýplama yaparken kayma olmamalý
-            wallJumpingDirection = -transform.localScale.x; // yüzün dönüþ yönünü belirler
-            wallJumpingCounter = wallJumpingTime; // duvardan zýplama için belirlenen süreyi temsil ediyor
-                                                  // Walljumping counter wj özelliðini kontrol eden deðiþken olarak söylenebilir.
+            isWallJumping = false;
+            wallJumpingDirection = -transform.localScale.x;
+            wallJumpingCounter = wallJumpingTime;
 
-            CancelInvoke(nameof(StopWallJumping)); // wjyi durdurmak
+            CancelInvoke(nameof(StopWallJumping));
         }
         else
         {
-            wallJumpingCounter -= Time.deltaTime; // zamana baðlý olarak wj olayýný bitirir
+            wallJumpingCounter -= Time.deltaTime;
         }
 
         if (Input.GetButtonDown("Jump") && wallJumpingCounter > 0f)
         {
-            // wj hareketinde rb deðerlerini ayarlýyoruz
             isWallJumping = true;
             rb.velocity = new Vector2(wallJumpingDirection * wallJumpingPower.x, wallJumpingPower.y);
             wallJumpingCounter = 0f;
 
-
             if (transform.localScale.x != wallJumpingDirection)
             {
-                // wj sýrasýnda duvardan ayrýlýp tekrar duvara gitmemizi saðlýyor kabaca
                 isFacingRight = !isFacingRight;
                 Vector3 localScale = transform.localScale;
                 localScale.x *= -1f;
                 transform.localScale = localScale;
             }
-
             // Invoke fonksiyonu, belirli bir süre sonra veya belirli bir periyotta bir fonksiyonu çaðýrmak için kullanýlýr.
             Invoke(nameof(StopWallJumping), wallJumpingDuration);
         }
@@ -211,12 +298,8 @@ public class PlayerMovement : MonoBehaviour
     }
 
 
-
     private void Flip()
     {
-        /*
-		Karakterin yüzü saða dönükse veya sola dönükse klavyeden gelen deðere göre yüzünü doðru yöne çevirmesini saðlar
-		*/
         if (isFacingRight && horizontal < 0f || !isFacingRight && horizontal > 0f)
         {
             isFacingRight = !isFacingRight;
@@ -228,21 +311,13 @@ public class PlayerMovement : MonoBehaviour
 
     }
 
-    /*
+
     // Dash özelliði için Coroutine kullandýk burada karakter dash atabiliyorsa anlýk olarak yatay düzlemde dashingPower kadar 
     // |   gravity'den etkilenmeyerek ilerleyecek ve sonra hareket bittiðinde gravity tekrar olmasý gereken deðerine dönecek
     // |    
     // •--> Dash süresini ve dash dolum süresini daha iyi kontrol edebilmek adýna
-	*/
     private IEnumerator Dash()
     {
-
-        /*
-			dash yapabildiðimiz anda gravityi 0'a çekip rb gravitysini de bir deðerde tutuyoruz.
-			dash atabilir olduðumuzda oyuncu yatay düzlemde dash power ve dash time kadar hareketi gerçekleþtiriyor
-			ardýndan rb deðerleri eski haline geliyor.
-			dash atabilme süresini ve dash bekleme süresini coroutine sayesinde saðlýyoruz
-		*/
         canDash = false;
         isDashing = true;
         float originalGravity = rb.gravityScale;
@@ -253,10 +328,10 @@ public class PlayerMovement : MonoBehaviour
 
         if (audioManager)
         {
-            audioManager.PlaySFX(audioManager.dash);
+            audioManager.PlaySFX(audioManager.dash);    
         }
 
-        // coroutine yield return ile kullanýlýr
+        //
         tr.emitting = true;
         yield return new WaitForSeconds(dashingTime);
         tr.emitting = false;
@@ -266,11 +341,13 @@ public class PlayerMovement : MonoBehaviour
         canDash = true;
     }
 
+    // hata veriyordu ve gerek yoktu dendi o yüzden simdilik kapattim
+    /*
     private void OnDrawGizmos()
     {
+        //Physics2D.OverlapBox(groundCheck.position, new Vector2(0.2f, 0.1f), 0f, groundLayer);
         Gizmos.color = Color.red;
-        Gizmos.DrawWireSphere(groundCheck.position, 0.2f);
-        Gizmos.DrawWireSphere(groundCheck1.position, 0.2f);
-        Gizmos.DrawWireSphere(wallCheck.position, 0.2f);
+        Gizmos.DrawWireCube(groundCheck.position, new Vector2(boxCollider.size.x * transform.localScale.x, 0.2f * transform.localScale.y));
     }
+    */
 }
