@@ -18,7 +18,7 @@ public class PlayerGunSelector : MonoBehaviour
     [Header("Runtime Filled")]
     public GunSO ActiveGun;
 
-    private void Start()
+    private void Awake()
     {
         GunSO gun = Guns.Find(gun => gun.type == Gun);
 
@@ -28,8 +28,9 @@ public class PlayerGunSelector : MonoBehaviour
             return;
         }
 
-        ActiveGun = gun;
-        gun.Spawn(GunParent, this);
+        ActiveGun = gun.Clone() as GunSO;
+        ActiveGun.Spawn(GunParent, this);
+        
 
         // IK
         /*

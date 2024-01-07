@@ -14,10 +14,10 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   isHitScan: 0
   bulletPrefab: {fileID: 7643169906871904929, guid: d5e1edd8562a0b04a8d8b875a75270aa, type: 3}
-  bulletSpawnForce: 2000
+  bulletSpawnForce: 10000
   hitMask:
     serializedVersion: 2
     m_Bits: 193
-  spread: {x: 0.05, y: 0.05, z: 0}
+  spread: {x: 0.03, y: 0.03, z: 0}
   fireRate: 0.25
   recoilRecoverySpeed: 1

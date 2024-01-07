@@ -1,7 +1,7 @@
 using UnityEngine;
 
 [CreateAssetMenu(fileName = "Audio Config", menuName = "Guns/Audio Configuration", order = 5)]
-public class AudioConfigurationSO : ScriptableObject
+public class AudioConfigurationSO : ScriptableObject, System.ICloneable
 {
     [Range(0, 1f)]
     public float Volume = 1f;
@@ -43,5 +43,14 @@ public class AudioConfigurationSO : ScriptableObject
         {
             AudioSource.PlayOneShot(reloadClip, Volume);
         }
+    }
+
+
+    // ICloneable interface and Clone() for using copies of scriptable objects instead
+    public object Clone()
+    {
+        AudioConfigurationSO config = CreateInstance<AudioConfigurationSO>();
+        Utilities.CopyValues(this, config); // Utilities is a custom class
+        return config;
     }
 }

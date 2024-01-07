@@ -3,7 +3,7 @@ using UnityEngine;
 using UnityEngine.Pool;
 
 [CreateAssetMenu(fileName = "Gun", menuName = "Guns/Gun", order = 0)]
-public class GunSO : ScriptableObject
+public class GunSO : ScriptableObject, System.ICloneable
 {
     // spawn - shoot - create trail - play trail 
     
@@ -33,7 +33,11 @@ public class GunSO : ScriptableObject
     public void Spawn(Transform parent, MonoBehaviour activeMonoBehaviour)
     {
         this.activeMonoBehaviour = activeMonoBehaviour;
+        /*
         lastShootTime = 0; // Time.time = time since game started. lastShootTime = time the shot was fired
+        ammoConfig.currentClipAmmo = ammoConfig.clipSize; // set current ammo to max ammo
+        */
+
         trailPool = new ObjectPool<TrailRenderer>(CreateTrail);
         if (!shootConfig.isHitScan)
         {
@@ -274,5 +278,25 @@ public class GunSO : ScriptableObject
     private Bullet CreateBullet()
     {
         return Instantiate(shootConfig.bulletPrefab);
+    }
+
+    // ICloneable interface and Clone() for using copies of scriptable objects instead
+    public object Clone()
+    {
+        GunSO config = CreateInstance<GunSO>();
+        // TODO: if surface manager implemented add impact type here
+        config.type = type;
+        config.Name = Name;
+        config.name = name; // built-in name property
+        config.modelPrefab = modelPrefab;
+        config.spawnPoint = spawnPoint;
+        config.spawnRotation = spawnRotation;
+        config.damageConfig = damageConfig.Clone() as DamageConfigurationSO;
+        config.ammoConfig = ammoConfig.Clone() as AmmoConfigurationSO;
+        config.shootConfig = shootConfig.Clone() as ShootConfigurationSO;
+        config.trailConfig = trailConfig.Clone() as TrailConfigurationSO;
+        config.audioConfig = audioConfig.Clone() as AudioConfigurationSO;
+
+        return config;
     }
 }

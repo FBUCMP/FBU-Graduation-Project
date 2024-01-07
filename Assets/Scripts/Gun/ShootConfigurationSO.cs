@@ -2,7 +2,7 @@ using UnityEngine;
 
 
 [CreateAssetMenu(fileName = "Shoot Config", menuName = "Guns/Shoot Configuration", order = 2)]
-public class ShootConfigurationSO : ScriptableObject
+public class ShootConfigurationSO : ScriptableObject, System.ICloneable
 {
     public bool isHitScan = true;
     public Bullet bulletPrefab;
@@ -12,4 +12,11 @@ public class ShootConfigurationSO : ScriptableObject
     public float fireRate = 0.25f;
     public float recoilRecoverySpeed = 1f;
 
+    // ICloneable interface and Clone() for using copies of scriptable objects instead
+    public object Clone()
+    {
+        ShootConfigurationSO config = CreateInstance<ShootConfigurationSO>();
+        Utilities.CopyValues(this, config); // Utilities is a custom class
+        return config;
+    }
 }
