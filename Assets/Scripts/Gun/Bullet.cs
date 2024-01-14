@@ -37,7 +37,10 @@ public class Bullet : MonoBehaviour
 
     private void OnCollisionEnter2D(Collision2D collision)
     {
-        OnCollsion?.Invoke(this, collision);
+        if (collision.gameObject.tag != "Player")
+        {
+            OnCollsion?.Invoke(this, collision);
+        }
     }
 
     private void OnDisable()
@@ -45,6 +48,6 @@ public class Bullet : MonoBehaviour
         StopAllCoroutines();
         rb.velocity = Vector2.zero;
         rb.angularVelocity = 0;
-        OnCollsion = null;
+        OnCollsion = null; // clear
     }
 }

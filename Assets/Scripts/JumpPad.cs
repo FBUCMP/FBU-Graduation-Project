@@ -1,7 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-using UnityEngine.InputSystem.XR.Haptics;
 
 public class JumpPad : MonoBehaviour
 {
@@ -17,9 +16,14 @@ public class JumpPad : MonoBehaviour
             bounce = playerMovement.jumpingPower * 2f; // bounce deðerinin zýplama deðerinin 2 katý olmasýný istiyorum
            // Debug.Log("bounce: " + bounce);
         }
+        else if (FindObjectOfType<PlayerMovementNew>())
+        {
+            bounce = FindObjectOfType<PlayerMovementNew>().jumpingPower*2f;
+            
+        }
         else
         {
-            Debug.Log("PlayerMovement component not found.");
+            Debug.Log("JumpPad.cs cannot find a PlayerMovement");
             bounce = 16f;
         }
     }

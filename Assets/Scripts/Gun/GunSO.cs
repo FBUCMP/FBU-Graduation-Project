@@ -147,19 +147,32 @@ public class GunSO : ScriptableObject, System.ICloneable
             trail.gameObject.SetActive(true);
         }
     }
-    public void Tick(bool shootRequest)
+    public void Tick(bool shootRequest, Transform gunPivot)
     {
         // try to recover from recoil every frame. Shoot() recoil > recovery speed
         model.transform.localRotation = Quaternion.Lerp(
             model.transform.localRotation,
             Quaternion.Euler(spawnRotation),
             Time.deltaTime * shootConfig.recoilRecoverySpeed);
+        Vector2 mousePos = Camera.main.ScreenToWorldPoint(Input.mousePosition);
+        Vector2 direction = mousePos - (Vector2)gunPivot.position;
+        float angle = Mathf.Atan2(direction.y,direction.x) * Mathf.Rad2Deg;
+        
+        
+        model.transform.position = gunPivot.position + Quaternion.Euler(0f, 0f, angle) * new Vector3(spawnPoint.x, 0f, 0f); 
+        model.transform.rotation = Quaternion.Euler(0, 0, angle);
+        //model.transform.rotation = Quaternion.AngleAxis(angle, Vector3.forward);
+        
         if (shootRequest)
         {
             TryToShoot();            
         }
     }
 
+    public void FlipGun()
+    {
+        model.transform.localScale = new Vector3(-model.transform.localScale.x, -model.transform.localScale.y, model.transform.localScale.z);
+    }
     public void StartReloading()
     {
         audioConfig.PlayReloadClip(shootingAudioSource);

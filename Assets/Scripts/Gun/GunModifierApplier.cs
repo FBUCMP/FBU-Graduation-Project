@@ -14,12 +14,12 @@ public class GunModifierApplier : MonoBehaviour
             amount = 1.5f, // 50% more damage
             attributeName = "damageConfig/damageCurve"
         };
-        Debug.Log($"is ActiveGun null: {GunSelector.ActiveGun == null}"); // null here find out why
+         
         damageModifier.Apply(GunSelector.ActiveGun);
 
         Vector3Modifier spreadModifier = new()
         {
-            amount = Vector3.zero, // no spread
+            amount = Vector3.one / 2, // no spread
             attributeName = "shootConfig/spread"
         };
         

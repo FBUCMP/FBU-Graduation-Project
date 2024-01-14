@@ -1,7 +1,7 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.IO;
-using Unity.VisualScripting;
 using UnityEngine;
 
 public class PlayerMovementNew : MonoBehaviour
@@ -49,7 +49,7 @@ public class PlayerMovementNew : MonoBehaviour
     [SerializeField] private Transform groundCheckR;
     [SerializeField] private Transform groundCheckL;
 
-
+    public event Action OnFlipped;
 
     //double jump
     private bool doubleJump;
@@ -66,8 +66,8 @@ public class PlayerMovementNew : MonoBehaviour
         boxCollider = GetComponent<BoxCollider2D>();
         //dashingPower *= Mathf.Sqrt(transform.localScale.x);
         dashingTime /= Mathf.Sqrt(transform.localScale.x);
-        Debug.Log(dashingPower);
-        Debug.Log(dashingTime);
+        //Debug.Log(dashingPower);
+        //Debug.Log(dashingTime);
         speed *= Mathf.Sqrt(transform.localScale.x);
         jumpingPower *= Mathf.Sqrt(transform.localScale.x);
         wallJumpingPower *= Mathf.Sqrt(transform.localScale.x);
@@ -134,10 +134,8 @@ public class PlayerMovementNew : MonoBehaviour
             Vector3 mousePosition = Camera.main.ScreenToWorldPoint(Input.mousePosition); 
             Vector3 lookDirection = mousePosition - center.position; // karakterin ortasindan mousea dogru bir vektor
             float angle = Mathf.Atan2(lookDirection.y, Mathf.Abs(lookDirection.x)) * Mathf.Rad2Deg; // aci hesabi, aci negatif olamaz
-            //upper_anim.transform.rotation = Quaternion.AngleAxis(angle, Vector3.forward); // upper body animasyonu mousea dogru donsun
             angle += 90; // aciyi 0-180 arasi yapmak icin
-                angle = Mathf.Abs(angle);
-            //animator.SetFloat("Angle", angle); 
+            angle = Mathf.Abs(angle);
 
             if (horizontal != 0) // horizontal harakette kos animasyonu
             {
@@ -253,7 +251,7 @@ public class PlayerMovementNew : MonoBehaviour
     }
 
 
-    private void Flip()
+    private void Flip() // calculate if flip is needed and if so flip
     {
         /* old version
         if (isFacingRight && horizontal < 0f || !isFacingRight && horizontal > 0f)
@@ -275,6 +273,8 @@ public class PlayerMovementNew : MonoBehaviour
             Vector3 localScale = transform.localScale;
             localScale.x *= -1f;
             transform.localScale = localScale;
+
+            OnFlipped?.Invoke();
 
         }
 
