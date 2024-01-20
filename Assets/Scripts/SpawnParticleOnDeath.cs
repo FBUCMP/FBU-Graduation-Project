@@ -19,6 +19,10 @@ public class SpawnParticleSystemOnDeath : MonoBehaviour
         damageable.OnDeath += Damageable_OnDeath; // subscribe to the OnDeath event
     }
 
+    private void OnDisable()
+    {
+        damageable.OnDeath -= Damageable_OnDeath; // unsubscribe from the OnDeath event
+    }
     private void Damageable_OnDeath(Vector3 position)
     {
         Instantiate(deathParticle, position, Quaternion.identity).Play();

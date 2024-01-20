@@ -1,54 +1,58 @@
+using System.Linq;
 using UnityEngine;
+using UnityEngine.U2D.IK;
 
-[DisallowMultipleComponent]
-[RequireComponent(typeof(Animator))]
+
 public class PlayerIK : MonoBehaviour
 {
-    public Transform LeftHandIKTarget;
-    public Transform RightHandIKTarget;
-    public Transform LeftElbowIKTarget;
-    public Transform RightElbowIKTarget;
+    public LimbSolver2D rightHandSolver;// drag all in editor
+    public LimbSolver2D leftHandSolver;
+    public Transform leftHandTarget; 
+    public Transform rightHandTarget;
 
-    [SerializeField]
-    [Range(0, 1f)]
-    private float HandIKAmount = 1f;
-    [SerializeField]
-    [Range(0, 1f)]
-    private float ElbowIKAmount = 1f;
+    private Transform leftHandOnGun;
+    private Transform rightHandOnGun;
 
-    private Animator Animator;
+    [Range(0, 1f)]
+    [SerializeField]
+    private float handWeight = 1f;
 
     private void Awake()
     {
-        Animator = GetComponent<Animator>();
+        SetHandWeights(handWeight);
     }
 
-    private void OnAnimatorIK(int layerIndex)
+    private void Update()
     {
-        if (LeftHandIKTarget != null)
+        if (leftHandOnGun != null)
         {
-            Animator.SetIKRotationWeight(AvatarIKGoal.LeftHand, HandIKAmount);
-            Animator.SetIKPositionWeight(AvatarIKGoal.LeftHand, HandIKAmount);
-            Animator.SetIKPosition(AvatarIKGoal.LeftHand, LeftHandIKTarget.position);
-            Animator.SetIKRotation(AvatarIKGoal.LeftHand, LeftHandIKTarget.rotation);
+            leftHandTarget.position = leftHandOnGun.position;
+            leftHandTarget.rotation = leftHandOnGun.rotation; // might be wrong if so try local rotation
         }
-        if (RightHandIKTarget != null)
+        if (rightHandOnGun != null)
         {
-            Animator.SetIKPositionWeight(AvatarIKGoal.RightHand, HandIKAmount);
-            Animator.SetIKRotationWeight(AvatarIKGoal.RightHand, HandIKAmount);
-            Animator.SetIKRotation(AvatarIKGoal.RightHand, RightHandIKTarget.rotation);
-            Animator.SetIKPosition(AvatarIKGoal.RightHand, RightHandIKTarget.position);
+            rightHandTarget.position = rightHandOnGun.position;
+            rightHandTarget.rotation = rightHandOnGun.rotation;
         }
-        if (LeftElbowIKTarget != null)
-        {
-            Animator.SetIKHintPosition(AvatarIKHint.LeftElbow, LeftElbowIKTarget.position);
-            Animator.SetIKHintPositionWeight(AvatarIKHint.LeftElbow, ElbowIKAmount);
-        }
+            
+    }
 
-        if (RightElbowIKTarget != null)
+    public void SetHandWeights(float weight)
+    {
+        handWeight = weight;
+        if (leftHandSolver != null || rightHandSolver != null)
         {
-            Animator.SetIKHintPosition(AvatarIKHint.RightElbow, RightElbowIKTarget.position);
-            Animator.SetIKHintPositionWeight(AvatarIKHint.RightElbow, ElbowIKAmount);
+            leftHandSolver.weight = handWeight;
+            rightHandSolver.weight = handWeight;
         }
+    }
+
+    public void Setup(Transform GunParent)
+    {
+        Transform[] allChildren = GunParent.GetComponentsInChildren<Transform>();
+
+        leftHandOnGun = allChildren.FirstOrDefault(child => child.name == "LeftHandPos");
+        rightHandOnGun = allChildren.FirstOrDefault(child => child.name == "RightHandPos");
+
     }
 }

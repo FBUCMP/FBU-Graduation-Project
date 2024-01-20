@@ -13,6 +13,8 @@ GameObject:
   - component: {fileID: 2121686846651058532}
   - component: {fileID: 2553790278319410101}
   - component: {fileID: 9088486007728596213}
+  - component: {fileID: 7421416757568503666}
+  - component: {fileID: 7013565604560769156}
   m_Layer: 0
   m_Name: EnemyWalk
   m_TagString: Untagged
@@ -172,6 +174,33 @@ BoxCollider2D:
   serializedVersion: 2
   m_Size: {x: 0.95717585, y: 0.9607446}
   m_EdgeRadius: 0
+--- !u!114 &7421416757568503666
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1146065578683380128}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 8d82eab623fe6ce449d92481b2896aa1, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _health: 0
+  _maxHealth: 20
+--- !u!114 &7013565604560769156
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1146065578683380128}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 0b68a7e903d6619459e3201638bb4000, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  deathParticle: {fileID: 2675300400477456816, guid: 9d63d16f3d494e24ba92a43fb4fafaa3, type: 3}
 --- !u!1 &2795475253046505575
 GameObject:
   m_ObjectHideFlags: 0
