@@ -12,14 +12,15 @@ public class PlayerGunSelector : MonoBehaviour
     [SerializeField]
     private List<GunSO> Guns;
     [SerializeField]
-    //private PlayerIK InverseKinematics;
+    private PlayerIK playerIK;
 
     [Space]
     [Header("Runtime Filled")]
     public GunSO ActiveGun;
 
-    private void Start()
+    private void Awake()
     {
+        // spawn gun
         GunSO gun = Guns.Find(gun => gun.type == Gun);
 
         if (gun == null)
@@ -28,16 +29,13 @@ public class PlayerGunSelector : MonoBehaviour
             return;
         }
 
-        ActiveGun = gun;
-        gun.Spawn(GunParent, this);
+        ActiveGun = gun.Clone() as GunSO;
+        ActiveGun.Spawn(GunParent, this);
 
-        // IK
-        /*
-        Transform[] allChildren = GunParent.GetComponentsInChildren<Transform>();
-        InverseKinematics.LeftElbowIKTarget = allChildren.FirstOrDefault(child => child.name == "LeftElbow");
-        InverseKinematics.RightElbowIKTarget = allChildren.FirstOrDefault(child => child.name == "RightElbow");
-        InverseKinematics.LeftHandIKTarget = allChildren.FirstOrDefault(child => child.name == "LeftHand");
-        InverseKinematics.RightHandIKTarget = allChildren.FirstOrDefault(child => child.name == "RightHand");
-        */
+        playerIK = GetComponent<PlayerIK>();
+        playerIK.Setup(GunParent);
+        
+
+        
     }
 }

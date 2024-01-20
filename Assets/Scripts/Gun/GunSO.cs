@@ -3,7 +3,7 @@ using UnityEngine;
 using UnityEngine.Pool;
 
 [CreateAssetMenu(fileName = "Gun", menuName = "Guns/Gun", order = 0)]
-public class GunSO : ScriptableObject
+public class GunSO : ScriptableObject, System.ICloneable
 {
     // spawn - shoot - create trail - play trail 
     
@@ -26,16 +26,26 @@ public class GunSO : ScriptableObject
 
     private float lastShootTime;
     private ParticleSystem shootSystem; // gun muzzle flash
-    private ObjectPool<TrailRenderer> trailPool; // bullet trail
 
-    public void Spawn(Transform Parent, MonoBehaviour activeMonoBehaviour)
+    private ObjectPool<Bullet> bulletPool; // projectile bullet pool
+    private ObjectPool<TrailRenderer> trailPool; // raycast bullet trail
+
+    public void Spawn(Transform parent, MonoBehaviour activeMonoBehaviour)
     {
         this.activeMonoBehaviour = activeMonoBehaviour;
+        /*
         lastShootTime = 0; // Time.time = time since game started. lastShootTime = time the shot was fired
+        ammoConfig.currentClipAmmo = ammoConfig.clipSize; // set current ammo to max ammo
+        */
+
         trailPool = new ObjectPool<TrailRenderer>(CreateTrail);
+        if (!shootConfig.isHitScan)
+        {
+            bulletPool = new ObjectPool<Bullet>(CreateBullet);
+        }
 
         model = Instantiate(modelPrefab);
-        model.transform.SetParent(Parent, false);
+        model.transform.SetParent(parent, false);
         model.transform.localPosition = spawnPoint;
         model.transform.localRotation = Quaternion.Euler(spawnRotation);
 
@@ -81,47 +91,88 @@ public class GunSO : ScriptableObject
 
             ammoConfig.currentClipAmmo--;
 
-            RaycastHit2D hit = Physics2D.Raycast(
-                    shootSystem.transform.position,
-                    shootDirection,
-                    float.MaxValue,
-                    shootConfig.hitMask
-                );
-            if (hit.collider != null)
+            if (shootConfig.isHitScan)
             {
-                activeMonoBehaviour.StartCoroutine(
-                    PlayTrail(
-                        shootSystem.transform.position,
-                        hit.point,
-                        hit
-                    )
-                );
+                HitScanShoot(shootDirection);
             }
             else
             {
-                activeMonoBehaviour.StartCoroutine(
-                    PlayTrail(
-                        shootSystem.transform.position,
-                        shootSystem.transform.position + (shootDirection * trailConfig.missDistance),
-                        new RaycastHit2D()
-                    )
-                );
+                ProjectileShoot(shootDirection);
             }
         }
     }
-    public void Tick(bool shootRequest)
+    private void HitScanShoot(Vector3 shootDirection) // raycast shoot 
+    {
+
+        RaycastHit2D hit = Physics2D.Raycast(
+                shootSystem.transform.position,
+                shootDirection,
+                float.MaxValue,
+                shootConfig.hitMask
+            );
+        if (hit.collider != null)
+        {
+            activeMonoBehaviour.StartCoroutine(
+                PlayTrail(
+                    shootSystem.transform.position,
+                    hit.point,
+                    hit
+                )
+            );
+        }
+        else
+        {
+            activeMonoBehaviour.StartCoroutine(
+                PlayTrail(
+                    shootSystem.transform.position,
+                    shootSystem.transform.position + (shootDirection * trailConfig.missDistance),
+                    new RaycastHit2D()
+                )
+            );
+        }
+    }
+    private void ProjectileShoot(Vector3 shootDirection)
+    {
+        Bullet bullet = bulletPool.Get();
+        bullet.gameObject.SetActive(true);
+        bullet.OnCollsion += HandleBulletCollision;
+        bullet.transform.position = shootSystem.transform.position;
+        bullet.Spawn(shootDirection * shootConfig.bulletSpawnForce);
+        TrailRenderer trail = trailPool.Get();
+        if (trail != null)
+        {
+            trail.transform.SetParent(bullet.transform, false); // set trail as child of bullet and set its local position to 0 to make it same as the bullet
+            trail.transform.localPosition = Vector3.zero;
+            trail.emitting = true;
+            trail.gameObject.SetActive(true);
+        }
+    }
+    public void Tick(bool shootRequest, Transform gunPivot)
     {
         // try to recover from recoil every frame. Shoot() recoil > recovery speed
         model.transform.localRotation = Quaternion.Lerp(
             model.transform.localRotation,
             Quaternion.Euler(spawnRotation),
             Time.deltaTime * shootConfig.recoilRecoverySpeed);
+        Vector2 mousePos = Camera.main.ScreenToWorldPoint(Input.mousePosition);
+        Vector2 direction = mousePos - (Vector2)gunPivot.position;
+        float angle = Mathf.Atan2(direction.y,direction.x) * Mathf.Rad2Deg;
+        
+        
+        model.transform.position = gunPivot.position + Quaternion.Euler(0f, 0f, angle) * new Vector3(spawnPoint.x, 0f, 0f); 
+        model.transform.rotation = Quaternion.Euler(0, 0, angle);
+        //model.transform.rotation = Quaternion.AngleAxis(angle, Vector3.forward);
+        
         if (shootRequest)
         {
             TryToShoot();            
         }
     }
 
+    public void FlipGun()
+    {
+        model.transform.localScale = new Vector3(-model.transform.localScale.x, -model.transform.localScale.y, model.transform.localScale.z);
+    }
     public void StartReloading()
     {
         audioConfig.PlayReloadClip(shootingAudioSource);
@@ -134,22 +185,22 @@ public class GunSO : ScriptableObject
     }
 
 
-    private IEnumerator PlayTrail(Vector3 StartPoint, Vector3 EndPoint, RaycastHit2D Hit)
+    private IEnumerator PlayTrail(Vector3 startPoint, Vector3 endPoint, RaycastHit2D hit) // only hitscan uses this
     {
         TrailRenderer instance = trailPool.Get();
         instance.gameObject.SetActive(true);
-        instance.transform.position = StartPoint;
+        instance.transform.position = startPoint;
         yield return null; // wait one frame to avoid position carry-over from last frame if reused
 
         instance.emitting = true;
 
-        float distance = Vector3.Distance(StartPoint, EndPoint);
+        float distance = Vector3.Distance(startPoint, endPoint);
         float remainingDistance = distance;
         while (remainingDistance > 0)
         {
             instance.transform.position = Vector3.Lerp(
-                StartPoint,
-                EndPoint,
+                startPoint,
+                endPoint,
                 Mathf.Clamp01(1 - (remainingDistance / distance))
             );
             remainingDistance -= trailConfig.simulationSpeed * Time.deltaTime;
@@ -157,24 +208,11 @@ public class GunSO : ScriptableObject
             yield return null;
         }
 
-        instance.transform.position = EndPoint;
+        instance.transform.position = endPoint;
 
-        if (Hit.collider != null)
+        if (hit.collider != null)
         {
-            // surface manager is not implemented
-            /*
-            SurfaceManager.Instance.HandleImpact(
-                Hit.transform.gameObject,
-                EndPoint,
-                Hit.normal,
-                ImpactType,
-                0
-            );
-            */
-            if(Hit.collider.TryGetComponent<IDamageable>(out IDamageable damageable))
-            {
-                damageable.TakeDamage(damageConfig.GetDamage(distance)); // distance is used to calculate damage
-            }
+            HandleBulletImpact(distance, endPoint, hit.normal, hit.collider);
         }
 
         yield return new WaitForSeconds(trailConfig.duration);
@@ -183,7 +221,58 @@ public class GunSO : ScriptableObject
         instance.gameObject.SetActive(false);
         trailPool.Release(instance);
     }
-
+    private void HandleBulletCollision(Bullet bullet, Collision2D collision) // gets subscribed to projectile bullet's collision event
+    {
+        
+        TrailRenderer trail = bullet.GetComponentInChildren<TrailRenderer>();
+        if (trail != null)
+        {
+            // bullet is collided no need for trail anymore
+            trail.transform.SetParent(null, true);
+            activeMonoBehaviour.StartCoroutine(DelayedDisableTrail(trail));
+        }
+        bullet.gameObject.SetActive(false);
+        bulletPool.Release(bullet);
+        if (collision != null)
+        {
+            ContactPoint2D contactPoint = collision.GetContact(0);
+            HandleBulletImpact(
+                Vector3.Distance(contactPoint.point, bullet.spawnLocation),
+                contactPoint.point,
+                contactPoint.normal,
+                contactPoint.collider);
+        }
+    }
+    private void HandleBulletImpact(
+        float distanceTraveled,
+        Vector3 hitLocation,
+        Vector3 hitNormal,
+        Collider2D hitCollider)
+    {
+        /*
+        SurfaceManager.Instance.HandleImpact(
+                hitCollider.gameObject,
+                hitLocation,
+                hitNormal,
+                ImpactType,
+                0
+            );
+        */
+        
+        if (hitCollider.TryGetComponent(out IDamageable damageable))
+        {
+            Debug.Log("Damageable got hit");
+            damageable.TakeDamage(damageConfig.GetDamage(distanceTraveled));
+        }
+    }
+    private IEnumerator DelayedDisableTrail(TrailRenderer trail)
+    {
+        yield return new WaitForSeconds(trailConfig.duration);
+        yield return null; // wait for one more frame
+        trail.emitting = false;
+        trail.gameObject.SetActive(false);
+        trailPool.Release(trail);
+    }
     private TrailRenderer CreateTrail()
     {
         GameObject instance = new GameObject("Bullet Trail");
@@ -199,5 +288,28 @@ public class GunSO : ScriptableObject
 
         return trail;
     }
+    private Bullet CreateBullet()
+    {
+        return Instantiate(shootConfig.bulletPrefab);
+    }
 
+    // ICloneable interface and Clone() for using copies of scriptable objects instead
+    public object Clone()
+    {
+        GunSO config = CreateInstance<GunSO>();
+        // TODO: if surface manager implemented add impact type here
+        config.type = type;
+        config.Name = Name;
+        config.name = name; // built-in name property
+        config.modelPrefab = modelPrefab;
+        config.spawnPoint = spawnPoint;
+        config.spawnRotation = spawnRotation;
+        config.damageConfig = damageConfig.Clone() as DamageConfigurationSO;
+        config.ammoConfig = ammoConfig.Clone() as AmmoConfigurationSO;
+        config.shootConfig = shootConfig.Clone() as ShootConfigurationSO;
+        config.trailConfig = trailConfig.Clone() as TrailConfigurationSO;
+        config.audioConfig = audioConfig.Clone() as AudioConfigurationSO;
+
+        return config;
+    }
 }
