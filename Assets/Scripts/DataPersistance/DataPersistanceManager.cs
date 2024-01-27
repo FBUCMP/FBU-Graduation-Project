@@ -12,6 +12,9 @@ using System.Linq;
 public class DataPersistanceManager : MonoBehaviour
 {
     private GameData gameData; 
+
+    private List<IDataPersistance> dataPersistanceObjects;
+
     public static DataPersistanceManager instance { get; private set;} //veriyi public çeker ama özel setler
 
     private void Awake() //singleton yapýsý ile tek bir tane olmasý veri çakýþmasýný engelliyoruz. 
@@ -25,6 +28,7 @@ public class DataPersistanceManager : MonoBehaviour
 
     private void Start()
     {
+        this.dataPersistanceObjects = FindAllDataPersistanceObjects();
         LoadGame(); // Oyun baþladýðýnda yükle.
     }
 
@@ -46,17 +50,35 @@ public class DataPersistanceManager : MonoBehaviour
         }
 
         // TODO - Yüklenen veriyi diðer her yere yolla ihtiyacý olan kullansýn.
+        foreach (IDataPersistance dataPersistanceObj in dataPersistanceObjects)
+        {
+            dataPersistanceObj.LoadData(gameData);
+        }
+        Debug.Log("Olum sayisi yuklendi: " + gameData.deathCount);
     }
     public void SaveGame()
     {
         // TODO - Veriyi diðer scriptlere yolla ki güncellensinler.
-
+        foreach(IDataPersistance dataPersistanceObj in dataPersistanceObjects)
+        {
+            dataPersistanceObj.SaveData(ref gameData);
+        }
+        Debug.Log("Olum sayisi kaydedildi: " + gameData.deathCount);
         // TODO - Data handler kullanarak veriyi güncelle.
     }
 
     private void OnApplicationQuit()
     {
         SaveGame();
+    }
+
+    private List<IDataPersistance> FindAllDataPersistanceObjects()
+    {
+        IEnumerable<IDataPersistance> dataPersistanceObjects = FindObjectsOfType<MonoBehaviour>() 
+            .OfType<IDataPersistance>(); //buradaki kod sayesinde bu scripti kullanan tamamýný Linq ile bulabiliyor ve listeleyebiliyoruz.
+
+        return new List<IDataPersistance> (dataPersistanceObjects);
+
     }
 
 }

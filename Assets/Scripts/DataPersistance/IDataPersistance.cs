@@ -4,6 +4,6 @@ using UnityEngine;
 
 public interface IDataPersistance
 {
-    void LoadGame(GameData data); // yüklediðinde ise sadece okumasýna izin veriyoruz
-    void SaveGame(ref GameData data); // ref sebebi oyunu savelediðinde scripti düzenlemesi için izin veriyoruz.
+    void LoadData(GameData data); // yüklediðinde ise sadece okumasýna izin veriyoruz
+    void SaveData(ref GameData data); // ref sebebi oyunu savelediðinde scripti düzenlemesi için izin veriyoruz.
 }

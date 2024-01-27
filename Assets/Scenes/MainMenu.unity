@@ -2123,7 +2123,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b66aa0b0920fc9642a7388fb5192ee66, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  theText: {fileID: 0}
 --- !u!1 &1115204541
 GameObject:
   m_ObjectHideFlags: 0
@@ -4199,7 +4198,7 @@ PrefabInstance:
     - target: {fileID: 8448493488274672026, guid: 4c32ade72d6bcb6499620ec877589126, type: 3}
       propertyPath: death
       value: 
-      objectReference: {fileID: 8300000, guid: abf19601b0fa71248834d29cf88123cd, type: 3}
+      objectReference: {fileID: 8300000, guid: 089f1ccfc0af9244b881132ea8199080, type: 3}
     - target: {fileID: 8662048821618574609, guid: 4c32ade72d6bcb6499620ec877589126, type: 3}
       propertyPath: OutputAudioMixerGroup
       value: 

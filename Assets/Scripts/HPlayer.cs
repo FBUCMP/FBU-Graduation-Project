@@ -4,7 +4,7 @@ using Unity.VisualScripting;
 using UnityEditor.Rendering.Universal;
 using UnityEngine;
 
-public class HPlayer : MonoBehaviour
+public class HPlayer : MonoBehaviour, IDataPersistance
 
 {
     private bool isDead = false;
@@ -12,8 +12,22 @@ public class HPlayer : MonoBehaviour
 
     [SerializeField] private int maxHealth;
     [SerializeField] private int currentHealth;
+    private int deathCount = 0;
+
 
     public HealthBar healthBar;
+
+    public void LoadData(GameData gameData)
+    {
+        this.deathCount = gameData.deathCount;
+    }
+
+    public void SaveData(ref GameData gameData) 
+    {
+        gameData.deathCount = this.deathCount;
+    }
+
+
     // Start is called before the first frame update
     void Start()
     {
@@ -50,6 +64,7 @@ public class HPlayer : MonoBehaviour
             if (!isDead)
             {
                 isDead = true;
+                deathCount++;
                 gameManager.gameOver();
                 Debug.Log("Dead");
             }
