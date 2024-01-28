@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class Explode : ICollisionHandler
 {
-    public float radius = 1f;
+    public float radius = 3f;
     public AnimationCurve damageFalloff;
     public int baseDamage = 10;
     public int maxEnemiesAffected= 10;

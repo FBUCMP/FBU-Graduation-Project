@@ -10,7 +10,7 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 6c364acc47cbd914e93da6ab0b8744cf, type: 3}
-  m_Name: SpawnExplosionParticle
+  m_Name: SpawnExplosionEffect
   m_EditorClassIdentifier: 
   Prefab: {fileID: 191186, guid: 079954accd64b32419ec069129c81273, type: 3}
   Probability: 1

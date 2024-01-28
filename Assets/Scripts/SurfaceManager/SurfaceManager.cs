@@ -36,8 +36,22 @@ public class SurfaceManager : MonoBehaviour
     private Surface DefaultSurface;
     private Dictionary<GameObject, ObjectPool<GameObject>> ObjectPools = new();
 
+    
+    Vector3 explosionPoint = Vector3.zero;
+    private void OnDrawGizmos()
+    {
+        if (explosionPoint != Vector3.zero)
+        {
+            Gizmos.color = Color.red;
+            Gizmos.DrawWireSphere(explosionPoint, 3f);
+
+        }
+
+    }
+    
     public void HandleImpact(GameObject HitObject, Vector3 HitPoint, Vector3 HitNormal, ImpactType Impact, int TriangleIndex)
     {
+        explosionPoint = HitPoint;
         if (HitObject.TryGetComponent<Terrain>(out Terrain terrain)) // unnecessary for our use case, but I'm leaving it here for completeness' sake
         {
             List<TextureAlpha> activeTextures = GetActiveTexturesFromTerrain(terrain, HitPoint);
@@ -92,6 +106,7 @@ public class SurfaceManager : MonoBehaviour
                 }
             }
         }
+        
     }
 
     private List<TextureAlpha> GetActiveTexturesFromTerrain(Terrain Terrain, Vector3 HitPoint) // not used in our case
