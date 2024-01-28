@@ -7,8 +7,10 @@ using UnityEngine;
 public class HPlayer : MonoBehaviour, IDataPersistance
 
 {
-    private bool isDead = false;
-    public GameManagerScript gameManager; //Death Screen için gameManager çaðýrýyoruz
+    [SerializeField] private bool isDead = false;
+    private GameManagerScript gameManager; //Death Screen için gameManager çaðýrýyoruz
+
+
 
     [SerializeField] private int maxHealth;
     [SerializeField] private int currentHealth;
@@ -31,7 +33,17 @@ public class HPlayer : MonoBehaviour, IDataPersistance
     // Start is called before the first frame update
     void Start()
     {
-        // burda biþey denedik olmadý
+        gameManager = GameManagerScript.Instance;
+        if (gameManager == null)
+        {
+            Debug.LogError("GameManager instance is null!");
+        }
+        else
+        {
+            Debug.Log("GameManager instance is not null!");
+        }
+
+
         //healthBar = GameObject.FindGameObjectWithTag("HealthBar").GetComponent<HealthBar>();
         if (healthBar == null)
         {
@@ -56,17 +68,17 @@ public class HPlayer : MonoBehaviour, IDataPersistance
     void TakeDamage(int damage)
     {
         currentHealth -= damage;
-
         if (currentHealth <= 0)
         {
+            Debug.Log("Health is 0");
             currentHealth = 0;
             healthBar.SetHealth(currentHealth, maxHealth);
             if (!isDead)
             {
                 isDead = true;
                 deathCount++;
-                gameManager.gameOver();
-                Debug.Log("Dead");
+                gameManager.gameOver(); 
+                Debug.Log("Dead:" + deathCount);
             }
         }
         healthBar.SetHealth(currentHealth, maxHealth);

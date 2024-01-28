@@ -44,6 +44,8 @@ public class GameManagerScript : MonoBehaviour
     /// BÝTÝÞ
     private void Start()
     {
+
+
         Time.timeScale = 1.0f;
         gameOverUI.SetActive(false); // Olur da unutursak kapansýn 
         
