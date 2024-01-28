@@ -1646,7 +1646,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   Surfaces: []
-  DefaultSurface: {fileID: 0}
+  DefaultSurface: {fileID: 11400000, guid: c3f2e3a6b1f6db04b9a1cca6f818715a, type: 2}
 --- !u!4 &650722542
 Transform:
   m_ObjectHideFlags: 0

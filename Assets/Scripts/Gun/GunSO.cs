@@ -251,15 +251,15 @@ public class GunSO : ScriptableObject, System.ICloneable
         Vector3 hitNormal,
         Collider2D hitCollider)
     {
-        /*
+        
         SurfaceManager.Instance.HandleImpact(
                 hitCollider.gameObject,
                 hitLocation,
                 hitNormal,
-                ImpactType,
+                impactType,
                 0
             );
-        */
+        
         
         if (hitCollider.TryGetComponent(out IDamageable damageable))
         {

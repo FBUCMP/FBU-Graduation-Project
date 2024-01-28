@@ -68,9 +68,9 @@ public class SurfaceManager : MonoBehaviour
         }
         else if (HitObject.TryGetComponent<Renderer>(out Renderer renderer))
         {
-            Texture activeTexture = GetActiveTextureFromRenderer(renderer, TriangleIndex);
+            Texture activeTexture = GetActiveTextureFromRenderer(renderer, TriangleIndex); // get the texture that was hit
 
-            SurfaceType surfaceType = Surfaces.Find(surface => surface.Albedo == activeTexture);
+            SurfaceType surfaceType = Surfaces.Find(surface => surface.Albedo == activeTexture); // find the surface type that corresponds to the texture
             if (surfaceType != null)
             {
                 foreach (Surface.SurfaceImpactTypeEffect typeEffect in surfaceType.Surface.ImpactTypeEffects)
@@ -94,7 +94,7 @@ public class SurfaceManager : MonoBehaviour
         }
     }
 
-    private List<TextureAlpha> GetActiveTexturesFromTerrain(Terrain Terrain, Vector3 HitPoint)
+    private List<TextureAlpha> GetActiveTexturesFromTerrain(Terrain Terrain, Vector3 HitPoint) // not used in our case
     {
         Vector3 terrainPosition = HitPoint - Terrain.transform.position;
         Vector3 splatMapPosition = new Vector3(
@@ -140,7 +140,7 @@ public class SurfaceManager : MonoBehaviour
             return GetTextureFromMesh(mesh, TriangleIndex, Renderer.sharedMaterials);
         }
 
-        Debug.LogError($"{Renderer.name} has no MeshFilter or SkinnedMeshRenderer! Using default impact effect instead of texture-specific one because we'll be unable to find the correct texture!");
+        Debug.Log($"{Renderer.name} has no MeshFilter or SkinnedMeshRenderer! Using default impact effect instead of texture-specific one because we'll be unable to find the correct texture!");
         return null;
     }
 
@@ -193,6 +193,7 @@ public class SurfaceManager : MonoBehaviour
                 instance.SetActive(true);
                 instance.transform.position = HitPoint + HitNormal * 0.001f;
                 instance.transform.forward = HitNormal;
+                //instance.transform.localScale = spawnObjectEffect.Scale;
 
                 if (spawnObjectEffect.RandomizeRotation)
                 {
