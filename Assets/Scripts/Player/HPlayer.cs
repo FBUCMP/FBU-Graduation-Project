@@ -8,7 +8,7 @@ public class HPlayer : MonoBehaviour, IDataPersistance
 
 {
     [SerializeField] private bool isDead = false;
-    private GameManagerScript gameManager; //Death Screen için gameManager çaðýrýyoruz
+    //[SerializeField] private GameManagerScript gameManager; //Death Screen için gameManager çaðýrýyoruz
 
 
 
@@ -33,6 +33,7 @@ public class HPlayer : MonoBehaviour, IDataPersistance
     // Start is called before the first frame update
     void Start()
     {
+        /*
         gameManager = GameManagerScript.Instance;
         if (gameManager == null)
         {
@@ -42,7 +43,7 @@ public class HPlayer : MonoBehaviour, IDataPersistance
         {
             Debug.Log("GameManager instance is not null!");
         }
-
+        */
 
         //healthBar = GameObject.FindGameObjectWithTag("HealthBar").GetComponent<HealthBar>();
         if (healthBar == null)
@@ -77,7 +78,7 @@ public class HPlayer : MonoBehaviour, IDataPersistance
             {
                 isDead = true;
                 deathCount++;
-                gameManager.gameOver(); 
+                GameManagerScript.Instance.gameOver(); 
                 Debug.Log("Dead:" + deathCount);
             }
         }

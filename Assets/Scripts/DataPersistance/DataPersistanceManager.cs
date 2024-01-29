@@ -11,9 +11,15 @@ using System.Linq;
 
 public class DataPersistanceManager : MonoBehaviour
 {
+    [Header("File Storage Config")]
+    [SerializeField] private string fileName;
+
+
+
     private GameData gameData; 
 
     private List<IDataPersistance> dataPersistanceObjects;
+    private FileDataHandler dataHandler;
 
     public static DataPersistanceManager instance { get; private set;} //veriyi public çeker ama özel setler
 
@@ -28,6 +34,8 @@ public class DataPersistanceManager : MonoBehaviour
 
     private void Start()
     {
+
+        this.dataHandler = new FileDataHandler(Application.persistentDataPath, fileName);
         this.dataPersistanceObjects = FindAllDataPersistanceObjects();
         LoadGame(); // Oyun baþladýðýnda yükle.
     }
@@ -40,8 +48,8 @@ public class DataPersistanceManager : MonoBehaviour
     }
     public void LoadGame()
     {
-        // TODO - Data varsa yükle
-  
+        // Data varsa yükle
+        this.gameData = dataHandler.Load();
         // Data yoksa yeni data oluþtur.
         if (this.gameData == null)
         {
@@ -49,22 +57,23 @@ public class DataPersistanceManager : MonoBehaviour
             NewGame();
         }
 
-        // TODO - Yüklenen veriyi diðer her yere yolla ihtiyacý olan kullansýn.
+        // Yüklenen veriyi diðer her yere yolla ihtiyacý olan kullansýn.
         foreach (IDataPersistance dataPersistanceObj in dataPersistanceObjects)
         {
             dataPersistanceObj.LoadData(gameData);
         }
-        Debug.Log("Olum sayisi yuklendi: " + gameData.deathCount);
+        //Debug.Log("Olum sayisi yuklendi: " + gameData.deathCount);
     }
     public void SaveGame()
     {
-        // TODO - Veriyi diðer scriptlere yolla ki güncellensinler.
+        // Veriyi diðer scriptlere yolla ki güncellensinler.
         foreach(IDataPersistance dataPersistanceObj in dataPersistanceObjects)
         {
             dataPersistanceObj.SaveData(ref gameData);
         }
-        Debug.Log("Olum sayisi kaydedildi: " + gameData.deathCount);
-        // TODO - Data handler kullanarak veriyi güncelle.
+        //Debug.Log("Olum sayisi kaydedildi: " + gameData.deathCount);
+        // Data handler kullanarak veriyi güncelle.
+        dataHandler.Save(gameData);
     }
 
     private void OnApplicationQuit()

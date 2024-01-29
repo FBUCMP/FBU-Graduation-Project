@@ -6,10 +6,10 @@ public class JumpPad : MonoBehaviour
 {
 
     private float bounce;
-    private PlayerMovement playerMovement; // referans deðiþkeni
+    private PlayerMovementNew playerMovement; // referans deðiþkeni
     private void Start()
     {
-        playerMovement = FindObjectOfType<PlayerMovement>();  // playerMovementi buluyoruz
+        playerMovement = FindObjectOfType<PlayerMovementNew>();  // playerMovementi buluyoruz
 
         if (playerMovement != null)
         {
