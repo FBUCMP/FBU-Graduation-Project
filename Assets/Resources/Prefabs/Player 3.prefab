@@ -1231,7 +1231,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b0be0e0a5b5382a42999f3be88e71d74, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  ImpactTypeOverride: {fileID: 11400000, guid: 930bf34931d6149419f6ecd910c51e04, type: 2}
   GunSelector: {fileID: 5788830053130607927}
 --- !u!114 &7990839356388715012
 MonoBehaviour:
@@ -1275,7 +1274,7 @@ Transform:
   m_GameObject: {fileID: 7279611073937030427}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -0.05, y: 0.93, z: 0}
+  m_LocalPosition: {x: -0.126, y: 0.928, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []

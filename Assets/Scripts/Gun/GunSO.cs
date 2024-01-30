@@ -6,7 +6,7 @@ using UnityEngine.Pool;
 public class GunSO : ScriptableObject, System.ICloneable
 {
     // spawn - shoot - create trail - play trail 
-    public ImpactType impactType;
+    
     public GunType type;
     public string Name;
     public GameObject modelPrefab;// gun model prefab
@@ -23,8 +23,6 @@ public class GunSO : ScriptableObject, System.ICloneable
     private MonoBehaviour activeMonoBehaviour; // bullet
     private GameObject model;
     private AudioSource shootingAudioSource;
-
-    public ICollisionHandler[] bulletImpactEffects = new ICollisionHandler[0];
 
     private float lastShootTime;
     private ParticleSystem shootSystem; // gun muzzle flash
@@ -251,24 +249,20 @@ public class GunSO : ScriptableObject, System.ICloneable
         Vector3 hitNormal,
         Collider2D hitCollider)
     {
-        
+        /*
         SurfaceManager.Instance.HandleImpact(
                 hitCollider.gameObject,
                 hitLocation,
                 hitNormal,
-                impactType,
+                ImpactType,
                 0
             );
-        
+        */
         
         if (hitCollider.TryGetComponent(out IDamageable damageable))
         {
-            
+            Debug.Log("Damageable got hit");
             damageable.TakeDamage(damageConfig.GetDamage(distanceTraveled));
-        }
-        foreach (ICollisionHandler handler in bulletImpactEffects)
-        {
-            handler.HandleImpact(hitCollider, hitLocation, hitNormal, this);
         }
     }
     private IEnumerator DelayedDisableTrail(TrailRenderer trail)
