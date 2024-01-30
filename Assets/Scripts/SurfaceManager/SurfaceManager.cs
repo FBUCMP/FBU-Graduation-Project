@@ -155,7 +155,7 @@ public class SurfaceManager : MonoBehaviour
             return GetTextureFromMesh(mesh, TriangleIndex, Renderer.sharedMaterials);
         }
 
-        Debug.Log($"{Renderer.name} has no MeshFilter or SkinnedMeshRenderer! Using default impact effect instead of texture-specific one because we'll be unable to find the correct texture!");
+        //Debug.Log($"{Renderer.name} has no MeshFilter or SkinnedMeshRenderer! Using default impact effect instead of texture-specific one because we'll be unable to find the correct texture!");
         return null;
     }
 

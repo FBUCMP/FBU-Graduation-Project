@@ -1346,7 +1346,7 @@ PrefabInstance:
     - target: {fileID: 7494285914062552199, guid: 38706b82ce779444e981b979785a554a, type: 3}
       propertyPath: ImpactTypeOverride
       value: 
-      objectReference: {fileID: 11400000, guid: 1aace0c1d395dec4dbd2fc9a7115243f, type: 2}
+      objectReference: {fileID: 11400000, guid: 930bf34931d6149419f6ecd910c51e04, type: 2}
     - target: {fileID: 9187415687850968742, guid: 38706b82ce779444e981b979785a554a, type: 3}
       propertyPath: m_LocalRotation.w
       value: 0.99965006
