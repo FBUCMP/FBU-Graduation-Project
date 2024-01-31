@@ -54,7 +54,20 @@ public class GunSO : ScriptableObject, System.ICloneable
         shootSystem = model.GetComponentInChildren<ParticleSystem>();
         shootingAudioSource = model.GetComponent<AudioSource>();
     }
+    public void Despawn()
+    {
+       
+        model.gameObject.SetActive(false);
+        Destroy(model);
+        trailPool.Clear();
+        if (bulletPool != null)
+        {
+            bulletPool.Clear();
+        }
 
+        shootingAudioSource = null;
+        shootSystem = null;
+    }
     public void TryToShoot()
     {
         if (Time.time > shootConfig.fireRate + lastShootTime)
@@ -306,7 +319,8 @@ public class GunSO : ScriptableObject, System.ICloneable
     public object Clone()
     {
         GunSO config = CreateInstance<GunSO>();
-        // TODO: if surface manager implemented add impact type here
+        
+        config.impactType = impactType;
         config.type = type;
         config.Name = Name;
         config.name = name; // built-in name property

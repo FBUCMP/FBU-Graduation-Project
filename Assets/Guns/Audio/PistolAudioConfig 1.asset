@@ -12,7 +12,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 2cb48cfc68aa29641ad5ec459a4a0bbd, type: 3}
   m_Name: PistolAudioConfig 1
   m_EditorClassIdentifier: 
-  Volume: 0.5
-  fireClips: []
+  Volume: 0.25
+  fireClips:
+  - {fileID: 8300000, guid: 4ef847b9581f57a43a2ed14ab7e6d52e, type: 3}
   emptyClip: {fileID: 0}
-  reloadClip: {fileID: 0}
+  reloadClip: {fileID: 8300000, guid: 5876df27b42534f79a61f829f41842e1, type: 3}

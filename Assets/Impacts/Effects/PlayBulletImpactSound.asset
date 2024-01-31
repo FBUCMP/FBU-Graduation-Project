@@ -14,5 +14,5 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   AudioSourcePrefab: {fileID: 4124673604752975571, guid: 2ac4e4809ab518d4983c5e6720110ab9, type: 3}
   AudioClips:
-  - {fileID: 8300000, guid: 4ef847b9581f57a43a2ed14ab7e6d52e, type: 3}
-  VolumeRange: {x: 0.8, y: 1}
+  - {fileID: 8300000, guid: 07e17c040baac49bfbab34e436244b01, type: 3}
+  VolumeRange: {x: 0.3, y: 0.5}

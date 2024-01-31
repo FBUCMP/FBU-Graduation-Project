@@ -11,10 +11,15 @@ public class GunModifierApplier : MonoBehaviour
     // modifiers for buffs and debuffs
     private void Start()
     {
-        new ImpactTypeModifier
+        if (GunSelector == null) { return; }
+        if (ImpactTypeOverride != null)
         {
-            amount = ImpactTypeOverride
-        }.Apply(GunSelector.ActiveGun);
+            new ImpactTypeModifier
+            {
+                amount = ImpactTypeOverride
+            }.Apply(GunSelector.ActiveGun);
+
+        }
 
         GunSelector.ActiveGun.bulletImpactEffects = new ICollisionHandler[]
         {

@@ -1,0 +1,25 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 762ef543b50005148b92fcbce17fdde1, type: 3}
+  m_Name: GranadeLauncher
+  m_EditorClassIdentifier: 
+  impactType: {fileID: 11400000, guid: 930bf34931d6149419f6ecd910c51e04, type: 2}
+  type: 2
+  Name: GranadeLauncher
+  modelPrefab: {fileID: 9057755086822400041, guid: c2ef640714987104d9733833c3070b06, type: 3}
+  spawnPoint: {x: 1, y: 0.25, z: 0}
+  spawnRotation: {x: 0, y: 0, z: 0}
+  damageConfig: {fileID: 11400000, guid: c1c260620612e844db00f8440e901866, type: 2}
+  ammoConfig: {fileID: 11400000, guid: 4393e5a08ae29e34f8d012dc9c9ed8e9, type: 2}
+  shootConfig: {fileID: 11400000, guid: 0fab38facd52dff4e9b0e3098bb032f9, type: 2}
+  trailConfig: {fileID: 11400000, guid: 2ec035f4fb08eb443b0bd8668b179548, type: 2}
+  audioConfig: {fileID: 11400000, guid: 53c2d797be411ab41b89d8389ceb1350, type: 2}

@@ -29,13 +29,27 @@ public class PlayerGunSelector : MonoBehaviour
             return;
         }
 
+        SetupGun(gun);
+        
+    }
+    public void DespawnActiveGun()
+    {
+        ActiveGun.Despawn();
+        Destroy(ActiveGun);
+    }
+    public void PickupGun(GunSO gun)
+    {
+        DespawnActiveGun();
+        SetupGun(gun);
+    }
+    private void SetupGun(GunSO gun)
+    {
         ActiveGun = gun.Clone() as GunSO;
         ActiveGun.Spawn(GunParent, this);
 
         playerIK = GetComponent<PlayerIK>();
         playerIK.Setup(GunParent);
-        
 
-        
+
     }
 }
