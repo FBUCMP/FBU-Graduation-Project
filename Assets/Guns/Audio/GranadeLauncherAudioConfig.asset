@@ -12,7 +12,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 2cb48cfc68aa29641ad5ec459a4a0bbd, type: 3}
   m_Name: GranadeLauncherAudioConfig
   m_EditorClassIdentifier: 
-  Volume: 0.3
+  Volume: 0.15
   fireClips:
   - {fileID: 8300000, guid: 26c507c8785d841f3bca141ed44cd0a2, type: 3}
   emptyClip: {fileID: 0}
