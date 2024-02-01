@@ -175,7 +175,7 @@ public class GunSO : ScriptableObject, System.ICloneable
         
         
         model.transform.position = gunPivot.position + Quaternion.Euler(0f, 0f, angle) * new Vector3(spawnPoint.x, 0f, 0f); 
-        model.transform.rotation = Quaternion.Euler(0, 0, angle);
+        model.transform.rotation = Quaternion.Euler(spawnRotation.x, spawnRotation.y, spawnRotation.z + angle);
         //model.transform.rotation = Quaternion.AngleAxis(angle, Vector3.forward);
         
         if (shootRequest)
