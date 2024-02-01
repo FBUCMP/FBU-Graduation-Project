@@ -6,7 +6,7 @@ using UnityEngine.Pool;
 public class GunSO : ScriptableObject, System.ICloneable
 {
     // spawn - shoot - create trail - play trail 
-    
+    public ImpactType impactType;
     public GunType type;
     public string Name;
     public GameObject modelPrefab;// gun model prefab
@@ -23,6 +23,8 @@ public class GunSO : ScriptableObject, System.ICloneable
     private MonoBehaviour activeMonoBehaviour; // bullet
     private GameObject model;
     private AudioSource shootingAudioSource;
+
+    public ICollisionHandler[] bulletImpactEffects = new ICollisionHandler[0];
 
     private float lastShootTime;
     private ParticleSystem shootSystem; // gun muzzle flash
@@ -52,7 +54,20 @@ public class GunSO : ScriptableObject, System.ICloneable
         shootSystem = model.GetComponentInChildren<ParticleSystem>();
         shootingAudioSource = model.GetComponent<AudioSource>();
     }
+    public void Despawn()
+    {
+       
+        model.gameObject.SetActive(false);
+        Destroy(model);
+        trailPool.Clear();
+        if (bulletPool != null)
+        {
+            bulletPool.Clear();
+        }
 
+        shootingAudioSource = null;
+        shootSystem = null;
+    }
     public void TryToShoot()
     {
         if (Time.time > shootConfig.fireRate + lastShootTime)
@@ -160,7 +175,7 @@ public class GunSO : ScriptableObject, System.ICloneable
         
         
         model.transform.position = gunPivot.position + Quaternion.Euler(0f, 0f, angle) * new Vector3(spawnPoint.x, 0f, 0f); 
-        model.transform.rotation = Quaternion.Euler(0, 0, angle);
+        model.transform.rotation = Quaternion.Euler(spawnRotation.x, spawnRotation.y, spawnRotation.z + angle);
         //model.transform.rotation = Quaternion.AngleAxis(angle, Vector3.forward);
         
         if (shootRequest)
@@ -249,20 +264,27 @@ public class GunSO : ScriptableObject, System.ICloneable
         Vector3 hitNormal,
         Collider2D hitCollider)
     {
-        /*
-        SurfaceManager.Instance.HandleImpact(
-                hitCollider.gameObject,
-                hitLocation,
-                hitNormal,
-                ImpactType,
-                0
-            );
-        */
+        if (SurfaceManager.Instance != null)
+        {
+            SurfaceManager.Instance.HandleImpact(
+                            hitCollider.gameObject,
+                            hitLocation,
+                            hitNormal,
+                            impactType,
+                            0
+                        );
+        }
+        
+        
         
         if (hitCollider.TryGetComponent(out IDamageable damageable))
         {
-            Debug.Log("Damageable got hit");
+            
             damageable.TakeDamage(damageConfig.GetDamage(distanceTraveled));
+        }
+        foreach (ICollisionHandler handler in bulletImpactEffects)
+        {
+            handler.HandleImpact(hitCollider, hitLocation, hitNormal, this);
         }
     }
     private IEnumerator DelayedDisableTrail(TrailRenderer trail)
@@ -297,7 +319,8 @@ public class GunSO : ScriptableObject, System.ICloneable
     public object Clone()
     {
         GunSO config = CreateInstance<GunSO>();
-        // TODO: if surface manager implemented add impact type here
+        
+        config.impactType = impactType;
         config.type = type;
         config.Name = Name;
         config.name = name; // built-in name property

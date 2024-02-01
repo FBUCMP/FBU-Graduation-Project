@@ -1,5 +1,6 @@
 public enum GunType 
 {
     Pistol,
-    Rifle
+    Rifle,
+    GranadeLauncher
 }

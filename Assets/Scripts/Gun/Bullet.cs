@@ -32,11 +32,12 @@ public class Bullet : MonoBehaviour
     private IEnumerator DelayedDisable(float time)
     {
         yield return new WaitForSeconds(time);
-        OnCollisionEnter2D(null);
+        OnCollisionEnter2D(null); // if doesnt collide at all
     }
 
     private void OnCollisionEnter2D(Collision2D collision)
     {
+        if (collision == null) return;
         if (collision.gameObject.tag != "Player")
         {
             OnCollsion?.Invoke(this, collision);

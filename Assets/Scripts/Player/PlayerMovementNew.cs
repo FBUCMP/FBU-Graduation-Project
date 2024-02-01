@@ -137,7 +137,12 @@ public class PlayerMovementNew : MonoBehaviour
             angle += 90; // aciyi 0-180 arasi yapmak icin
             angle = Mathf.Abs(angle);
 
-            if (horizontal != 0) // horizontal harakette kos animasyonu
+            if (!IsGrounded() || isDashing)
+            {
+                animator.Play("LowerInAir");
+                return;
+            }
+            else if (horizontal != 0) // horizontal harakette kos animasyonu
             {
                 animator.Play("LowerRun");  
             }
@@ -155,7 +160,8 @@ public class PlayerMovementNew : MonoBehaviour
             {
                 animator.SetFloat("RunDir", -1f); // lower animasyonuna ters gitsin diye negatif yolluyoruz
             }
-            
+
+
         }
         
     }
