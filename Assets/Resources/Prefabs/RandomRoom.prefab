@@ -50,6 +50,7 @@ MonoBehaviour:
   width: 100
   height: 50
   roomIndex: 0
+  squareSize: 1
   difficulty: 1
   borderSize: 1
   gates: 00000000

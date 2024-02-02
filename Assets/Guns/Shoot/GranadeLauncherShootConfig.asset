@@ -18,6 +18,6 @@ MonoBehaviour:
   hitMask:
     serializedVersion: 2
     m_Bits: 193
-  spread: {x: 0.1, y: 0.1, z: 0}
+  spread: {x: 0.05, y: 0.05, z: 0}
   fireRate: 1
   recoilRecoverySpeed: 1
