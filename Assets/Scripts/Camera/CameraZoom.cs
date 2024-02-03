@@ -9,7 +9,7 @@ public class CameraZoom : MonoBehaviour
     private float zoom;
     private float zoomMultiplier = 4f;
     private float minZoom = 4f;
-    private float maxZoom = 16f;
+    private float maxZoom = 32f;
     private float velocity = 0;
     private float smoothTime = 0.25f;
 
@@ -32,6 +32,14 @@ public class CameraZoom : MonoBehaviour
         zoom -= scroll * zoomMultiplier;
         zoom = Mathf.Clamp(zoom, minZoom, maxZoom);
         cam.orthographicSize = Mathf.SmoothDamp(cam.orthographicSize, zoom, ref velocity, smoothTime);
+        if (Input.GetKeyDown(KeyCode.Q))
+        {
+            zoom = minZoom;
+        }
+        else if (Input.GetKeyDown(KeyCode.E))
+        {
+            zoom = maxZoom;
+        }
         // Mathf.SmoothDamp, Unity'nin Mathf sýnýfýnda bulunan ve deðerleri yumuþak bir þekilde geçiþ yapmak için 
         // kullanýlan bir fonksiyondur. Bu fonksiyon genellikle bir deðeri
         // (genellikle konum, hýz veya dönüþ) diðer bir deðere (hedef) yumuþak bir þekilde yaklaþtýrmak için kullanýlýr.

@@ -26,6 +26,8 @@ public class StageGenerator : MonoBehaviour
     */
     [Header("------- Room Prefab ------------")]
     public GameObject roomPrefab;
+    [Range(1,4)]
+    public int squareSize = 1;
     private int roomWidth; // room prefabin boyutlari
     private int roomHeight;
 
@@ -127,7 +129,7 @@ public class StageGenerator : MonoBehaviour
 
     }
 
-
+    /*
     private void OnDrawGizmos()
     {
         Gizmos.color = Color.red;
@@ -173,7 +175,7 @@ public class StageGenerator : MonoBehaviour
         }            
         
     }
-
+    */
     void CalculateConnectedSides() // 0: up, 1: right, 2: down, 3: left
     {
         gatesList = new List<bool[]>(); // 0: up, 1: right, 2: down, 3: left
@@ -312,6 +314,7 @@ public class StageGenerator : MonoBehaviour
                 roomsGen.roomIndex = roomsList.IndexOf(roomCoord); 
                 roomsGen.gates = gatesList[roomsList.IndexOf(roomCoord)];
                 roomsGen.difficulty = stageDifficulty + Random.Range(0,3);
+                roomsGen.squareSize = squareSize;
                 // if the first generated room
                 if (roomsList.IndexOf(roomCoord) == 0)
                 {
