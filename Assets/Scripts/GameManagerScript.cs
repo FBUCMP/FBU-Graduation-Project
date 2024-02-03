@@ -5,6 +5,8 @@ using UnityEngine;
 public class GameManagerScript : MonoBehaviour
 {
     public GameObject gameOverUI;
+    public GameObject pauseMenuUI;
+    //public PauseMenu pauseMenu;
 
 
     /// <summary>
@@ -44,30 +46,39 @@ public class GameManagerScript : MonoBehaviour
     /// BÝTÝÞ
     private void Start()
     {
-
-
+        pauseMenuUI = pauseMenuUI.transform.Find("InGameUIManager/PauseScreen/PauseMenuScreen").gameObject;
+        /*pauseMenu = FindObjectOfType<PauseMenu>();
+        if(pauseMenu == null)
+        {
+            Debug.LogError("PauseMenu not found!");
+        }
+        */
         Time.timeScale = 1.0f;
-        gameOverUI.SetActive(false); // Olur da unutursak kapansýn 
-        
-        //Cursor.visible = false;
-        //Cursor.lockState = CursorLockMode.Locked; 
+        gameOverUI.SetActive(false); 
+        pauseMenuUI.SetActive(false); 
        
     }
 
     private void Update()
     {
-        /*
-        if(gameOverUI.activeInHierarchy)
+        //Pause Menu
+        if (Input.GetKeyDown(KeyCode.Escape) && pauseMenuUI != null)
         {
-            Cursor.visible = true;
-            //Cursor.lockState = CursorLockMode.None;
-        }
-        else
+            if (pauseMenuUI.activeSelf)
+            {
+                pauseMenuUI.SetActive(false);
+                Time.timeScale = 1.0f;
+            }
+            else
+            {
+                pauseMenuUI.SetActive(true);
+                Time.timeScale = 0.0f;
+            }
+        } 
+        else if (Input.GetKeyDown(KeyCode.Return) && pauseMenuUI == null)
         {
-            Cursor.visible = false;
-            //Cursor.lockState = CursorLockMode.Locked;
+            Debug.LogError("Pause Menu is null");
         }
-        */
     }
 
     public void gameOver()

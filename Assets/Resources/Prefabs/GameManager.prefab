@@ -30,9 +30,9 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
-  - {fileID: 3527738999030692520}
   - {fileID: 3351577625127098026}
   - {fileID: 2210498195680539136}
+  - {fileID: 3527738999030692520}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!114 &834107042541422509
@@ -48,6 +48,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   gameOverUI: {fileID: 6569482277905534660}
+  pauseMenuUI: {fileID: 0}
 --- !u!1 &6544155749817278163
 GameObject:
   m_ObjectHideFlags: 0
@@ -110,12 +111,20 @@ PrefabInstance:
       value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 1013882644578919416, guid: d45b10c039e21f34387dfbebc9de9ce3, type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Target
+      value: 
+      objectReference: {fileID: 0}
+    - target: {fileID: 1013882644578919416, guid: d45b10c039e21f34387dfbebc9de9ce3, type: 3}
       propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[1].m_CallState
       value: 2
       objectReference: {fileID: 0}
     - target: {fileID: 1013882644578919416, guid: d45b10c039e21f34387dfbebc9de9ce3, type: 3}
       propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[1].m_TargetAssemblyTypeName
       value: GameOver, Assembly-CSharp
+      objectReference: {fileID: 0}
+    - target: {fileID: 2048581324799841447, guid: d45b10c039e21f34387dfbebc9de9ce3, type: 3}
+      propertyPath: m_StaticEditorFlags
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 3583324173513385796, guid: d45b10c039e21f34387dfbebc9de9ce3, type: 3}
       propertyPath: m_LocalPosition.x
@@ -161,12 +170,33 @@ PrefabInstance:
       propertyPath: gameOverUI
       value: 
       objectReference: {fileID: 6569482277905534660}
+    - target: {fileID: 4490584799459991707, guid: d45b10c039e21f34387dfbebc9de9ce3, type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Target
+      value: 
+      objectReference: {fileID: 0}
+    - target: {fileID: 5216786231575700056, guid: d45b10c039e21f34387dfbebc9de9ce3, type: 3}
+      propertyPath: m_Name
+      value: PauseScreen
+      objectReference: {fileID: 0}
+    - target: {fileID: 6992018014681400809, guid: d45b10c039e21f34387dfbebc9de9ce3, type: 3}
+      propertyPath: m_Name
+      value: FailText
+      objectReference: {fileID: 0}
+    - target: {fileID: 7153550111651364070, guid: d45b10c039e21f34387dfbebc9de9ce3, type: 3}
+      propertyPath: m_IsActive
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 7636404444735625393, guid: d45b10c039e21f34387dfbebc9de9ce3, type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Target
+      value: 
+      objectReference: {fileID: 0}
     - target: {fileID: 9142279350782455377, guid: d45b10c039e21f34387dfbebc9de9ce3, type: 3}
       propertyPath: m_Name
-      value: DeadUIManager
+      value: InGameUIManager
       objectReference: {fileID: 0}
     m_RemovedComponents: []
-    m_RemovedGameObjects: []
+    m_RemovedGameObjects:
+    - {fileID: 7717495687145025690, guid: d45b10c039e21f34387dfbebc9de9ce3, type: 3}
     m_AddedGameObjects: []
     m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: d45b10c039e21f34387dfbebc9de9ce3, type: 3}

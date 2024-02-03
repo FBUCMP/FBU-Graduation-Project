@@ -67,9 +67,9 @@ public class StageGenerator : MonoBehaviour
             roomPrefab = Resources.Load<GameObject>("Prefabs/RandomRoom"); // room prefabini yukle
 
         }
-        if (!playerPrefab && Resources.Load<GameObject>("Prefabs/Player 1"))
+        if (!playerPrefab && Resources.Load<GameObject>("Prefabs/Player 3"))
         {
-            playerPrefab = Resources.Load<GameObject>("Prefabs/Player 2"); // player prefabini yukle
+            playerPrefab = Resources.Load<GameObject>("Prefabs/Player 3"); // player prefabini yukle
 
         }
         RoomGenerator prefabsGen = roomPrefab.GetComponent<RoomGenerator>();
