@@ -14,7 +14,6 @@ public class GameManagerScript : MonoBehaviour
     /// nesneleri kontrol edip, statik kalmasý gereken deðiþkenleri yönettiðimiz kod bloðu olacak.
     /// blok buradan itibaren baþlamakta.
     /// </summary>
-
     private static GameManagerScript _instance; // Gamemanager´ýn bir adet kopyasýný/örneðini içeren kod satýrý.
 
     public static GameManagerScript Instance //Instance adýnda bir özellik oluþturduk ve buradan get ile eriþim saðladýk.
@@ -40,23 +39,18 @@ public class GameManagerScript : MonoBehaviour
         {
             Destroy(this.gameObject);
         }
+
+        
     }
 
 
     /// BÝTÝÞ
     private void Start()
     {
-        pauseMenuUI = pauseMenuUI.transform.Find("InGameUIManager/PauseScreen/PauseMenuScreen").gameObject;
-        /*pauseMenu = FindObjectOfType<PauseMenu>();
-        if(pauseMenu == null)
-        {
-            Debug.LogError("PauseMenu not found!");
-        }
-        */
         Time.timeScale = 1.0f;
         gameOverUI.SetActive(false); 
-        pauseMenuUI.SetActive(false); 
-       
+        pauseMenuUI.SetActive(false);
+        
     }
 
     private void Update()
@@ -65,7 +59,7 @@ public class GameManagerScript : MonoBehaviour
         if (Input.GetKeyDown(KeyCode.Escape) && pauseMenuUI != null)
         {
             if (pauseMenuUI.activeSelf)
-            {
+            { 
                 pauseMenuUI.SetActive(false);
                 Time.timeScale = 1.0f;
             }

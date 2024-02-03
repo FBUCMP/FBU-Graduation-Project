@@ -3821,9 +3821,9 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 0}
     m_Modifications:
-    - target: {fileID: 834107042541422509, guid: 151f1ff787f4e514988de879e942f7f3, type: 3}
-      propertyPath: pauseMenuUI
-      value: 
+    - target: {fileID: 334265645257194765, guid: 151f1ff787f4e514988de879e942f7f3, type: 3}
+      propertyPath: m_IsActive
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 1107187665517592084, guid: 151f1ff787f4e514988de879e942f7f3, type: 3}
       propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Target
@@ -3852,6 +3852,10 @@ PrefabInstance:
     - target: {fileID: 5028629585731526745, guid: 151f1ff787f4e514988de879e942f7f3, type: 3}
       propertyPath: m_Name
       value: GameManager
+      objectReference: {fileID: 0}
+    - target: {fileID: 5272082133046149044, guid: 151f1ff787f4e514988de879e942f7f3, type: 3}
+      propertyPath: m_Name
+      value: Screens
       objectReference: {fileID: 0}
     - target: {fileID: 5272082133046149044, guid: 151f1ff787f4e514988de879e942f7f3, type: 3}
       propertyPath: m_Layer
@@ -3909,9 +3913,11 @@ PrefabInstance:
       propertyPath: fileName
       value: save.game
       objectReference: {fileID: 0}
-    m_RemovedComponents: []
+    m_RemovedComponents:
+    - {fileID: 834107042541422509, guid: 151f1ff787f4e514988de879e942f7f3, type: 3}
     m_RemovedGameObjects:
     - {fileID: 7662171921671433590, guid: 151f1ff787f4e514988de879e942f7f3, type: 3}
+    - {fileID: 6569482277905534660, guid: 151f1ff787f4e514988de879e942f7f3, type: 3}
     m_AddedGameObjects: []
     m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 151f1ff787f4e514988de879e942f7f3, type: 3}

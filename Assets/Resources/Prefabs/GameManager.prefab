@@ -9,7 +9,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 7413391713096177310}
-  - component: {fileID: 834107042541422509}
+  - component: {fileID: 462687891052931097}
   m_Layer: 0
   m_Name: GameManager
   m_TagString: Untagged
@@ -35,7 +35,7 @@ Transform:
   - {fileID: 3527738999030692520}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &834107042541422509
+--- !u!114 &462687891052931097
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -47,8 +47,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 6b0869f7588dd8b4e85b2e6b86929d41, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  gameOverUI: {fileID: 6569482277905534660}
-  pauseMenuUI: {fileID: 0}
+  gameOverUI: {fileID: 7064193264097599754}
+  pauseMenuUI: {fileID: 2099108882040244555}
 --- !u!1 &6544155749817278163
 GameObject:
   m_ObjectHideFlags: 0
@@ -200,6 +200,11 @@ PrefabInstance:
     m_AddedGameObjects: []
     m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: d45b10c039e21f34387dfbebc9de9ce3, type: 3}
+--- !u!1 &2099108882040244555 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 2048581324799841447, guid: d45b10c039e21f34387dfbebc9de9ce3, type: 3}
+  m_PrefabInstance: {fileID: 94449923391610348}
+  m_PrefabAsset: {fileID: 0}
 --- !u!4 &3527738999030692520 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 3583324173513385796, guid: d45b10c039e21f34387dfbebc9de9ce3, type: 3}
@@ -208,6 +213,11 @@ Transform:
 --- !u!1 &6569482277905534660 stripped
 GameObject:
   m_CorrespondingSourceObject: {fileID: 6513595837222310696, guid: d45b10c039e21f34387dfbebc9de9ce3, type: 3}
+  m_PrefabInstance: {fileID: 94449923391610348}
+  m_PrefabAsset: {fileID: 0}
+--- !u!1 &7064193264097599754 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 7153550111651364070, guid: d45b10c039e21f34387dfbebc9de9ce3, type: 3}
   m_PrefabInstance: {fileID: 94449923391610348}
   m_PrefabAsset: {fileID: 0}
 --- !u!1001 &7655215275183383639
