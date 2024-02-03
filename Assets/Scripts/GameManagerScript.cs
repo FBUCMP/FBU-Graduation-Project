@@ -5,6 +5,8 @@ using UnityEngine;
 public class GameManagerScript : MonoBehaviour
 {
     public GameObject gameOverUI;
+    public GameObject pauseMenuUI;
+    //public PauseMenu pauseMenu;
 
 
     /// <summary>
@@ -12,7 +14,6 @@ public class GameManagerScript : MonoBehaviour
     /// nesneleri kontrol edip, statik kalmasý gereken deðiþkenleri yönettiðimiz kod bloðu olacak.
     /// blok buradan itibaren baþlamakta.
     /// </summary>
-
     private static GameManagerScript _instance; // Gamemanager´ýn bir adet kopyasýný/örneðini içeren kod satýrý.
 
     public static GameManagerScript Instance //Instance adýnda bir özellik oluþturduk ve buradan get ile eriþim saðladýk.
@@ -38,36 +39,40 @@ public class GameManagerScript : MonoBehaviour
         {
             Destroy(this.gameObject);
         }
+
+        
     }
 
 
     /// BÝTÝÞ
     private void Start()
     {
-
-
         Time.timeScale = 1.0f;
-        gameOverUI.SetActive(false); // Olur da unutursak kapansýn 
+        gameOverUI.SetActive(false); 
+        pauseMenuUI.SetActive(false);
         
-        //Cursor.visible = false;
-        //Cursor.lockState = CursorLockMode.Locked; 
-       
     }
 
     private void Update()
     {
-        /*
-        if(gameOverUI.activeInHierarchy)
+        //Pause Menu
+        if (Input.GetKeyDown(KeyCode.Escape) && pauseMenuUI != null)
         {
-            Cursor.visible = true;
-            //Cursor.lockState = CursorLockMode.None;
-        }
-        else
+            if (pauseMenuUI.activeSelf)
+            { 
+                pauseMenuUI.SetActive(false);
+                Time.timeScale = 1.0f;
+            }
+            else
+            {
+                pauseMenuUI.SetActive(true);
+                Time.timeScale = 0.0f;
+            }
+        } 
+        else if (Input.GetKeyDown(KeyCode.Return) && pauseMenuUI == null)
         {
-            Cursor.visible = false;
-            //Cursor.lockState = CursorLockMode.Locked;
+            Debug.LogError("Pause Menu is null");
         }
-        */
     }
 
     public void gameOver()

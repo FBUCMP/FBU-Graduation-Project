@@ -1,5 +1,5 @@
 fileFormatVersion: 2
-guid: 7806ef4dffc370e43a3e0fe8cfb83ace
+guid: 450ad4b62c8fa324d9695e1ed815b937
 TrueTypeFontImporter:
   externalObjects: {}
   serializedVersion: 4
@@ -9,7 +9,7 @@ TrueTypeFontImporter:
   characterPadding: 1
   includeFontData: 1
   fontNames:
-  - Swistblnk Monthoers
+  - Motion Control
   fallbackFontReferences: []
   customCharacters: 
   fontRenderingMode: 0
