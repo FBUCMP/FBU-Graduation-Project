@@ -15,6 +15,7 @@ public class GameOver : MonoBehaviour
     }
     public void MainMenu() //Play Button
     {
+        GameManagerScript.Instance.gameOverUI.SetActive(false);
         SceneManager.LoadSceneAsync(0); // Restart Butonuna basýldýðýnda file->build settings -> kaç nolu indeks sahnesi gelsin örn: 1
     }
     public void ExitGame() // Quit Button
