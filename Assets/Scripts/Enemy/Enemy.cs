@@ -1,21 +1,10 @@
 using UnityEngine;
 
-[DisallowMultipleComponent]
-public class Enemy : MonoBehaviour
-{
-    public EnemyHealth health;
-    public EnemyMovement movement;
-    public EnemyPainResponse painResponse;
-
-    private void Start()
+[System.Serializable]
+    public class Enemy
     {
-        health.OnTakeDamage += painResponse.HandlePain;
-        health.OnDeath += Die;
+        public string enemyName;
+        public float health;
+        public float damage;
+        public float speed;
     }
-
-    private void Die(Vector3 Position)
-    {
-        movement.StopMoving();
-        painResponse.HandleDeath();
-    }
-}
