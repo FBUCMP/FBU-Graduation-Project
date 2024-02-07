@@ -55,10 +55,10 @@ MonoBehaviour:
   borderSize: 1
   gates: 00000000
   gatePrefab: {fileID: 6854857394847769645, guid: b975325b4c15fbf43850313eb62d01b5, type: 3}
-  smoothness: 10
+  smoothness: 3
   seed: 
   useRandomSeed: 1
-  randomFillPercent: 46
+  randomFillPercent: 47
 --- !u!114 &3867795692586346141
 MonoBehaviour:
   m_ObjectHideFlags: 0

@@ -31,7 +31,7 @@ public class Explode : ICollisionHandler
                                                                                                    *try hitObjects[i].ClosestPoint(HitPosition). if that causes an error its because
                                                                                                    the collider is not primitive */
 
-                damagable.TakeDamage(Mathf.CeilToInt(baseDamage * damageFalloff.Evaluate(distance / radius))); // damage according to distance
+                damagable.TakeDamage(Mathf.CeilToInt(baseDamage * damageFalloff.Evaluate(distance / radius)), HitPosition); // damage according to distance
             }
             
 

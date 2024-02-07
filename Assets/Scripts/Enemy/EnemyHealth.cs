@@ -21,7 +21,7 @@ public class EnemyHealth : MonoBehaviour, IDamageable
         _health = maxHealth;
     }
 
-    public void TakeDamage(int damage)
+    public void TakeDamage(int damage, Vector3 hitPos)
     {
         int damageTaken = Mathf.Clamp(damage, 0, currentHealth);
 

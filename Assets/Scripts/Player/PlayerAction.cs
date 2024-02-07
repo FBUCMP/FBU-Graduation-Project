@@ -9,7 +9,7 @@ public class PlayerAction : MonoBehaviour
     private bool autoReload = true;
     [SerializeField]
     private Transform gunPivot;
-
+    public bool isStopped;
     private PlayerMovementNew playerMovement;
     private void Update()
     {
@@ -21,7 +21,11 @@ public class PlayerAction : MonoBehaviour
         }
         */
         // new system for recoil recovery
-        GunSelector.ActiveGun.Tick(Input.GetMouseButton(0) && GunSelector.ActiveGun != null && Application.isFocused, gunPivot);
+        if (!isStopped)
+        {
+            GunSelector.ActiveGun.Tick(Input.GetMouseButton(0) && GunSelector.ActiveGun != null && Application.isFocused, gunPivot);
+            
+        }
         if (ShouldAutoReload() || ShouldManualReload())
         {
             // play animations here in the future

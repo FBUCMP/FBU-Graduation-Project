@@ -331,7 +331,7 @@ GameObject:
   m_Component:
   - component: {fileID: 174278656722678466}
   m_Layer: 0
-  m_Name: ' Wall Check (1)'
+  m_Name: ' WallCheckL'
   m_TagString: Untagged
   m_Icon: {fileID: -5397416234189338067, guid: 0000000000000000d000000000000000, type: 0}
   m_NavMeshLayer: 0
@@ -346,7 +346,7 @@ Transform:
   m_GameObject: {fileID: 1181881278469703696}
   serializedVersion: 2
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: -1, y: 0.5, z: 0}
+  m_LocalPosition: {x: -0.6, y: 0.5, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -948,6 +948,7 @@ Transform:
   m_Children:
   - {fileID: 8742678637986149153}
   - {fileID: 2788537209329071482}
+  - {fileID: 9095605813144567861}
   - {fileID: 8891103828245098602}
   - {fileID: 2664116126168120570}
   - {fileID: 174278656722678466}
@@ -1015,7 +1016,7 @@ BoxCollider2D:
   m_IsTrigger: 0
   m_UsedByEffector: 0
   m_UsedByComposite: 0
-  m_Offset: {x: 0.10756534, y: -0.15}
+  m_Offset: {x: 0, y: -0.15}
   m_SpriteTilingProperty:
     border: {x: 0, y: 0, z: 0, w: 0}
     pivot: {x: 0.5, y: 0.5}
@@ -1040,20 +1041,22 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a6d61b2476e10aa489e13ab837bd7699, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  playerAction: {fileID: 5558435348904062528}
   speed: 8
-  jumpingPower: 16
+  jumpHeight: 20
   tr: {fileID: 6311657264688382926}
   velocity_test: 0
   rb: {fileID: 2300254057313476750}
   groundLayer:
     serializedVersion: 2
     m_Bits: 192
-  wallCheck: {fileID: 2664116126168120570}
-  wallCheck2: {fileID: 174278656722678466}
+  wallCheckR: {fileID: 2664116126168120570}
+  wallCheckL: {fileID: 174278656722678466}
   wallLayer:
     serializedVersion: 2
-    m_Bits: 0
+    m_Bits: 192
   groundCheckR: {fileID: 8891103828245098602}
+  groundCheckM: {fileID: 9095605813144567861}
   groundCheckL: {fileID: 2788537209329071482}
   center: {fileID: 8742678637986149153}
 --- !u!96 &6311657264688382926
@@ -1229,6 +1232,7 @@ MonoBehaviour:
   GunSelector: {fileID: 5788830053130607927}
   autoReload: 1
   gunPivot: {fileID: 4651418364107695867}
+  isStopped: 0
 --- !u!114 &7494285914062552199
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1448,6 +1452,37 @@ Transform:
   m_Children: []
   m_Father: {fileID: 4918508463085795092}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!1 &8041408260612064990
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 9095605813144567861}
+  m_Layer: 0
+  m_Name: GroundCheckM
+  m_TagString: Untagged
+  m_Icon: {fileID: 7174288486110832750, guid: 0000000000000000d000000000000000, type: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &9095605813144567861
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8041408260612064990}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: -1.77, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 6736318490891152782}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &8410302533635781786
 GameObject:
   m_ObjectHideFlags: 0
@@ -1458,7 +1493,7 @@ GameObject:
   m_Component:
   - component: {fileID: 2664116126168120570}
   m_Layer: 0
-  m_Name: ' Wall Check'
+  m_Name: ' WallCheckR'
   m_TagString: Untagged
   m_Icon: {fileID: -5487077368411116049, guid: 0000000000000000d000000000000000, type: 0}
   m_NavMeshLayer: 0
@@ -1473,7 +1508,7 @@ Transform:
   m_GameObject: {fileID: 8410302533635781786}
   serializedVersion: 2
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 1.2, y: 0.5, z: 0}
+  m_LocalPosition: {x: 0.6, y: 0.5, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []

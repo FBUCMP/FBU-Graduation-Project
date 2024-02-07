@@ -319,15 +319,16 @@ void MeshFromPoints(params Node[] points) /* params -> fonksiyon cagrilirken poi
 	public class SquareGrid // tile benzeri yapi olustur
 	{
 		public Square[,] squares; // tum karelerin tutuldugu 2d array
+		public ControlNode[,] controlNodes;
 
-		public SquareGrid(int[,] map, int squareSize) // room generatordan map datasi alacak. map datasi dolu yerler 1 bos yerler 0.
+        public SquareGrid(int[,] map, int squareSize) // room generatordan map datasi alacak. map datasi dolu yerler 1 bos yerler 0.
 		{
 			int nodeCountX = map.GetLength(0);
 			int nodeCountY = map.GetLength(1);
 			float mapWidth = nodeCountX * squareSize;
 			float mapHeight = nodeCountY * squareSize;
 
-			ControlNode[,] controlNodes = new ControlNode[nodeCountX, nodeCountY];
+			controlNodes = new ControlNode[nodeCountX, nodeCountY];
 
 			for (int x = 0; x < nodeCountX; x++)
 			{
@@ -449,16 +450,18 @@ void MeshFromPoints(params Node[] points) /* params -> fonksiyon cagrilirken poi
 
 		public bool active;
 		public Node above, right; // kose control nodelari ustte ve yandaki normal nodelarý tutacak
-
+		public float value;
 		public ControlNode(Vector3 _pos, bool _active, float value, float squareSize) : base(_pos) // _pos'u inheritledigi classtan initle
 		{
 			active = _active;
+			this.value = value;
 			above = new Node(position + Vector3.up * squareSize * value); // x-y ekseni ise y icin vector.up
 			right = new Node(position + Vector3.right * squareSize * value); // x ekseni vector.right
 		}
         public ControlNode(Vector3 _pos, bool _active, float squareSize) : base(_pos) // _pos'u inheritledigi classtan initle
         {
             active = _active;
+			value = _active ? 1f : 0f;
             above = new Node(position + Vector3.up * squareSize / 2); // x-y ekseni ise y icin vector.up
             right = new Node(position + Vector3.right * squareSize / 2); // x ekseni vector.right
         }
