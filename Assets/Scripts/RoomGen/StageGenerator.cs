@@ -26,8 +26,7 @@ public class StageGenerator : MonoBehaviour
     */
     [Header("------- Room Prefab ------------")]
     public GameObject roomPrefab;
-    [Range(1,4)]
-    public int squareSize = 1;
+    private int squareSize = 1;
     private int roomWidth; // room prefabin boyutlari
     private int roomHeight;
 

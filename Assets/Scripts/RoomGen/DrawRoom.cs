@@ -11,12 +11,12 @@ public class DrawRoom : MonoBehaviour
     [SerializeField] public string roomName = "Room_0";
     private string roomJSONsFolderName = "RoomJSONs";
 
-    public int[,] map; // 0-1 li data. amac bunu degistirmek. mesh icin kullanýlan tek veri bu
+    public float[,] map; // 0-1 li data. amac bunu degistirmek. mesh icin kullanýlan tek veri bu
     private int brushSize = 0;
     private MeshGenerator meshGenerator;
     private void Start()
     {
-        map = new int[width, height];
+        map = new float[width, height];
         meshGenerator = GetComponent<MeshGenerator>();
         meshGenerator.GenerateMesh(map, 1);
         Camera mainCamera = Camera.main;
@@ -155,7 +155,7 @@ public class DrawRoom : MonoBehaviour
         return cellCoords.x >= 0 && cellCoords.x < width && cellCoords.y >= 0 && cellCoords.y < height;
     }
 
-    private int[,] OneDimentionToTwo(int[] arr, int width, int height) // 1D arrayi 2D yap
+    private float[,] OneDimentionToTwo(float[] arr, int width, int height) // 1D arrayi 2D yap
     {
         if (arr.Length != width * height)
         {
@@ -163,7 +163,7 @@ public class DrawRoom : MonoBehaviour
             return null;
         }
 
-        int[,] result = new int[width, height];
+        float[,] result = new float[width, height];
 
         for (int x = 0; x < width; x++)
         {
@@ -177,12 +177,12 @@ public class DrawRoom : MonoBehaviour
         return result;
     }
 
-    private int[] TwoDimentionToOne(int[,] arr) // 2D arrayi 1D yap
+    private float[] TwoDimentionToOne(float[,] arr) // 2D arrayi 1D yap
     {
         int width = arr.GetLength(0);
         int height = arr.GetLength(1);
 
-        int[] result = new int[width * height];
+        float[] result = new float[width * height];
 
         for (int x = 0; x < width; x++)
         {

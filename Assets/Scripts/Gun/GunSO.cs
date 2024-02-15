@@ -281,7 +281,7 @@ public class GunSO : ScriptableObject, System.ICloneable
         if (hitCollider.TryGetComponent(out IDamageable damageable))
         {
             
-            damageable.TakeDamage(damageConfig.GetDamage(distanceTraveled), hitLocation);
+            damageable.TakeDamage(damageConfig.GetDamage(distanceTraveled), hitLocation, 1);
         }
         foreach (ICollisionHandler handler in bulletImpactEffects)
         {

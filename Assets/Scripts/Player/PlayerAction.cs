@@ -32,7 +32,18 @@ public class PlayerAction : MonoBehaviour
             GunSelector.ActiveGun.StartReloading();
             GunSelector.ActiveGun.ammoConfig.Reload();
         }
-
+        if (Input.GetKeyDown(KeyCode.Alpha1))
+        {
+            GunSelector.PickupGun(GunSelector.Guns[0]);
+        }
+        if (Input.GetKeyDown(KeyCode.Alpha2))
+        {
+            GunSelector.PickupGun(GunSelector.Guns[1]);
+        }
+        if (Input.GetKeyDown(KeyCode.Alpha3))
+        {
+            GunSelector.PickupGun(GunSelector.Guns[2]);
+        }
     }
     private void Start()
     {

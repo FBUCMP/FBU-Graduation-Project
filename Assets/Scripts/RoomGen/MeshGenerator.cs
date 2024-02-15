@@ -6,51 +6,74 @@ public class MeshGenerator : MonoBehaviour
 	// kirmak icin control nodelari inactive yap. pos ile karsilastir
 
 	public SquareGrid squareGrid;
-	List<Vector3> vertices; // noktalarin pozisyonlari vector2 olmasi lazim tutorial 3d diye boyle degisebilir!
+	[HideInInspector] public List<Vector3> vertices; // noktalarin pozisyonlari vector2 olmasi lazim tutorial 3d diye boyle degisebilir!
 	List<int> triangles;
-
 	Dictionary<int, List<Triangle>> triangleDict = new Dictionary<int, List<Triangle>>(); /* nokta, noktanin dahil oldugu ucgenler. amac dis hatlari bulmak*/
+	[HideInInspector] public Dictionary<Vector2Int, Vector3> indexPosPair = new Dictionary<Vector2Int, Vector3>(); /* index, pozisyon. amac dis hatlari bulmak*/
 	List<List<int>> outlines = new List<List<int>>(); /* bir adet outline List<int>. tum outlinelar List<List<int>>. amac bunu bulmak*/
 	HashSet<int> checkedVertices = new HashSet<int>(); /* tum vertexler checklenirken daha once checklenen denk gelmesin diye. hash contains fonksiyonu hizli.*/
+    
+    [HideInInspector]
+    public float[,] mapWithValues;
 
-	public void GenerateMesh(int[,] map, int squareSize)
+   
+    private void Update()
+    {
+		//Debug.Log(squareGrid.controlNodes != null);
+	}
+
+	public Vector2Int ClosestIndexToPos(Vector3 hitPos, int squareSize) // make this return array of closest indexes instead, can be empty
 	{
-		triangleDict.Clear();
-		outlines.Clear(); // generate mesh her callandiginda bu verileri resetle
-        checkedVertices.Clear();
-
+		for (int i = 0; i < mapWithValues.GetLength(0); i++)
+		{
+            for (int j = 0; j < mapWithValues.GetLength(1); j++)
+			{
+                if (mapWithValues[i,j] >= 0.5f && Vector3.Distance(GetPosFromIndex(new Vector2Int(i,j), squareSize), hitPos) < 1.5f)
+				{
+					//Debug.Log(Vector3.Distance(GetPosFromIndex(new Vector2Int(i, j), squareSize), pos));
+                    return new Vector2Int(i, j);
+                }
+            }
+        }
+		return -Vector2Int.one;
+	}
+	public Vector2Int[] ClosestIndexesToPos(Vector3 hitPos, int squareSize, int radius)
+	{
+        List<Vector2Int> indexes = new List<Vector2Int>();
+        for (int i = 0; i < mapWithValues.GetLength(0); i++)
+		{
+            for (int j = 0; j < mapWithValues.GetLength(1); j++)
+			{
+                if (mapWithValues[i, j] >= 0.5f && Vector3.Distance(GetPosFromIndex(new Vector2Int(i, j), squareSize), hitPos) < radius)
+				{
+                    //Debug.Log(Vector3.Distance(GetPosFromIndex(new Vector2Int(i, j), squareSize), pos));
+                    indexes.Add(new Vector2Int(i, j));
+                }
+            }
+        }
+		indexes.Sort((a, b) => Vector3.Distance(GetPosFromIndex(a, squareSize), hitPos).CompareTo(Vector3.Distance(GetPosFromIndex(b, squareSize), hitPos)));
+        return indexes.ToArray();
+    }
+	public Vector3 GetPosFromIndex(Vector2Int index, int squareSize) 
+	{
+        // if pos calculated like Vector3 pos = new Vector3(-mapWidth / 2 + (x * squareSize) + squareSize / 2, -mapHeight / 2 + (y * squareSize) + squareSize / 2, 0);
+        // then reverse it to get the position from index
+        Vector3 relativePos = new Vector3(-mapWithValues.GetLength(0) / 2 + (index.x * squareSize) + squareSize / 2, -mapWithValues.GetLength(1) / 2 + (index.y * squareSize) + squareSize / 2, 0);
+        return gameObject.transform.position + relativePos;
+        
+    }
+	public void GenerateMesh(float[,] map, int squareSize)
+    {
+		this.mapWithValues = map;
+		//Debug.Log(generateFromNothing);
+		
 		squareGrid = new SquareGrid(map, squareSize);
-
+        triangleDict.Clear();
+		outlines.Clear(); // generate mesh her callandiginda bu verileri resetle
+		checkedVertices.Clear();
 		vertices = new List<Vector3>();
 		triangles = new List<int>();
-
-		for (int x = 0; x < squareGrid.squares.GetLength(0); x++)
-		{
-			for (int y = 0; y < squareGrid.squares.GetLength(1); y++)
-			{
-				TriangulateSquare(squareGrid.squares[x, y]); // griddeki kareleri ucgenlestir mesh icin
-			}
-		}
-
-		Mesh mesh = new Mesh();
-		GetComponent<MeshFilter>().mesh = mesh;
-
-		mesh.vertices = vertices.ToArray(); // mesh icin gerekli veriler
-		mesh.triangles = triangles.ToArray();
-		mesh.RecalculateNormals();
-
-		GenerateColliders(); // fizik icin colliderlari olustur
-	}
-    public void GenerateMesh(float[,] map, int squareSize)
-    {
-        triangleDict.Clear();
-        outlines.Clear(); // generate mesh her callandiginda bu verileri resetle
-        checkedVertices.Clear();
-
-        squareGrid = new SquareGrid(map, squareSize);
-
-        vertices = new List<Vector3>();
-        triangles = new List<int>();
+        indexPosPair = new Dictionary<Vector2Int, Vector3>();
 
         for (int x = 0; x < squareGrid.squares.GetLength(0); x++)
         {
@@ -320,35 +343,7 @@ void MeshFromPoints(params Node[] points) /* params -> fonksiyon cagrilirken poi
 	{
 		public Square[,] squares; // tum karelerin tutuldugu 2d array
 		public ControlNode[,] controlNodes;
-
-        public SquareGrid(int[,] map, int squareSize) // room generatordan map datasi alacak. map datasi dolu yerler 1 bos yerler 0.
-		{
-			int nodeCountX = map.GetLength(0);
-			int nodeCountY = map.GetLength(1);
-			float mapWidth = nodeCountX * squareSize;
-			float mapHeight = nodeCountY * squareSize;
-
-			controlNodes = new ControlNode[nodeCountX, nodeCountY];
-
-			for (int x = 0; x < nodeCountX; x++)
-			{
-				for (int y = 0; y < nodeCountY; y++)
-				{
-					Vector3 pos = new Vector3(-mapWidth / 2 + (x * squareSize) + squareSize / 2, -mapHeight / 2 + (y * squareSize) + squareSize / 2, 0); // map ortalansin diye -width/2 den basliyor
-					controlNodes[x, y] = new ControlNode(pos, map[x, y] == 1, squareSize); // mapdeki index 1se active degilse active degil. degisebilir!!!!!!!
-				}
-			}
-
-			squares = new Square[nodeCountX - 1, nodeCountY - 1]; // control nodelarin en sonundakilerin saginda kare olmayacak o yuzden -1 adet kare
-			for (int x = 0; x < nodeCountX - 1; x++)
-			{
-				for (int y = 0; y < nodeCountY - 1; y++)
-				{
-					squares[x, y] = new Square(controlNodes[x, y + 1], controlNodes[x + 1, y + 1], controlNodes[x + 1, y], controlNodes[x, y]);
-				}
-			}
-
-		}
+        
         public SquareGrid(float[,] map, int squareSize) // room generatordan map datasi alacak. map datasi dolu yerler 1 bos yerler 0.
         {
             int nodeCountX = map.GetLength(0);
@@ -363,7 +358,8 @@ void MeshFromPoints(params Node[] points) /* params -> fonksiyon cagrilirken poi
                 for (int y = 0; y < nodeCountY; y++)
                 {
                     Vector3 pos = new Vector3(-mapWidth / 2 + (x * squareSize) + squareSize / 2, -mapHeight / 2 + (y * squareSize) + squareSize / 2, 0); // map ortalansin diye -width/2 den basliyor
-                    controlNodes[x, y] = new ControlNode(pos, map[x, y] >= 0.5f, map[x, y],squareSize); // mapdeki index 1se active degilse active degil. degisebilir!!!!!!!
+                    controlNodes[x, y] = new ControlNode(pos, map[x, y] >= 0.5f, map[x, y],squareSize); // mapdeki index > 0.5se active degilse active degil. degisebilir!!!!!!!
+			
                 }
             }
 
@@ -458,12 +454,6 @@ void MeshFromPoints(params Node[] points) /* params -> fonksiyon cagrilirken poi
 			above = new Node(position + Vector3.up * squareSize * value); // x-y ekseni ise y icin vector.up
 			right = new Node(position + Vector3.right * squareSize * value); // x ekseni vector.right
 		}
-        public ControlNode(Vector3 _pos, bool _active, float squareSize) : base(_pos) // _pos'u inheritledigi classtan initle
-        {
-            active = _active;
-			value = _active ? 1f : 0f;
-            above = new Node(position + Vector3.up * squareSize / 2); // x-y ekseni ise y icin vector.up
-            right = new Node(position + Vector3.right * squareSize / 2); // x ekseni vector.right
-        }
+        
     }
 }

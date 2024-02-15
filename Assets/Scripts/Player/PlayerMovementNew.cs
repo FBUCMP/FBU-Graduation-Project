@@ -18,8 +18,8 @@ public class PlayerMovementNew : MonoBehaviour
     // Dash kismi
     private bool canDash = true;
     private bool isDashing;
-    private float dashingPower = 24f;
-    private float dashingTime = 0.2f;
+    private float dashingPower = 30f;
+    private float dashingTime = 0.25f; // dpower/120 is a good value
     private float dashingCooldown = 1f;
     // dash sonrasi arkada iz birakmasi için 
     [SerializeField] private TrailRenderer tr;
@@ -177,7 +177,7 @@ public class PlayerMovementNew : MonoBehaviour
     private bool IsGrounded()
     {
         // iki noktada daire olusturup checklemek yerine box ile daha etkili bir sekilde checkliyoruz
-        return Physics2D.OverlapBox(groundCheckM.position, new Vector2(boxCollider.size.x * transform.localScale.x * .9f, 1.5f * transform.localScale.y), 0f, groundLayer);
+        return Physics2D.OverlapBox(groundCheckM.position, new Vector2(boxCollider.size.x * transform.localScale.x * 1f, 1.5f * transform.localScale.y), 0f, groundLayer);
     }
     /*
     //erdo isgrounded
@@ -199,10 +199,9 @@ public class PlayerMovementNew : MonoBehaviour
         }
         //Physics2D.OverlapBox(groundCheck.position, new Vector2(0.2f, 0.1f), 0f, groundLayer);
         Gizmos.color = Color.red;
-        Gizmos.DrawWireCube(groundCheckM.position, new Vector2(boxCollider.size.x * transform.localScale.x * .9f, 1.5f * transform.localScale.y));
+        Gizmos.DrawWireCube(groundCheckM.position, new Vector2(boxCollider.size.x * transform.localScale.x * 1f, 1.5f * transform.localScale.y));
         if (IsWalled())
         {
-            Debug.Log("Walled");
             Gizmos.color = Color.magenta;
             Gizmos.DrawWireSphere(wallCheckL.position, 0.2f);
             Gizmos.DrawWireSphere(wallCheckR.position, 0.2f);

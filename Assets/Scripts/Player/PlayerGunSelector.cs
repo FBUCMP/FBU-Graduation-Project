@@ -10,14 +10,17 @@ public class PlayerGunSelector : MonoBehaviour
     [SerializeField]
     private Transform GunParent;
     [SerializeField]
-    private List<GunSO> Guns;
+    public List<GunSO> Guns;
     [SerializeField]
     private PlayerIK playerIK;
 
     [Space]
     [Header("Runtime Filled")]
     public GunSO ActiveGun;
+    public GunSO ActiveBaseGun;
 
+    public delegate void GunPicked();
+    public event GunPicked OnGunPicked;
     private void Awake()
     {
         // spawn gun
@@ -42,9 +45,11 @@ public class PlayerGunSelector : MonoBehaviour
     {
         DespawnActiveGun();
         SetupGun(gun);
+        OnGunPicked?.Invoke();
     }
     private void SetupGun(GunSO gun)
     {
+        ActiveBaseGun = gun;
         ActiveGun = gun.Clone() as GunSO;
 
         // if localscale.x is negative(player is looking left) add 180 degrees to z axis of ActiveGun.spawnRotation else do nothing
@@ -56,5 +61,16 @@ public class PlayerGunSelector : MonoBehaviour
         playerIK.Setup(GunParent);
 
 
+    }
+
+    public void ApplyModifiers(IModifier[] Modifiers)
+    {
+        DespawnActiveGun();
+        SetupGun(ActiveBaseGun);
+
+        foreach (IModifier modifier in Modifiers)
+        {
+            modifier.Apply(ActiveGun);
+        }
     }
 }

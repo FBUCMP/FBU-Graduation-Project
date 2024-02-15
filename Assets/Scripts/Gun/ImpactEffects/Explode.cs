@@ -27,11 +27,15 @@ public class Explode : ICollisionHandler
         {
             if (hitObjects[i].TryGetComponent(out IDamageable damagable))
             {
-                float distance = Vector3.Distance(hitObjects[i].transform.position, HitPosition); /* hitObjects[i].transform.position might cause an error because it gets center
+                float distance = Vector3.Distance(hitObjects[i].ClosestPoint(HitPosition), HitPosition); /* hitObjects[i].transform.position might cause an error because it gets center
                                                                                                    *try hitObjects[i].ClosestPoint(HitPosition). if that causes an error its because
                                                                                                    the collider is not primitive */
+                //Debug.Log($"hitpos: {HitPosition}");
+                //Debug.Log($"hitobj.pos: {hitObjects[i].transform.position}");
+                //Debug.Log($"closestpoint: {hitObjects[i].ClosestPoint(HitPosition)}");
+                //Debug.Log("exploded: " + hitObjects[i].name);
 
-                damagable.TakeDamage(Mathf.CeilToInt(baseDamage * damageFalloff.Evaluate(distance / radius)), HitPosition); // damage according to distance
+                damagable.TakeDamage(Mathf.CeilToInt(baseDamage * damageFalloff.Evaluate(distance / radius)), HitPosition, radius); // damage according to distance
             }
             
 
