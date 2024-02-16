@@ -5,17 +5,17 @@ using UnityEngine.SceneManagement;
 
 public class GameOver : MonoBehaviour
 {
-    public GameObject gameOverUI;
     public void RestartGame() //Play Button
     {
-        SceneManager.LoadSceneAsync(2);// Restart Butonuna basýldýðýnda file->build settings -> kaç nolu indeks sahnesi gelsin örn: 1
+        SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex);// Restart Butonuna basýldýðýnda file->build settings -> kaç nolu indeks sahnesi gelsin örn: 1
 
-        gameOverUI.SetActive(true);
-        Time.timeScale = 0f;
+        GameManagerScript.Instance.gameOverUI.SetActive(false);
+        Time.timeScale = 1.0f;
 
     }
     public void MainMenu() //Play Button
     {
+        GameManagerScript.Instance.gameOverUI.SetActive(false);
         SceneManager.LoadSceneAsync(0); // Restart Butonuna basýldýðýnda file->build settings -> kaç nolu indeks sahnesi gelsin örn: 1
     }
     public void ExitGame() // Quit Button

@@ -4102,6 +4102,14 @@ PrefabInstance:
       propertyPath: m_text
       value: EXIT
       objectReference: {fileID: 0}
+    - target: {fileID: 4713521904453785311, guid: 0863610fd7fca99429944a5dad16798b, type: 3}
+      propertyPath: m_fontSize
+      value: 128
+      objectReference: {fileID: 0}
+    - target: {fileID: 4713521904453785311, guid: 0863610fd7fca99429944a5dad16798b, type: 3}
+      propertyPath: m_enableAutoSizing
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 5115368760490103193, guid: 0863610fd7fca99429944a5dad16798b, type: 3}
       propertyPath: m_TargetGraphic
       value: 
