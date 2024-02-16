@@ -9,7 +9,7 @@ public class PlayerAction : MonoBehaviour
     private bool autoReload = true;
     [SerializeField]
     private Transform gunPivot;
-
+    public bool isStopped;
     private PlayerMovementNew playerMovement;
     private void Update()
     {
@@ -21,14 +21,29 @@ public class PlayerAction : MonoBehaviour
         }
         */
         // new system for recoil recovery
-        GunSelector.ActiveGun.Tick(Input.GetMouseButton(0) && GunSelector.ActiveGun != null && Application.isFocused, gunPivot);
+        if (!isStopped)
+        {
+            GunSelector.ActiveGun.Tick(Input.GetMouseButton(0) && GunSelector.ActiveGun != null && Application.isFocused, gunPivot);
+            
+        }
         if (ShouldAutoReload() || ShouldManualReload())
         {
             // play animations here in the future
             GunSelector.ActiveGun.StartReloading();
             GunSelector.ActiveGun.ammoConfig.Reload();
         }
-
+        if (Input.GetKeyDown(KeyCode.Alpha1))
+        {
+            GunSelector.PickupGun(GunSelector.Guns[0]);
+        }
+        if (Input.GetKeyDown(KeyCode.Alpha2))
+        {
+            GunSelector.PickupGun(GunSelector.Guns[1]);
+        }
+        if (Input.GetKeyDown(KeyCode.Alpha3))
+        {
+            GunSelector.PickupGun(GunSelector.Guns[2]);
+        }
     }
     private void Start()
     {

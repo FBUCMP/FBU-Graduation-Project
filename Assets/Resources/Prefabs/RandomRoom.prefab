@@ -13,6 +13,7 @@ GameObject:
   - component: {fileID: 3867795692586346141}
   - component: {fileID: 8692006702022840890}
   - component: {fileID: 5714658141192719863}
+  - component: {fileID: 6373678575182219782}
   m_Layer: 6
   m_Name: RandomRoom
   m_TagString: Room
@@ -55,10 +56,10 @@ MonoBehaviour:
   borderSize: 1
   gates: 00000000
   gatePrefab: {fileID: 6854857394847769645, guid: b975325b4c15fbf43850313eb62d01b5, type: 3}
-  smoothness: 10
+  smoothness: 3
   seed: 
   useRandomSeed: 1
-  randomFillPercent: 46
+  randomFillPercent: 47
 --- !u!114 &3867795692586346141
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -71,6 +72,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3f10f2cd92a7dc24fa062785edf8aa05, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  generateFromNothing: 1
 --- !u!33 &8692006702022840890
 MeshFilter:
   m_ObjectHideFlags: 0
@@ -121,3 +123,15 @@ MeshRenderer:
   m_SortingLayer: 0
   m_SortingOrder: 0
   m_AdditionalVertexStreams: {fileID: 0}
+--- !u!114 &6373678575182219782
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 910457236798788244}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 413e6885fcb00e1438302a8fb6274e50, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 

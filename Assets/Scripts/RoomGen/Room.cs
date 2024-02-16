@@ -6,13 +6,13 @@ using System.IO;
 public class Room
 {
 
-    public int[] map; // 1d array for json
+    public float[] map; // 1d array for json
     public int difficulty;
     public int index;
     public int width;
     public int height;
 
-    public Room(int[] _map, int _width, int _height, int _dif = 0, int _index = 0)
+    public Room(float[] _map, int _width, int _height, int _dif = 0, int _index = 0)
     {
         map = _map;
         width = _width;
