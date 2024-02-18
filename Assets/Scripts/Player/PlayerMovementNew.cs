@@ -263,10 +263,10 @@ public class PlayerMovementNew : MonoBehaviour
             rb.velocity = new Vector2(wallJumpingDirection * walljumpVelocity.x, walljumpVelocity.y);
             wallJumpingCounter = 0f;
             playerAction.isStopped = true;
-            if (transform.localScale.x != wallJumpingDirection)
-            {
-                Flip();
-            }
+            //if (transform.localScale.x != wallJumpingDirection)
+            //{
+            //    Flip();
+            //}
             // Invoke fonksiyonu, belirli bir süre sonra veya belirli bir periyotta bir fonksiyonu çaðýrmak için kullanýlýr.
             Invoke(nameof(StopWallJumping), wallJumpingDuration);
         }
