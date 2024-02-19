@@ -21,7 +21,7 @@ public class GunSO : ScriptableObject, System.ICloneable
     public AudioConfigurationSO audioConfig;
 
     private MonoBehaviour activeMonoBehaviour; // bullet
-    private GameObject model;
+    [HideInInspector] public GameObject model;
     private AudioSource shootingAudioSource;
 
     public ICollisionHandler[] bulletImpactEffects = new ICollisionHandler[0];

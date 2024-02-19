@@ -1230,6 +1230,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 31dce7f23f7190d478f639aa0571dd41, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  shootBlockMask:
+    serializedVersion: 2
+    m_Bits: 193
   GunSelector: {fileID: 5788830053130607927}
   autoReload: 1
   gunPivot: {fileID: 4651418364107695867}

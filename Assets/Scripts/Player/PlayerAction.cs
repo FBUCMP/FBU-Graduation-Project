@@ -4,6 +4,8 @@ using UnityEngine;
 public class PlayerAction : MonoBehaviour
 {
     [SerializeField]
+    private LayerMask shootBlockMask;
+    [SerializeField]
     private PlayerGunSelector GunSelector;
     [SerializeField]
     private bool autoReload = true;
@@ -13,17 +15,10 @@ public class PlayerAction : MonoBehaviour
     private PlayerMovementNew playerMovement;
     private void Update()
     {
-        // old system for shooting
-        /*
-        if (Input.GetMouseButton(0) && GunSelector.ActiveGun != null)
-        {
-            GunSelector.ActiveGun.Shoot();
-        }
-        */
-        // new system for recoil recovery
+        
         if (!isStopped)
         {
-            GunSelector.ActiveGun.Tick(Input.GetMouseButton(0) && GunSelector.ActiveGun != null && Application.isFocused, gunPivot);
+            GunSelector.ActiveGun.Tick(GetRequest(), gunPivot);
             
         }
         if (ShouldAutoReload() || ShouldManualReload())
@@ -50,7 +45,16 @@ public class PlayerAction : MonoBehaviour
         playerMovement = GetComponent<PlayerMovementNew>();
         playerMovement.OnFlipped += FlipGun;
     }
-    
+    private bool GetRequest()
+    {
+        return Input.GetMouseButton(0) && GunSelector.ActiveGun != null && Application.isFocused && !IsGunInWall();
+    }
+    private bool IsGunInWall()
+    {
+        RaycastHit2D hit = Physics2D.Raycast(gunPivot.position, GunSelector.ActiveGun.model.transform.position - gunPivot.position , 2f, shootBlockMask);
+        Debug.DrawRay(gunPivot.position, (GunSelector.ActiveGun.model.transform.position - gunPivot.position) * 2, Color.blue, .01f);
+        return hit.collider != null;
+    }
     private void FlipGun()
     {
         GunSelector.ActiveGun.FlipGun();
