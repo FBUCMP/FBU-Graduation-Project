@@ -13,7 +13,13 @@ public class EnemyController : MonoBehaviour
         enemyData = enemy;
         // Düþmanýn özelliklerini burada kullanabilirsiniz (örneðin, health, damage, speed).
     }
+    public void SetStats(float health, float speed, float power)
+    {
+        enemyData.Health = health;
+        enemyData.Speed = speed;
+        enemyData.Power = power;
+    }
 
-    // Düþmanýn diðer davranýþlarýný ekleyebilirsiniz.
-}
+        // Düþmanýn diðer davranýþlarýný ekleyebilirsiniz.
+    }
 
