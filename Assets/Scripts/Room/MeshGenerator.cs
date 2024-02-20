@@ -24,35 +24,44 @@ public class MeshGenerator : MonoBehaviour
 
 	public Vector2Int ClosestIndexToPos(Vector3 hitPos, int squareSize) // make this return array of closest indexes instead, can be empty
 	{
+		Vector2Int closest = Vector2Int.zero;
 		for (int i = 0; i < mapWithValues.GetLength(0); i++)
 		{
             for (int j = 0; j < mapWithValues.GetLength(1); j++)
 			{
-                if (mapWithValues[i,j] >= 0.5f && Vector3.Distance(GetPosFromIndex(new Vector2Int(i,j), squareSize), hitPos) < 1.5f)
+                if (mapWithValues[i,j] >= 0.5f && Vector3.Distance(GetPosFromIndex(new Vector2Int(i,j), squareSize), hitPos) < Vector3.Distance(GetPosFromIndex(closest, squareSize), hitPos))
 				{
-					//Debug.Log(Vector3.Distance(GetPosFromIndex(new Vector2Int(i, j), squareSize), pos));
-                    return new Vector2Int(i, j);
+					closest = new Vector2Int(i, j);
                 }
             }
         }
-		return -Vector2Int.one;
+		return closest;
 	}
 	public Vector2Int[] ClosestIndexesToPos(Vector3 hitPos, int squareSize, int radius)
 	{
-        List<Vector2Int> indexes = new List<Vector2Int>();
-        for (int i = 0; i < mapWithValues.GetLength(0); i++)
+		List<Vector2Int> indexes = new List<Vector2Int>();
+		if (radius > 1)
 		{
-            for (int j = 0; j < mapWithValues.GetLength(1); j++)
+			for (int i = 0; i < mapWithValues.GetLength(0); i++)
 			{
-                if (mapWithValues[i, j] >= 0.5f && Vector3.Distance(GetPosFromIndex(new Vector2Int(i, j), squareSize), hitPos) < radius)
+				for (int j = 0; j < mapWithValues.GetLength(1); j++)
 				{
-                    //Debug.Log(Vector3.Distance(GetPosFromIndex(new Vector2Int(i, j), squareSize), pos));
-                    indexes.Add(new Vector2Int(i, j));
-                }
-            }
-        }
-		indexes.Sort((a, b) => Vector3.Distance(GetPosFromIndex(a, squareSize), hitPos).CompareTo(Vector3.Distance(GetPosFromIndex(b, squareSize), hitPos)));
-        return indexes.ToArray();
+					if (mapWithValues[i, j] >= 0.5f && Vector3.Distance(GetPosFromIndex(new Vector2Int(i, j), squareSize), hitPos) < radius)
+					{
+						//Debug.Log(Vector3.Distance(GetPosFromIndex(new Vector2Int(i, j), squareSize), pos));
+						indexes.Add(new Vector2Int(i, j));
+					}
+				}
+			}
+			indexes.Sort((a, b) => Vector3.Distance(GetPosFromIndex(a, squareSize), hitPos).CompareTo(Vector3.Distance(GetPosFromIndex(b, squareSize), hitPos)));
+
+		}
+		else // radius == 1
+		{
+			indexes.Add(ClosestIndexToPos(hitPos, squareSize));
+		}
+		
+		return indexes.ToArray();
     }
 	public Vector3 GetPosFromIndex(Vector2Int index, int squareSize) 
 	{
