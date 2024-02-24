@@ -3,14 +3,18 @@ using System.Collections;
 using System.Collections.Generic;
 using System.IO;
 using UnityEngine;
+using UnityEngine.InputSystem; // Unity Input System eklenen namespace
 
 public class PlayerMovementNew : MonoBehaviour
 {
+    // InputSystem Kismi
+    private Controls input = null;
 
     // Movement kismi
+    private Vector2 movementInput;
     private float horizontal;
     [SerializeField] private float speed = 8f;
-    [SerializeField] public float jumpingPower = 16f;
+    [SerializeField] public float jumpingPower = 32f;
     private bool isFacingRight = true;
 
     // Dash kismi
@@ -19,7 +23,6 @@ public class PlayerMovementNew : MonoBehaviour
     private float dashingPower = 24f;
     private float dashingTime = 0.2f;
     private float dashingCooldown = 1f;
-    // dash sonrasi arkada iz birakmasi için 
     [SerializeField] private TrailRenderer tr;
 
     // wall sliding ve wall jumping kismi
@@ -30,16 +33,14 @@ public class PlayerMovementNew : MonoBehaviour
     private float wallJumpingDirection;
     private float wallJumpingTime = 0.2f;
     private float wallJumpingCounter;
-    private float wallJumpingDuration = 0.15f; // ne kadar surede tekrar walljump yapacagiyla ilgili 0.1f civari biraz hýzlý oluyor ama tam Transformice'deki wj gibi hosuma gitti.
+    private float wallJumpingDuration = 0.15f;
     private Vector2 wallJumpingPower = new Vector2(8f, 16f);
 
     [SerializeField] private float velocity_test = 0f;
     [SerializeField] private Rigidbody2D rb;
     private BoxCollider2D boxCollider;
-    
-    //[SerializeField] private Transform groundCheck;
 
-   [SerializeField] private LayerMask groundLayer;
+    [SerializeField] private LayerMask groundLayer;
 
     [SerializeField] private Transform wallCheck;
     [SerializeField] private Transform wallCheck2;
@@ -60,8 +61,12 @@ public class PlayerMovementNew : MonoBehaviour
     //animator
     [SerializeField] private Transform center; // playerin orta noktasi
     private Animator animator;
+
     private void Awake()
     {
+        //musa - input system
+        input = new Controls();
+
         // yunus - sayisal islemler
         boxCollider = GetComponent<BoxCollider2D>();
         //dashingPower *= Mathf.Sqrt(transform.localScale.x);
@@ -81,9 +86,24 @@ public class PlayerMovementNew : MonoBehaviour
             animator = GetComponentInChildren<Animator>();
 
         }
-        
     }
 
+    // INPUT SYSTEM BEGIN
+    public void OnEnable()
+    {
+        input.Enable();
+
+        input.Player.Jump.started += context => Jump(); // Jump baþladýðýnda Jump fonksiyonunu çaðýr
+    }
+
+    public void OnDisable()
+    {
+        input.Disable();
+
+        input.Player.Jump.started -= context => Jump(); // Jump baþladýðýnda Jump fonksiyonunu çaðýrmayý kaldýr
+    }
+
+    //INPUT SYSTEM END
 
     // Update is called once per frame
     void Update()
@@ -92,32 +112,27 @@ public class PlayerMovementNew : MonoBehaviour
         {
             return;
         }
-        horizontal = Input.GetAxisRaw("Horizontal");
+        movementInput = input.Player.Move.ReadValue<Vector2>();
+        horizontal = movementInput.x;
 
-        if (IsGrounded() && !Input.GetButton("Jump"))
+        if (IsGrounded() && !input.Player.Jump.triggered)
         {
             doubleJump = false;
         }
 
-        if (Input.GetButtonDown("Jump"))
+        if (input.Player.Jump.triggered)
         {
-            if (IsGrounded() || doubleJump)
-            {
-                rb.velocity = new Vector2(rb.velocity.x, jumpingPower);
-
-                doubleJump = !doubleJump;
-            }
-
+            Jump();
         }
 
-        if (Input.GetButtonUp("Jump") && rb.velocity.y > velocity_test)
+        if (input.Player.Jump.triggered && rb.velocity.y > velocity_test)
         {
             rb.velocity = new Vector2(rb.velocity.x, rb.velocity.y * 0.5f);
             // tuþa basýldýðý anda ve basýlý tutulduðu anda olan
             // zýplama deðiþimi
         }
 
-        if (Input.GetKeyDown(KeyCode.LeftShift) && canDash)
+        if (input.Player.Dash.triggered && canDash)
         {
             StartCoroutine(Dash());
         }
@@ -131,7 +146,7 @@ public class PlayerMovementNew : MonoBehaviour
         if (animator) // animator varsa
         {
             // TODO: mousea bakma yeniden yazilacak
-            Vector3 mousePosition = Camera.main.ScreenToWorldPoint(Input.mousePosition); 
+            Vector3 mousePosition = Camera.main.ScreenToWorldPoint(Input.mousePosition);
             Vector3 lookDirection = mousePosition - center.position; // karakterin ortasindan mousea dogru bir vektor
             float angle = Mathf.Atan2(lookDirection.y, Mathf.Abs(lookDirection.x)) * Mathf.Rad2Deg; // aci hesabi, aci negatif olamaz
             angle += 90; // aciyi 0-180 arasi yapmak icin
@@ -144,13 +159,12 @@ public class PlayerMovementNew : MonoBehaviour
             }
             else if (horizontal != 0) // horizontal harakette kos animasyonu
             {
-                animator.Play("LowerRun");  
+                animator.Play("LowerRun");
             }
             else // degilse dur
             {
                 animator.Play("LowerIdle");
             }
-
 
             if (isFacingRight == (horizontal > 0)) // ileri kosuyor
             {
@@ -160,10 +174,17 @@ public class PlayerMovementNew : MonoBehaviour
             {
                 animator.SetFloat("RunDir", -1f); // lower animasyonuna ters gitsin diye negatif yolluyoruz
             }
-
-
         }
-        
+    }
+
+    private void Jump()
+    {
+        if (IsGrounded() || doubleJump)
+        {
+            rb.velocity = new Vector2(rb.velocity.x, jumpingPower);
+
+            doubleJump = !doubleJump;
+        }
     }
 
     // yunus isgrounded
@@ -175,7 +196,7 @@ public class PlayerMovementNew : MonoBehaviour
     }
     */
     //erdo isgrounded
-    
+
     private bool IsGrounded()
     {
         //return Physics2D.OverlapCircle(groundCheck.position, 0.2f, groundLayer);
@@ -183,7 +204,6 @@ public class PlayerMovementNew : MonoBehaviour
         // rampa gibi þekillerde yürüme ve zýplama sýkýntýsý yaþanýyordu bunun için yapýldý
         return Physics2D.OverlapCircle(groundCheckR.position, 0.2f, groundLayer) || Physics2D.OverlapCircle(groundCheckL.position, 0.2f, groundLayer);
     }
-
 
     private void FixedUpdate()
     {
@@ -233,7 +253,7 @@ public class PlayerMovementNew : MonoBehaviour
             wallJumpingCounter -= Time.deltaTime;
         }
 
-        if (Input.GetButtonDown("Jump") && wallJumpingCounter > 0f)
+        if (input.Player.Jump.triggered && wallJumpingCounter > 0f)
         {
             isWallJumping = true;
             rb.velocity = new Vector2(wallJumpingDirection * wallJumpingPower.x, wallJumpingPower.y);
@@ -283,10 +303,7 @@ public class PlayerMovementNew : MonoBehaviour
             OnFlipped?.Invoke();
 
         }
-
-
     }
-
 
     // Dash özelliði için Coroutine kullandýk burada karakter dash atabiliyorsa anlýk olarak yatay düzlemde dashingPower kadar 
     // |   gravity'den etkilenmeyerek ilerleyecek ve sonra hareket bittiðinde gravity tekrar olmasý gereken deðerine dönecek
@@ -301,10 +318,9 @@ public class PlayerMovementNew : MonoBehaviour
         rb.velocity = new Vector2(transform.localScale.x * dashingPower, 0f);
 
         //DASH SOUND
-
         if (audioManager)
         {
-            audioManager.PlaySFX(audioManager.dash);    
+            audioManager.PlaySFX(audioManager.dash);
         }
 
         //

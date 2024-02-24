@@ -1,11 +1,25 @@
 using System;
+using System.Collections.Generic;
 using UnityEngine;
-using UnityEngine.UIElements;
+
+[Serializable]
+public class EnemyData
+{
+    public string name;
+    public float health;
+    public float speed;
+    public float power;
+    public GameObject prefab;
+    public float skillCooldown;
+}
 
 public class EnemySpawner : MonoBehaviour
 {
     public Collider2D[] validColliders; // Collider'larýn listesi
     private EnemyManager enemyManager;
+
+    public List<EnemyData> enemyDataList = new List<EnemyData>();
+    public int numberOfEnemiesToSpawn = 5;
 
     void Start()
     {
@@ -16,21 +30,29 @@ public class EnemySpawner : MonoBehaviour
         }
         else
         {
-            SpawnRandomEnemies(5);
+            SpawnCustomEnemies(numberOfEnemiesToSpawn);
             Debug.Log("Enemy Manager founded: " + enemyManager.name);
         }
     }
 
-    void SpawnRandomEnemies(int numberOfEnemies)
+    void SpawnCustomEnemies(int numberOfEnemies)
     {
         for (int i = 0; i < numberOfEnemies; i++)
         {
-            // Rastgele bir konumu seç
-            Vector2 randomPosition = GetRandomColliderPosition();
-
-            // Düþmaný bu konumda oluþtur
-            SpawnEnemyAtPosition(randomPosition);
+            foreach (var enemyData in enemyDataList)
+            {
+                SpawnEnemy(enemyData);
+            }
         }
+    }
+
+    void SpawnEnemy(EnemyData enemyData)
+    {
+        // Rastgele bir konumu seç
+        Vector2 randomPosition = GetRandomColliderPosition();
+
+        // Düþmaný bu konumda oluþtur
+        SpawnEnemyAtPosition(enemyData, randomPosition);
     }
 
     Vector2 GetRandomColliderPosition()
@@ -55,14 +77,13 @@ public class EnemySpawner : MonoBehaviour
         return new Vector2(randomX, randomY);
     }
 
-    void SpawnEnemyAtPosition(Vector2 position)
+    void SpawnEnemyAtPosition(EnemyData enemyData, Vector2 position)
     {
         Debug.Log("SpawnEnemyAtPosition");
         if (enemyManager != null)
         {
             // Düþman oluþtur
-            Debug.Log("Düþman oluþturma deneniyor");
-            enemyManager.CreateEnemy(100f, 5f, 20f, position);
+            enemyManager.CreateEnemy(enemyData.name, enemyData.health, enemyData.speed, enemyData.power, position, enemyData.prefab);
         }
         else
         {
@@ -70,3 +91,29 @@ public class EnemySpawner : MonoBehaviour
         }
     }
 }
+
+#if UNITY_EDITOR
+[UnityEditor.CustomEditor(typeof(EnemySpawner))]
+public class EnemySpawnerEditor : UnityEditor.Editor
+{
+    public override void OnInspectorGUI()
+    {
+        base.OnInspectorGUI();
+
+        EnemySpawner spawner = (EnemySpawner)target;
+
+        if (GUILayout.Button("Add Default Enemy"))
+        {
+            spawner.enemyDataList.Add(new EnemyData
+            {
+                name = "NewEnemy",
+                health = 100f,
+                speed = 5f,
+                power = 20f,
+                prefab = null, // Set your default prefab here
+                skillCooldown = 5f
+            });
+        }
+    }
+}
+#endif

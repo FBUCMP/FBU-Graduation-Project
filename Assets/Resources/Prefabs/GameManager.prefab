@@ -9,7 +9,6 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 974507756711922314}
-  - component: {fileID: 5328790773919673107}
   m_Layer: 0
   m_Name: EnemyManager
   m_TagString: Untagged
@@ -33,19 +32,6 @@ Transform:
   - {fileID: 8867130901882251123}
   m_Father: {fileID: 7413391713096177310}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &5328790773919673107
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1755954853520562220}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 0a2fa7fa7476eb640964d60c0c909757, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  enemyPrefab: {fileID: 3523763345156744282, guid: 0ae7edc525f263d4db493924ceb5ac3a, type: 3}
 --- !u!1 &2615094042729840737
 GameObject:
   m_ObjectHideFlags: 0
@@ -55,6 +41,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 8867130901882251123}
+  - component: {fileID: 6146892320841707773}
   - component: {fileID: 94219611910768170}
   m_Layer: 0
   m_Name: EnemySpawner
@@ -78,6 +65,18 @@ Transform:
   m_Children: []
   m_Father: {fileID: 974507756711922314}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &6146892320841707773
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2615094042729840737}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 0a2fa7fa7476eb640964d60c0c909757, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!114 &94219611910768170
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -93,6 +92,8 @@ MonoBehaviour:
   validColliders:
   - {fileID: 0}
   - {fileID: 0}
+  enemyDataList: []
+  numberOfEnemiesToSpawn: 5
 --- !u!1 &5028629585731526745
 GameObject:
   m_ObjectHideFlags: 0

@@ -5,11 +5,9 @@ public class EnemyManager : MonoBehaviour
 {
     private List<Enemy> enemies = new List<Enemy>();
 
-    public GameObject enemyPrefab; // Düþmanýn prefab'ýný belirtin
-
-    public void CreateEnemy(float health, float speed, float power, Vector2 position)
+    public void CreateEnemy(string name, float health, float speed, float power, Vector2 position, GameObject prefab)
     {
-        Enemy newEnemy = new Enemy(health, speed, power, position);
+        Enemy newEnemy = new Enemy(name, health, speed, power, position, prefab);
         enemies.Add(newEnemy);
         DisplayEnemy(newEnemy);
     }
@@ -27,14 +25,14 @@ public class EnemyManager : MonoBehaviour
 
     private void DisplayEnemy(Enemy enemy)
     {
-        GameObject enemyObject = Instantiate(enemyPrefab, enemy.Position, Quaternion.identity);
+        GameObject enemyObject = Instantiate(enemy.Prefab, enemy.Position, Quaternion.identity);
 
         // enemyObject'un özelliklerini enemy'nin özelliklerine göre ayarla
         EnemyController enemyController = enemyObject.GetComponent<EnemyController>();
         if (enemyController != null)
         {
             Debug.Log("Enemy display");
-            enemyController.SetStats(enemy.Health, enemy.Speed, enemy.Power);
+            enemyController.Initialize(enemy);
         }
         else
         {
