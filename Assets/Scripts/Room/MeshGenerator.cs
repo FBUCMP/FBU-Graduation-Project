@@ -5,11 +5,9 @@ public class MeshGenerator : MonoBehaviour
 {
 	// kirmak icin control nodelari inactive yap. pos ile karsilastir
 
-	public SquareGrid squareGrid;
 	[HideInInspector] public List<Vector3> vertices; // noktalarin pozisyonlari vector2 olmasi lazim tutorial 3d diye boyle degisebilir!
 	List<int> triangles;
 	Dictionary<int, List<Triangle>> triangleDict = new Dictionary<int, List<Triangle>>(); /* nokta, noktanin dahil oldugu ucgenler. amac dis hatlari bulmak*/
-	[HideInInspector] public Dictionary<Vector2Int, Vector3> indexPosPair = new Dictionary<Vector2Int, Vector3>(); /* index, pozisyon. amac dis hatlari bulmak*/
 	List<List<int>> outlines = new List<List<int>>(); /* bir adet outline List<int>. tum outlinelar List<List<int>>. amac bunu bulmak*/
 	HashSet<int> checkedVertices = new HashSet<int>(); /* tum vertexler checklenirken daha once checklenen denk gelmesin diye. hash contains fonksiyonu hizli.*/
     
@@ -19,7 +17,6 @@ public class MeshGenerator : MonoBehaviour
    
     private void Update()
     {
-		//Debug.Log(squareGrid.controlNodes != null);
 	}
 
 	public Vector2Int ClosestIndexToPos(Vector3 hitPos, int squareSize) // make this return array of closest indexes instead, can be empty
@@ -71,18 +68,23 @@ public class MeshGenerator : MonoBehaviour
         return gameObject.transform.position + relativePos;
         
     }
-	public void GenerateMesh(float[,] map, int squareSize)
+	public void GenerateMesh(float[,] map, int squareSize) // mesh and then colliders
     {
-		this.mapWithValues = map;
-		//Debug.Log(generateFromNothing);
-		
-		squareGrid = new SquareGrid(map, squareSize);
+		GenerateMeshOnly(map, squareSize);
+
+        GenerateColliders(); // fizik icin colliderlari olustur
+    }
+	public void GenerateMeshOnly(float[,] map, int squareSize)
+	{
+        this.mapWithValues = map;
+        //Debug.Log(generateFromNothing);
+
+        SquareGrid squareGrid = new SquareGrid(map, squareSize);
         triangleDict.Clear();
-		outlines.Clear(); // generate mesh her callandiginda bu verileri resetle
-		checkedVertices.Clear();
-		vertices = new List<Vector3>();
-		triangles = new List<int>();
-        indexPosPair = new Dictionary<Vector2Int, Vector3>();
+        outlines.Clear(); // generate mesh her callandiginda bu verileri resetle
+        checkedVertices.Clear();
+        vertices = new List<Vector3>();
+        triangles = new List<int>();
 
         for (int x = 0; x < squareGrid.squares.GetLength(0); x++)
         {
@@ -98,8 +100,6 @@ public class MeshGenerator : MonoBehaviour
         mesh.vertices = vertices.ToArray(); // mesh icin gerekli veriler
         mesh.triangles = triangles.ToArray();
         mesh.RecalculateNormals();
-
-        GenerateColliders(); // fizik icin colliderlari olustur
     }
     void GenerateColliders()
     {
