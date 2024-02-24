@@ -11,6 +11,13 @@ public class GunModifierApplier : MonoBehaviour
     // modifiers for buffs and debuffs
     private void Start()
     {
+        AssignModifiers();
+        GunSelector.OnGunPicked += AssignModifiers;
+        
+    }
+    void AssignModifiers()
+    {
+
         if (GunSelector == null) { return; }
         if (ImpactTypeOverride != null)
         {
@@ -20,33 +27,18 @@ public class GunModifierApplier : MonoBehaviour
             }.Apply(GunSelector.ActiveGun);
 
         }
-
-        GunSelector.ActiveGun.bulletImpactEffects = new ICollisionHandler[]
+        if (GunSelector.ActiveGun.type == GunType.GranadeLauncher) // TODO: make automatic instead of manually assing the impact effect for the weopon 
         {
-            new Explode(
-                1.5f, // radius
-                new AnimationCurve(new Keyframe[] { new Keyframe(0, 1), new Keyframe(1, 0.25f) }), // damage falloff curve 1 to .25 over the radius
-                10, // base damage
-                10 // number of objects to apply damage to
-                )
-        };
+            GunSelector.ActiveGun.bulletImpactEffects = new ICollisionHandler[]
+                    {
+                        new Explode(
+                            5f, // radius
+                            new AnimationCurve(new Keyframe[] { new Keyframe(0, 1), new Keyframe(1, 0.25f) }), // damage falloff curve 1 to .5 over the radius
+                            20, // base damage
+                            10 // number of objects to apply damage to
+                            )
+                    };
+        }
 
-        /*
-        DamageModifier damageModifier = new()
-        {
-            amount = 1.5f, // 50% more damage
-            attributeName = "damageConfig/damageCurve"
-        };
-         
-        damageModifier.Apply(GunSelector.ActiveGun);
-
-        Vector3Modifier spreadModifier = new()
-        {
-            amount = Vector3.one / 2, // no spread
-            attributeName = "shootConfig/spread"
-        };
-        
-        spreadModifier.Apply(GunSelector.ActiveGun);
-        */
     }
 }

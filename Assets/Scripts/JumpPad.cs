@@ -5,7 +5,7 @@ using UnityEngine;
 public class JumpPad : MonoBehaviour
 {
 
-    private float bounce;
+    private float bounceHeight;
     private PlayerMovementNew playerMovement; // referans deðiþkeni
     private void Start()
     {
@@ -13,18 +13,13 @@ public class JumpPad : MonoBehaviour
 
         if (playerMovement != null)
         {
-            bounce = playerMovement.jumpingPower * 2f; // bounce deðerinin zýplama deðerinin 2 katý olmasýný istiyorum
+            bounceHeight = playerMovement.jumpHeight * 2f; // bounce deðerinin zýplama deðerinin 2 katý olmasýný istiyorum
            // Debug.Log("bounce: " + bounce);
-        }
-        else if (FindObjectOfType<PlayerMovementNew>())
-        {
-            bounce = FindObjectOfType<PlayerMovementNew>().jumpingPower*2f;
-            
         }
         else
         {
             Debug.Log("JumpPad.cs cannot find a PlayerMovement");
-            bounce = 16f;
+            bounceHeight = 4f;
         }
     }
 
@@ -32,7 +27,7 @@ public class JumpPad : MonoBehaviour
     {
         if (collision.gameObject.CompareTag("Player"))
         {
-            collision.gameObject.GetComponent<Rigidbody2D>().AddForce(Vector2.up * bounce, ForceMode2D.Impulse);
+            collision.gameObject.GetComponent<Rigidbody2D>().AddForce(Vector2.up * Mathf.Sqrt(-2f * bounceHeight * Physics2D.gravity.y), ForceMode2D.Impulse);
         }
     }
 }

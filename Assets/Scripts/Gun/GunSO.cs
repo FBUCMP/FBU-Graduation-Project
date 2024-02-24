@@ -21,7 +21,7 @@ public class GunSO : ScriptableObject, System.ICloneable
     public AudioConfigurationSO audioConfig;
 
     private MonoBehaviour activeMonoBehaviour; // bullet
-    private GameObject model;
+    [HideInInspector] public GameObject model;
     private AudioSource shootingAudioSource;
 
     public ICollisionHandler[] bulletImpactEffects = new ICollisionHandler[0];
@@ -180,6 +180,7 @@ public class GunSO : ScriptableObject, System.ICloneable
         
         if (shootRequest)
         {
+            Debug.DrawLine(gunPivot.position, mousePos, Color.red);
             TryToShoot();            
         }
     }
@@ -280,7 +281,7 @@ public class GunSO : ScriptableObject, System.ICloneable
         if (hitCollider.TryGetComponent(out IDamageable damageable))
         {
             
-            damageable.TakeDamage(damageConfig.GetDamage(distanceTraveled));
+            damageable.TakeDamage(damageConfig.GetDamage(distanceTraveled), hitLocation, 1);
         }
         foreach (ICollisionHandler handler in bulletImpactEffects)
         {
