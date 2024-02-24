@@ -15,20 +15,19 @@ public class RoomGenerator : MonoBehaviour
 	// TODO: square size 1den farkliysa collider hatalari olusuyor. bunu duzelt
 	public int width = 50;
 	public int height = 30;
-	public int roomIndex = 0;
-	public int squareSize = 1;
-	public int difficulty = 1;
-	public int borderSize = 1;
-	public bool[] gates = new bool[4]; // 0: up, 1: right, 2: down, 3: left
+    [HideInInspector] public int roomIndex = 0;
+	[HideInInspector] public int squareSize = 1;
+	[HideInInspector] public int difficulty = 1;
+    [HideInInspector] public int borderSize = 1;
+	[HideInInspector] public bool[] gates = new bool[4]; // 0: up, 1: right, 2: down, 3: left
 	public GameObject gatePrefab;
 
 	[Range(1,10)]
 	public int smoothness;
+	public Vector2Int perlinVals;
 	public string seed;
 	public bool useRandomSeed = true;
 
-	[Range(0, 100)]
-	public int randomFillPercent;
 
 	public float[,] mapWithValues;
 	void Start()
@@ -55,7 +54,7 @@ public class RoomGenerator : MonoBehaviour
 		mapWithValues = new float[width, height];
 		RandomFillMap(); // indexe bagli rastgelelikle doldur
 
-		for (int i = 0; i < 5; i++)
+		for (int i = 0; i < smoothness; i++)
 		{
 			SmoothMap();
 		}
@@ -148,7 +147,7 @@ public class RoomGenerator : MonoBehaviour
 		if (useRandomSeed)
 		{
 			
-			seed = Time.time.ToString() + roomIndex.ToString(); // time random icin, aynanda olusan odalar farkli olsun diye index eklendi
+			seed = UnityEngine.Random.Range(0,100) + roomIndex.ToString(); // time random icin, aynanda olusan odalar farkli olsun diye index eklendi
 		}
 
 		System.Random pseudoRandom = new System.Random(seed.GetHashCode());
@@ -164,10 +163,10 @@ public class RoomGenerator : MonoBehaviour
 				else
 				{
 					// perlin noise doesnt use randomfillpercent, it can with a custom round function
-					float val = Mathf.PerlinNoise((x / (float)width * smoothness) + pseudoRandom.Next(0, smoothness), (y / (float)height * smoothness) + pseudoRandom.Next(0, smoothness));// smoothness'i serpistirdim
+					float val = Mathf.PerlinNoise((x / (float)width * perlinVals.x) + pseudoRandom.Next(0, 100), 
+													(y / (float)height * perlinVals.y) + pseudoRandom.Next(0, 100));
 					val = Mathf.Clamp(val, 0f, 1f);
 					mapWithValues[x, y] = val;
-					//map[x, y] = (pseudoRandom.Next(0, 100) < randomFillPercent) ? 1 : 0; // kalani rastgele 1 veya 0 ver random noise üret
 				}
 			}
 		}
@@ -175,7 +174,7 @@ public class RoomGenerator : MonoBehaviour
 
 	void SmoothMap() // rastgelelik duzgun hale getiriliyor
 	{
-
+		int neighbourThreshold = 4; // 4 is the best
 		float[,] newMapWithValues = (float[,])mapWithValues.Clone();
 		for (int x = 0; x < width; x++)
 		{
@@ -183,12 +182,12 @@ public class RoomGenerator : MonoBehaviour
 			{
 				int neighbourWallTiles = GetSurroundingWallCount(x, y); // komsu duvar sayisi
 				// TODO: mapWithValues surrounding wallarýn degerlerini topla ve ortalamasini al
-				if (neighbourWallTiles > 4) // komsu duvar sayisi 4ten fazla ise duvar yap
+				if (neighbourWallTiles > neighbourThreshold) // komsu duvar sayisi thresholddan fazla ise duvar yap
 				{
 					newMapWithValues[x, y] += 0.5f;
 				}
 					
-				else if (neighbourWallTiles < 4) // komsu duvar sayisi 4ten az ise bosluk yap
+				else if (neighbourWallTiles < neighbourThreshold) // komsu duvar sayisi threshholddan az ise bosluk yap
 				{
 					newMapWithValues[x, y] -= 0.5f;
 				}
