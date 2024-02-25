@@ -8,15 +8,20 @@ public class DashAbility : AbilityManager
 {
     public float dashVelocity;
 
+    private float gravity;
     public override void Activate(GameObject parent)
     {
         PlayerMovementNew movement = parent.GetComponent<PlayerMovementNew>();
-        Rigidbody2D rigidbody = parent.GetComponent<Rigidbody2D>();
-
-        //rigidbody.velocity = new Vector2(transform.localScale.x * dashingPower, 0f);
-        //rigidbody.velocity = movement.movementInput.normalized * dashVelocity;
-
-        
+        gravity = movement.rb.gravityScale;
+        movement.isDashing = true;
+        movement.rb.gravityScale = 0f;
+        movement.rb.velocity = new Vector2(movement.movementInput * dashVelocity, 0f);
+   
     }
-
+    public override void BeginCooldown(GameObject parent)
+    {
+        PlayerMovementNew movement = parent.GetComponent<PlayerMovementNew>();
+        movement.rb.gravityScale = gravity;
+        movement.isDashing = false;
+    }
 }

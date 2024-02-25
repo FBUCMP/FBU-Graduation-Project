@@ -2,10 +2,13 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.IO;
+using UnityEditor.Playables;
 using UnityEngine;
 
 public class PlayerMovementNew : MonoBehaviour
 {
+    //Ability Dash
+    public float movementInput;
 
     // Movement kismi
     [SerializeField] private PlayerAction playerAction;
@@ -15,14 +18,9 @@ public class PlayerMovementNew : MonoBehaviour
     private float jumpVelocity;
     private bool isFacingRight = true;
 
-    // Dash kismi
-    private bool canDash = true;
-    private bool isDashing;
-    private float dashingPower = 30f;
-    private float dashingTime = 0.25f; // dpower/120 is a good value
-    private float dashingCooldown = 1f;
-    // dash sonrasi arkada iz birakmasi için 
-    [SerializeField] private TrailRenderer tr;
+
+    public bool isDashing;
+
 
     // wall sliding ve wall jumping kismi
     private bool isWallSliding;
@@ -36,7 +34,9 @@ public class PlayerMovementNew : MonoBehaviour
     private Vector2 walljumpVelocity = new Vector2(8f, 16f);
 
     [SerializeField] private float velocity_test = 0f;
-    [SerializeField] private Rigidbody2D rb;
+    [SerializeField] public Rigidbody2D rb;
+    
+
     private BoxCollider2D boxCollider;
 
     //[SerializeField] private Transform groundCheck;
@@ -63,14 +63,13 @@ public class PlayerMovementNew : MonoBehaviour
     //animator
     [SerializeField] private Transform center; // playerin orta noktasi
     private Animator animator;
+
+
     private void Awake()
     {
         // yunus - sayisal islemler
         boxCollider = GetComponent<BoxCollider2D>();
-        //dashingPower *= Mathf.Sqrt(transform.localScale.x);
-        dashingTime /= Mathf.Sqrt(transform.localScale.x);
-        //Debug.Log(dashingPower);
-        //Debug.Log(dashingTime);
+     
         speed *= Mathf.Sqrt(transform.localScale.x);
         //jumpVelocity *= Mathf.Sqrt(transform.localScale.x);
         jumpVelocity = Mathf.Sqrt(-2f * jumpHeight * Physics2D.gravity.y); // initial vel^2 = -2 * g * h
@@ -94,10 +93,17 @@ public class PlayerMovementNew : MonoBehaviour
     void Update()
     {
         playerAction.isStopped = false;
+
+        movementInput = horizontal;
+
+        // ************* DASH **************
         if (isDashing)
         {
             return;
         }
+        
+
+
         horizontal = Input.GetAxisRaw("Horizontal");
 
         if (IsGrounded() && !Input.GetButton("Jump"))
@@ -122,11 +128,9 @@ public class PlayerMovementNew : MonoBehaviour
             // tuþa basýldýðý anda ve basýlý tutulduðu anda olan
             // zýplama deðiþimi
         }
+        
 
-        if (Input.GetKeyDown(KeyCode.LeftShift) && canDash)
-        {
-            StartCoroutine(Dash());
-        }
+
 
         WallSlide();
         WallJump();
@@ -179,17 +183,6 @@ public class PlayerMovementNew : MonoBehaviour
         // iki noktada daire olusturup checklemek yerine box ile daha etkili bir sekilde checkliyoruz
         return Physics2D.OverlapBox(groundCheckM.position, new Vector2(boxCollider.size.x * transform.localScale.x * 1f, 1.5f * transform.localScale.y), 0f, groundLayer);
     }
-    /*
-    //erdo isgrounded
-    
-    private bool IsGrounded()
-    {
-        //return Physics2D.OverlapCircle(groundCheck.position, 0.2f, groundLayer);
-
-        // rampa gibi þekillerde yürüme ve zýplama sýkýntýsý yaþanýyordu bunun için yapýldý
-        return Physics2D.OverlapCircle(groundCheckR.position, 0.2f, groundLayer) || Physics2D.OverlapCircle(groundCheckL.position, 0.2f, groundLayer);
-    }
- */
 
     private void OnDrawGizmos()
     {
@@ -211,10 +204,12 @@ public class PlayerMovementNew : MonoBehaviour
 
     private void FixedUpdate()
     {
+        // ************* DASH **************
         if (isDashing)
         {
             return;
         }
+        
         if (!isWallJumping)
         {
             rb.velocity = new Vector2(horizontal * speed, rb.velocity.y);
@@ -298,35 +293,6 @@ public class PlayerMovementNew : MonoBehaviour
         transform.localScale = localScale;
 
         OnFlipped?.Invoke();
-    }
-
-    // Dash özelliði için Coroutine kullandýk burada karakter dash atabiliyorsa anlýk olarak yatay düzlemde dashingPower kadar 
-    // |   gravity'den etkilenmeyerek ilerleyecek ve sonra hareket bittiðinde gravity tekrar olmasý gereken deðerine dönecek
-    // |    
-    // •--> Dash süresini ve dash dolum süresini daha iyi kontrol edebilmek adýna
-    private IEnumerator Dash()
-    {
-        canDash = false;
-        isDashing = true;
-        float originalGravity = rb.gravityScale;
-        rb.gravityScale = 0f;
-        rb.velocity = new Vector2(transform.localScale.x * dashingPower, 0f);
-
-        //DASH SOUND
-
-        if (audioManager)
-        {
-            audioManager.PlaySFX(audioManager.dash);
-        }
-
-        //
-        tr.emitting = true;
-        yield return new WaitForSeconds(dashingTime);
-        tr.emitting = false;
-        rb.gravityScale = originalGravity;
-        isDashing = false;
-        yield return new WaitForSeconds(dashingCooldown);
-        canDash = true;
     }
 }
 

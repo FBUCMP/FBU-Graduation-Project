@@ -37,6 +37,7 @@ public class AbilityHolder : MonoBehaviour
                 }
                 else
                 {
+                    ability.BeginCooldown(gameObject);
                     state = AbilityState.cooldown;
                     cooldownTime = ability.cooldownTime;
                 }
