@@ -1,21 +1,28 @@
 using UnityEngine;
 
-[DisallowMultipleComponent]
-public class Enemy : MonoBehaviour
+public class Enemy
 {
-    public EnemyHealth health;
-    public EnemyMovement movement;
-    public EnemyPainResponse painResponse;
+    public string Name { get; set; }
+    public float Health { get; set; }
+    public float Speed { get; set; }
+    public float Power { get; set; }
+    public Vector2 Position { get; set; }
+    public GameObject Prefab { get; set; }
 
-    private void Start()
+    public Enemy(string name, float health, float speed, float power, Vector2 position, GameObject prefab)
     {
-        health.OnTakeDamage += painResponse.HandlePain;
-        health.OnDeath += Die;
+        Name = name;
+        Health = health;
+        Speed = speed;
+        Power = power;
+        Position = position;
+        Prefab = prefab;
     }
 
-    private void Die(Vector3 Position)
+    public void ModifyStats(float healthMultiplier, float speedMultiplier, float powerMultiplier)
     {
-        movement.StopMoving();
-        painResponse.HandleDeath();
+        Health *= healthMultiplier;
+        Speed *= speedMultiplier;
+        Power *= powerMultiplier;
     }
 }
