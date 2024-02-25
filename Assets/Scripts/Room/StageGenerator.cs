@@ -32,8 +32,8 @@ public class StageGenerator : MonoBehaviour
 
     private List<bool[]> gatesList; // bool[] = 0: up, 1: right, 2: down, 3: left
 
-    [Header("------- Player Prefab ------------")]
-    public GameObject playerPrefab;
+    //[Header("------- Player Prefab ------------")]
+    private GameObject playerPrefab;
     private GameObject player;
 
     private int[,] roomData; /* orn:
@@ -314,11 +314,8 @@ public class StageGenerator : MonoBehaviour
                 roomsGen.gates = gatesList[roomsList.IndexOf(roomCoord)];
                 roomsGen.difficulty = stageDifficulty + Random.Range(0,3);
                 roomsGen.squareSize = squareSize;
-                // if the first generated room
-                if (roomsList.IndexOf(roomCoord) == 0)
-                {
-                    roomsGen.randomFillPercent -= 5;
-                }
+                // // can do changes to the first generated room HERE with roomsList.IndexOf(roomCoord) == 0
+                
                 roomsGen.GenerateMap(); // generate mapi elle cagiriyoruz.
 
 
