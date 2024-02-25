@@ -21,6 +21,16 @@ public class PlayerMovementNew : MonoBehaviour
 
     public bool isDashing;
 
+    // 25.02.2024
+    // cyoto time and jump buffering
+    private float coyoteTime = 0.4f; // test için 2f verildi def 0.2f ayarlanabilir
+    private float coyoteCounter;
+
+    private float jumpBufferTime = 0.3f; // test için 3f verildi def 0.2f ayarlanabilir
+    private float jumpBufferCounter;
+
+
+    // 25.02.2024 end
 
     // wall sliding ve wall jumping kismi
     private bool isWallSliding;
@@ -106,18 +116,40 @@ public class PlayerMovementNew : MonoBehaviour
 
         horizontal = Input.GetAxisRaw("Horizontal");
 
+        //-------------------------------------- coyote time and jump buffer
+        if (IsGrounded())
+        {
+            coyoteCounter = coyoteTime;
+        }
+        else
+        {
+            coyoteCounter -= Time.deltaTime;
+        }
+        if (Input.GetButtonDown("Jump"))
+        {
+            jumpBufferCounter = jumpBufferTime;
+        }
+        else
+        {
+            jumpBufferCounter -= Time.deltaTime;
+        }
+
+        //-------------------------------------- 
+
         if (IsGrounded() && !Input.GetButton("Jump"))
         {
             doubleJump = false;
         }
 
-        if (Input.GetButtonDown("Jump"))
+        if (jumpBufferCounter > 0f)
         {
-            if (IsGrounded() || doubleJump)
+            if (coyoteCounter > 0f || doubleJump)
             {
                 rb.velocity = new Vector2(rb.velocity.x, jumpVelocity);
 
                 doubleJump = !doubleJump;
+
+                jumpBufferCounter = 0f;
             }
 
         }
@@ -127,6 +159,8 @@ public class PlayerMovementNew : MonoBehaviour
             rb.velocity = new Vector2(rb.velocity.x, rb.velocity.y * 0.5f);
             // tuþa basýldýðý anda ve basýlý tutulduðu anda olan
             // zýplama deðiþimi
+
+            coyoteCounter = 0f;
         }
         
 
