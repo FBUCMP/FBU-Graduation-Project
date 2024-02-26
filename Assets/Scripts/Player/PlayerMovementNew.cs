@@ -55,7 +55,7 @@ public class PlayerMovementNew : MonoBehaviour
     public event Action OnFlipped;
 
     //double jump
-    private bool doubleJump;
+    public bool doubleJump;
 
     // AUDIO MANAGER
     AudioManager audioManager;
