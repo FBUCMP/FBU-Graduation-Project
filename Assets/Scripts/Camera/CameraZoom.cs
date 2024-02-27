@@ -9,7 +9,7 @@ public class CameraZoom : MonoBehaviour
     private float zoom;
     private float zoomMultiplier = 6f;
     private float minZoom = 4f;
-    private float maxZoom = 32f;
+    public float maxZoom = 32f;
     private float velocity = 0;
     private float smoothTime = .25f;
 

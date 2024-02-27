@@ -38,18 +38,6 @@ public class RoomHealth : MonoBehaviour, IDamageable
             else
             {
                 Debug.DrawLine(hitPos, meshGen.GetPosFromIndex(indexes[0], roomGen.squareSize), Color.red, 1f);
-                /*
-                for (int x = index.x - r; x < index.x + r; x++)
-                {
-                    for (int y = index.y - r; y < index.y + r; y++)
-                    {
-                        //float distance = Vector2.Distance(meshGen.GetPosFromIndex(new Vector2Int(x,y), roomGen.squareSize), meshGen.GetPosFromIndex(index, roomGen.squareSize));
-                        float distance = MathF.Sqrt(MathF.Pow(x - index.x, 2) + MathF.Pow(y - index.y, 2));
-                        float damageApplied = Mathf.Min(newDamage * (1 - distance / r), meshGen.mapWithValues[x, y]);
-                        ApplyDamage(damageApplied, new Vector2Int(x, y), r);
-                    }
-                }
-                */
                 for (int i = 0; i < indexes.Length; i++)
                 {
                     float distance = Vector2.Distance(meshGen.GetPosFromIndex(indexes[i], roomGen.squareSize), hitPos);
@@ -88,7 +76,7 @@ public class RoomHealth : MonoBehaviour, IDamageable
         }
         else
         {
-            Debug.Log($"Wall you try to break ({index.x}, {index.y}) is out of bounds");
+            //Debug.Log($"Wall you try to break ({index.x}, {index.y}) is out of bounds");
         }
     }
     void Awake()

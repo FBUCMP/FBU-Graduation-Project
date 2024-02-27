@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class CameraFollow : MonoBehaviour
 {
-    public GameObject targetObject;
+    public Transform target;
 
     // proje 2d olduðu için kamera Z'yi -10dan baslattim. Yoksa goruntu alamiyorduk
     public Vector3 cameraOffset = new Vector3(0, 0, -10f);
@@ -12,14 +12,14 @@ public class CameraFollow : MonoBehaviour
     private Vector3 velocity = Vector3.zero;
 
     public float smoothTime = 0.25f;
-
+    [HideInInspector] public float maxX, maxY, minX, minY;
     private void Start()
     {
         // baþlangýçta target objecti tag üzerinden player seçmek için 
         // cameranýn takip edeceði obje haliyle player
         if (GameObject.FindGameObjectWithTag("Player"))
         {
-            targetObject = GameObject.FindGameObjectWithTag("Player");
+            target = GameObject.FindGameObjectWithTag("Player").transform;
 
         }
         else
@@ -34,16 +34,22 @@ public class CameraFollow : MonoBehaviour
     */
     private void LateUpdate()
     {
-        targetObject = GameObject.FindGameObjectWithTag("Player");
-        if (targetObject)
+        target = GameObject.FindGameObjectWithTag("Player").transform;
+        if (target)
         {
-            targetedPosition = targetObject.transform.position + cameraOffset; // kameranýn hedef pozisyonunu hesaplar
-            //Debug.Log("targetedPosition: " + targetedPosition);
-            // soft bir kamera takibi için SmoothDamp kullandýk.
-            // Vector3.SmoothDamp, 
-            // bir vektörün diðer bir vektöre yumuþak bir þekilde (smoothTime) geçiþini saðlar.
-            // transform.position'dan targetedPosition'a doðru geçiþ yapýlýr
-            // referans vektörü velocity ve geçiþin süresi smoothTime.
+            targetedPosition = target.position + cameraOffset; // kameranýn hedef pozisyonunu hesaplar
+            if (minX != 0 && minY != 0 && maxX != 0 && maxY != 0)
+            {
+                targetedPosition.x = Mathf.Clamp(targetedPosition.x, minX, maxX); // x ekseninde kamera sýnýrlarýný belirler
+                targetedPosition.y = Mathf.Clamp(targetedPosition.y, minY, maxY); // y ekseninde kamera sýnýrlarýný belirler
+            }
+            /*Debug.Log("targetedPosition: " + targetedPosition);
+             soft bir kamera takibi için SmoothDamp kullandýk.
+             Vector3.SmoothDamp, 
+             bir vektörün diðer bir vektöre yumuþak bir þekilde (smoothTime) geçiþini saðlar.
+             transform.position'dan targetedPosition'a doðru geçiþ yapýlýr
+             referans vektörü velocity ve geçiþin süresi smoothTime.
+            */
             transform.position = Vector3.SmoothDamp(transform.position, targetedPosition, ref velocity, smoothTime);
 
         }
