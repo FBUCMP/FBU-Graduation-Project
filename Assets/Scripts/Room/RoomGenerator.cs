@@ -11,12 +11,11 @@ public class RoomGenerator : MonoBehaviour
 	 * yani room jsonunu okuyan kisim olustur. room jsonu yoksa random olsun.
 	 */
 
-	// TODO: square size gate kýsmýný 0 yapmýyor. bunu duzelt
-	// TODO: square size 1den farkliysa collider hatalari olusuyor. bunu duzelt
+	
 	public int width = 50;
 	public int height = 30;
     [HideInInspector] public int roomIndex = 0;
-	[HideInInspector] public int squareSize = 1;
+	[HideInInspector] public int squareSize = 1; // square size > 1 causes errors
 	[HideInInspector] public int difficulty = 1;
     [HideInInspector] public int borderSize = 1;
 	[HideInInspector] public bool[] gates = new bool[4]; // 0: up, 1: right, 2: down, 3: left
@@ -81,14 +80,14 @@ public class RoomGenerator : MonoBehaviour
 		
         // 0: up, 1: right, 2: down, 3: left
 		int platformLength = (int) 5 / squareSize;
-		int gateSpaceSize = (int)10 / squareSize;
+		int gateSpaceSize = (int)8 / squareSize;
 		float gateDistanceToWall = 1.25f * squareSize;
 		Vector3 roomBottomLeft = new Vector3(transform.position.x - (width/2) * squareSize, transform.position.y - (height/2) * squareSize, 0);
         if (gates[0]) // up
         {  
 
-            DrawCicle(borderedMapWithValues, new Vector2Int(width / 2 , height - 1 ), 0, gateSpaceSize);
-            DrawCicle(borderedMapWithValues, new Vector2Int(width / 2 , height - 3 ), 0, gateSpaceSize);
+            DrawCicle(borderedMapWithValues, new Vector2Int(width / 2 , height - 1 ), 0, gateSpaceSize*2);
+            DrawCicle(borderedMapWithValues, new Vector2Int(width / 2 , height - 3 ), 0, gateSpaceSize * 2);
 
             for (int i = 0; i < platformLength; i++)
 			{
@@ -96,43 +95,47 @@ public class RoomGenerator : MonoBehaviour
             }
 			GameObject g0 = (GameObject)Instantiate(gatePrefab, roomBottomLeft + new Vector3(width * squareSize / 2 ,  height * squareSize - (gateDistanceToWall - borderSize) -1, 0), Quaternion.Euler(0,0,90));
 			g0.transform.parent = transform;
+			g0.GetComponent<Gate>().direction = 0;
 
         }
         if (gates[1]) // right
         {
-            DrawCicle(borderedMapWithValues, new Vector2Int(width - 1 , height / 2), 0, gateSpaceSize);
-            DrawCicle(borderedMapWithValues, new Vector2Int(width - 3 , height / 2), 0, gateSpaceSize);
+            DrawCicle(borderedMapWithValues, new Vector2Int(width - 1 , height / 2), 0, gateSpaceSize * 2);
+            DrawCicle(borderedMapWithValues, new Vector2Int(width - 3 , height / 2), 0, gateSpaceSize * 2);
             for (int i = 0; i < platformLength; i++)
             {
                 DrawCicle(borderedMapWithValues, new Vector2Int((width)-i , (height / 2) - gateSpaceSize), 0.5f, 1);
             }
             GameObject g1 = (GameObject)Instantiate(gatePrefab, roomBottomLeft + new Vector3( width * squareSize - (gateDistanceToWall - borderSize) -1,  height * squareSize / 2, 0), Quaternion.identity);
             g1.transform.parent = transform;
+			g1.GetComponent<Gate>().direction = 1;
 
         }
         if (gates[2]) // down
         {
 
-            DrawCicle(borderedMapWithValues, new Vector2Int(width / 2 , 0 ), 0, gateSpaceSize);
-            DrawCicle(borderedMapWithValues, new Vector2Int(width / 2 , 2 ), 0, gateSpaceSize);
+            DrawCicle(borderedMapWithValues, new Vector2Int(width / 2 , 0 ), 0, gateSpaceSize * 2);
+            DrawCicle(borderedMapWithValues, new Vector2Int(width / 2 , 2 ), 0, gateSpaceSize * 2);
             for (int i = 0; i < platformLength; i++)
             {
                 DrawCicle(borderedMapWithValues, new Vector2Int((width / 2) - ((int)(platformLength / 2)) + i , gateSpaceSize), 0.5f, 1);
             }
             GameObject g2 = (GameObject)Instantiate(gatePrefab, roomBottomLeft + new Vector3( width * squareSize / 2 , (gateDistanceToWall - borderSize ), 0), Quaternion.Euler(0, 0, -90));
             g2.transform.parent = transform;
+			g2.GetComponent<Gate>().direction = 2;
         }
         if (gates[3]) // left
         {
 
-            DrawCicle(borderedMapWithValues, new Vector2Int(0 , height / 2 ), 0, gateSpaceSize);
-            DrawCicle(borderedMapWithValues, new Vector2Int(2 , height / 2 ), 0, gateSpaceSize);
+            DrawCicle(borderedMapWithValues, new Vector2Int(0 , height / 2 ), 0, gateSpaceSize * 2);
+            DrawCicle(borderedMapWithValues, new Vector2Int(2 , height / 2 ), 0, gateSpaceSize * 2);
             for (int i = 0;i < platformLength; i++)
 			{
 				DrawCicle(borderedMapWithValues, new Vector2Int(1+i , (height / 2) - gateSpaceSize), 0.5f, 1);
 			}
             GameObject g3 = (GameObject)Instantiate(gatePrefab, roomBottomLeft + new Vector3((gateDistanceToWall - borderSize ) , height * squareSize / 2 , 0), Quaternion.Euler(0, 0, 180));
             g3.transform.parent = transform;
+			g3.GetComponent<Gate>().direction = 3;
         }
 		
         

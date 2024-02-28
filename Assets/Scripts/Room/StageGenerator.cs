@@ -27,10 +27,11 @@ public class StageGenerator : MonoBehaviour
     [Header("------- Room Prefab ------------")]
     public GameObject roomPrefab;
     private int squareSize = 1;
-    private int roomWidth; // room prefabin boyutlari
-    private int roomHeight;
+    [HideInInspector] public int roomWidth; // room prefabin boyutlari
+    [HideInInspector] public int roomHeight;
 
-    private List<bool[]> gatesList; // bool[] = 0: up, 1: right, 2: down, 3: left
+    [HideInInspector] public List<bool[]> gatesList; // bool[] = 0: up, 1: right, 2: down, 3: left
+    [HideInInspector] public Dictionary<Vector2Int, Vector3[]> tpPoints = new Dictionary<Vector2Int, Vector3[]>(); // room kordinatlari ve oda kordinatlarina gore kapi kordinatlari
 
     //[Header("------- Player Prefab ------------")]
     private GameObject playerPrefab;
@@ -55,9 +56,10 @@ public class StageGenerator : MonoBehaviour
 
     private List<Vector2Int> tempQueue; // ustunde calisilan odayi aliyor is bitince siliyor
 
-    private List<Vector2Int> roomsList; /* olusturulan tum odalarin kordinatlari
+    [HideInInspector] public List<Vector2Int> roomsList; /* olusturulan tum odalarin kordinatlari
                                          * orn: [4,9], [4,8], [3,8], [2,8], [4,7] ...
                                          */
+
 
     // Start is called before the first frame update
     void Awake()
@@ -175,32 +177,46 @@ public class StageGenerator : MonoBehaviour
         
     }
     */
-    void CalculateConnectedSides() // 0: up, 1: right, 2: down, 3: left
+    void CalculateConnectedSides() // connected rooms
     {
         gatesList = new List<bool[]>(); // 0: up, 1: right, 2: down, 3: left
-        
         for (int i = 0; i < roomsList.Count; i++)
         {
             bool[] connectedSides = new bool[4];
             Vector2Int room = roomsList[i];
-            if(roomsList.Contains(new Vector2Int(room.x, room.y + 1)))
+            Vector3[] tpPointsArray = new Vector3[4];
+            float offset = 8f;
+            // notice that the order is different than the gatesList to match the direction of the gates
+            tpPointsArray[2] = new Vector3(room.x * roomWidth, (room.y * roomHeight + roomHeight / 2) - offset, 0); // up
+            tpPointsArray[3] = new Vector3( (room.x * roomWidth + roomWidth / 2) - offset, room.y * roomHeight, 0); // right
+            tpPointsArray[0] = new Vector3(room.x * roomWidth, (room.y * roomHeight - roomHeight / 2) + offset, 0); // down
+            tpPointsArray[1] = new Vector3( (room.x * roomWidth - roomWidth / 2) + offset, room.y * roomHeight, 0); // left
+            if(roomsList.Contains(new Vector2Int(room.x, room.y + 1))) // up
             {
                 connectedSides[0] = true;
             }
-            if (roomsList.Contains(new Vector2Int(room.x + 1, room.y)))
+            if (roomsList.Contains(new Vector2Int(room.x + 1, room.y))) // right
             {
                 connectedSides[1] = true;
             }
-            if (roomsList.Contains(new Vector2Int(room.x, room.y - 1)))
+            if (roomsList.Contains(new Vector2Int(room.x, room.y - 1))) // down
             {
                 connectedSides[2] = true;
             }
-            if (roomsList.Contains(new Vector2Int(room.x - 1, room.y)))
+            if (roomsList.Contains(new Vector2Int(room.x - 1, room.y))) // left
             {
                 connectedSides[3] = true;
             }
             gatesList.Add(connectedSides); // all bools have all true values
-
+            if (tpPoints.ContainsKey(room))
+            {
+                tpPoints[room] = tpPointsArray;
+            }
+            else
+            { 
+                tpPoints.Add(room, tpPointsArray);
+            }
+            //Debug.Log(room);
         }
 
     }
@@ -210,6 +226,10 @@ public class StageGenerator : MonoBehaviour
         roomData = new int[width, height];
         tempQueue = new List<Vector2Int>();
         roomsList = new List<Vector2Int>();
+
+        gatesList = new List<bool[]>();
+        tpPoints = new Dictionary<Vector2Int, Vector3[]>();
+
         // fill roomData with 0
         for (int x = 0; x < width; x++)
         {
@@ -255,7 +275,10 @@ public class StageGenerator : MonoBehaviour
                         {
                             roomData[neighborCell.x, neighborCell.y] = 1; //burada secilen oda 0 -> 1 e degistiriliyor
                             tempQueue.Add(neighborCell); // tempQueue alinip siliyor gecici
-                            roomsList.Add(neighborCell); // roomsList bastan olusma sirasina gore ekliyor ve kalici. oda kordinatlari
+                            if (!roomsList.Contains(neighborCell))
+                            {
+                                roomsList.Add(neighborCell); // roomsList bastan olusma sirasina gore ekliyor ve kalici. oda kordinatlari
+                            }
                             generatedRooms++;
                         }
 

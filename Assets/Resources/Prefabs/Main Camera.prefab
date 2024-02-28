@@ -14,6 +14,7 @@ GameObject:
   - component: {fileID: 5010791633259414771}
   - component: {fileID: 8954948516552763750}
   - component: {fileID: 8451387975870596112}
+  - component: {fileID: 5906450294803554883}
   m_Layer: 0
   m_Name: Main Camera
   m_TagString: MainCamera
@@ -45,8 +46,8 @@ Camera:
   m_GameObject: {fileID: 684270734693412767}
   m_Enabled: 1
   serializedVersion: 2
-  m_ClearFlags: 1
-  m_BackGroundColor: {r: 0.19215687, g: 0.3019608, b: 0.4745098, a: 0}
+  m_ClearFlags: 2
+  m_BackGroundColor: {r: 0, g: 0, b: 0, a: 0}
   m_projectionMatrixMode: 1
   m_GateFitMode: 2
   m_FOVAxisMode: 0
@@ -118,7 +119,7 @@ MonoBehaviour:
     m_Bits: 1
   m_VolumeTrigger: {fileID: 0}
   m_VolumeFrameworkUpdateModeOption: 2
-  m_RenderPostProcessing: 0
+  m_RenderPostProcessing: 1
   m_Antialiasing: 0
   m_AntialiasingQuality: 2
   m_StopNaN: 0
@@ -151,6 +152,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 61b0bb259ec6d5a47b620aa6444c7055, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  maxZoom: 32
 --- !u!114 &8451387975870596112
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -163,7 +165,25 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 7435ad860a0a1b4468eb2b9f4c0859a0, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  targetObject: {fileID: 0}
+  target: {fileID: 0}
   cameraOffset: {x: 0, y: 0, z: -10}
   targetedPosition: {x: 10.65, y: 0.88, z: -10}
   smoothTime: 0.25
+  maxX: 0
+  maxY: 0
+  minX: 0
+  minY: 0
+--- !u!114 &5906450294803554883
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 684270734693412767}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: c8854736ee8b7604283322f73ee7778d, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  roomWidth: 100
+  roomHeight: 50
