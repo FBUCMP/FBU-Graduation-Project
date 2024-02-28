@@ -6,6 +6,7 @@ using static UnityEngine.RuleTile.TilingRuleOutput;
 [CreateAssetMenu]
 public class DashAbility : AbilityManager
 {
+    
     public float dashVelocity;
 
     private float gravity;

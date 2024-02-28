@@ -4,6 +4,7 @@ using UnityEngine;
 
 public class AbilityManager : ScriptableObject
 {
+    public KeyCode key;
     public new string name;
     public float cooldownTime;
     public float activeTime;

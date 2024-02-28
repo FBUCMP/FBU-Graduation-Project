@@ -13,7 +13,7 @@ public class PlayerMovementNew : MonoBehaviour
     // Movement kismi
     [SerializeField] private PlayerAction playerAction;
     private float horizontal;
-    [SerializeField] private float speed = 8f;
+    [SerializeField] public float speed = 8f;
     public float jumpHeight = 20f;
     private float jumpVelocity;
     private bool isFacingRight = true;

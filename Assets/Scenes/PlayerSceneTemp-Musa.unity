@@ -1481,6 +1481,22 @@ PrefabInstance:
       propertyPath: m_LocalRotation.z
       value: 0.268604
       objectReference: {fileID: 0}
+    - target: {fileID: 8145619094936080059, guid: 38706b82ce779444e981b979785a554a, type: 3}
+      propertyPath: ability
+      value: 
+      objectReference: {fileID: 11400000, guid: c832d7d96b435b9458b8f8f82746792c, type: 2}
+    - target: {fileID: 8145619094936080059, guid: 38706b82ce779444e981b979785a554a, type: 3}
+      propertyPath: abilities.Array.size
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 8145619094936080059, guid: 38706b82ce779444e981b979785a554a, type: 3}
+      propertyPath: abilities.Array.data[0]
+      value: 
+      objectReference: {fileID: 11400000, guid: 4d80229d2b1a0524a8794762026602df, type: 2}
+    - target: {fileID: 8145619094936080059, guid: 38706b82ce779444e981b979785a554a, type: 3}
+      propertyPath: abilities.Array.data[1]
+      value: 
+      objectReference: {fileID: 11400000, guid: c832d7d96b435b9458b8f8f82746792c, type: 2}
     - target: {fileID: 9187415687850968742, guid: 38706b82ce779444e981b979785a554a, type: 3}
       propertyPath: m_LocalRotation.w
       value: 0.99965006
@@ -4490,7 +4506,7 @@ PrefabInstance:
     m_Modifications:
     - target: {fileID: 94219611910768170, guid: 151f1ff787f4e514988de879e942f7f3, type: 3}
       propertyPath: numberOfEnemiesToSpawn
-      value: 5
+      value: 2
       objectReference: {fileID: 0}
     - target: {fileID: 94219611910768170, guid: 151f1ff787f4e514988de879e942f7f3, type: 3}
       propertyPath: enemyDataList.Array.size
@@ -4498,7 +4514,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 94219611910768170, guid: 151f1ff787f4e514988de879e942f7f3, type: 3}
       propertyPath: validColliders.Array.size
-      value: 5
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 94219611910768170, guid: 151f1ff787f4e514988de879e942f7f3, type: 3}
       propertyPath: validColliders.Array.data[0]
@@ -4522,15 +4538,27 @@ PrefabInstance:
       objectReference: {fileID: 623966250}
     - target: {fileID: 94219611910768170, guid: 151f1ff787f4e514988de879e942f7f3, type: 3}
       propertyPath: enemyDataList.Array.data[0].name
-      value: Yunus
+      value: EnemyFly
+      objectReference: {fileID: 0}
+    - target: {fileID: 94219611910768170, guid: 151f1ff787f4e514988de879e942f7f3, type: 3}
+      propertyPath: enemyDataList.Array.data[1].name
+      value: 
       objectReference: {fileID: 0}
     - target: {fileID: 94219611910768170, guid: 151f1ff787f4e514988de879e942f7f3, type: 3}
       propertyPath: enemyDataList.Array.data[0].power
-      value: 1
+      value: 5
       objectReference: {fileID: 0}
     - target: {fileID: 94219611910768170, guid: 151f1ff787f4e514988de879e942f7f3, type: 3}
       propertyPath: enemyDataList.Array.data[0].speed
       value: 5
+      objectReference: {fileID: 0}
+    - target: {fileID: 94219611910768170, guid: 151f1ff787f4e514988de879e942f7f3, type: 3}
+      propertyPath: enemyDataList.Array.data[1].power
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 94219611910768170, guid: 151f1ff787f4e514988de879e942f7f3, type: 3}
+      propertyPath: enemyDataList.Array.data[1].speed
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 94219611910768170, guid: 151f1ff787f4e514988de879e942f7f3, type: 3}
       propertyPath: enemyDataList.Array.data[0].health
@@ -4539,10 +4567,22 @@ PrefabInstance:
     - target: {fileID: 94219611910768170, guid: 151f1ff787f4e514988de879e942f7f3, type: 3}
       propertyPath: enemyDataList.Array.data[0].prefab
       value: 
-      objectReference: {fileID: 7140912594573197821, guid: 38706b82ce779444e981b979785a554a, type: 3}
+      objectReference: {fileID: 6568199932609452222, guid: 597229b17136c87478b1ab1e779d50bf, type: 3}
+    - target: {fileID: 94219611910768170, guid: 151f1ff787f4e514988de879e942f7f3, type: 3}
+      propertyPath: enemyDataList.Array.data[1].health
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 94219611910768170, guid: 151f1ff787f4e514988de879e942f7f3, type: 3}
+      propertyPath: enemyDataList.Array.data[1].prefab
+      value: 
+      objectReference: {fileID: 0}
     - target: {fileID: 94219611910768170, guid: 151f1ff787f4e514988de879e942f7f3, type: 3}
       propertyPath: enemyDataList.Array.data[0].skillCooldown
-      value: 5
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 94219611910768170, guid: 151f1ff787f4e514988de879e942f7f3, type: 3}
+      propertyPath: enemyDataList.Array.data[1].skillCooldown
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 334265645257194765, guid: 151f1ff787f4e514988de879e942f7f3, type: 3}
       propertyPath: m_IsActive

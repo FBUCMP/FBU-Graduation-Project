@@ -4,9 +4,10 @@ using UnityEngine;
 
 public class AbilityHolder : MonoBehaviour
 {
-    public AbilityManager ability;
-    float cooldownTime;
-    float activeTime;
+    public List<AbilityManager> abilities;
+    List<float> cooldownTimes;
+    List<float> activeTimes;
+    List<AbilityState> states;
 
     enum AbilityState
     {
@@ -14,49 +15,63 @@ public class AbilityHolder : MonoBehaviour
         active,
         cooldown
     }
-    AbilityState state = AbilityState.ready;
 
-    public KeyCode key;
+    private void Start()
+    {
+        InitializeAbilities();
+    }
+
+    private void InitializeAbilities()
+    {
+        cooldownTimes = new List<float>();
+        activeTimes = new List<float>();
+        states = new List<AbilityState>();
+
+        foreach (var ability in abilities)
+        {
+            cooldownTimes.Add(0f);
+            activeTimes.Add(0f);
+            states.Add(AbilityState.ready);
+        }
+    }
 
     private void Update()
     {
-        switch (state)
+        for (int i = 0; i < abilities.Count; i++)
         {
-            case AbilityState.ready:
-                if (Input.GetKeyDown(key))
-                {
-                    ability.Activate(gameObject);
-                    state = AbilityState.active;
-                    activeTime = ability.activeTime;
-                }
-                break;
-            case AbilityState.active:
-                if(activeTime > 0)
-                {
-                    activeTime -= Time.deltaTime;
-                }
-                else
-                {
-                    ability.BeginCooldown(gameObject);
-                    state = AbilityState.cooldown;
-                    cooldownTime = ability.cooldownTime;
-                }
-                break;
-            case AbilityState.cooldown:
-                if (cooldownTime > 0)
-                {
-                    cooldownTime -= Time.deltaTime;
-                }
-                else
-                {
-                    state = AbilityState.ready;
-                }
-                break;
-
+            switch (states[i])
+            {
+                case AbilityState.ready:
+                    if (Input.GetKeyDown(abilities[i].key))
+                    {
+                        abilities[i].Activate(gameObject);
+                        states[i] = AbilityState.active;
+                        activeTimes[i] = abilities[i].activeTime;
+                    }
+                    break;
+                case AbilityState.active:
+                    if (activeTimes[i] > 0)
+                    {
+                        activeTimes[i] -= Time.deltaTime;
+                    }
+                    else
+                    {
+                        abilities[i].BeginCooldown(gameObject);
+                        states[i] = AbilityState.cooldown;
+                        cooldownTimes[i] = abilities[i].cooldownTime;
+                    }
+                    break;
+                case AbilityState.cooldown:
+                    if (cooldownTimes[i] > 0)
+                    {
+                        cooldownTimes[i] -= Time.deltaTime;
+                    }
+                    else
+                    {
+                        states[i] = AbilityState.ready;
+                    }
+                    break;
+            }
         }
-
-
-
     }
-
 }
