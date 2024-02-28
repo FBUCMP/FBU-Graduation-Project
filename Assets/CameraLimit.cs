@@ -11,19 +11,24 @@ public class CameraLimit : MonoBehaviour
     Camera cam;
     float cameraRatio = 16f / 9f;
     Vector3 roomCenter;
-    void Start()
+
+    private void Awake()
     {
+        GateManager.OnTeleport += OnTeleport;
         cam = GetComponent<Camera>();
         cameraZoom = GetComponent<CameraZoom>();
         cameraFollow = GetComponent<CameraFollow>();
+       
+    }
+    void Start()
+    {
 
         cameraZoom.maxZoom = CalculateMaxZoom();
-        Debug.Log("Max Zoom: " + cameraZoom.maxZoom);
-        GateManager.OnTeleport += OnTeleport;
+        //Debug.Log("Max Zoom: " + cameraZoom.maxZoom);
     }
 
     // Update is called once per frame
-    void Update()
+    void LateUpdate()
     {
         UpdateClamp();
         
@@ -40,15 +45,18 @@ public class CameraLimit : MonoBehaviour
     void OnTeleport(Vector3 roomCenter)
     {
         // if the player teleports to a new room, limit camera position to the new room
-        //Debug.Log("Room Center: " + roomCenter);
+        Debug.Log("Room Center: " + roomCenter);
         this.roomCenter = roomCenter;
         UpdateClamp();
     }
     void UpdateClamp()
     {
-        cameraFollow.maxX = (roomCenter.x + roomWidth / 2) - (cam.orthographicSize * cameraRatio);
-        cameraFollow.minX = (roomCenter.x - roomWidth / 2) + (cam.orthographicSize * cameraRatio);
-        cameraFollow.maxY = (roomCenter.y + roomHeight / 2) - cam.orthographicSize;
-        cameraFollow.minY = (roomCenter.y - roomHeight / 2) + cam.orthographicSize;
+        if (cam != null)
+        {
+            cameraFollow.maxX = (roomCenter.x + roomWidth / 2) - (cam.orthographicSize * cameraRatio);
+            cameraFollow.minX = (roomCenter.x - roomWidth / 2) + (cam.orthographicSize * cameraRatio);
+            cameraFollow.maxY = (roomCenter.y + roomHeight / 2) - cam.orthographicSize;
+            cameraFollow.minY = (roomCenter.y - roomHeight / 2) + cam.orthographicSize;
+        }
     }
 }

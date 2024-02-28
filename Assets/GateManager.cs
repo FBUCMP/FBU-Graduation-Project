@@ -6,7 +6,6 @@ public class GateManager : MonoBehaviour
 {
     //attached to Stage gameobject
     StageGenerator stageGen;
-    List<bool[]> gatesList;
     List<Vector2Int> roomsList;
     private Vector2Int currentRoom;
     Transform player;
@@ -15,18 +14,20 @@ public class GateManager : MonoBehaviour
     public delegate void TeleportEvent(Vector3 roomCenter);
     public static event TeleportEvent OnTeleport;
 
-
+    private void Awake()
+    {
+        Gate.OnGateCollide += OnGateCollide;
+    }
     void Start()
     {
         stageGen = GetComponent<StageGenerator>();
-        gatesList = stageGen.gatesList;
         roomsList = stageGen.roomsList;
         currentRoom = roomsList[0];
         Debug.Log("First Current room: " + currentRoom);
-        Gate.OnGateCollide += OnGateCollide;
         player = GameObject.FindGameObjectWithTag("Player").transform;
 
         TeleportTo(currentRoom, 0);
+
     }
     private void Update()
     {
@@ -53,7 +54,7 @@ public class GateManager : MonoBehaviour
         {
             this.currentRoom.x--;
         }
-            TeleportTo(this.currentRoom, dir);
+        TeleportTo(this.currentRoom, dir);
     }
     void TeleportTo(Vector2Int room, int dirFrom)
     {

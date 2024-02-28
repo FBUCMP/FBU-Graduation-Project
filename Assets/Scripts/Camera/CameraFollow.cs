@@ -43,7 +43,8 @@ public class CameraFollow : MonoBehaviour
                 targetedPosition.x = Mathf.Clamp(targetedPosition.x, minX, maxX); // x ekseninde kamera sýnýrlarýný belirler
                 targetedPosition.y = Mathf.Clamp(targetedPosition.y, minY, maxY); // y ekseninde kamera sýnýrlarýný belirler
             }
-            /*Debug.Log("targetedPosition: " + targetedPosition);
+            /*
+             Debug.Log("targetedPosition: " + targetedPosition);
              soft bir kamera takibi için SmoothDamp kullandýk.
              Vector3.SmoothDamp, 
              bir vektörün diðer bir vektöre yumuþak bir þekilde (smoothTime) geçiþini saðlar.
