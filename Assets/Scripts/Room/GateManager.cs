@@ -23,7 +23,6 @@ public class GateManager : MonoBehaviour
         stageGen = GetComponent<StageGenerator>();
         roomsList = stageGen.roomsList;
         currentRoom = roomsList[0];
-        //Debug.Log("First Current room: " + currentRoom);
         player = GameObject.FindGameObjectWithTag("Player").transform;
 
         TeleportTo(currentRoom, 0);
@@ -36,7 +35,6 @@ public class GateManager : MonoBehaviour
     void OnGateCollide(int dir)
     {
         // 0: up, 1: right, 2: down, 3: left
-        //Debug.Log("OnCollideCurrent room: " + this.currentRoom);
         Debug.Log("Collided with gate, dir: " + dir);
         if( dir == 0)
         {
@@ -62,7 +60,6 @@ public class GateManager : MonoBehaviour
         {
             newPos = stageGen.tpPoints[room][dirFrom];
         }
-        //Debug.Log("Teleported To: " + newPos);
         if (player != null && newPos != null)
         {
             player.position = newPos; // tppoints[room] -> gives array with 4 vectors. 0: down, 1: left, 2: up, 3: right (opposites of gates)
