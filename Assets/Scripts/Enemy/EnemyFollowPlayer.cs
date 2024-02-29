@@ -1,14 +1,16 @@
+using System.Collections.Generic;
 using UnityEngine;
 
 public class EnemyFollowPlayer : MonoBehaviour
 {
     [SerializeField] private float speed = 1.5f;
     private GameObject player;
-
     private bool hasLineOfSight = false;
 
+    private Collider2D enemyCollider;
     void Start()
     {
+        enemyCollider = GetComponent<Collider2D>();
         player = GameObject.FindGameObjectWithTag("Player");
     }
 
@@ -22,17 +24,21 @@ public class EnemyFollowPlayer : MonoBehaviour
 
     private void FixedUpdate()
     {
-        RaycastHit2D ray = Physics2D.Raycast(transform.position, player.transform.position - transform.position);
-        if (ray.collider != null)
+        Vector2 direction = player.transform.position - transform.position;
+        RaycastHit2D[] results = new RaycastHit2D[1];
+        int hitAmount = enemyCollider.Raycast(direction, results);
+        //RaycastHit2D hit = Physics2D.Raycast(transform.position, player.transform.position - transform.position);
+        RaycastHit2D hit = results[0];
+        if (hit.collider != null)
         {
-            hasLineOfSight = ray.collider.CompareTag("Player");
+            hasLineOfSight = hit.collider.CompareTag(player.tag);
             if (hasLineOfSight)
             {
-                Debug.DrawRay(transform.position, player.transform.position - transform.position, Color.green);
+                Debug.DrawRay(transform.position, direction, Color.green);
             }
             else
             {
-                Debug.DrawRay(transform.position, player.transform.position - transform.position, Color.red);
+                Debug.DrawRay(transform.position, direction, Color.red);
             }
         }
     }
