@@ -45,7 +45,7 @@ public class CameraLimit : MonoBehaviour
     void OnTeleport(Vector3 roomCenter)
     {
         // if the player teleports to a new room, limit camera position to the new room
-        Debug.Log("Room Center: " + roomCenter);
+
         this.roomCenter = roomCenter;
         UpdateClamp();
     }
