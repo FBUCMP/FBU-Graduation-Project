@@ -3,8 +3,9 @@ using UnityEngine;
 
 public class EnemyFollowPlayer : MonoBehaviour
 {
-    [SerializeField] private float speed = 3f;
-    public float memorySpan = 15f; // how long the enemy remembers the player
+    [SerializeField] private float speed = 5f;
+    [SerializeField] private float maxSteeringForce = 4f;
+    public float memorySpan = 25; // how long the enemy remembers the player
     public LayerMask groundLayer; // layermask for the ground
     private Rigidbody2D rb; // rigidbody of the enemy
     private Collider2D enemyCollider; // collider of the enemy
@@ -110,16 +111,10 @@ public class EnemyFollowPlayer : MonoBehaviour
             { 
                 ChangeState(EnemyState.Follow); // if there are waypoints, go to follow state
             }
-            /*
-            if (Vector2.Distance(transform.position, waypoints[0]) < 2f) // if enemy close to the waypoint
-            {
-                waypoints.RemoveAt(0); // remove that waypoint
-            }
-            */
             
             for (int i = 0; i < waypoints.Count; i++)
             {
-                if (Vector2.Distance(transform.position, waypoints[i]) < 2f) // if enemy close to a waypoint
+                if (Vector2.Distance(transform.position, waypoints[i]) < 1.5f) // if enemy close to a waypoint
                 {
                     if (i == waypoints.Count-1) // if the last waypoint
                     {
@@ -163,11 +158,24 @@ public class EnemyFollowPlayer : MonoBehaviour
             waypoints.RemoveAt(0);
         }
         */
+        
         if (waypoints.Count > 0)
         {
-            Vector2 direction = waypoints[0] - rb.position;
-            rb.velocity = direction.normalized * speed;
             
+            Vector2 desiredVelocity = (waypoints[0] - rb.position).normalized * speed;
+
+            // Calculate the steering force
+            Vector2 steeringForce = desiredVelocity - rb.velocity;
+
+            // Limit the steering force to prevent excessive acceleration
+            steeringForce = Vector2.ClampMagnitude(steeringForce, maxSteeringForce);
+
+            // Apply the steering force
+            rb.velocity += steeringForce * Time.fixedDeltaTime;
+
+            // Limit the velocity to the maximum speed
+            rb.velocity = Vector2.ClampMagnitude(rb.velocity, speed);
+
         }
         else if (enemyState != EnemyState.Idle)
         {
@@ -190,23 +198,26 @@ public class EnemyFollowPlayer : MonoBehaviour
     void HandleWalls()
     {
         float checkDistance = 1f;
-        float power = 1f;
-        Collider2D[] colliders = Physics2D.OverlapCircleAll(transform.position, checkDistance, groundLayer);
-        Debug.DrawLine(transform.position, transform.position + Vector3.right * checkDistance, Color.magenta);
-        Debug.DrawLine(transform.position, transform.position + Vector3.left * checkDistance, Color.magenta);
-        Debug.DrawLine(transform.position, transform.position + Vector3.up * checkDistance, Color.magenta);
-        Debug.DrawLine(transform.position, transform.position + Vector3.down * checkDistance, Color.magenta);
-        
-        Vector2 distToWall;
-        foreach (Collider2D collider in colliders)
+        float maxForce = 1f;
+        int rayCount = 8;
+        Vector2 avoidance = Vector2.zero;
+        for (int i = 0; i < rayCount; i++)
         {
-            distToWall = collider.ClosestPoint(transform.position);
-            //Debug.Log((transform.position - (Vector3)distToWall) * power);
-            Debug.DrawLine(transform.position, distToWall, Color.yellow);
-            rb.velocity = 
-            rb.velocity += (rb.position - distToWall) * power;
-            //rb.AddForce((transform.position - (Vector3)distToWall) * power , ForceMode2D.Impulse);
+            float angle = i * 360 / rayCount; // if rayCount is 8: 0, 45, 90, 135, 180, 225, 270, 315
+            Vector2 rayDirection = new Vector2(Mathf.Sin(angle * Mathf.Deg2Rad), Mathf.Cos(angle * Mathf.Deg2Rad));
+            Debug.DrawLine(transform.position, transform.position + (Vector3)rayDirection * checkDistance, enemyState == EnemyState.Follow ? Color.magenta:Color.white);
+
+            RaycastHit2D[] hit = new RaycastHit2D[1];
+            int hitCount = enemyCollider.Raycast(rayDirection, hit, checkDistance, groundLayer);
+            if (hitCount > 0)
+            {
+                Debug.DrawLine(transform.position, hit[0].point, Color.yellow);
+                avoidance += (Vector2)transform.position - hit[0].point;
+            }
         }
+        avoidance = Vector2.ClampMagnitude(avoidance, maxForce);
+        rb.velocity += avoidance;
+        rb.velocity = Vector2.ClampMagnitude(rb.velocity, speed);
         
     }
     void ChangeState(EnemyState newState)

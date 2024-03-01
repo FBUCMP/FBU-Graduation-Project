@@ -192,11 +192,12 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: cc69135593f63e444aca213234e39c01, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  speed: 3
-  memorySpan: 20
+  speed: 5
+  maxSteeringForce: 4
+  memorySpan: 25
   groundLayer:
     serializedVersion: 2
-    m_Bits: 192
+    m_Bits: 1217
   enemyState: 0
 --- !u!1001 &298740875341954338
 PrefabInstance:
