@@ -278,8 +278,8 @@ public class StageGenerator : MonoBehaviour
                                 roomData[neighborCell.x, neighborCell.y] = 1; //burada secilen oda 0 -> 1 e degistiriliyor
                                 tempQueue.Add(neighborCell); // tempQueue alinip siliyor gecici
                                 roomsList.Add(neighborCell); // roomsList bastan olusma sirasina gore ekliyor ve kalici. oda kordinatlari
+                                generatedRooms++;
                             }
-                            generatedRooms++;
                         }
 
                     }
