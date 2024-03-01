@@ -9,6 +9,7 @@ TagManager:
   - Room
   - healthBar
   - JumpPad
+  - Enemy
   layers:
   - Default
   - TransparentFX
@@ -20,7 +21,7 @@ TagManager:
   - Wall
   - Bullet
   - Player
-  - 
+  - Enemy
   - 
   - 
   - 

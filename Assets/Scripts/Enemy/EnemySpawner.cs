@@ -1,5 +1,6 @@
 using System;
 using System.Collections.Generic;
+using Unity.VisualScripting;
 using UnityEngine;
 
 [Serializable]
@@ -15,7 +16,8 @@ public class EnemyData
 
 public class EnemySpawner : MonoBehaviour
 {
-    public Collider2D[] validColliders; // Collider'larýn listesi
+    public Vector2 spawnRoomPos; // Düþmanlarýn oluþturulacaðý alan
+    public List<Collider2D> validColliders; // Collider'larýn listesi
     private EnemyManager enemyManager;
 
     public List<EnemyData> enemyDataList = new List<EnemyData>();
@@ -30,11 +32,64 @@ public class EnemySpawner : MonoBehaviour
         }
         else
         {
-            SpawnCustomEnemies(numberOfEnemiesToSpawn);
-            Debug.Log("Enemy Manager founded: " + enemyManager.name);
+            Debug.Log("Enemy Manager is found: " + enemyManager.name);
+            if(validColliders.Count <= 0)
+            {
+                Debug.LogWarning("No colliders found!");
+                CreateColliders(numberOfEnemiesToSpawn);
+                SpawnCustomEnemies(numberOfEnemiesToSpawn);
+            }
+            else
+            {
+                SpawnCustomEnemies(numberOfEnemiesToSpawn);
+            }
+            DestroyChildColliders();
         }
     }
+    void DestroyChildColliders()
+    {
+        foreach (Transform child in transform)
+        {
+            if (child.name == "Collider")
+            Destroy(child.gameObject);
+        }
+    }
+    void CreateColliders(int n)
+    {
+        if (spawnRoomPos == null)
+        {
+            Debug.LogWarning("Spawn room position is not set!");
+            return;
+        }
+        int s = 3;// size of the collider
+        validColliders = new List<Collider2D>();
+        int count = 0;
+        while (count < n)
+        {
+            int X = UnityEngine.Random.Range(-40, 40);
+            int Y = UnityEngine.Random.Range(-15, 15);
+            Vector2 pos = new Vector2(X, Y) + spawnRoomPos;
+            Collider2D col = Physics2D.OverlapBox(pos, new Vector2(s, s), 0);
+            if (col == null) // nothings in the way
+            {
+                GameObject go = new GameObject("Collider");
+                go.transform.position = pos;
+                go.transform.parent = transform;
+                BoxCollider2D bc = go.AddComponent<BoxCollider2D>();
+                bc.size = new Vector2(s, s);
+                bc.transform.position = pos;
 
+                validColliders.Add(bc);
+                Debug.Log("Collider created at: " + pos);
+                count++;
+            }
+            else
+            {
+                Debug.Log("Collider collided, couldn't spawn at: " + pos);
+            }
+        }
+
+    }
     void SpawnCustomEnemies(int numberOfEnemies)
     {
         for (int i = 0; i < numberOfEnemies; i++)
@@ -58,7 +113,7 @@ public class EnemySpawner : MonoBehaviour
     Vector2 GetRandomColliderPosition()
     {
         // Rastgele bir collider seç
-        Collider2D randomCollider = validColliders[UnityEngine.Random.Range(0, validColliders.Length)];
+        Collider2D randomCollider = validColliders[UnityEngine.Random.Range(0, validColliders.Count)];
 
         // Collider sýnýrlarý içinde rastgele bir konum oluþtur
         float minX = randomCollider.bounds.min.x;

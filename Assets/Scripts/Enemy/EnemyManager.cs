@@ -36,7 +36,7 @@ public class EnemyManager : MonoBehaviour
         }
         else
         {
-            Debug.LogError("EnemyController component not found on the instantiated enemy object!");
+            Debug.LogWarning("EnemyController component not found on the instantiated enemy object!");
         }
     }
 }
