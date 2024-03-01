@@ -32,11 +32,11 @@ public class CameraZoom : MonoBehaviour
         zoom -= scroll * zoomMultiplier;
         zoom = Mathf.Clamp(zoom, minZoom, maxZoom);
         cam.orthographicSize = Mathf.SmoothDamp(cam.orthographicSize, zoom, ref velocity, smoothTime);
-        if (Input.GetKeyDown(KeyCode.Q))
+        if (Input.GetKeyDown(KeyCode.O))
         {
             zoom = minZoom;
         }
-        else if (Input.GetKeyDown(KeyCode.E))
+        else if (Input.GetKeyDown(KeyCode.P))
         {
             zoom = maxZoom;
         }

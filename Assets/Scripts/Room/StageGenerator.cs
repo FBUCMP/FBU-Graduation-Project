@@ -87,10 +87,10 @@ public class StageGenerator : MonoBehaviour
     void Update()
     {
 
-        if (Input.GetKeyDown(KeyCode.Y)) 
-        {
-            Init();
-        }
+        //if (Input.GetKeyDown(KeyCode.Y)) 
+        //{
+        //    Init();
+        //}
         
     }
 
@@ -273,10 +273,10 @@ public class StageGenerator : MonoBehaviour
 
                         if (neighborRoomCount == 1 && (Random.Range(0f, 1f) < randomness )) // rastgelelik var randomness 0.5 ise %50 ihtimal. komsu sayisi 1se
                         {
-                            roomData[neighborCell.x, neighborCell.y] = 1; //burada secilen oda 0 -> 1 e degistiriliyor
-                            tempQueue.Add(neighborCell); // tempQueue alinip siliyor gecici
                             if (!roomsList.Contains(neighborCell))
                             {
+                                roomData[neighborCell.x, neighborCell.y] = 1; //burada secilen oda 0 -> 1 e degistiriliyor
+                                tempQueue.Add(neighborCell); // tempQueue alinip siliyor gecici
                                 roomsList.Add(neighborCell); // roomsList bastan olusma sirasina gore ekliyor ve kalici. oda kordinatlari
                             }
                             generatedRooms++;

@@ -39,10 +39,10 @@ public class RoomGenerator : MonoBehaviour
 
 	void Update()
 	{
-		if (Input.GetKeyDown(KeyCode.U))
-		{
-			GenerateMap();
-		}
+		//if (Input.GetKeyDown(KeyCode.U))
+		//{
+		//	GenerateMap();
+		//}
 	}
 
 

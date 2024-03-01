@@ -12,7 +12,7 @@ public class EnemyFollowPlayer : MonoBehaviour
     private GameObject target; // the player
 
     List<Vector2> waypoints = new List<Vector2>(); // enemy always follows the first ([0]) waypoint
-    float trackingAbility = 1f;
+    //float trackingAbility = 1f;
     float memoryTimer;
     public EnemyState enemyState = EnemyState.Idle; // current state of the enemy
     public enum EnemyState
