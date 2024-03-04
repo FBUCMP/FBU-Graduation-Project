@@ -57,8 +57,8 @@ MonoBehaviour:
   borderSize: 1
   gates: 00000000
   gatePrefab: {fileID: 6854857394847769645, guid: b975325b4c15fbf43850313eb62d01b5, type: 3}
-  smoothness: 8
-  perlinVals: {x: 3, y: 3}
+  smoothness: 5
+  perlinVals: {x: 4, y: 4}
   seed: 
   useRandomSeed: 1
 --- !u!114 &3867795692586346141
@@ -148,7 +148,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 513a88e903cb52b438d26ac179b2803d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  bgColor: {r: 0.5647059, g: 0.50980395, b: 0.40392157, a: 0}
-  sprite: {fileID: 7482667652216324306, guid: 22c8417d7875a054f842e3892736d714, type: 3}
+  generateBackground: 0
+  bgColor: {r: 1, g: 1, b: 1, a: 0}
+  sprite: {fileID: 21300000, guid: c98824b51e78d1c48bb7ea6f8f66fb01, type: 3}
   colorMaterial: {fileID: 2100000, guid: a0cec58fc32f482418596ffdf7c0d693, type: 2}
   meshMaterial: {fileID: 2100000, guid: b746d4b9fb6164d4c8152a6d185e88ae, type: 2}

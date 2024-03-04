@@ -434,7 +434,7 @@ MonoBehaviour:
     power: 1
     prefab: {fileID: 6568199932609452222, guid: 597229b17136c87478b1ab1e779d50bf, type: 3}
     skillCooldown: 5
-  numberOfEnemiesToSpawn: 2
+  numberOfEnemiesToSpawn: 0
 --- !u!114 &1405794837
 MonoBehaviour:
   m_ObjectHideFlags: 0
