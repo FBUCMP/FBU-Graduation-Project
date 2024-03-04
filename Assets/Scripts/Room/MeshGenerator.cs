@@ -100,7 +100,7 @@ public class MeshGenerator : MonoBehaviour
         mesh.vertices = vertices.ToArray(); // mesh icin gerekli veriler
         mesh.triangles = triangles.ToArray();
         mesh.RecalculateNormals();
-        int tileAmount = 10; // more then 1 should repeat the texture but it breaks
+        int tileAmount = 10;
         Vector2[] uvs = new Vector2[vertices.Count];
         for (int i = 0; i < vertices.Count; i++)
         {

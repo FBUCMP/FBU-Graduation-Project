@@ -193,8 +193,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   speed: 5
-  maxSteeringForce: 4
-  memorySpan: 25
+  maxSteeringForce: 5
+  memorySpan: 15
   groundLayer:
     serializedVersion: 2
     m_Bits: 1217
