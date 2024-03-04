@@ -9,7 +9,9 @@ public class PlayerIK : MonoBehaviour
     public LimbSolver2D leftHandSolver;
     public Transform leftHandTarget; 
     public Transform rightHandTarget;
-
+    public Transform head;
+    public Transform headTarget;
+    public Transform gunPivot;
     private Transform leftHandOnGun;
     private Transform rightHandOnGun;
 
@@ -21,6 +23,7 @@ public class PlayerIK : MonoBehaviour
     {
         SetHandWeights(handWeight);
     }
+    
 
     private void Update()
     {
@@ -33,6 +36,17 @@ public class PlayerIK : MonoBehaviour
         {
             rightHandTarget.position = rightHandOnGun.position;
             rightHandTarget.rotation = rightHandOnGun.rotation;
+        }
+        if (head != null && rightHandTarget !=  null)
+        {
+            
+            Vector2 mousePos = Camera.main.ScreenToWorldPoint(Input.mousePosition);
+            Vector2 direction = mousePos - (Vector2)gunPivot.position; // direction from gun rotation point to mouse
+            headTarget.position = head.position + (Vector3)direction.normalized; // head target is where the head should look, it's the head position + the direction
+            if (headTarget.localPosition.x < 1 && headTarget.localPosition.x > -1) /* if the head target's x is too close to the head, keep a distance of 1 so it doesnt directly look down or up */
+            {
+                headTarget.localPosition = new Vector3(Mathf.Sign(headTarget.localPosition.x) * 1, headTarget.localPosition.y, headTarget.localPosition.z);
+            }
         }
             
     }

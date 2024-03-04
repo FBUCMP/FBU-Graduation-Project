@@ -185,7 +185,7 @@ public class GunSO : ScriptableObject, System.ICloneable
         // if angle is 0 to -90  meaning looking down-right, lower the gunPivot's y position and higher the x position slightly
         Vector3 modifiedGunPivot = gunPivot.position;
         float sinAng = Mathf.Sin(angle * Mathf.Deg2Rad); // distance from x axis
-        float distX = 0.25f;
+        float distX = 0.4f;
         float distY = 0.2f;
         if (direction.y > 0) // up
         {
