@@ -8,7 +8,7 @@ public class RoomBackground : MonoBehaviour
     // does not have any collider or anything, just a background
     // and creates a sprite with a flat color
 
-
+    public bool generateBackground = true;
     public Color bgColor;
     public Sprite sprite;
     public Material colorMaterial;
@@ -36,23 +36,27 @@ public class RoomBackground : MonoBehaviour
         spriteRenderer.sprite = sprite;
         spriteRenderer.material = colorMaterial;
         spriteRenderer.sortingOrder = -2;
-        spriteHolder.transform.localScale = new Vector3(roomGenerator.width, roomGenerator.height, 1);
+        spriteHolder.transform.localScale = new Vector3(roomGenerator.width, roomGenerator.width, 1); // width both x and y because the sprite is 2x1 ratio
         spriteRenderer.color = bgColor;
         MeshRenderer bgRenderer = bg.AddComponent<MeshRenderer>();
         MeshFilter bgFilter = bg.AddComponent<MeshFilter>();
         bgRenderer.material = meshMaterial;
         bgRenderer.sortingOrder = -1;
         bgRenderer.shadowCastingMode = UnityEngine.Rendering.ShadowCastingMode.Off;
-
-        meshGenerator = bg.AddComponent<MeshGenerator>();
-        GenerateBackgroundMap();
-        for (int i = 0; i < 5; i++) 
+        
+        if (generateBackground)
         {
-            SmoothMap();
+            meshGenerator = bg.AddComponent<MeshGenerator>();
+            GenerateBackgroundMap();
+            for (int i = 0; i < 5; i++) 
+            {
+                SmoothMap();
+            }
+            meshGenerator.GenerateMeshOnly(map, 2);
+            
         }
-        meshGenerator.GenerateMeshOnly(map, 2);
 
-
+        
     }
     private float[,] GenerateBackgroundMap()
     {
