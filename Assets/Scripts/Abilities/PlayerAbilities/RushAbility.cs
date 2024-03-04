@@ -8,11 +8,14 @@ public class RushAbility : AbilityManager
     public float speedUpScale = 2f;
     public override void Activate(GameObject parent)
     {
-        PlayerMovementNew movement = parent.GetComponent<PlayerMovementNew>();
-        playerSpeed = movement.speed;
+        if(taken == true)
+        {
+            PlayerMovementNew movement = parent.GetComponent<PlayerMovementNew>();
+            playerSpeed = movement.speed;
 
-        movement.speed *= speedUpScale;
-
+            movement.speed *= speedUpScale;
+        }
+        
     }
     public override void BeginCooldown(GameObject parent)
     {

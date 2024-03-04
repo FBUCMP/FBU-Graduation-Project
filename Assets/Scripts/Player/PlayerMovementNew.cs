@@ -102,6 +102,10 @@ public class PlayerMovementNew : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
+        if(Input.GetKeyDown(KeyCode.Tab))
+        {
+            Time.timeScale = 0.1f;
+        }
         playerAction.isStopped = false;
 
         movementInput = horizontal;
