@@ -100,6 +100,15 @@ public class MeshGenerator : MonoBehaviour
         mesh.vertices = vertices.ToArray(); // mesh icin gerekli veriler
         mesh.triangles = triangles.ToArray();
         mesh.RecalculateNormals();
+        int tileAmount = 10; // more then 1 should repeat the texture but it breaks
+        Vector2[] uvs = new Vector2[vertices.Count];
+        for (int i = 0; i < vertices.Count; i++)
+        {
+            float percentX = Mathf.InverseLerp(-map.GetLength(0) / 2 * squareSize, map.GetLength(0) / 2 * squareSize, vertices[i].x) * tileAmount;
+            float percentY = Mathf.InverseLerp(-map.GetLength(0) / 2 * squareSize, map.GetLength(0) / 2 * squareSize, vertices[i].y) * tileAmount;
+            uvs[i] = new Vector2(percentX, percentY);
+        }
+        mesh.uv = uvs;
     }
     void GenerateColliders()
     {
