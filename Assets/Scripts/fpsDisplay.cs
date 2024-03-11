@@ -1,22 +1,24 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
 
 public class fpsDisplay : MonoBehaviour
 {
-
     private float fps;
     public TMPro.TextMeshProUGUI FPSCounterText;
     public Canvas HealthBarCanvas;
 
-    // Start is called before the first frame update
-    void Start()
+    private void Awake()
     {
         HealthBarCanvas = GameObject.Find("HealthBarCanvas").GetComponent<Canvas>(); // canvasý bul
-        FPSCounterText = HealthBarCanvas.GetComponentInChildren<TMPro.TextMeshProUGUI>();   //texti çek
-        InvokeRepeating("getFPS", 1, 1); // saniye baþýna yenileme yap
+        FPSCounterText = HealthBarCanvas.GetComponentInChildren<TMPro.TextMeshProUGUI>();   // texti çek
     }
 
+    private void Start()
+    {
+        InvokeRepeating("getFPS", 1, 1); // saniye baþýna yenileme yap
+    }
 
     void getFPS()
     {

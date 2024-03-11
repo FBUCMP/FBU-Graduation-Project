@@ -1785,6 +1785,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: FpsCounterText
       objectReference: {fileID: 0}
+    - target: {fileID: 6646555383227517349, guid: bbfc4f2437e541d48a4ce3c33ec935d4, type: 3}
+      propertyPath: m_text
+      value: 
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
