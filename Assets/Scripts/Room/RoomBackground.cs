@@ -9,6 +9,7 @@ public class RoomBackground : MonoBehaviour
     // and creates a sprite with a flat color
 
     public bool generateBackground = true;
+    public bool doesTile = true;
     public Color bgColor;
     public Sprite sprite;
     public Material colorMaterial;
@@ -36,8 +37,20 @@ public class RoomBackground : MonoBehaviour
         spriteRenderer.sprite = sprite;
         spriteRenderer.material = colorMaterial;
         spriteRenderer.sortingOrder = -2;
-        spriteHolder.transform.localScale = new Vector3(roomGenerator.width, roomGenerator.width, 1); // width both x and y because the sprite is 2x1 ratio
         spriteRenderer.color = bgColor;
+        if (doesTile)
+        {
+            spriteRenderer.drawMode = SpriteDrawMode.Tiled;
+            spriteRenderer.size = new Vector2(roomGenerator.width, roomGenerator.height);
+        }
+        else
+        {
+            spriteHolder.transform.localScale = new Vector3(roomGenerator.width, roomGenerator.width, 1); // width both x and y because the sprite is 2x1 ratio
+        }
+        
+
+
+        // ----------------- Generate Background -----------------
         MeshRenderer bgRenderer = bg.AddComponent<MeshRenderer>();
         MeshFilter bgFilter = bg.AddComponent<MeshFilter>();
         bgRenderer.material = meshMaterial;

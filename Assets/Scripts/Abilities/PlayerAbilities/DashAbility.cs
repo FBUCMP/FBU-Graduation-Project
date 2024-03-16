@@ -7,7 +7,7 @@ using static UnityEngine.RuleTile.TilingRuleOutput;
 public class DashAbility : AbilityManager
 {
     public float dashVelocity;
-
+    public AudioClip dashSound;
     private float gravity;
     public override void Activate(GameObject parent)
     {

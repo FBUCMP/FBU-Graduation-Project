@@ -244,7 +244,7 @@ public class StageGenerator : MonoBehaviour
     {
         while (roomsList.Count < minRooms)
         {
-            
+            InitializeArray();
             int startX = (int)(width / 2); //Random.Range(0, width);
             int startY = (int)height -1;//(int)(height / 2); //Random.Range(0, height);
             Vector2Int startCell = new Vector2Int(startX, startY);
@@ -253,7 +253,7 @@ public class StageGenerator : MonoBehaviour
             roomsList.Add(startCell); 
             roomData[startX, startY] = 1;
             int generatedRooms = 1;
-
+            //Debug.Log($"Room Generated at: {startX},{startY}");
             while (tempQueue.Count > 0 && generatedRooms < maxRooms)
             {
 
@@ -279,6 +279,7 @@ public class StageGenerator : MonoBehaviour
                                 tempQueue.Add(neighborCell); // tempQueue alinip siliyor gecici
                                 roomsList.Add(neighborCell); // roomsList bastan olusma sirasina gore ekliyor ve kalici. oda kordinatlari
                                 generatedRooms++;
+                                //Debug.Log($"Room Generated at: {neighborCell.x},{neighborCell.y}");
                             }
                         }
 
