@@ -7,7 +7,7 @@ public class EnemyController : MonoBehaviour
 {
     private Enemy enemyData;  // Düþman verilerini tutan nesne
 
-    // Düþmaný baþlat
+    
     public void Initialize(Enemy enemy)
     {
         enemyData = enemy;
