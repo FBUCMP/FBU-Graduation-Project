@@ -10,6 +10,7 @@ TagManager:
   - healthBar
   - JumpPad
   - Enemy
+  - YetenekVerici
   layers:
   - Default
   - TransparentFX
