@@ -59,15 +59,13 @@ public class EnemyFollowPlayer : MonoBehaviour
     }
     void WatchTarget()
     {
-        memoryTimer -= Time.deltaTime;
         if (memoryTimer <= 0) // if enemy forgets
         {
             Debug.Log($"{gameObject.name} forgot it's target ever existed...");
-            memoryTimer = memorySpan;
             waypoints.Clear(); // clear all the waypoints and go back to idle state
             if (enemyState != EnemyState.Idle)
             {
-                ChangeState(EnemyState.Idle);
+                ChangeState(EnemyState.Idle); 
             }
         }
         /* using collider raycast bc doesnt include own collider
@@ -83,6 +81,8 @@ public class EnemyFollowPlayer : MonoBehaviour
         {
             waypoints.Clear(); // clear all the waypoints
             waypoints.Add(hit.point); // add the player's position as the first waypoint
+
+            memoryTimer = memorySpan; // reset the memory timer
 
             Debug.DrawLine(transform.position, target.transform.position, Color.green);
 
@@ -158,7 +158,7 @@ public class EnemyFollowPlayer : MonoBehaviour
             waypoints.RemoveAt(0);
         }
         */
-        
+        memoryTimer -= Time.fixedDeltaTime;
         if (waypoints.Count > 0)
         {
             
@@ -197,8 +197,8 @@ public class EnemyFollowPlayer : MonoBehaviour
     }
     void HandleWalls()
     {
-        float checkDistance = 1f;
-        float maxForce = 1f;
+        float checkDistance = 1.5f;
+        float maxForce = 0.6f;
         int rayCount = 8;
         Vector2 avoidance = Vector2.zero;
         for (int i = 0; i < rayCount; i++)
@@ -212,7 +212,9 @@ public class EnemyFollowPlayer : MonoBehaviour
             if (hitCount > 0)
             {
                 Debug.DrawLine(transform.position, hit[0].point, Color.yellow);
-                avoidance += (Vector2)transform.position - hit[0].point;
+                Vector2 newVec = (Vector2)transform.position - hit[0].point;
+                newVec = newVec.normalized * (checkDistance - newVec.magnitude);
+                avoidance += newVec;
             }
         }
         avoidance = Vector2.ClampMagnitude(avoidance, maxForce);

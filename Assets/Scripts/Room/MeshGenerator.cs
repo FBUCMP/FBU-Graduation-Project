@@ -1,12 +1,14 @@
 using UnityEngine;
 using System.Collections;
 using System.Collections.Generic;
+using System.Linq;
+using UnityEditor;
 public class MeshGenerator : MonoBehaviour
 {
 	// kirmak icin control nodelari inactive yap. pos ile karsilastir
-
-	[HideInInspector] public List<Vector3> vertices; // noktalarin pozisyonlari vector2 olmasi lazim tutorial 3d diye boyle degisebilir!
-	List<int> triangles;
+	//public Material caveMaterial;
+	[HideInInspector] public List<Vector3> vertices; // noktalarin pozisyonlari vector2 olmasi lazim tutorial 3d diye boyle degisebilir! vertices holds active ones
+    List<int> triangles;
 	Dictionary<int, List<Triangle>> triangleDict = new Dictionary<int, List<Triangle>>(); /* nokta, noktanin dahil oldugu ucgenler. amac dis hatlari bulmak*/
 	List<List<int>> outlines = new List<List<int>>(); /* bir adet outline List<int>. tum outlinelar List<List<int>>. amac bunu bulmak*/
 	HashSet<int> checkedVertices = new HashSet<int>(); /* tum vertexler checklenirken daha once checklenen denk gelmesin diye. hash contains fonksiyonu hizli.*/
@@ -68,6 +70,7 @@ public class MeshGenerator : MonoBehaviour
         return gameObject.transform.position + relativePos;
         
     }
+	// ----------------------------------------------------------- MESH GENERATION -----------------------------------------------------------
 	public void GenerateMesh(float[,] map, int squareSize) // mesh and then colliders
     {
 		GenerateMeshOnly(map, squareSize);
@@ -93,14 +96,20 @@ public class MeshGenerator : MonoBehaviour
                 TriangulateSquare(squareGrid.squares[x, y]); // griddeki kareleri ucgenlestir mesh icin
             }
         }
+        CalculateMeshOutlines(); // outlinelari hesapla
 
-        Mesh mesh = new Mesh();
+		// ---- THIS OBJECTS MESH ----
+		
+		Mesh mesh = new Mesh();
         GetComponent<MeshFilter>().mesh = mesh;
 
         mesh.vertices = vertices.ToArray(); // mesh icin gerekli veriler
         mesh.triangles = triangles.ToArray();
-        mesh.RecalculateNormals();
-        int tileAmount = 10; // more then 1 should repeat the texture but it breaks
+        mesh.RecalculateNormals( );
+		
+		// -----------------------
+
+        int tileAmount = 20;
         Vector2[] uvs = new Vector2[vertices.Count];
         for (int i = 0; i < vertices.Count; i++)
         {
@@ -109,7 +118,99 @@ public class MeshGenerator : MonoBehaviour
             uvs[i] = new Vector2(percentX, percentY);
         }
         mesh.uv = uvs;
+		// -----------------------
+
+		HashSet<int> checkedOutlineVertex = new HashSet<int>();
+		List<List<int>> outlinesWithoutRep = new List<List<int>>();
+		foreach (List<int> outline in outlines) // turn outlines into outlinesWithoutRep
+		{
+			List<int> outlineWithoutRep = new List<int>();
+			for (int i = 0; i < outline.Count; i++)
+			{
+                if (checkedOutlineVertex.Contains(outline[i])) continue; // if already checked, skip
+				else
+				{
+					checkedOutlineVertex.Add(outline[i]);
+					outlineWithoutRep.Add(outline[i]);
+				}
+            }
+			outlineWithoutRep.Add(outlineWithoutRep[0]);
+			outlinesWithoutRep.Add(outlineWithoutRep);
+		}
+		foreach(LineRenderer child in GetComponentsInChildren<LineRenderer>())
+		{
+            Destroy(child.gameObject);
+        }
+		foreach (List<int> outline in outlinesWithoutRep) // calculate light norms
+		{
+			GameObject outlineGO = new GameObject("Outline"); // create a new gameobject for each outline
+			outlineGO.transform.parent = transform;
+			outlineGO.transform.position = transform.position;
+            for (int i = 0; i < outline.Count; i++)
+			{
+				
+
+                
+                Vector3 from = Vector3.back;
+				Vector3 to = Vector3.back;
+                if (i < outline.Count - 1)
+				{
+                    Vector3 dir = vertices[outline[i + 1]] - vertices[outline[i]];
+					Vector3 perp = Vector3.Cross(Vector3.forward, dir).normalized;
+					if (perp.y > 0.5f)
+					{
+						//Debug.DrawLine(transform.position + vertices[outline[i]], transform.position + vertices[outline[i]] + perp, Color.green, 100);
+						//Debug.DrawLine(transform.position + vertices[outline[i]], transform.position + vertices[outline[i + 1]], Color.red, 100);
+                        from = vertices[outline[i]];
+						to = vertices[outline[i + 1]];
+
+                    }
+                }
+                else
+				{
+                    Vector3 dir = vertices[outline[0]] - vertices[outline[i]];
+                    Vector3 perp = Vector3.Cross(Vector3.forward, dir).normalized; 
+					if (perp.y > 0.5f)
+					{
+                        Debug.DrawLine(transform.position + vertices[outline[i]], transform.position + vertices[outline[0]], Color.red, 100);
+						from = vertices[outline[i]];
+						to = vertices[outline[0]];
+                    }
+                }
+
+				if (from != Vector3.back && to != Vector3.back)
+				{
+                    GameObject line = new GameObject("Line");
+                    line.transform.parent = outlineGO.transform;
+                    LineRenderer lineRenderer = line.AddComponent<LineRenderer>();
+                    lineRenderer.material = new Material(Shader.Find("Sprites/Default"));
+					lineRenderer.sortingOrder = -1;
+					lineRenderer.widthMultiplier = 0.1f;
+                    lineRenderer.SetPosition(0, transform.position + vertices[outline[i]]);
+					lineRenderer.SetPosition(1, transform.position + vertices[outline[i + 1]]);
+
+
+                }
+            }
+		}
+
     }
+    /*
+    private void OnDrawGizmos()
+    {
+        if (falsevertices != null)
+		{
+            for (int i = 0; i < outlines.Count; i++)
+			{
+				for (int j = 0; j < outlines[i].Count; j++)
+				{
+					Gizmos.color = Color.white;
+					Gizmos.DrawSphere(transform.position + vertices[outlines[i][j]], 0.1f);
+				}
+            }
+        }
+    }
+	*/
     void GenerateColliders()
     {
 		EdgeCollider2D[] currentColliders = gameObject.GetComponents<EdgeCollider2D>(); // halihazirda collider varsa
@@ -118,7 +219,7 @@ public class MeshGenerator : MonoBehaviour
 			Destroy(currentColliders[i]); // onceki colliderlari temizle
         }
 
-		CalculateMeshOutlines(); // outlinelari hesapla
+		
         foreach (List<int> outline in outlines) // outlinelar icerisinden her bir outline kumesini dolas. outline noktalari tutuyor.
         {
 			EdgeCollider2D edgeCollider = gameObject.AddComponent<EdgeCollider2D>(); // unitynin duz cizgi collideri

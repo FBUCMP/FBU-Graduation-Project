@@ -172,9 +172,31 @@ public class GunSO : ScriptableObject, System.ICloneable
         Vector2 mousePos = Camera.main.ScreenToWorldPoint(Input.mousePosition);
         Vector2 direction = mousePos - (Vector2)gunPivot.position;
         float angle = Mathf.Atan2(direction.y,direction.x) * Mathf.Rad2Deg;
-        
-        
-        model.transform.position = gunPivot.position + Quaternion.Euler(0f, 0f, angle) * new Vector3(spawnPoint.x, 0f, 0f); 
+        /*
+         *              |
+         *             90
+         *              |
+         * <--180/-180--o--------0-->
+         *              |
+         *            -90
+         *              |
+         */
+        // if angle is 0 to 90 meaning looking up-right, higher the gunPivot's y position
+        // if angle is 0 to -90  meaning looking down-right, lower the gunPivot's y position and higher the x position slightly
+        Vector3 modifiedGunPivot = gunPivot.position;
+        float sinAng = Mathf.Sin(angle * Mathf.Deg2Rad); // distance from x axis
+        float distX = 0.4f;
+        float distY = 0.2f;
+        if (direction.y > 0) // up
+        {
+            modifiedGunPivot = new Vector3(gunPivot.position.x + distX * Mathf.Abs(sinAng) * Mathf.Sign(direction.x), gunPivot.position.y + distY * sinAng, gunPivot.position.z);
+        }
+        else // down
+        {
+            modifiedGunPivot = new Vector3(gunPivot.position.x + distX * Mathf.Abs(sinAng) * Mathf.Sign(direction.x), gunPivot.position.y + distY * sinAng, gunPivot.position.z);
+        }
+        Debug.DrawLine(gunPivot.position, modifiedGunPivot, Color.yellow);
+        model.transform.position = modifiedGunPivot + Quaternion.Euler(0f, 0f, angle) * new Vector3(spawnPoint.x, 0f, 0f); 
         model.transform.rotation = Quaternion.Euler(spawnRotation.x, spawnRotation.y, spawnRotation.z + angle);
         //model.transform.rotation = Quaternion.AngleAxis(angle, Vector3.forward);
         
