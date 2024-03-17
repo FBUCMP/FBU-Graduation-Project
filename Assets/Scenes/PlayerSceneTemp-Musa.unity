@@ -1285,6 +1285,10 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 674734279960390426, guid: 38706b82ce779444e981b979785a554a, type: 3}
+      propertyPath: m_IsTrigger
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 682513599126917167, guid: 38706b82ce779444e981b979785a554a, type: 3}
       propertyPath: m_LocalRotation.w
       value: 0.22484636
@@ -1491,7 +1495,7 @@ PrefabInstance:
       objectReference: {fileID: 11400000, guid: c832d7d96b435b9458b8f8f82746792c, type: 2}
     - target: {fileID: 8145619094936080059, guid: 38706b82ce779444e981b979785a554a, type: 3}
       propertyPath: abilities.Array.size
-      value: 2
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 8145619094936080059, guid: 38706b82ce779444e981b979785a554a, type: 3}
       propertyPath: abilities.Array.data[0]
