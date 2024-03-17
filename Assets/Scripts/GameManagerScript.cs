@@ -28,7 +28,7 @@ public class GameManagerScript : MonoBehaviour
         }
     }
 
-    private void Awake()
+    void Awake()
     {
         if(_instance == null)
         {

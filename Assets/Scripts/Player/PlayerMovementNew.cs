@@ -13,7 +13,7 @@ public class PlayerMovementNew : MonoBehaviour
     // Movement kismi
     [SerializeField] private PlayerAction playerAction;
     private float horizontal;
-    [SerializeField] private float speed = 8f;
+    [SerializeField] public float speed = 8f;
     public float jumpHeight = 20f;
     private float jumpVelocity;
     private bool isFacingRight = true;
@@ -65,7 +65,7 @@ public class PlayerMovementNew : MonoBehaviour
     public event Action OnFlipped;
 
     //double jump
-    private bool doubleJump;
+    public bool doubleJump;
 
     // AUDIO MANAGER
     AudioManager audioManager;
@@ -102,6 +102,10 @@ public class PlayerMovementNew : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
+        if(Input.GetKeyDown(KeyCode.Tab))
+        {
+            Time.timeScale = 0.1f;
+        }
         playerAction.isStopped = false;
 
         movementInput = horizontal;

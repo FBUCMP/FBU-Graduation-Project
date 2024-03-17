@@ -1118,6 +1118,7 @@ MonoBehaviour:
   groundCheckR: {fileID: 8891103828245098602}
   groundCheckM: {fileID: 9095605813144567861}
   groundCheckL: {fileID: 2788537209329071482}
+  doubleJump: 0
   center: {fileID: 8742678637986149153}
 --- !u!96 &6311657264688382926
 TrailRenderer:
@@ -1343,8 +1344,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 43a04c63297c7384fbb1ae5993f52670, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  ability: {fileID: 11400000, guid: 4d80229d2b1a0524a8794762026602df, type: 2}
-  key: 304
+  abilities:
+  - {fileID: 11400000, guid: 76705746fa9d8954d99e46d8a0367230, type: 2}
 --- !u!1 &7279611073937030427
 GameObject:
   m_ObjectHideFlags: 0
