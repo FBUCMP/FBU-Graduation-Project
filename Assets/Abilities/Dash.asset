@@ -18,4 +18,5 @@ MonoBehaviour:
   activeTime: 0.2
   taken: 0
   soundEffect: {fileID: 8300000, guid: 196758a97ca448041bd6be4d714d86db, type: 3}
-  dashVelocity: 0
+  dashVelocity: 30
+  dashSound: {fileID: 0}
