@@ -12,7 +12,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 961926100f9e51241a922ee9314be234, type: 3}
   m_Name: Dash
   m_EditorClassIdentifier: 
+  key: 304
   name: Dash
   cooldownTime: 1
   activeTime: 0.2
+  taken: 0
+  soundEffect: {fileID: 8300000, guid: 196758a97ca448041bd6be4d714d86db, type: 3}
   dashVelocity: 0

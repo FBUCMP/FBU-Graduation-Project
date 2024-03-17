@@ -21,6 +21,8 @@ public class AbilityHolder : MonoBehaviour
         InitializeAbilities();
     }
 
+
+
     private void InitializeAbilities()
     {
         cooldownTimes = new List<float>();
