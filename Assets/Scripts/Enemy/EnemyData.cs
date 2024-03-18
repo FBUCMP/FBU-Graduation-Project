@@ -1,3 +1,4 @@
+using System.Buffers.Text;
 using UnityEngine;
 
 public enum EnemyType
@@ -18,6 +19,7 @@ public class EnemyData : ScriptableObject
 [CreateAssetMenu(fileName = "NewDragonData", menuName = "Enemy Data/Dragon", order = 52)]
 public class DragonData : EnemyData
 {
+    
     public float FireBreathingPower;
 }
 
