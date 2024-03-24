@@ -131,6 +131,10 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 94219611910768170, guid: 151f1ff787f4e514988de879e942f7f3, type: 3}
+      propertyPath: EnemyDataList.Array.size
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 5028629585731526745, guid: 151f1ff787f4e514988de879e942f7f3, type: 3}
       propertyPath: m_Name
       value: GameManager
@@ -727,10 +731,10 @@ PrefabInstance:
 SceneRoots:
   m_ObjectHideFlags: 0
   m_Roots:
+  - {fileID: 301450348}
   - {fileID: 1941614301}
   - {fileID: 3595986313865603734}
   - {fileID: 486569867}
   - {fileID: 1129817335}
   - {fileID: 549811296926238176}
   - {fileID: 1535272251}
-  - {fileID: 301450348}

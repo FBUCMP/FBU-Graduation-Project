@@ -1,42 +1,38 @@
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
 public class EnemyManager : MonoBehaviour
 {
-    private List<Enemy> enemies = new List<Enemy>();
+    public List<EnemyData> EnemyDataList = new List<EnemyData>();
+    public int NumberOfEnemiesToSpawn = 5;
+    int roomIndex;
 
-    public void CreateEnemy(string name, float health, float speed, float power, Vector2 position, GameObject prefab)
+    StageGenerator stageGenerator;
+    EnemySpawner spawner;
+
+    private void Start()
     {
-        Enemy newEnemy = new Enemy(name, health, speed, power, position, prefab);
-        enemies.Add(newEnemy);
-        DisplayEnemy(newEnemy);
+        stageGenerator = GameObject.FindAnyObjectByType<StageGenerator>();
+        Debug.LogError("Stage Generator is NULL! Stage Generator: " + stageGenerator);
+
+        spawner = GetComponentInChildren<EnemySpawner>();
     }
 
-    public void ModifyEnemyStats(int enemyIndex, float healthMultiplier, float speedMultiplier, float powerMultiplier)
+
+    public void CreateEnemy(EnemyData enemyData)
     {
-        if (enemyIndex < 0 || enemyIndex >= enemies.Count)
+
+        for (int i = 0; i< stageGenerator.roomsList.Count; i++)
         {
-            Debug.LogError("Invalid enemy index!");
-            return;
+            Vector3 pos = new Vector3(stageGenerator.roomsList[i].x * stageGenerator.roomWidth, stageGenerator.roomsList[i].y * stageGenerator.roomHeight);
+            spawner.BeginProccess(EnemyDataList, NumberOfEnemiesToSpawn, pos);
         }
 
-        enemies[enemyIndex].ModifyStats(healthMultiplier, speedMultiplier, powerMultiplier);
+
+
+       //GameObject enemyObject = Instantiate(enemyData.prefab, Vector3.zero, Quaternion.identity);
+       
     }
 
-    private void DisplayEnemy(Enemy enemy)
-    {
-        GameObject enemyObject = Instantiate(enemy.Prefab, enemy.Position, Quaternion.identity);
-
-        // enemyObject'un özelliklerini enemy'nin özelliklerine göre ayarla
-        EnemyController enemyController = enemyObject.GetComponent<EnemyController>();
-        if (enemyController != null)
-        {
-            Debug.Log("Enemy display");
-            enemyController.Initialize(enemy);
-        }
-        else
-        {
-            Debug.LogWarning("EnemyController component not found on the instantiated enemy object!");
-        }
-    }
 }

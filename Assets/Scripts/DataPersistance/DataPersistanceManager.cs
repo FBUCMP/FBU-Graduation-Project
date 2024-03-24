@@ -14,7 +14,7 @@ public class DataPersistanceManager : MonoBehaviour
     [Header("File Storage Config")]
     [SerializeField] private string fileName = "save.game";
 
-
+    
 
     private GameData gameData; 
 

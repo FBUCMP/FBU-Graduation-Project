@@ -8,23 +8,28 @@ public enum EnemyType
 }
 public class EnemyData : ScriptableObject
 {
-    public string Name;
-    public float Health;
-    public float Speed;
-    public float Power;
-    public GameObject Prefab;
-    public EnemyType Type;
+    public string name;
+    public float health;
+    public float speed;
+    public float power;
+    public GameObject prefab;
+    public EnemyType type;
 }
 
-[CreateAssetMenu(fileName = "NewDragonData", menuName = "Enemy Data/Dragon", order = 52)]
-public class DragonData : EnemyData
+[CreateAssetMenu(fileName = "NewHasakiFlyData", menuName = "Enemy Data/HasakiFly", order = 52)]
+public class HasakiFlyData : EnemyData
 {
+    public float fireDamage;
     
-    public float FireBreathingPower;
 }
 
 [CreateAssetMenu(fileName = "NewGoblinData", menuName = "Enemy Data/Goblin", order = 53)]
 public class GoblinData : EnemyData
 {
-    public float Stealth;
+    public float iceDamage;
+}
+[CreateAssetMenu(fileName = "NewSpiderData", menuName = "Enemy Data/Spider", order = 53)]
+public class SpiderData : EnemyData
+{
+    public float webDamage;
 }

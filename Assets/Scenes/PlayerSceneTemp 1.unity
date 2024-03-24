@@ -1782,6 +1782,10 @@ PrefabInstance:
     m_TransformParent: {fileID: 0}
     m_Modifications:
     - target: {fileID: 768452642778710191, guid: 811f238c679292e4a895efbab4907637, type: 3}
+      propertyPath: maxSpeed
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 768452642778710191, guid: 811f238c679292e4a895efbab4907637, type: 3}
       propertyPath: gravity.x
       value: 0
       objectReference: {fileID: 0}
