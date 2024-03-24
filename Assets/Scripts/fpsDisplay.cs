@@ -9,14 +9,10 @@ public class fpsDisplay : MonoBehaviour
     public TMPro.TextMeshProUGUI FPSCounterText;
     public Canvas HealthBarCanvas;
 
-    private void Awake()
+    private void Start()
     {
         HealthBarCanvas = GameObject.Find("HealthBarCanvas").GetComponent<Canvas>(); // canvasý bul
         FPSCounterText = HealthBarCanvas.GetComponentInChildren<TMPro.TextMeshProUGUI>();   // texti çek
-    }
-
-    private void Start()
-    {
         InvokeRepeating("getFPS", 1, 1); // saniye baþýna yenileme yap
     }
 

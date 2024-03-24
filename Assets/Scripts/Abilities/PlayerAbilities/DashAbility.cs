@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using static UnityEngine.RuleTile.TilingRuleOutput;
 
-[CreateAssetMenu]
+[CreateAssetMenu(menuName ="Abilities/DashAbility")]
 public class DashAbility : AbilityManager
 {
     public float dashVelocity;

@@ -3,15 +3,20 @@ using UnityEngine;
 
 public class EnemySpawner : MonoBehaviour
 {
-    public Vector2 SpawnRoomPos;
-    public List<Collider2D> ValidColliders;
+    [HideInInspector]public Vector2 SpawnRoomPos;
+    [HideInInspector]public List<Collider2D> ValidColliders;
     private EnemyManager enemyManager;
 
-    public List<EnemyData> EnemyDataList = new List<EnemyData>();
-    public int NumberOfEnemiesToSpawn = 5;
+    private List<EnemyData> EnemyDataList = new List<EnemyData>();
+    private int NumberOfEnemiesToSpawn = 5;
 
-    void Start()
+    public void BeginProccess(List<EnemyData> EnemyDataList, int NumberOfEnemiesToSpawn, Vector2 SpawnRoomPos)
     {
+        this.EnemyDataList = EnemyDataList;
+        this.NumberOfEnemiesToSpawn = NumberOfEnemiesToSpawn;
+        this.SpawnRoomPos = SpawnRoomPos;
+
+
         enemyManager = GetComponent<EnemyManager>();
         if (enemyManager == null)
         {
@@ -113,7 +118,7 @@ public class EnemySpawner : MonoBehaviour
     {
         if (enemyManager != null)
         {
-            enemyManager.CreateEnemy(enemyData.Name, enemyData.Health, enemyData.Speed, enemyData.Power, position, enemyData.Prefab);
+            enemyManager.CreateEnemy(enemyData);
         }
         else
         {
