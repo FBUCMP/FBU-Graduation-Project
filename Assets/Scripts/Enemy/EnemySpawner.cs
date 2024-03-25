@@ -15,9 +15,8 @@ public class EnemySpawner : MonoBehaviour
         this.EnemyDataList = EnemyDataList;
         this.NumberOfEnemiesToSpawn = NumberOfEnemiesToSpawn;
         this.SpawnRoomPos = SpawnRoomPos;
-
-
         enemyManager = GetComponent<EnemyManager>();
+        
         if (enemyManager == null)
         {
             Debug.LogError("EnemyManager component not found!");
@@ -116,13 +115,6 @@ public class EnemySpawner : MonoBehaviour
 
     void SpawnEnemyAtPosition(EnemyData enemyData, Vector2 position)
     {
-        if (enemyManager != null)
-        {
-            enemyManager.CreateEnemy(enemyData);
-        }
-        else
-        {
-            Debug.LogError("Enemy Manager at SpawnEnemyAtPosition is NULL");
-        }
+        GameObject enemyObject = Instantiate(enemyData.prefab, Vector3.zero, Quaternion.identity);
     }
 }

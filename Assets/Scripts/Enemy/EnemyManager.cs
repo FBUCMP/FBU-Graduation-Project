@@ -14,9 +14,8 @@ public class EnemyManager : MonoBehaviour
     private void Start()
     {
         stageGenerator = GameObject.FindAnyObjectByType<StageGenerator>();
-        Debug.LogError("Stage Generator is NULL! Stage Generator: " + stageGenerator);
-
         spawner = GetComponentInChildren<EnemySpawner>();
+
     }
 
 
@@ -28,10 +27,6 @@ public class EnemyManager : MonoBehaviour
             Vector3 pos = new Vector3(stageGenerator.roomsList[i].x * stageGenerator.roomWidth, stageGenerator.roomsList[i].y * stageGenerator.roomHeight);
             spawner.BeginProccess(EnemyDataList, NumberOfEnemiesToSpawn, pos);
         }
-
-
-
-       //GameObject enemyObject = Instantiate(enemyData.prefab, Vector3.zero, Quaternion.identity);
        
     }
 
