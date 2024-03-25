@@ -135,6 +135,10 @@ PrefabInstance:
       propertyPath: EnemyDataList.Array.size
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 948263364788865795, guid: 151f1ff787f4e514988de879e942f7f3, type: 3}
+      propertyPath: NumberOfEnemiesToSpawn
+      value: 1000
+      objectReference: {fileID: 0}
     - target: {fileID: 5028629585731526745, guid: 151f1ff787f4e514988de879e942f7f3, type: 3}
       propertyPath: m_Name
       value: GameManager
