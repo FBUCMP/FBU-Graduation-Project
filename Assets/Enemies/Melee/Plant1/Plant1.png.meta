@@ -1,5 +1,5 @@
 fileFormatVersion: 2
-guid: fbaa195226c01ca4b9a7ca4a6f919899
+guid: 674ab5d236fc7f242bc0770998d1ae22
 TextureImporter:
   internalIDToNameTable: []
   externalObjects: {}
@@ -48,7 +48,7 @@ TextureImporter:
   spriteMeshType: 1
   alignment: 0
   spritePivot: {x: 0.5, y: 0.5}
-  spritePixelsToUnits: 1000
+  spritePixelsToUnits: 100
   spriteBorder: {x: 0, y: 0, z: 0, w: 0}
   spriteGenerateFallbackPhysicsShape: 1
   alphaUsage: 1
@@ -110,13 +110,13 @@ TextureImporter:
     serializedVersion: 2
     sprites:
     - serializedVersion: 2
-      name: poison-plantV1_0
+      name: Plant1_0
       rect:
         serializedVersion: 2
         x: 0
-        y: 889
-        width: 796
-        height: 522
+        y: 1
+        width: 500
+        height: 500
       alignment: 0
       pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -124,20 +124,20 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 66cf4f783ddee8645b85694522bb2643
-      internalID: 2099697630
+      spriteID: 9e0e21e29f17f0b4ebfdf82fc16368cf
+      internalID: 1389832710
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: poison-plantV1_8
+      name: Plant1_1
       rect:
         serializedVersion: 2
-        x: 60
-        y: 0
-        width: 675
-        height: 692
+        x: 500
+        y: 1
+        width: 500
+        height: 500
       alignment: 0
       pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -145,20 +145,20 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: fda77e46b6a11854391884e11dd00b60
-      internalID: 1821176862
+      spriteID: 32cb40e8eb265bf40b96c34196afb052
+      internalID: 833965176
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: poison-plantV1_9
+      name: Plant1_2
       rect:
         serializedVersion: 2
-        x: 1002
-        y: 923
-        width: 738
-        height: 413
+        x: 1000
+        y: 1
+        width: 500
+        height: 500
       alignment: 0
       pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -166,8 +166,92 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: f491ea0cb466c4a4e8a1a21ac605a8ba
-      internalID: -1671135742
+      spriteID: b4e4c0235275c8d4abd112e3e3538dd9
+      internalID: 682351558
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Plant1_3
+      rect:
+        serializedVersion: 2
+        x: 1500
+        y: 1
+        width: 500
+        height: 500
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 7db743799634c1d43b84992285ea2fcc
+      internalID: -272772531
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Plant1_4
+      rect:
+        serializedVersion: 2
+        x: 2000
+        y: 1
+        width: 500
+        height: 500
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 8c2154dd75711494097baeabee67120d
+      internalID: -2027583639
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Plant1_5
+      rect:
+        serializedVersion: 2
+        x: 2500
+        y: 1
+        width: 500
+        height: 500
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 8bc0c10ca9a3eb344a9d6a9cdb999796
+      internalID: 1802525915
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Plant1_6
+      rect:
+        serializedVersion: 2
+        x: 3000
+        y: 1
+        width: 500
+        height: 500
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 8bfdd4c695c920e4aa228b1d5244377b
+      internalID: -451097762
       vertices: []
       indices: 
       edges: []
@@ -183,16 +267,13 @@ TextureImporter:
     weights: []
     secondaryTextures: []
     nameFileIdTable:
-      poison-plantV1_0: 2099697630
-      poison-plantV1_1: -1026465903
-      poison-plantV1_2: -430630466
-      poison-plantV1_3: -383279836
-      poison-plantV1_4: -2144277227
-      poison-plantV1_5: -1058882558
-      poison-plantV1_6: 70073176
-      poison-plantV1_7: 10447603
-      poison-plantV1_8: 1821176862
-      poison-plantV1_9: -1671135742
+      Plant1_0: 1389832710
+      Plant1_1: 833965176
+      Plant1_2: 682351558
+      Plant1_3: -272772531
+      Plant1_4: -2027583639
+      Plant1_5: 1802525915
+      Plant1_6: -451097762
   mipmapLimitGroupName: 
   pSDRemoveMatte: 0
   userData: 

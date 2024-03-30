@@ -6,6 +6,9 @@ namespace Pathfinding {
 	using Pathfinding.RVO;
 	using Pathfinding.Util;
 
+	//public EnemyData enemyData;
+
+
 	/// <summary>
 	/// Base class for AIPath and RichAI.
 	/// This class holds various methods and fields that are common to both AIPath and RichAI.

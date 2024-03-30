@@ -9,6 +9,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 974507756711922314}
+  - component: {fileID: 948263364788865795}
   m_Layer: 0
   m_Name: EnemyManager
   m_TagString: Untagged
@@ -32,6 +33,21 @@ Transform:
   - {fileID: 8867130901882251123}
   m_Father: {fileID: 7413391713096177310}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &948263364788865795
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1755954853520562220}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 0a2fa7fa7476eb640964d60c0c909757, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  EnemyDataList:
+  - {fileID: 11400000, guid: 59920269eccd6044fbbc7f29edfb2eff, type: 2}
+  NumberOfEnemiesToSpawn: 1
 --- !u!1 &2615094042729840737
 GameObject:
   m_ObjectHideFlags: 0
@@ -41,7 +57,6 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 8867130901882251123}
-  - component: {fileID: 6146892320841707773}
   - component: {fileID: 94219611910768170}
   m_Layer: 0
   m_Name: EnemySpawner
@@ -65,18 +80,6 @@ Transform:
   m_Children: []
   m_Father: {fileID: 974507756711922314}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &6146892320841707773
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 2615094042729840737}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 0a2fa7fa7476eb640964d60c0c909757, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!114 &94219611910768170
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -89,11 +92,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3678886d12378564881e14f3ac33e6b5, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  validColliders:
-  - {fileID: 0}
-  - {fileID: 0}
-  enemyDataList: []
-  numberOfEnemiesToSpawn: 5
+  SpawnRoomPos: {x: 0, y: 0}
+  ValidColliders: []
 --- !u!1 &5028629585731526745
 GameObject:
   m_ObjectHideFlags: 0
@@ -264,7 +264,7 @@ PrefabInstance:
     - target: {fileID: 3897735715113705775, guid: d45b10c039e21f34387dfbebc9de9ce3, type: 3}
       propertyPath: gameOverUI
       value: 
-      objectReference: {fileID: 6569482277905534660}
+      objectReference: {fileID: 0}
     - target: {fileID: 4490584799459991707, guid: d45b10c039e21f34387dfbebc9de9ce3, type: 3}
       propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Target
       value: 
@@ -303,11 +303,6 @@ GameObject:
 --- !u!4 &3527738999030692520 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 3583324173513385796, guid: d45b10c039e21f34387dfbebc9de9ce3, type: 3}
-  m_PrefabInstance: {fileID: 94449923391610348}
-  m_PrefabAsset: {fileID: 0}
---- !u!1 &6569482277905534660 stripped
-GameObject:
-  m_CorrespondingSourceObject: {fileID: 6513595837222310696, guid: d45b10c039e21f34387dfbebc9de9ce3, type: 3}
   m_PrefabInstance: {fileID: 94449923391610348}
   m_PrefabAsset: {fileID: 0}
 --- !u!1 &7064193264097599754 stripped

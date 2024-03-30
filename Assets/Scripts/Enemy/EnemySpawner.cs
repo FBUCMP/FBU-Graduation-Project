@@ -3,16 +3,20 @@ using UnityEngine;
 
 public class EnemySpawner : MonoBehaviour
 {
-    public Vector2 SpawnRoomPos;
-    public List<Collider2D> ValidColliders;
+    [HideInInspector]public Vector2 SpawnRoomPos;
+    [HideInInspector]public List<Collider2D> ValidColliders;
     private EnemyManager enemyManager;
 
-    public List<EnemyData> EnemyDataList = new List<EnemyData>();
-    public int NumberOfEnemiesToSpawn = 5;
+    private List<EnemyData> EnemyDataList = new List<EnemyData>();
+    private int NumberOfEnemiesToSpawn = 5;
 
-    void Start()
+    public void BeginProccess(List<EnemyData> EnemyDataList, int NumberOfEnemiesToSpawn, Vector2 SpawnRoomPos)
     {
+        this.EnemyDataList = EnemyDataList;
+        this.NumberOfEnemiesToSpawn = NumberOfEnemiesToSpawn;
+        this.SpawnRoomPos = SpawnRoomPos;
         enemyManager = GetComponent<EnemyManager>();
+        
         if (enemyManager == null)
         {
             Debug.LogError("EnemyManager component not found!");
@@ -111,13 +115,6 @@ public class EnemySpawner : MonoBehaviour
 
     void SpawnEnemyAtPosition(EnemyData enemyData, Vector2 position)
     {
-        if (enemyManager != null)
-        {
-            enemyManager.CreateEnemy(enemyData.Name, enemyData.Health, enemyData.Speed, enemyData.Power, position, enemyData.Prefab);
-        }
-        else
-        {
-            Debug.LogError("Enemy Manager at SpawnEnemyAtPosition is NULL");
-        }
+        GameObject enemyObject = Instantiate(enemyData.prefab, Vector3.zero, Quaternion.identity);
     }
 }

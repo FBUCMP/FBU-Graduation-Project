@@ -151,6 +151,6 @@ MonoBehaviour:
   generateBackground: 0
   doesTile: 1
   bgColor: {r: 0.67058825, g: 0.7019608, b: 0.8156863, a: 0}
-  sprite: {fileID: 21300000, guid: f3a2493badd8ef447a91c86df36416cb, type: 3}
+  sprite: {fileID: 21300000, guid: 7228b98ce946fa3479ddd2749c2b5e28, type: 3}
   colorMaterial: {fileID: 2100000, guid: a0cec58fc32f482418596ffdf7c0d693, type: 2}
   meshMaterial: {fileID: 2100000, guid: b746d4b9fb6164d4c8152a6d185e88ae, type: 2}
