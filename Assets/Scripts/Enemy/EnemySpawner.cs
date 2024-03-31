@@ -12,11 +12,21 @@ public class EnemySpawner : MonoBehaviour
 
     public void BeginProccess(List<EnemyData> EnemyDataList, int NumberOfEnemiesToSpawn, Vector2 SpawnRoomPos)
     {
+        
+        enemyManager = FindObjectOfType<EnemyManager>();
+
         this.EnemyDataList = EnemyDataList;
         this.NumberOfEnemiesToSpawn = NumberOfEnemiesToSpawn;
         this.SpawnRoomPos = SpawnRoomPos;
-        enemyManager = GetComponent<EnemyManager>();
-        
+        if(this.EnemyDataList.Count > 0)
+        {
+            Debug.Log("EnemyDataList: " + this.EnemyDataList);
+        } else
+        {
+            Debug.Log("EnemyDataList is Empty");
+        }
+
+
         if (enemyManager == null)
         {
             Debug.LogError("EnemyManager component not found!");
@@ -37,6 +47,14 @@ public class EnemySpawner : MonoBehaviour
             DestroyChildColliders();
         }
     }
+
+    void FindColliders()
+    {
+        //List<Vector3> edges = stageGenerator.GetRoomEdges();
+    }
+
+
+
 
     void DestroyChildColliders()
     {
