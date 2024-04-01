@@ -23,7 +23,7 @@ public class SpikeTrap : MonoBehaviour
             // Belirli bir süre aralýðýnda hasar ver
             if (timeSinceLastDamage >= damageInterval)
             {
-                collision.GetComponent<HPlayer>().TakeDamage(damage);
+                collision.GetComponent<HPlayer>().TakeDamage(damage, collision.ClosestPoint(transform.position), 1);
                 timeSinceLastDamage = 0f; // Hasar verildikten sonra sayaçý sýfýrla
             }
             else

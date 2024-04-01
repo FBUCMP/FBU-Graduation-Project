@@ -25,7 +25,7 @@ public class Parallax : MonoBehaviour
     }
     void Execute(Vector3 roomCenter)
     {
-        Debug.Log("Parallax Executed: "+ roomCenter);
+        //Debug.Log("Parallax Executed: "+ roomCenter);
         spawnPosition = new Vector2Int((int)roomCenter.x, (int)roomCenter.y);
         foreach(Transform child in transform)
         {

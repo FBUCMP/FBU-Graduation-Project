@@ -1,9 +1,10 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class EnemyFollowPlayer : MonoBehaviour
+public class EnemyBehaviour : MonoBehaviour
 {
-    [SerializeField] private float speed = 5f;
+    public float speed = 5f;
+    public float power = 1f;
     [SerializeField] private float maxSteeringForce = 4f;
     public float memorySpan = 25; // how long the enemy remembers the player
     public LayerMask groundLayer; // layermask for the ground
@@ -30,10 +31,7 @@ public class EnemyFollowPlayer : MonoBehaviour
         memoryTimer = memorySpan;
     }
 
-    void Update()
-    {
-        
-    }
+   
 
     private void OnDrawGizmos()
     {
@@ -61,7 +59,7 @@ public class EnemyFollowPlayer : MonoBehaviour
     {
         if (memoryTimer <= 0) // if enemy forgets
         {
-            Debug.Log($"{gameObject.name} forgot it's target ever existed...");
+            //Debug.Log($"{gameObject.name} forgot it's target ever existed...");
             waypoints.Clear(); // clear all the waypoints and go back to idle state
             if (enemyState != EnemyState.Idle)
             {
@@ -79,6 +77,11 @@ public class EnemyFollowPlayer : MonoBehaviour
         
         if (hit.collider != null && hit.collider.CompareTag(target.tag)) // if the raycast hits the player
         {
+            if (Vector3.Distance(rb.position, hit.collider.transform.position) < 2f)
+            {
+                ChangeState(EnemyState.Attack);
+                return;
+            }
             waypoints.Clear(); // clear all the waypoints
             waypoints.Add(hit.point); // add the player's position as the first waypoint
 
@@ -193,7 +196,22 @@ public class EnemyFollowPlayer : MonoBehaviour
     }
     void Attack()
     {
-        Debug.Log(gameObject.name + " Attacking");
+        Debug.Log(gameObject.name + " is Attacking");
+        Collider2D[] hitObjects = new Collider2D[10];
+        int hits = Physics2D.OverlapCircleNonAlloc(rb.position, 2f, hitObjects);
+        for (int i = 0; i < hits; i++)
+        {
+            if (hitObjects[i].TryGetComponent(out IDamageable damagable))
+            {
+
+                damagable.TakeDamage(10 * (int)power, transform.position, 2f);
+            }
+        }
+        if(TryGetComponent(out IDamageable selfDamagable))
+        {
+            selfDamagable.TakeDamage(selfDamagable.currentHealth, transform.position, 1f);
+        }
+        
     }
     void HandleWalls()
     {
@@ -224,7 +242,7 @@ public class EnemyFollowPlayer : MonoBehaviour
     }
     void ChangeState(EnemyState newState)
     {
-        Debug.Log($"Changing state from {enemyState} to {newState}");
+        //Debug.Log($"Changing state from {enemyState} to {newState}");
         enemyState = newState;
     }
 }

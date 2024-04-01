@@ -4,20 +4,28 @@ using Unity.VisualScripting;
 using UnityEditor.Rendering.Universal;
 using UnityEngine;
 
-public class HPlayer : MonoBehaviour, IDataPersistance
+public class HPlayer : MonoBehaviour, IDataPersistance, IDamageable
 
 {
     [SerializeField] private bool isDead = false;
     //[SerializeField] private GameManagerScript gameManager; //Death Screen için gameManager çaðýrýyoruz
 
+    [SerializeField]
+    private int _health;
+    [SerializeField]
+    private int _maxHealth = 100;
+    public int currentHealth { get => _health; set => _health = value; } // getter and setter
+    public int maxHealth { get => _maxHealth; set => _maxHealth = value; } // getter and setter
 
-
-    [SerializeField] private int maxHealth;
-    [SerializeField] private int currentHealth;
     private int deathCount = 0;
 
 
     public HealthBar healthBar;
+
+    public event IDamageable.TakeDamageEvent OnTakeDamage;
+    public event IDamageable.DeathEvent OnDeath;
+
+    
 
     public void LoadData(GameData gameData)
     {
@@ -62,13 +70,18 @@ public class HPlayer : MonoBehaviour, IDataPersistance
         //Debug.Log("Ölü mü: " + isDead);
         if (Input.GetKeyDown(KeyCode.B))
         {
-            TakeDamage(20);
+            TakeDamage(20, transform.position,1f);
         }
     }
 
-    public void TakeDamage(int damage)
+    public void TakeDamage(int damage, Vector3 hitPos, float radius) // radius 1f
     {
+        damage = Mathf.Clamp(damage, 0, currentHealth);
         currentHealth -= damage;
+        if (damage != 0)
+        {
+            OnTakeDamage?.Invoke(damage);
+        }
         if (currentHealth <= 0)
         {
             Debug.Log("Health is 0");
@@ -78,6 +91,7 @@ public class HPlayer : MonoBehaviour, IDataPersistance
             {
                 isDead = true;
                 deathCount++;
+                OnDeath?.Invoke(transform.position);
                 GameManagerScript.Instance.gameOver(); 
                 Debug.Log("Dead:" + deathCount);
             }
@@ -85,4 +99,5 @@ public class HPlayer : MonoBehaviour, IDataPersistance
         healthBar.SetHealth(currentHealth, maxHealth);
     }
 
+    
 }
