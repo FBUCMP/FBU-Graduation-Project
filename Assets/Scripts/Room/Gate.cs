@@ -25,7 +25,6 @@ public class Gate : MonoBehaviour
         */
         boxCollider = GetComponent<BoxCollider2D>();
         spriteRenderer = GetComponentInChildren<SpriteRenderer>();
-        boxCollider.size = spriteRenderer.transform.localScale;
         if (isClosed)
         {
             spriteRenderer.color = closedColor;       

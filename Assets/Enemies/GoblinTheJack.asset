@@ -16,5 +16,5 @@ MonoBehaviour:
   health: 100
   speed: 10
   power: 2
-  prefab: {fileID: 4322037059510183647, guid: 667fa16d16022ce4f9c0569343cedd23, type: 3}
+  prefab: {fileID: 6568199932609452222, guid: 597229b17136c87478b1ab1e779d50bf, type: 3}
   type: 1

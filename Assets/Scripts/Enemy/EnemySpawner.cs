@@ -12,7 +12,7 @@ public class EnemySpawner : MonoBehaviour
 
     public void BeginProccess(List<EnemyData> EnemyDataList, int NumberOfEnemiesToSpawn, Vector2 SpawnRoomPos)
     {
-        
+        Debug.Log("BeginProcess, SpawnRoomPos: "+ SpawnRoomPos);
         enemyManager = FindObjectOfType<EnemyManager>();
 
         this.EnemyDataList = EnemyDataList;
@@ -34,17 +34,12 @@ public class EnemySpawner : MonoBehaviour
         else
         {
             Debug.Log("Enemy Manager is found: " + enemyManager.name);
-            if (ValidColliders.Count <= 0)
-            {
-                Debug.LogWarning("No colliders found!");
-                CreateColliders(NumberOfEnemiesToSpawn);
-                SpawnCustomEnemies(NumberOfEnemiesToSpawn);
-            }
-            else
-            {
-                SpawnCustomEnemies(NumberOfEnemiesToSpawn);
-            }
+            
             DestroyChildColliders();
+            CreateColliders(NumberOfEnemiesToSpawn);
+           
+            SpawnCustomEnemies(NumberOfEnemiesToSpawn);
+            
         }
     }
 
@@ -121,6 +116,8 @@ public class EnemySpawner : MonoBehaviour
     Vector2 GetRandomColliderPosition()
     {
         Collider2D randomCollider = ValidColliders[UnityEngine.Random.Range(0, ValidColliders.Count)];
+        return randomCollider.transform.position; // valid colliders dont collide with walls, so we can use their position directly
+        /*
         float minX = randomCollider.bounds.min.x;
         float maxX = randomCollider.bounds.max.x;
         float colliderTop = randomCollider.bounds.max.y;
@@ -129,10 +126,11 @@ public class EnemySpawner : MonoBehaviour
         float randomY = colliderTop + offsetY;
 
         return new Vector2(randomX, randomY);
+        */
     }
 
     void SpawnEnemyAtPosition(EnemyData enemyData, Vector2 position)
     {
-        GameObject enemyObject = Instantiate(enemyData.prefab, Vector3.zero, Quaternion.identity);
+        GameObject enemyObject = Instantiate(enemyData.prefab, position, Quaternion.identity);
     }
 }

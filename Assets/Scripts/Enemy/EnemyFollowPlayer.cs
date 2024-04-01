@@ -61,7 +61,7 @@ public class EnemyFollowPlayer : MonoBehaviour
     {
         if (memoryTimer <= 0) // if enemy forgets
         {
-            Debug.Log($"{gameObject.name} forgot it's target ever existed...");
+            //Debug.Log($"{gameObject.name} forgot it's target ever existed...");
             waypoints.Clear(); // clear all the waypoints and go back to idle state
             if (enemyState != EnemyState.Idle)
             {
@@ -224,7 +224,7 @@ public class EnemyFollowPlayer : MonoBehaviour
     }
     void ChangeState(EnemyState newState)
     {
-        Debug.Log($"Changing state from {enemyState} to {newState}");
+        //Debug.Log($"Changing state from {enemyState} to {newState}");
         enemyState = newState;
     }
 }

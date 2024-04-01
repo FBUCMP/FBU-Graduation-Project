@@ -10,6 +10,8 @@ public class GateManager : MonoBehaviour
     private Vector2Int currentRoom;
     Transform player;
     Vector3 newPos;
+    public AudioClip teleportSound;
+    private AudioSource audioSource;
 
     public delegate void TeleportEvent(Vector3 roomCenter);
     public static event TeleportEvent OnTeleport;
@@ -20,6 +22,8 @@ public class GateManager : MonoBehaviour
     }
     void Start()
     {
+        audioSource = gameObject.AddComponent<AudioSource>();
+        audioSource.volume = 0.3f;
         stageGen = GetComponent<StageGenerator>();
         roomsList = stageGen.roomsList;
         currentRoom = roomsList[0];
@@ -56,6 +60,7 @@ public class GateManager : MonoBehaviour
     }
     void TeleportTo(Vector2Int room, int dirFrom)
     {
+        audioSource.PlayOneShot(teleportSound);
         if (stageGen.tpPoints.ContainsKey(room))
         {
             newPos = stageGen.tpPoints[room][dirFrom];
