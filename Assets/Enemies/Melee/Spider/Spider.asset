@@ -1,0 +1,21 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 0}
+  m_Name: Spider
+  m_EditorClassIdentifier: Assembly-CSharp::SpiderData
+  name: Spider
+  health: 100
+  speed: 2
+  power: 2
+  prefab: {fileID: 7788685956179826834, guid: 272b3a5c262b48e468a8ef5916cf2432, type: 3}
+  type: 2
+  webDamage: 3

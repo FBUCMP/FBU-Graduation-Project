@@ -11,9 +11,11 @@ public class EnemyManager : MonoBehaviour
 
     StageGenerator stageGenerator;
     EnemySpawner spawner;
-
+    public static AudioSource audioSource; // static so it can be accessed from enemy scripts
     private void Start()
     {
+        audioSource = gameObject.AddComponent<AudioSource>();
+        audioSource.volume = 0.3f;
         stageGenerator = GameObject.FindAnyObjectByType<StageGenerator>();
         spawner = GetComponentInChildren<EnemySpawner>();
         CreateEnemy(EnemyDataList);

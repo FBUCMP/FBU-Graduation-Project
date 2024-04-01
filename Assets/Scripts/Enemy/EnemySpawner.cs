@@ -132,5 +132,10 @@ public class EnemySpawner : MonoBehaviour
     void SpawnEnemyAtPosition(EnemyData enemyData, Vector2 position)
     {
         GameObject enemyObject = Instantiate(enemyData.prefab, position, Quaternion.identity);
+        if (enemyObject.TryGetComponent(out EnemyHealth enemyHealth))
+        {
+            enemyHealth.maxHealth = (int)enemyData.health;
+            enemyHealth.currentHealth = enemyHealth.maxHealth;
+        }
     }
 }

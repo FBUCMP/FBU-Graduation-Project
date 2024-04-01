@@ -7,6 +7,8 @@ public class SpawnParticleSystemOnDeath : MonoBehaviour
 {
     [SerializeField]
     private ParticleSystem deathParticle;
+    [SerializeField]
+    private AudioClip deathSound;
     public IDamageable damageable;
 
     private void Awake()
@@ -26,6 +28,8 @@ public class SpawnParticleSystemOnDeath : MonoBehaviour
     private void Damageable_OnDeath(Vector3 position)
     {
         Instantiate(deathParticle, position, Quaternion.identity).Play();
+        
+        EnemyManager.audioSource.PlayOneShot(deathSound);
         
         gameObject.SetActive(false);
     }

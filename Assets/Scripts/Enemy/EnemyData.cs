@@ -4,7 +4,8 @@ using UnityEngine;
 public enum EnemyType
 {
     Dragon,
-    Goblin
+    Goblin,
+    Spider
 }
 public class EnemyData : ScriptableObject
 {

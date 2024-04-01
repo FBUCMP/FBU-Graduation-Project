@@ -14,6 +14,8 @@ GameObject:
   - component: {fileID: 1769089380128946702}
   - component: {fileID: 4378208202800920012}
   - component: {fileID: 588168470265931361}
+  - component: {fileID: 5952800756205147480}
+  - component: {fileID: 206514084015724580}
   m_Layer: 10
   m_Name: EnemyFlying
   m_TagString: Enemy
@@ -199,6 +201,34 @@ MonoBehaviour:
     serializedVersion: 2
     m_Bits: 1217
   enemyState: 0
+--- !u!114 &5952800756205147480
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6568199932609452222}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 8d82eab623fe6ce449d92481b2896aa1, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _health: 0
+  _maxHealth: 100
+--- !u!114 &206514084015724580
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6568199932609452222}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 0b68a7e903d6619459e3201638bb4000, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  deathParticle: {fileID: 2675300400477456816, guid: 9d63d16f3d494e24ba92a43fb4fafaa3, type: 3}
+  deathSound: {fileID: 8300000, guid: e2ef13590109348d19c2566f7381c2f5, type: 3}
 --- !u!1001 &298740875341954338
 PrefabInstance:
   m_ObjectHideFlags: 0
