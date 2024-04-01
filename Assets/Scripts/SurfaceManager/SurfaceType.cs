@@ -5,6 +5,7 @@ using UnityEngine;
 [System.Serializable]
 public class SurfaceType
 {
-    public Texture Albedo;
+    //public Texture Albedo; // old version
+    public LayerMask Layer;
     public Surface Surface;
 }
