@@ -15,6 +15,7 @@ public class EnemyData : ScriptableObject
     public float power;
     public GameObject prefab;
     public EnemyType type;
+
 }
 
 [CreateAssetMenu(fileName = "NewHasakiFlyData", menuName = "Enemy Data/HasakiFly", order = 52)]

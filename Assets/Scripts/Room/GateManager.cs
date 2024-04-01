@@ -60,7 +60,10 @@ public class GateManager : MonoBehaviour
     }
     void TeleportTo(Vector2Int room, int dirFrom)
     {
-        audioSource.PlayOneShot(teleportSound);
+        if (audioSource != null && teleportSound != null)
+        {
+            audioSource.PlayOneShot(teleportSound);
+        }
         if (stageGen.tpPoints.ContainsKey(room))
         {
             newPos = stageGen.tpPoints[room][dirFrom];

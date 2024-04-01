@@ -137,5 +137,10 @@ public class EnemySpawner : MonoBehaviour
             enemyHealth.maxHealth = (int)enemyData.health;
             enemyHealth.currentHealth = enemyHealth.maxHealth;
         }
+        if (enemyObject.TryGetComponent(out EnemyBehaviour enemyBehaviour))
+        {
+            enemyBehaviour.speed = enemyData.speed;
+            enemyBehaviour.power = enemyData.power;
+        }
     }
 }

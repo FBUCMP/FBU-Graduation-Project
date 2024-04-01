@@ -34,7 +34,17 @@ public class CameraFollow : MonoBehaviour
     */
     private void LateUpdate()
     {
-        target = GameObject.FindGameObjectWithTag("Player").transform;
+        if (!target)
+        {
+            if (GameObject.FindGameObjectWithTag("Player"))
+            {
+                target = GameObject.FindGameObjectWithTag("Player").transform;
+            }
+            else
+            {
+                return; // if player is not found, return from the update function !!
+            }
+        }
         if (target)
         {
             targetedPosition = target.position + cameraOffset; // kameranýn hedef pozisyonunu hesaplar
