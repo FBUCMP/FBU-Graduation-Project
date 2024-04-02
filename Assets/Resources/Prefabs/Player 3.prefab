@@ -156,8 +156,8 @@ MonoBehaviour:
   m_ShadowVolumeIntensityEnabled: 0
   m_ShadowVolumeIntensity: 0.75
   m_LocalBounds:
-    m_Center: {x: 0.13295001, y: -0.054149985, z: 0}
-    m_Extent: {x: 0.66335, y: 0.74645, z: 0}
+    m_Center: {x: 0.13139999, y: -0.05375001, z: 0}
+    m_Extent: {x: 0.6574, y: 0.74735, z: 0}
   m_PointLightInnerAngle: 360
   m_PointLightOuterAngle: 360
   m_PointLightInnerRadius: 0
@@ -417,8 +417,8 @@ MonoBehaviour:
   m_ShadowVolumeIntensityEnabled: 0
   m_ShadowVolumeIntensity: 0.75
   m_LocalBounds:
-    m_Center: {x: -0.28055, y: 0.1496, z: 0}
-    m_Extent: {x: 0.74915004, y: 0.7235, z: 0}
+    m_Center: {x: -0.29324996, y: 0.15190002, z: 0}
+    m_Extent: {x: 0.74815, y: 0.73039997, z: 0}
   m_PointLightInnerAngle: 360
   m_PointLightOuterAngle: 360
   m_PointLightInnerRadius: 0
@@ -552,7 +552,7 @@ GameObject:
   m_Layer: 0
   m_Name: GroundCheckL
   m_TagString: Untagged
-  m_Icon: {fileID: 7174288486110832750, guid: 0000000000000000d000000000000000, type: 0}
+  m_Icon: {fileID: -5487077368411116049, guid: 0000000000000000d000000000000000, type: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 1
@@ -614,7 +614,7 @@ GameObject:
   m_Layer: 0
   m_Name: ' WallCheckL'
   m_TagString: Untagged
-  m_Icon: {fileID: -5397416234189338067, guid: 0000000000000000d000000000000000, type: 0}
+  m_Icon: {fileID: -5487077368411116049, guid: 0000000000000000d000000000000000, type: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 1
@@ -699,8 +699,8 @@ MonoBehaviour:
   m_ShadowVolumeIntensityEnabled: 0
   m_ShadowVolumeIntensity: 0.75
   m_LocalBounds:
-    m_Center: {x: 0.13115, y: 0.132, z: 0}
-    m_Extent: {x: 0.60465, y: 0.7415, z: 0}
+    m_Center: {x: 0.14254999, y: 0.13364998, z: 0}
+    m_Extent: {x: 0.59875, y: 0.75374997, z: 0}
   m_PointLightInnerAngle: 360
   m_PointLightOuterAngle: 360
   m_PointLightInnerRadius: 0
@@ -1024,8 +1024,8 @@ MonoBehaviour:
   m_ShadowVolumeIntensityEnabled: 0
   m_ShadowVolumeIntensity: 0.75
   m_LocalBounds:
-    m_Center: {x: 0.63905, y: -0.027349979, z: 0}
-    m_Extent: {x: 1.07205, y: 0.74195004, z: 0}
+    m_Center: {x: 0.64175, y: -0.025549978, z: 0}
+    m_Extent: {x: 1.06515, y: 0.73364997, z: 0}
   m_PointLightInnerAngle: 360
   m_PointLightOuterAngle: 360
   m_PointLightInnerRadius: 0
@@ -1113,8 +1113,8 @@ MonoBehaviour:
   m_ShadowVolumeIntensityEnabled: 0
   m_ShadowVolumeIntensity: 0.75
   m_LocalBounds:
-    m_Center: {x: -0.4037, y: 0.05609998, z: 0}
-    m_Extent: {x: 0.7909, y: 0.6381, z: 0}
+    m_Center: {x: -0.41275, y: 0.05790001, z: 0}
+    m_Extent: {x: 0.79285, y: 0.6441, z: 0}
   m_PointLightInnerAngle: 360
   m_PointLightOuterAngle: 360
   m_PointLightInnerRadius: 0
@@ -1454,8 +1454,8 @@ MonoBehaviour:
   m_ShadowVolumeIntensityEnabled: 0
   m_ShadowVolumeIntensity: 0.75
   m_LocalBounds:
-    m_Center: {x: -0.36259997, y: -0.16720003, z: 0}
-    m_Extent: {x: 0.8347, y: 0.7051, z: 0}
+    m_Center: {x: -0.35525003, y: -0.1674, z: 0}
+    m_Extent: {x: 0.83545005, y: 0.7047, z: 0}
   m_PointLightInnerAngle: 360
   m_PointLightOuterAngle: 360
   m_PointLightInnerRadius: 0
@@ -1602,8 +1602,8 @@ MonoBehaviour:
   m_ShadowVolumeIntensityEnabled: 0
   m_ShadowVolumeIntensity: 0.75
   m_LocalBounds:
-    m_Center: {x: -0.31735, y: -0.0014499724, z: 0}
-    m_Extent: {x: 0.83984995, y: 0.61045, z: 0}
+    m_Center: {x: -0.32585, y: -0.0029999912, z: 0}
+    m_Extent: {x: 0.83675003, y: 0.61319995, z: 0}
   m_PointLightInnerAngle: 360
   m_PointLightOuterAngle: 360
   m_PointLightInnerRadius: 0
@@ -1797,6 +1797,7 @@ MonoBehaviour:
   speed: 8
   jumpHeight: 20
   isDashing: 0
+  isWallSliding: 0
   velocity_test: 0
   rb: {fileID: 2300254057313476750}
   groundLayer:
@@ -2244,8 +2245,8 @@ MonoBehaviour:
   m_ShadowVolumeIntensityEnabled: 0
   m_ShadowVolumeIntensity: 0.75
   m_LocalBounds:
-    m_Center: {x: 0.13469999, y: 0.14295, z: 0}
-    m_Extent: {x: 0.58, y: 0.74405, z: 0}
+    m_Center: {x: 0.13250001, y: 0.14285001, z: 0}
+    m_Extent: {x: 0.5896, y: 0.74115, z: 0}
   m_PointLightInnerAngle: 360
   m_PointLightOuterAngle: 360
   m_PointLightInnerRadius: 0
@@ -2337,7 +2338,7 @@ GameObject:
   m_Layer: 0
   m_Name: GroundCheckM
   m_TagString: Untagged
-  m_Icon: {fileID: 7174288486110832750, guid: 0000000000000000d000000000000000, type: 0}
+  m_Icon: {fileID: 4162164826716764455, guid: 0000000000000000d000000000000000, type: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 1
@@ -2368,7 +2369,7 @@ GameObject:
   m_Layer: 0
   m_Name: ' WallCheckR'
   m_TagString: Untagged
-  m_Icon: {fileID: -5487077368411116049, guid: 0000000000000000d000000000000000, type: 0}
+  m_Icon: {fileID: 7174288486110832750, guid: 0000000000000000d000000000000000, type: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 1

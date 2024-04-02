@@ -18,25 +18,53 @@ public class PlayerIK : MonoBehaviour
     [Range(0, 1f)]
     [SerializeField]
     private float handWeight = 1f;
-
+    private PlayerMovementNew playerMovement;
     private void Awake()
     {
         SetHandWeights(handWeight);
+        playerMovement = GetComponent<PlayerMovementNew>();
     }
     
 
     private void Update()
     {
-        if (leftHandOnGun != null)
+        if (playerMovement != null)
         {
-            leftHandTarget.position = leftHandOnGun.position;
-            leftHandTarget.rotation = leftHandOnGun.rotation; // might be wrong if so try local rotation
+            
+            if (playerMovement.isWalledLeft()) // reaching behind
+            {
+                
+                float offset = Mathf.Sign( playerMovement.wallCheckL.position.x - playerMovement.transform.position.x );
+                rightHandTarget.position = playerMovement.wallCheckL.position  + new Vector3(offset * 0.6f, 1.35f);
+                rightHandSolver.flip = false;
+            }
+            else if (rightHandOnGun != null)
+            {
+                rightHandSolver.flip = true;
+                rightHandTarget.position = rightHandOnGun.position;
+                rightHandTarget.rotation = rightHandOnGun.rotation;
+            }
+            if (playerMovement.isWalledRight()) // reaching front
+            {
+                float offset = Mathf.Sign(playerMovement.wallCheckR.position.x - playerMovement.transform.position.x);
+                leftHandTarget.position = playerMovement.wallCheckR.position + new Vector3(offset * 0.5f, 1f);
+                //leftHandSolver.flip = false;
+            }
+            else if (leftHandOnGun != null)
+            {
+                leftHandSolver.flip = true;
+                leftHandTarget.position = leftHandOnGun.position;
+                leftHandTarget.rotation = leftHandOnGun.rotation; // might be wrong if so try local rotation
+            }
+
+            //leftHandTarget.rotation = leftHandOnGun.rotation; // might be wrong if so try local rotation
+
+            
+            
         }
-        if (rightHandOnGun != null)
-        {
-            rightHandTarget.position = rightHandOnGun.position;
-            rightHandTarget.rotation = rightHandOnGun.rotation;
-        }
+        
+        
+        
         if (head != null && rightHandTarget !=  null)
         {
             
