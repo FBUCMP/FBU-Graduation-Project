@@ -92,7 +92,7 @@ public class EnemyBehaviour : MonoBehaviour
         }
         else // hits something else (wall ...)
         {
-            Debug.DrawLine(transform.position, target.transform.position, Color.red);
+            //Debug.DrawLine(transform.position, target.transform.position, Color.red);
         }
 
 

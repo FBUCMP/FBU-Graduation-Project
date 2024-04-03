@@ -156,8 +156,8 @@ MonoBehaviour:
   m_ShadowVolumeIntensityEnabled: 0
   m_ShadowVolumeIntensity: 0.75
   m_LocalBounds:
-    m_Center: {x: 0.13194999, y: -0.052900016, z: 0}
-    m_Extent: {x: 0.65435004, y: 0.7413, z: 0}
+    m_Center: {x: 0.13139999, y: -0.05375001, z: 0}
+    m_Extent: {x: 0.6574, y: 0.74735, z: 0}
   m_PointLightInnerAngle: 360
   m_PointLightOuterAngle: 360
   m_PointLightInnerRadius: 0
@@ -204,7 +204,7 @@ Transform:
   m_GameObject: {fileID: 449408697885146423}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0.02, y: 0, z: 0}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -227,13 +227,13 @@ MonoBehaviour:
   m_BlendStyleIndex: 0
   m_FalloffIntensity: 0.75
   m_Color: {r: 1, g: 0.88582355, b: 0.6839622, a: 1}
-  m_Intensity: 0.26
+  m_Intensity: 0.25
   m_LightVolumeIntensity: 0.01
   m_LightVolumeIntensityEnabled: 1
   m_ApplyToSortingLayers: 00000000
   m_LightCookieSprite: {fileID: 0}
   m_DeprecatedPointLightCookieSprite: {fileID: 0}
-  m_LightOrder: 1
+  m_LightOrder: 2
   m_AlphaBlendOnOverlap: 0
   m_OverlapOperation: 0
   m_NormalMapDistance: 3
@@ -247,7 +247,7 @@ MonoBehaviour:
     m_Center: {x: 0, y: -0.00000011920929, z: 0}
     m_Extent: {x: 0.9985302, y: 0.99853027, z: 0}
   m_PointLightInnerAngle: 359.99997
-  m_PointLightOuterAngle: 359.99997
+  m_PointLightOuterAngle: 360
   m_PointLightInnerRadius: 5
   m_PointLightOuterRadius: 20
   m_ShapeLightParametricSides: 5
@@ -417,8 +417,8 @@ MonoBehaviour:
   m_ShadowVolumeIntensityEnabled: 0
   m_ShadowVolumeIntensity: 0.75
   m_LocalBounds:
-    m_Center: {x: -0.28975004, y: 0.15215, z: 0}
-    m_Extent: {x: 0.73925, y: 0.72045004, z: 0}
+    m_Center: {x: -0.29324996, y: 0.15190002, z: 0}
+    m_Extent: {x: 0.74815, y: 0.73039997, z: 0}
   m_PointLightInnerAngle: 360
   m_PointLightOuterAngle: 360
   m_PointLightInnerRadius: 0
@@ -552,7 +552,7 @@ GameObject:
   m_Layer: 0
   m_Name: GroundCheckL
   m_TagString: Untagged
-  m_Icon: {fileID: 7174288486110832750, guid: 0000000000000000d000000000000000, type: 0}
+  m_Icon: {fileID: -5487077368411116049, guid: 0000000000000000d000000000000000, type: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 1
@@ -614,7 +614,7 @@ GameObject:
   m_Layer: 0
   m_Name: ' WallCheckL'
   m_TagString: Untagged
-  m_Icon: {fileID: -5397416234189338067, guid: 0000000000000000d000000000000000, type: 0}
+  m_Icon: {fileID: -5487077368411116049, guid: 0000000000000000d000000000000000, type: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 1
@@ -699,8 +699,8 @@ MonoBehaviour:
   m_ShadowVolumeIntensityEnabled: 0
   m_ShadowVolumeIntensity: 0.75
   m_LocalBounds:
-    m_Center: {x: 0.13205001, y: 0.13080001, z: 0}
-    m_Extent: {x: 0.59795, y: 0.7453, z: 0}
+    m_Center: {x: 0.14254999, y: 0.13364998, z: 0}
+    m_Extent: {x: 0.59875, y: 0.75374997, z: 0}
   m_PointLightInnerAngle: 360
   m_PointLightOuterAngle: 360
   m_PointLightInnerRadius: 0
@@ -1024,8 +1024,8 @@ MonoBehaviour:
   m_ShadowVolumeIntensityEnabled: 0
   m_ShadowVolumeIntensity: 0.75
   m_LocalBounds:
-    m_Center: {x: 0.6335, y: -0.021349996, z: 0}
-    m_Extent: {x: 1.0699, y: 0.73805, z: 0}
+    m_Center: {x: 0.64175, y: -0.025549978, z: 0}
+    m_Extent: {x: 1.06515, y: 0.73364997, z: 0}
   m_PointLightInnerAngle: 360
   m_PointLightOuterAngle: 360
   m_PointLightInnerRadius: 0
@@ -1113,8 +1113,8 @@ MonoBehaviour:
   m_ShadowVolumeIntensityEnabled: 0
   m_ShadowVolumeIntensity: 0.75
   m_LocalBounds:
-    m_Center: {x: -0.40775, y: 0.05794999, z: 0}
-    m_Extent: {x: 0.79275, y: 0.64055, z: 0}
+    m_Center: {x: -0.41275, y: 0.05790001, z: 0}
+    m_Extent: {x: 0.79285, y: 0.6441, z: 0}
   m_PointLightInnerAngle: 360
   m_PointLightOuterAngle: 360
   m_PointLightInnerRadius: 0
@@ -1454,8 +1454,8 @@ MonoBehaviour:
   m_ShadowVolumeIntensityEnabled: 0
   m_ShadowVolumeIntensity: 0.75
   m_LocalBounds:
-    m_Center: {x: -0.36090004, y: -0.17394999, z: 0}
-    m_Extent: {x: 0.8391, y: 0.70484996, z: 0}
+    m_Center: {x: -0.35525003, y: -0.1674, z: 0}
+    m_Extent: {x: 0.83545005, y: 0.7047, z: 0}
   m_PointLightInnerAngle: 360
   m_PointLightOuterAngle: 360
   m_PointLightInnerRadius: 0
@@ -1602,8 +1602,8 @@ MonoBehaviour:
   m_ShadowVolumeIntensityEnabled: 0
   m_ShadowVolumeIntensity: 0.75
   m_LocalBounds:
-    m_Center: {x: -0.32065004, y: 0.0034999847, z: 0}
-    m_Extent: {x: 0.83485, y: 0.6179, z: 0}
+    m_Center: {x: -0.32585, y: -0.0029999912, z: 0}
+    m_Extent: {x: 0.83675003, y: 0.61319995, z: 0}
   m_PointLightInnerAngle: 360
   m_PointLightOuterAngle: 360
   m_PointLightInnerRadius: 0
@@ -1797,6 +1797,7 @@ MonoBehaviour:
   speed: 8
   jumpHeight: 20
   isDashing: 0
+  isWallSliding: 0
   velocity_test: 0
   rb: {fileID: 2300254057313476750}
   groundLayer:
@@ -2244,8 +2245,8 @@ MonoBehaviour:
   m_ShadowVolumeIntensityEnabled: 0
   m_ShadowVolumeIntensity: 0.75
   m_LocalBounds:
-    m_Center: {x: 0.13134998, y: 0.14765, z: 0}
-    m_Extent: {x: 0.59225, y: 0.74095, z: 0}
+    m_Center: {x: 0.13250001, y: 0.14285001, z: 0}
+    m_Extent: {x: 0.5896, y: 0.74115, z: 0}
   m_PointLightInnerAngle: 360
   m_PointLightOuterAngle: 360
   m_PointLightInnerRadius: 0
@@ -2337,7 +2338,7 @@ GameObject:
   m_Layer: 0
   m_Name: GroundCheckM
   m_TagString: Untagged
-  m_Icon: {fileID: 7174288486110832750, guid: 0000000000000000d000000000000000, type: 0}
+  m_Icon: {fileID: 4162164826716764455, guid: 0000000000000000d000000000000000, type: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 1
@@ -2368,7 +2369,7 @@ GameObject:
   m_Layer: 0
   m_Name: ' WallCheckR'
   m_TagString: Untagged
-  m_Icon: {fileID: -5487077368411116049, guid: 0000000000000000d000000000000000, type: 0}
+  m_Icon: {fileID: 7174288486110832750, guid: 0000000000000000d000000000000000, type: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 1
