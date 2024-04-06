@@ -183,7 +183,7 @@ public class SurfaceManager : MonoBehaviour
     {
         int layerMask = HitObject.layer; // Get the layer of the hit object
         SurfaceType surfaceType = Surfaces.Find(surface => surface.Layer ==  (1 << layerMask)); // Find the surface type based on the layer mask
-        Debug.Log(surfaceType == null);
+        //Debug.Log(surfaceType == null);
         if (surfaceType != null)
         {
             Debug.Log("Surface type found: " + surfaceType.Surface.name);

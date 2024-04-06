@@ -9,13 +9,12 @@ MonoBehaviour:
   m_GameObject: {fileID: 0}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 0}
+  m_Script: {fileID: 11500000, guid: b6ea6958151f37c4bbb91b95d3cc2856, type: 3}
   m_Name: Spider
   m_EditorClassIdentifier: Assembly-CSharp::SpiderData
   name: Spider
-  health: 100
-  speed: 2
-  power: 2
+  health: 25
+  speed: 3
+  power: 3
   prefab: {fileID: 7788685956179826834, guid: 272b3a5c262b48e468a8ef5916cf2432, type: 3}
   type: 2
-  webDamage: 3
