@@ -13,8 +13,8 @@ MonoBehaviour:
   m_Name: Spider
   m_EditorClassIdentifier: Assembly-CSharp::SpiderData
   name: Spider
-  health: 25
-  speed: 3
-  power: 3
+  health: 100
+  speed: 5
+  power: 4
   prefab: {fileID: 7788685956179826834, guid: 272b3a5c262b48e468a8ef5916cf2432, type: 3}
   type: 2

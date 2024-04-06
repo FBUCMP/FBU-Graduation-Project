@@ -12,7 +12,6 @@ GameObject:
   - component: {fileID: 3092528033996168087}
   - component: {fileID: 7156045195542606868}
   - component: {fileID: 1769089380128946702}
-  - component: {fileID: 4378208202800920012}
   - component: {fileID: 588168470265931361}
   - component: {fileID: 5952800756205147480}
   - component: {fileID: 206514084015724580}
@@ -167,21 +166,6 @@ BoxCollider2D:
   serializedVersion: 2
   m_Size: {x: 1, y: 1}
   m_EdgeRadius: 0
---- !u!114 &4378208202800920012
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 6568199932609452222}
-  m_Enabled: 0
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: d7083c72a0f663b46ae012170a486073, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  player: {fileID: 0}
-  speed: 0
-  distanceBetween: 0
 --- !u!114 &588168470265931361
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -194,12 +178,19 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: cc69135593f63e444aca213234e39c01, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  isFlying: 1
   speed: 5
+  power: 0
   maxSteeringForce: 4
+  checkDistance: 0.9
+  reachDistance: 1.2
   memorySpan: 10
   groundLayer:
     serializedVersion: 2
-    m_Bits: 1217
+    m_Bits: 193
+  solidLayers:
+    serializedVersion: 2
+    m_Bits: 1729
   enemyState: 0
 --- !u!114 &5952800756205147480
 MonoBehaviour:

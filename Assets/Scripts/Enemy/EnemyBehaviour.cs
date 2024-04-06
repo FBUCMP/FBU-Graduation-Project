@@ -3,11 +3,16 @@ using UnityEngine;
 
 public class EnemyBehaviour : MonoBehaviour
 {
+    public bool isFlying;
     public float speed = 5f;
     public float power = 1f;
     [SerializeField] private float maxSteeringForce = 4f;
+    private float gravityScale;
+    public float checkDistance = 0.9f;
+    public float reachDistance = 1.2f;
     public float memorySpan = 25; // how long the enemy remembers the player
     public LayerMask groundLayer; // layermask for the ground
+    public LayerMask solidLayers; // ground wall + enemy layer
     private Rigidbody2D rb; // rigidbody of the enemy
     private Collider2D enemyCollider; // collider of the enemy
 
@@ -29,6 +34,7 @@ public class EnemyBehaviour : MonoBehaviour
         rb = GetComponent<Rigidbody2D>();
         target = GameObject.FindGameObjectWithTag("Player");
         memoryTimer = memorySpan;
+        gravityScale = rb.gravityScale;
     }
 
    
@@ -36,12 +42,13 @@ public class EnemyBehaviour : MonoBehaviour
     private void OnDrawGizmos()
     {
         Color wpColor = Color.yellow;
+        Gizmos.color = wpColor;
+        Gizmos.DrawWireSphere(transform.position, reachDistance);
         if (waypoints.Count > 0)
         {
             for (int i = 0; i < waypoints.Count; i++)
             {
                 wpColor.a = (float)i / waypoints.Count;
-                Gizmos.color = wpColor;
                 Gizmos.DrawSphere(waypoints[i], 0.5f);
             }
             
@@ -54,6 +61,7 @@ public class EnemyBehaviour : MonoBehaviour
         Debug.DrawLine(rb.position, rb.position + rb.velocity, Color.blue); // draw the velocity vector
         HandleStates();
         HandleWalls();
+        rb.gravityScale = isTouchingWall() ? gravityScale / 10 : gravityScale; // if enemy is close to a wall, reduce gravity
     }
     void WatchTarget()
     {
@@ -154,13 +162,6 @@ public class EnemyBehaviour : MonoBehaviour
     }
     void FollowPlayer()
     {
-        /*
-        if (waypoints.Count > 0 && Time.time % trackingAbility == 0)
-        {
-            Debug.Log("Removing waypoint");
-            waypoints.RemoveAt(0);
-        }
-        */
         memoryTimer -= Time.fixedDeltaTime;
         if (waypoints.Count > 0)
         {
@@ -178,6 +179,15 @@ public class EnemyBehaviour : MonoBehaviour
 
             // Limit the velocity to the maximum speed
             rb.velocity = Vector2.ClampMagnitude(rb.velocity, speed);
+            if (!isFlying)
+            {
+                if (desiredVelocity.normalized.y > 0.8f && isTouchingWall())
+                {
+                    //jump 
+                    rb.AddForce(Vector2.up *5* speed, ForceMode2D.Impulse);
+                }
+                
+            }
 
         }
         else if (enemyState != EnemyState.Idle)
@@ -215,7 +225,9 @@ public class EnemyBehaviour : MonoBehaviour
     }
     void HandleWalls()
     {
-        float checkDistance = 1.5f;
+        
+        
+
         float maxForce = 0.6f;
         int rayCount = 8;
         Vector2 avoidance = Vector2.zero;
@@ -226,8 +238,8 @@ public class EnemyBehaviour : MonoBehaviour
             Debug.DrawLine(transform.position, transform.position + (Vector3)rayDirection * checkDistance, enemyState == EnemyState.Follow ? Color.magenta:Color.white);
 
             RaycastHit2D[] hit = new RaycastHit2D[1];
-            int hitCount = enemyCollider.Raycast(rayDirection, hit, checkDistance, groundLayer);
-            if (hitCount > 0)
+            int hitCount = enemyCollider.Raycast(rayDirection, hit, checkDistance, solidLayers);
+            if (hitCount > 0) // if enemy is close to a wall
             {
                 Debug.DrawLine(transform.position, hit[0].point, Color.yellow);
                 Vector2 newVec = (Vector2)transform.position - hit[0].point;
@@ -239,6 +251,12 @@ public class EnemyBehaviour : MonoBehaviour
         rb.velocity += avoidance;
         rb.velocity = Vector2.ClampMagnitude(rb.velocity, speed);
         
+    }
+
+    bool isTouchingWall()
+    {
+        Collider2D hit = Physics2D.OverlapCircle(rb.position, reachDistance, groundLayer);
+        return hit != null;
     }
     void ChangeState(EnemyState newState)
     {
