@@ -13,7 +13,7 @@ MonoBehaviour:
   m_Name: GoblinTheJack
   m_EditorClassIdentifier: Assembly-CSharp::GoblinData
   name: Jack
-  health: 50
+  health: 80
   speed: 10
   power: 2
   prefab: {fileID: 6568199932609452222, guid: 597229b17136c87478b1ab1e779d50bf, type: 3}

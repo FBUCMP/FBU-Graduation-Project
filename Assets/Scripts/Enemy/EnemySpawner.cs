@@ -12,7 +12,7 @@ public class EnemySpawner : MonoBehaviour
 
     public void BeginProccess(List<EnemyData> EnemyDataList, int NumberOfEnemiesToSpawn, Vector2 SpawnRoomPos)
     {
-        Debug.Log("BeginProcess, SpawnRoomPos: "+ SpawnRoomPos);
+        //Debug.Log("BeginProcess, SpawnRoomPos: "+ SpawnRoomPos);
         enemyManager = FindObjectOfType<EnemyManager>();
 
         this.EnemyDataList = EnemyDataList;
