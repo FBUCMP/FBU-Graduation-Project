@@ -12,6 +12,7 @@ public class CursorManager : MonoBehaviour
     private int frameCount;
     private int currentCursorIndex;
 
+    private float animationActivationTimer;
     public enum CursorType
     {
         Menu,
@@ -20,6 +21,7 @@ public class CursorManager : MonoBehaviour
     void Start()
     {
         SetActiveCursorAnimation(cursorAnimationList[0]);
+
     }
 
     // Update is called once per frame
@@ -27,16 +29,28 @@ public class CursorManager : MonoBehaviour
     {
         if (cursorAnimation.doesAnimate && Input.GetMouseButton(0))
         {
-            Debug.Log("Mouse Clicked");
-            frameTimer -= Time.deltaTime;
-            if (frameTimer <= 0)
+            if (animationActivationTimer > 0)
             {
-                frameTimer += cursorAnimation.frameRate;
-                currentFrame = (currentFrame + 1) % frameCount;
-                Cursor.SetCursor(cursorAnimation.textureArray[currentFrame], cursorAnimation.offset, CursorMode.Auto);
+                animationActivationTimer -= Time.deltaTime;
+                Cursor.SetCursor(cursorAnimation.textureArray[0], cursorAnimation.offset, CursorMode.Auto);
+            }
+            else
+            {
+                frameTimer -= Time.deltaTime;
+                if (frameTimer <= 0)
+                {
+                    frameTimer += cursorAnimation.frameRate;
+                    currentFrame = (currentFrame + 1) % frameCount;
+                    Cursor.SetCursor(cursorAnimation.textureArray[currentFrame], cursorAnimation.offset, CursorMode.Auto);
+                }
+
             }
                 
             
+        }
+        else if(cursorAnimation.doesAnimate && Input.GetMouseButtonUp(0))
+        {
+            animationActivationTimer = cursorAnimation.animationActivationTime;
         }
         else
         {
@@ -51,12 +65,18 @@ public class CursorManager : MonoBehaviour
     
     private void SetActiveCursorAnimation(CursorAnimation cursorAnimation)
     {
+
         currentCursorIndex = cursorAnimationList.IndexOf(cursorAnimation);
         this.cursorAnimation = cursorAnimation;
         currentFrame = 0;
         frameTimer = cursorAnimation.frameRate;
         frameCount = cursorAnimation.textureArray.Length;
+        if (this.cursorAnimation.doesAnimate)
+        {
+            animationActivationTimer = this.cursorAnimation.animationActivationTime;
+        }
     }
+
 
     [System.Serializable]
     public class CursorAnimation
@@ -65,6 +85,9 @@ public class CursorManager : MonoBehaviour
         public Texture2D[] textureArray;
         public float frameRate;
         public Vector2 offset;
+        [Header("Animation")]
+        [Space(5)]
         public bool doesAnimate;
+        [Tooltip("Fill if does animate")]public float animationActivationTime;
     }
 }
