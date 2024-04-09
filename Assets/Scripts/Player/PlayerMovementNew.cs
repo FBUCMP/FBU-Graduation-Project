@@ -33,7 +33,7 @@ public class PlayerMovementNew : MonoBehaviour
     // 25.02.2024 end
 
     // wall sliding ve wall jumping kismi
-    private bool isWallSliding;
+    [HideInInspector] public bool isWallSliding;
     private float wallSlidingSpeed = 2f;
 
     private bool isWallJumping;
@@ -53,8 +53,8 @@ public class PlayerMovementNew : MonoBehaviour
 
     [SerializeField] private LayerMask groundLayer;
 
-    [SerializeField] private Transform wallCheckR;
-    [SerializeField] private Transform wallCheckL;
+    [SerializeField] public Transform wallCheckR;
+    [SerializeField] public Transform wallCheckL;
     [SerializeField] private LayerMask wallLayer;
 
     // erdo duvar denemesi tekrar
@@ -229,7 +229,7 @@ public class PlayerMovementNew : MonoBehaviour
             return;
         }
         //Physics2D.OverlapBox(groundCheck.position, new Vector2(0.2f, 0.1f), 0f, groundLayer);
-        Gizmos.color = Color.red;
+        Gizmos.color = IsGrounded()? Color.green : Color.red;
         Gizmos.DrawWireCube(groundCheckM.position, new Vector2(boxCollider.size.x * transform.localScale.x * 1f, 1.5f * transform.localScale.y));
         if (IsWalled())
         {
@@ -255,11 +255,18 @@ public class PlayerMovementNew : MonoBehaviour
 
     }
 
-    private bool IsWalled()
+    public bool IsWalled()
     {
-        return Physics2D.OverlapCircle(wallCheckL.position, .2f, wallLayer) || Physics2D.OverlapCircle(wallCheckR.position, .2f, wallLayer);
+        return isWalledLeft() || isWalledRight();
     }
-
+    public bool isWalledRight()
+    {
+        return Physics2D.OverlapCircle(wallCheckR.position, .2f, wallLayer);
+    }
+    public bool isWalledLeft()
+    {
+        return Physics2D.OverlapCircle(wallCheckL.position, .2f, wallLayer);
+    }
     private void WallSlide()
     {
         if (IsWalled() && !IsGrounded() && horizontal != 0f)

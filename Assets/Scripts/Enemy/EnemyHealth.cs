@@ -9,8 +9,8 @@ public class EnemyHealth : MonoBehaviour, IDamageable
     private int _health;
     [SerializeField]
     private int _maxHealth = 100;
-    public int currentHealth { get => _health; private set => _health = value; } // getter and setter
-    public int maxHealth { get => _maxHealth; private set => _maxHealth = value; } // getter and setter
+    public int currentHealth { get => _health;  set => _health = value; } // getter and setter
+    public int maxHealth { get => _maxHealth; set => _maxHealth = value; } // getter and setter
 
 
     public event IDamageable.TakeDamageEvent OnTakeDamage; // spawnparticleondeath subscribes to those events

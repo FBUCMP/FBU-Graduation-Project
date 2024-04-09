@@ -36,9 +36,9 @@ public class SurfaceManager : MonoBehaviour
     private Surface DefaultSurface;
     private Dictionary<GameObject, ObjectPool<GameObject>> ObjectPools = new();
 
-    
- 
-    
+
+
+    /*
     public void HandleImpact(GameObject HitObject, Vector3 HitPoint, Vector3 HitNormal, ImpactType Impact, int TriangleIndex)
     {
         if (HitObject.TryGetComponent<Terrain>(out Terrain terrain)) // unnecessary for our use case, but I'm leaving it here for completeness' sake
@@ -176,7 +176,37 @@ public class SurfaceManager : MonoBehaviour
 
         return Materials[0].mainTexture;
     }
+    */
 
+    // New version of HandleImpact
+    public void HandleImpact(GameObject HitObject, Vector3 HitPoint, Vector3 HitNormal, ImpactType Impact, int TriangleIndex)
+    {
+        int layerMask = HitObject.layer; // Get the layer of the hit object
+        SurfaceType surfaceType = Surfaces.Find(surface => surface.Layer ==  (1 << layerMask)); // Find the surface type based on the layer mask
+        //Debug.Log(surfaceType == null);
+        if (surfaceType != null)
+        {
+            Debug.Log("Surface type found: " + surfaceType.Surface.name);
+            foreach (Surface.SurfaceImpactTypeEffect typeEffect in surfaceType.Surface.ImpactTypeEffects)
+            {
+                if (typeEffect.ImpactType == Impact)
+                {
+                    PlayEffects(HitPoint, HitNormal, typeEffect.SurfaceEffect, 1);
+                }
+            }
+        }
+        else
+        {
+            foreach (Surface.SurfaceImpactTypeEffect typeEffect in DefaultSurface.ImpactTypeEffects)
+            {
+                if (typeEffect.ImpactType == Impact)
+                {
+                    PlayEffects(HitPoint, HitNormal, typeEffect.SurfaceEffect, 1);
+                }
+            }
+        }
+    }
+    // ---------------------------------------------------------------------
     private void PlayEffects(Vector3 HitPoint, Vector3 HitNormal, SurfaceEffect SurfaceEffect, float SoundOffset)
     {
         foreach (SpawnObjectEffect spawnObjectEffect in SurfaceEffect.SpawnObjectEffects)

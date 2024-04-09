@@ -22,7 +22,7 @@ public class DrawRoom : MonoBehaviour
         Camera mainCamera = Camera.main;
         if (mainCamera != null)
         {
-            mainCamera.orthographicSize = height/2; // cameranin boyutunu cizilen alana gore ayarla
+            mainCamera.orthographicSize = 30f; //Mathf.Max(height/2, width/2); // cameranin boyutunu cizilen alana gore ayarla
         }
 
         
