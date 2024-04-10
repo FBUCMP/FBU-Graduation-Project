@@ -50,7 +50,7 @@ public class SpiderLegMover : MonoBehaviour
         
         if (Vector2.Distance(transform.position, target.position) > moveDistance && posIndex == 0 && oppositeLeg.grounded && oppositeLeg1.grounded) // if the target is too far away and index is 0
         {
-            Debug.Log("0");
+            //Debug.Log("0");
             oldPos = target.position; // save the old position of the target the leg follows
             targetPoint = transform.position; // set the target point to the position of bodyTarget
             halfWayPoint = (targetPoint + (Vector2)target.position) / 2; // set the halfway point to the middle of the target and bodyTarget
@@ -60,7 +60,7 @@ public class SpiderLegMover : MonoBehaviour
         
         else if (posIndex == 1)
         {
-            Debug.Log("1");
+            //Debug.Log("1");
             target.position = Vector3.Lerp(target.position, halfWayPoint, legSpeed * Time.deltaTime); // slowly move the target to the halfway point
 
 
@@ -73,7 +73,7 @@ public class SpiderLegMover : MonoBehaviour
 
         else if (posIndex == 2)
         {
-            Debug.Log("2");
+            //Debug.Log("2");
             target.position = Vector3.Lerp(target.position, targetPoint, legSpeed * Time.deltaTime); // slowly move the target to the bodyTarget
 
 
