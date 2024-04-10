@@ -8,6 +8,7 @@ public class SpiderLegMover : MonoBehaviour
     public Transform center; // center of the spider
     public Transform target; // target that ik actually follows
     public SpiderLegMover oppositeLeg; // opposite leg
+    public SpiderLegMover oppositeLeg1; // opposite leg
 
     public LayerMask walkableLayer;
     public float moveDistance;
@@ -23,15 +24,21 @@ public class SpiderLegMover : MonoBehaviour
     private Vector2 halfWayPoint;
 
     private Vector2 oldPos;
+    private Vector2 startPos;
     void Start()
     {
         oldPos = target.position;
+        startPos = transform.position;
     }
 
 
     void Update()
     {
-        CheckGround();
+        if (!CheckGround())
+        {
+            target.position = startPos;
+        }
+
         // index 0 = set halfway and targetPoint , index 1 = move to halfway point, index 2 = move to targetPoint
         
         if (Vector2.Distance(target.position, transform.position) > 1f)
@@ -40,8 +47,8 @@ public class SpiderLegMover : MonoBehaviour
             oldPos = transform.position;
             posIndex = 0;
         }
-
-        if (Vector2.Distance(transform.position, target.position) > moveDistance && posIndex == 0 && oppositeLeg.grounded) // if the target is too far away and index is 0
+        
+        if (Vector2.Distance(transform.position, target.position) > moveDistance && posIndex == 0 && oppositeLeg.grounded && oppositeLeg1.grounded) // if the target is too far away and index is 0
         {
             Debug.Log("0");
             oldPos = target.position; // save the old position of the target the leg follows
@@ -58,7 +65,7 @@ public class SpiderLegMover : MonoBehaviour
 
 
 
-            if (Vector2.Distance(target.position, halfWayPoint) <= 0.25f) // if the target is close enough to the halfway point
+            if (Vector2.Distance(target.position, halfWayPoint) <= 0.2f) // if the target is close enough to the halfway point
             {
                 posIndex = 2;
             }
@@ -71,7 +78,7 @@ public class SpiderLegMover : MonoBehaviour
 
 
 
-            if (Vector2.Distance(target.position, targetPoint) < 0.25f) // if the target is close enough to the bodyTarget
+            if (Vector2.Distance(target.position, targetPoint) < 0.2f) // if the target is close enough to the bodyTarget
             {
                 posIndex = 0;
             }
@@ -90,18 +97,20 @@ public class SpiderLegMover : MonoBehaviour
 
     }
 
-    public void CheckGround()
+    public bool CheckGround()
     {
         Vector2 from = new Vector2(transform.position.x, center.position.y);
         RaycastHit2D hit = Physics2D.Raycast(from, Vector2.down, groundCheckDistance, walkableLayer);
         if (hit.collider != null)
         {
             Debug.DrawRay(from, Vector2.down * groundCheckDistance, Color.blue);
-            transform.position = hit.point + new Vector2(0, 0.00f);
+            transform.position = hit.point;// + new Vector2(0, 0.00f);
+            return true;
         }
         else
         {
             Debug.DrawRay(from, Vector2.down * groundCheckDistance, Color.red);
+            return false;
         }
     }
 }

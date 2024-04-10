@@ -12,6 +12,7 @@ public class EnemyBehaviour : MonoBehaviour
     public float reachDistance = 1.2f; // isTouchingWall distance
     public Vector2Int minMaxWallCheckAngle = new Vector2Int(0, 360); // angle range for wall check - raycast
     [Space(10)]
+    public float visionDistance = 20; // how far the enemy can see
     public float memorySpan = 25; // how long the enemy remembers the player
     public LayerMask groundLayer; // layermask for the ground
     public LayerMask solidLayers; // ground wall + enemy layer
@@ -100,7 +101,7 @@ public class EnemyBehaviour : MonoBehaviour
 
         Vector2 direction = target.transform.position - transform.position; // direction from enemy to the target
         RaycastHit2D[] results = new RaycastHit2D[1];
-        int hitAmount = enemyCollider.Raycast(direction, results);
+        int hitAmount = enemyCollider.Raycast(direction, results, visionDistance);
         RaycastHit2D hit = results[0];
         
         if (hit.collider != null && hit.collider.CompareTag(target.tag)) // if the raycast hits the player
@@ -115,12 +116,12 @@ public class EnemyBehaviour : MonoBehaviour
 
             memoryTimer = memorySpan; // reset the memory timer
 
-            Debug.DrawLine(transform.position, target.transform.position, Color.green);
+            Debug.DrawLine(transform.position, transform.position + (target.transform.position - transform.position).normalized * visionDistance, Color.green);
 
         }
         else // hits something else (wall ...)
         {
-            //Debug.DrawLine(transform.position, target.transform.position, Color.red);
+            //Debug.DrawLine(transform.position, transform.position +(target.transform.position - transform.position).normalized * visionDistance, Color.red);
         }
 
 
@@ -221,7 +222,7 @@ public class EnemyBehaviour : MonoBehaviour
         if (Time.time % 2 == 0)
         {
             Vector2 direction = new Vector2(Random.Range(-1f,1f), Random.Range(-1f,1f));
-            if (!isFlying)
+            if (!isFlying && !isTouchingWall())
             {
                 direction.y = 0;
             }
