@@ -74,6 +74,14 @@ public class EnemyBehaviour : MonoBehaviour
         HandleStates();
         HandleWalls();
         rb.gravityScale = isTouchingWall() ? gravityScale / 10 : gravityScale; // if enemy is close to a wall, reduce gravity
+        if (rb.velocity.x < 0)
+        {
+            transform.localScale = new Vector3(- Mathf.Abs(transform.localScale.x), transform.localScale.y, transform.localScale.z);
+        }
+        else if (rb.velocity.x > 0)
+        {
+            transform.localScale = new Vector3(Mathf.Abs(transform.localScale.x), transform.localScale.y, transform.localScale.z);
+        }
     }
     void WatchTarget()
     {
@@ -213,6 +221,10 @@ public class EnemyBehaviour : MonoBehaviour
         if (Time.time % 2 == 0)
         {
             Vector2 direction = new Vector2(Random.Range(-1f,1f), Random.Range(-1f,1f));
+            if (!isFlying)
+            {
+                direction.y = 0;
+            }
             rb.velocity = direction.normalized * speed / 3;
         }
     }
