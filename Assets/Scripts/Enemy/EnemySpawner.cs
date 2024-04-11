@@ -5,19 +5,26 @@ public class EnemySpawner : MonoBehaviour
 {
     [HideInInspector]public Vector2 SpawnRoomPos;
     [HideInInspector]public List<Collider2D> ValidColliders;
+    [HideInInspector]public List<EnemyHealth> enemyHealthList;
     private EnemyManager enemyManager;
 
     private List<EnemyData> EnemyDataList = new List<EnemyData>();
+    private GameObject enemyHolder;
     private int NumberOfEnemiesToSpawn = 5;
-
-    public void BeginProccess(List<EnemyData> EnemyDataList, int NumberOfEnemiesToSpawn, Vector2 SpawnRoomPos)
+    
+    public void BeginProccess(List<EnemyData> EnemyDataList, int NumberOfEnemiesToSpawn, Vector2 SpawnRoomPos, GameObject enemyHolder)
     {
         //Debug.Log("BeginProcess, SpawnRoomPos: "+ SpawnRoomPos);
+
+
         enemyManager = FindObjectOfType<EnemyManager>();
+
+        enemyHealthList = new List<EnemyHealth>(); // create a new list
 
         this.EnemyDataList = EnemyDataList;
         this.NumberOfEnemiesToSpawn = NumberOfEnemiesToSpawn;
         this.SpawnRoomPos = SpawnRoomPos;
+        this.enemyHolder = enemyHolder;
         if(this.EnemyDataList.Count > 0)
         {
             Debug.Log("EnemyDataList: " + this.EnemyDataList);
@@ -86,12 +93,12 @@ public class EnemySpawner : MonoBehaviour
                 bc.transform.position = pos;
 
                 ValidColliders.Add(bc);
-                Debug.Log("Collider created at: " + pos);
+                //Debug.Log("Collider created at: " + pos);
                 count++;
             }
             else
             {
-                Debug.Log("Collider collided, couldn't spawn at: " + pos);
+                //Debug.Log("Collider collided, couldn't spawn at: " + pos);
             }
         }
 
@@ -132,10 +139,13 @@ public class EnemySpawner : MonoBehaviour
     void SpawnEnemyAtPosition(EnemyData enemyData, Vector2 position)
     {
         GameObject enemyObject = Instantiate(enemyData.prefab, position, Quaternion.identity);
+        enemyObject.transform.parent = enemyHolder.transform;
         if (enemyObject.TryGetComponent(out EnemyHealth enemyHealth))
         {
             enemyHealth.maxHealth = (int)enemyData.health;
             enemyHealth.currentHealth = enemyHealth.maxHealth;
+            enemyHealthList.Add(enemyHealth); // fill the list
+            
         }
         if (enemyObject.TryGetComponent(out EnemyBehaviour enemyBehaviour))
         {
