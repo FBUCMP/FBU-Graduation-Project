@@ -23,7 +23,7 @@ public class CameraLimit : MonoBehaviour
     void Start()
     {
 
-        cameraZoom.maxZoom = CalculateMaxZoom();
+        cameraZoom.maxZoom = Mathf.Min(cameraZoom.maxZoom, CalculateMaxZoom());
         //Debug.Log("Max Zoom: " + cameraZoom.maxZoom);
     }
 
