@@ -9,8 +9,9 @@ public class EnemyBehaviour : MonoBehaviour
     [Header("Wall Avoidence")]
     [SerializeField] private float maxSteeringForce = 4f;
     public float checkDistance = 0.9f; // avoid walls(solids) distance
-    public float reachDistance = 1.2f; // isTouchingWall distance
     public Vector2Int minMaxWallCheckAngle = new Vector2Int(0, 360); // angle range for wall check - raycast
+    public float reachDistance = 1.2f; // isTouchingWall distance
+    public Vector2 reachOffset; // offset for reachDistance
     [Space(10)]
     public float visionDistance = 20; // how far the enemy can see
     public float memorySpan = 25; // how long the enemy remembers the player
@@ -47,7 +48,7 @@ public class EnemyBehaviour : MonoBehaviour
     {
         Color wpColor = Color.yellow;
         Gizmos.color = wpColor;
-        Gizmos.DrawWireSphere(transform.position, reachDistance);
+        Gizmos.DrawWireSphere(transform.position + (Vector3)reachOffset, reachDistance);
         if (waypoints.Count > 0)
         {
             for (int i = 0; i < waypoints.Count; i++)
@@ -281,7 +282,7 @@ public class EnemyBehaviour : MonoBehaviour
 
     bool isTouchingWall()
     {
-        Collider2D hit = Physics2D.OverlapCircle(rb.position, reachDistance, groundLayer);
+        Collider2D hit = Physics2D.OverlapCircle(rb.position + reachOffset, reachDistance, groundLayer);
         return hit != null;
     }
     void ChangeState(EnemyState newState)

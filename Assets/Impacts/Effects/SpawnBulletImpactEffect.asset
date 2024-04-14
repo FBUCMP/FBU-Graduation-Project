@@ -12,7 +12,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 6c364acc47cbd914e93da6ab0b8744cf, type: 3}
   m_Name: SpawnBulletImpactEffect
   m_EditorClassIdentifier: 
-  Prefab: {fileID: 191114, guid: 834c99069a124aa439d5795c3579843b, type: 3}
+  Prefab: {fileID: 191114, guid: ff251e823e04b184f9e84525dbc343be, type: 3}
   Probability: 1
   RandomizeRotation: 0
   RandomizedRotationMultiplier: {x: 0, y: 0, z: 0}
