@@ -1305,6 +1305,10 @@ PrefabInstance:
       propertyPath: m_LocalRotation.z
       value: 0.6229157
       objectReference: {fileID: 0}
+    - target: {fileID: 1176974815253937535, guid: 38706b82ce779444e981b979785a554a, type: 3}
+      propertyPath: m_AnchoredPosition.y
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 1178318891364163331, guid: 38706b82ce779444e981b979785a554a, type: 3}
       propertyPath: m_LocalRotation.w
       value: 0.9947343
@@ -1377,6 +1381,26 @@ PrefabInstance:
       propertyPath: m_Chain.m_StoredLocalRotations.Array.data[2].z
       value: -0.10248792
       objectReference: {fileID: 0}
+    - target: {fileID: 2651582737151334637, guid: 38706b82ce779444e981b979785a554a, type: 3}
+      propertyPath: m_Sprite
+      value: 
+      objectReference: {fileID: 21300000, guid: ea2d28b76b686dd439b7c02747393a5c, type: 3}
+    - target: {fileID: 2651582737151334637, guid: 38706b82ce779444e981b979785a554a, type: 3}
+      propertyPath: m_Color.a
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 2651582737151334637, guid: 38706b82ce779444e981b979785a554a, type: 3}
+      propertyPath: m_Color.b
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 2651582737151334637, guid: 38706b82ce779444e981b979785a554a, type: 3}
+      propertyPath: m_Color.g
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 2651582737151334637, guid: 38706b82ce779444e981b979785a554a, type: 3}
+      propertyPath: m_Color.r
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 3582732826915385822, guid: 38706b82ce779444e981b979785a554a, type: 3}
       propertyPath: m_AnchorMax.x
       value: 0
@@ -1384,6 +1408,22 @@ PrefabInstance:
     - target: {fileID: 3582732826915385822, guid: 38706b82ce779444e981b979785a554a, type: 3}
       propertyPath: m_AnchorMax.y
       value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 3582732826915385822, guid: 38706b82ce779444e981b979785a554a, type: 3}
+      propertyPath: m_SizeDelta.x
+      value: 102.14
+      objectReference: {fileID: 0}
+    - target: {fileID: 3582732826915385822, guid: 38706b82ce779444e981b979785a554a, type: 3}
+      propertyPath: m_SizeDelta.y
+      value: 78.8304
+      objectReference: {fileID: 0}
+    - target: {fileID: 3582732826915385822, guid: 38706b82ce779444e981b979785a554a, type: 3}
+      propertyPath: m_AnchoredPosition.x
+      value: -51.070007
+      objectReference: {fileID: 0}
+    - target: {fileID: 3582732826915385822, guid: 38706b82ce779444e981b979785a554a, type: 3}
+      propertyPath: m_AnchoredPosition.y
+      value: 0.000011444092
       objectReference: {fileID: 0}
     - target: {fileID: 4007084327134290184, guid: 38706b82ce779444e981b979785a554a, type: 3}
       propertyPath: m_LocalRotation.w
@@ -1420,6 +1460,14 @@ PrefabInstance:
     - target: {fileID: 5486911942921458537, guid: 38706b82ce779444e981b979785a554a, type: 3}
       propertyPath: m_LocalRotation.z
       value: -0.19512053
+      objectReference: {fileID: 0}
+    - target: {fileID: 5729727860604074701, guid: 38706b82ce779444e981b979785a554a, type: 3}
+      propertyPath: m_AnchoredPosition.x
+      value: -51.07
+      objectReference: {fileID: 0}
+    - target: {fileID: 5729727860604074701, guid: 38706b82ce779444e981b979785a554a, type: 3}
+      propertyPath: m_AnchoredPosition.y
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 5877615945973880677, guid: 38706b82ce779444e981b979785a554a, type: 3}
       propertyPath: m_LocalRotation.w
@@ -1505,6 +1553,10 @@ PrefabInstance:
       propertyPath: abilities.Array.data[1]
       value: 
       objectReference: {fileID: 11400000, guid: c832d7d96b435b9458b8f8f82746792c, type: 2}
+    - target: {fileID: 8828863969102077908, guid: 38706b82ce779444e981b979785a554a, type: 3}
+      propertyPath: m_Sprite
+      value: 
+      objectReference: {fileID: 21300000, guid: f4e59907866fa0c4c868dce3f7e14d79, type: 3}
     - target: {fileID: 9023660107612693073, guid: 38706b82ce779444e981b979785a554a, type: 3}
       propertyPath: m_Color.b
       value: 0
