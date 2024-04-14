@@ -6,10 +6,13 @@ public class EnemyBehaviour : MonoBehaviour
     public bool isFlying;
     public float speed = 5f;
     public float power = 1f;
+    [Header("Wall Avoidence")]
     [SerializeField] private float maxSteeringForce = 4f;
-    private float gravityScale;
-    public float checkDistance = 0.9f;
-    public float reachDistance = 1.2f;
+    public float checkDistance = 0.9f; // avoid walls(solids) distance
+    public float reachDistance = 1.2f; // isTouchingWall distance
+    public Vector2Int minMaxWallCheckAngle = new Vector2Int(0, 360); // angle range for wall check - raycast
+    [Space(10)]
+    public float visionDistance = 20; // how far the enemy can see
     public float memorySpan = 25; // how long the enemy remembers the player
     public LayerMask groundLayer; // layermask for the ground
     public LayerMask solidLayers; // ground wall + enemy layer
@@ -18,6 +21,7 @@ public class EnemyBehaviour : MonoBehaviour
 
     private GameObject target; // the player
 
+    private float gravityScale;
     List<Vector2> waypoints = new List<Vector2>(); // enemy always follows the first ([0]) waypoint
     //float trackingAbility = 1f;
     float memoryTimer;
@@ -53,6 +57,15 @@ public class EnemyBehaviour : MonoBehaviour
             }
             
         }
+        Gizmos.color = Color.red;
+        int j = minMaxWallCheckAngle.x; // min
+        while (j < minMaxWallCheckAngle.y) // till reach max
+        {
+            float angle = j;
+            Vector2 rayDirection = new Vector2(Mathf.Sin(angle * Mathf.Deg2Rad), Mathf.Cos(angle * Mathf.Deg2Rad));
+            Gizmos.DrawLine(transform.position, transform.position + (Vector3)rayDirection * checkDistance);
+            j += 45;
+        }
     }
     private void FixedUpdate()
     {
@@ -62,6 +75,14 @@ public class EnemyBehaviour : MonoBehaviour
         HandleStates();
         HandleWalls();
         rb.gravityScale = isTouchingWall() ? gravityScale / 10 : gravityScale; // if enemy is close to a wall, reduce gravity
+        if (rb.velocity.x < 0)
+        {
+            transform.localScale = new Vector3(- Mathf.Abs(transform.localScale.x), transform.localScale.y, transform.localScale.z);
+        }
+        else if (rb.velocity.x > 0)
+        {
+            transform.localScale = new Vector3(Mathf.Abs(transform.localScale.x), transform.localScale.y, transform.localScale.z);
+        }
     }
     void WatchTarget()
     {
@@ -80,7 +101,7 @@ public class EnemyBehaviour : MonoBehaviour
 
         Vector2 direction = target.transform.position - transform.position; // direction from enemy to the target
         RaycastHit2D[] results = new RaycastHit2D[1];
-        int hitAmount = enemyCollider.Raycast(direction, results);
+        int hitAmount = enemyCollider.Raycast(direction, results, visionDistance);
         RaycastHit2D hit = results[0];
         
         if (hit.collider != null && hit.collider.CompareTag(target.tag)) // if the raycast hits the player
@@ -95,12 +116,12 @@ public class EnemyBehaviour : MonoBehaviour
 
             memoryTimer = memorySpan; // reset the memory timer
 
-            Debug.DrawLine(transform.position, target.transform.position, Color.green);
+            Debug.DrawLine(transform.position, transform.position + (target.transform.position - transform.position).normalized * visionDistance, Color.green);
 
         }
         else // hits something else (wall ...)
         {
-            //Debug.DrawLine(transform.position, target.transform.position, Color.red);
+            //Debug.DrawLine(transform.position, transform.position +(target.transform.position - transform.position).normalized * visionDistance, Color.red);
         }
 
 
@@ -201,6 +222,10 @@ public class EnemyBehaviour : MonoBehaviour
         if (Time.time % 2 == 0)
         {
             Vector2 direction = new Vector2(Random.Range(-1f,1f), Random.Range(-1f,1f));
+            if (!isFlying && !isTouchingWall())
+            {
+                direction.y = 0;
+            }
             rb.velocity = direction.normalized * speed / 3;
         }
     }
@@ -225,15 +250,15 @@ public class EnemyBehaviour : MonoBehaviour
     }
     void HandleWalls()
     {
-        
-        
 
         float maxForce = 0.6f;
-        int rayCount = 8;
+        int angleBetweenRays = 45;
         Vector2 avoidance = Vector2.zero;
-        for (int i = 0; i < rayCount; i++)
+        int i = minMaxWallCheckAngle.x; // min
+        while (i < minMaxWallCheckAngle.y) // till reach max
         {
-            float angle = i * 360 / rayCount; // if rayCount is 8: 0, 45, 90, 135, 180, 225, 270, 315
+            //float angle = i * 360 / rayCount; // if rayCount is 8: 0, 45, 90, 135, 180, 225, 270, 315
+            float angle = i;
             Vector2 rayDirection = new Vector2(Mathf.Sin(angle * Mathf.Deg2Rad), Mathf.Cos(angle * Mathf.Deg2Rad));
             Debug.DrawLine(transform.position, transform.position + (Vector3)rayDirection * checkDistance, enemyState == EnemyState.Follow ? Color.magenta:Color.white);
 
@@ -246,6 +271,7 @@ public class EnemyBehaviour : MonoBehaviour
                 newVec = newVec.normalized * (checkDistance - newVec.magnitude);
                 avoidance += newVec;
             }
+            i += angleBetweenRays;
         }
         avoidance = Vector2.ClampMagnitude(avoidance, maxForce);
         rb.velocity += avoidance;

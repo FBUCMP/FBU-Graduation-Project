@@ -18,7 +18,7 @@ public class SpawnParticleSystemOnDeath : MonoBehaviour
 
     private void OnEnable()
     {
-        damageable.OnDeath += Damageable_OnDeath; // subscribe to the OnDeath event
+        damageable.OnDeath += Damageable_OnDeath; // subscribe to the OnDeath event set gObject inactive when invoked
     }
 
     private void OnDisable()
@@ -30,7 +30,8 @@ public class SpawnParticleSystemOnDeath : MonoBehaviour
         Instantiate(deathParticle, position, Quaternion.identity).Play();
         
         EnemyManager.audioSource.PlayOneShot(deathSound);
-        
+
+        //Destroy(gameObject); 
         gameObject.SetActive(false);
     }
 }

@@ -5,6 +5,8 @@ using UnityEngine.U2D.IK;
 
 public class PlayerIK : MonoBehaviour
 {
+    public float grabWallSpeed = 20f;
+    public float grabGunSpeed = 50f;
     public LimbSolver2D rightHandSolver;// drag all in editor
     public LimbSolver2D leftHandSolver;
     public Transform leftHandTarget; 
@@ -35,25 +37,34 @@ public class PlayerIK : MonoBehaviour
             {
                 
                 float offset = Mathf.Sign( playerMovement.wallCheckL.position.x - playerMovement.transform.position.x );
-                rightHandTarget.position = playerMovement.wallCheckL.position  + new Vector3(offset * 0.6f, 1.35f);
+                //rightHandTarget.position = playerMovement.wallCheckL.position  + new Vector3(offset * 0.6f, 1.35f);
+                rightHandTarget.position = new Vector3(Mathf.Lerp(rightHandTarget.position.x, (playerMovement.wallCheckL.position + new Vector3(offset * 0.6f, 1.35f)).x, Time.deltaTime * grabWallSpeed),
+                                                    Mathf.Lerp(rightHandTarget.position.y, (playerMovement.wallCheckL.position + new Vector3(offset * 0.6f, 1.35f)).y, Time.deltaTime * grabWallSpeed));
                 rightHandSolver.flip = false;
             }
             else if (rightHandOnGun != null)
             {
                 rightHandSolver.flip = true;
-                rightHandTarget.position = rightHandOnGun.position;
+                //rightHandTarget.position = rightHandOnGun.position;
+                rightHandTarget.position = new Vector3(Mathf.Lerp(rightHandTarget.position.x, rightHandOnGun.position.x, Time.deltaTime * grabGunSpeed),
+                                                        Mathf.Lerp(rightHandTarget.position.y, rightHandOnGun.position.y, Time.deltaTime * grabGunSpeed));
                 rightHandTarget.rotation = rightHandOnGun.rotation;
             }
             if (playerMovement.isWalledRight()) // reaching front
             {
                 float offset = Mathf.Sign(playerMovement.wallCheckR.position.x - playerMovement.transform.position.x);
-                leftHandTarget.position = playerMovement.wallCheckR.position + new Vector3(offset * 0.5f, 1f);
+                //leftHandTarget.position = playerMovement.wallCheckR.position + new Vector3(offset * 0.5f, 1f);
+                leftHandTarget.position = new Vector3(Mathf.Lerp(leftHandTarget.position.x, (playerMovement.wallCheckR.position + new Vector3(offset * 0.5f, 1f)).x, Time.deltaTime * grabWallSpeed),
+                                                    Mathf.Lerp(leftHandTarget.position.y, (playerMovement.wallCheckR.position + new Vector3(offset * 0.5f, 1f)).y, Time.deltaTime * grabWallSpeed));
+
                 //leftHandSolver.flip = false;
             }
             else if (leftHandOnGun != null)
             {
                 leftHandSolver.flip = true;
-                leftHandTarget.position = leftHandOnGun.position;
+                //leftHandTarget.position = leftHandOnGun.position;
+                leftHandTarget.position = new Vector3(Mathf.Lerp(leftHandTarget.position.x, leftHandOnGun.position.x, Time.deltaTime * grabGunSpeed),
+                                                        Mathf.Lerp(leftHandTarget.position.y, leftHandOnGun.position.y, Time.deltaTime * grabGunSpeed));
                 leftHandTarget.rotation = leftHandOnGun.rotation; // might be wrong if so try local rotation
             }
 
