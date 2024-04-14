@@ -2,7 +2,7 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.IO;
-using UnityEditor.Playables;
+//using UnityEditor.Playables;
 using UnityEngine;
 
 public class PlayerMovementNew : MonoBehaviour
