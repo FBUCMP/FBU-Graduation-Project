@@ -662,6 +662,30 @@ PrefabInstance:
       propertyPath: m_Name
       value: Global Volume
       objectReference: {fileID: 0}
+    - target: {fileID: 8097487949194869911, guid: 25c35d67dfdfbca46a15cba806755145, type: 3}
+      propertyPath: duration
+      value: 0.2
+      objectReference: {fileID: 0}
+    - target: {fileID: 8097487949194869911, guid: 25c35d67dfdfbca46a15cba806755145, type: 3}
+      propertyPath: vignetteColorChange.b
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 8097487949194869911, guid: 25c35d67dfdfbca46a15cba806755145, type: 3}
+      propertyPath: vignetteColorChange.g
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 8097487949194869911, guid: 25c35d67dfdfbca46a15cba806755145, type: 3}
+      propertyPath: vignetteColorChange.r
+      value: 0.5
+      objectReference: {fileID: 0}
+    - target: {fileID: 8097487949194869911, guid: 25c35d67dfdfbca46a15cba806755145, type: 3}
+      propertyPath: vignetteIntensityChange
+      value: 0.2
+      objectReference: {fileID: 0}
+    - target: {fileID: 8097487949194869911, guid: 25c35d67dfdfbca46a15cba806755145, type: 3}
+      propertyPath: vignetteColorChangeOnDamage.r
+      value: 0.5
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []

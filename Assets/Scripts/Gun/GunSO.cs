@@ -32,6 +32,10 @@ public class GunSO : ScriptableObject, System.ICloneable
     private ObjectPool<Bullet> bulletPool; // projectile bullet pool
     private ObjectPool<TrailRenderer> trailPool; // raycast bullet trail
 
+
+    public delegate void ShootEvent(float power);
+    public event ShootEvent OnShoot;
+
     public void Spawn(Transform parent, MonoBehaviour activeMonoBehaviour)
     {
         this.activeMonoBehaviour = activeMonoBehaviour;
@@ -114,6 +118,8 @@ public class GunSO : ScriptableObject, System.ICloneable
             {
                 ProjectileShoot(shootDirection);
             }
+            
+            OnShoot?.Invoke(shootConfig.bulletSpawnForce);
         }
     }
     private void HitScanShoot(Vector3 shootDirection) // raycast shoot 

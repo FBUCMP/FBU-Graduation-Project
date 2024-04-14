@@ -21,6 +21,9 @@ public class PlayerGunSelector : MonoBehaviour
 
     public delegate void GunPicked();
     public event GunPicked OnGunPicked;
+
+    public delegate void GunSetup(GunSO gun);
+    public event GunSetup OnGunSetup;
     private void Awake()
     {
         // spawn gun
@@ -60,6 +63,7 @@ public class PlayerGunSelector : MonoBehaviour
         playerIK = GetComponent<PlayerIK>();
         playerIK.Setup(GunParent);
 
+        OnGunSetup?.Invoke(ActiveGun);
 
     }
 

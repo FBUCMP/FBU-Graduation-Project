@@ -15,6 +15,7 @@ public class SpiderLegMover : MonoBehaviour
     public float groundCheckDistance;
     public float liftDistance;
 
+    public Transform fixedPoint; // fixed point of where this object starts
 
     public float legSpeed;
     public bool grounded;
@@ -24,11 +25,9 @@ public class SpiderLegMover : MonoBehaviour
     private Vector2 halfWayPoint;
 
     private Vector2 oldPos;
-    private Vector2 startPos;
     void Start()
     {
         oldPos = target.position;
-        startPos = transform.position;
     }
 
 
@@ -36,7 +35,7 @@ public class SpiderLegMover : MonoBehaviour
     {
         if (!CheckGround())
         {
-            target.position = startPos;
+            target.localPosition = fixedPoint.localPosition;
         }
 
         // index 0 = set halfway and targetPoint , index 1 = move to halfway point, index 2 = move to targetPoint
@@ -99,7 +98,7 @@ public class SpiderLegMover : MonoBehaviour
 
     public bool CheckGround()
     {
-        Vector2 from = new Vector2(transform.position.x, center.position.y);
+        Vector2 from = new Vector2(fixedPoint.position.x, center.position.y);
         RaycastHit2D hit = Physics2D.Raycast(from, Vector2.down, groundCheckDistance, walkableLayer);
         if (hit.collider != null)
         {
