@@ -17,3 +17,5 @@ MonoBehaviour:
     SurfaceEffect: {fileID: 11400000, guid: eb3d140dbab5a774ab788adc63237247, type: 2}
   - ImpactType: {fileID: 11400000, guid: 1aace0c1d395dec4dbd2fc9a7115243f, type: 2}
     SurfaceEffect: {fileID: 11400000, guid: 316f926c07742a44994806890a6a6381, type: 2}
+  - ImpactType: {fileID: 11400000, guid: 4c00eefe3167b7a4e881e077ecf8a4fd, type: 2}
+    SurfaceEffect: {fileID: 11400000, guid: b454ff10814336445b5da4dca5c2e578, type: 2}
