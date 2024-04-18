@@ -1,0 +1,23 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 3410a0946d83365438ad085f46d8bfb8, type: 3}
+  m_Name: PlayStepSound
+  m_EditorClassIdentifier: 
+  AudioSourcePrefab: {fileID: 4124673604752975571, guid: 2ac4e4809ab518d4983c5e6720110ab9, type: 3}
+  AudioClips:
+  - {fileID: 8300000, guid: 68dc95f63d3e4ad4bab54497857404a1, type: 3}
+  - {fileID: 8300000, guid: 91a0cd4867e918a4496170f662d9b9da, type: 3}
+  - {fileID: 8300000, guid: 1636d95f8b20e594aba4547f37b01aa9, type: 3}
+  - {fileID: 8300000, guid: bd5e7bbcee6ba154cb457431078c60e4, type: 3}
+  - {fileID: 8300000, guid: 469c003e59bef6c48b637eff1b7ead9a, type: 3}
+  - {fileID: 8300000, guid: 0d1b3fdd84b41124f8a9e8de419c0758, type: 3}
+  VolumeRange: {x: 0.01, y: 0.02}

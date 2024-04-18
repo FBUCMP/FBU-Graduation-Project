@@ -1,9 +1,9 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
-using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.Profiling;
+using Pathfinding;
 
 public class RoomHealth : MonoBehaviour, IDamageable
 {
@@ -23,9 +23,10 @@ public class RoomHealth : MonoBehaviour, IDamageable
     {
         int r = Mathf.CeilToInt(radius);
         float newDamage = damage / resistance;
-        Profiler.BeginSample("ClosestIndexesToPos");
         Vector2Int[] indexes = meshGen.ClosestIndexesToPos(hitPos, roomGen.squareSize, r); // closes map index to the hit position
-        Profiler.EndSample();
+
+        Bounds bounds = new Bounds(hitPos, new Vector3(2*r, 2*r, 0)); // bounds holds the area that will be updated because of breaking the wall
+        AstarPath.active.UpdateGraphs(bounds); // pass the bounds to the A star pathfinding graph to update just the area that will be updated
 
         if (indexes.Length > 0)
         {
