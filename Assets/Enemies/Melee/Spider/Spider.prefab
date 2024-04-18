@@ -7128,7 +7128,9 @@ CircleCollider2D:
   m_Offset: {x: 0, y: 0}
   serializedVersion: 2
   m_Radius: 1
+
 --- !u!114 &3563458374894376890
+
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -7509,8 +7511,8 @@ MonoBehaviour:
   m_ShadowVolumeIntensityEnabled: 0
   m_ShadowVolumeIntensity: 0.75
   m_LocalBounds:
-    m_Center: {x: 0.73585, y: -0.22850001, z: 0}
-    m_Extent: {x: 1.19165, y: 1.0804, z: 0}
+  m_Center: {x: 0.73585, y: -0.22850001, z: 0}
+  m_Extent: {x: 1.19165, y: 1.0804, z: 0}
   m_PointLightInnerAngle: 360
   m_PointLightOuterAngle: 360
   m_PointLightInnerRadius: 0
