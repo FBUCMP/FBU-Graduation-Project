@@ -1,8 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-using UnityEngine.Tilemaps;
-
+using Pathfinding;
 
 public class StageGenerator : MonoBehaviour
 {
@@ -81,6 +80,41 @@ public class StageGenerator : MonoBehaviour
         
 
         Init();
+
+        { // scope
+
+            int minY = int.MaxValue;
+            int minX = int.MaxValue;
+            int maxY = int.MinValue;
+            int maxX = int.MinValue;
+
+            for (int y = 0; y < roomData.GetLength(0); y++)
+            {
+                for (int x = 0; x < roomData.GetLength(1); x++)
+                {
+                    // Check if the element is non-zero (represents a room)
+                    if (roomData[y, x] != 0)
+                    {
+                        // Update min and max y coordinates
+                        minY = Mathf.Min(minY, y);
+                        maxY = Mathf.Max(maxY, y);
+
+                        // Update min and max x coordinates
+                        minX = Mathf.Min(minX, x);
+                        maxX = Mathf.Max(maxX, x);
+                    }
+                }
+            }
+            // x and y are reverse
+            Vector3 midPoint = new Vector3(((minY + maxY) * roomWidth / 2) , ((minX + maxX) * roomHeight / 2) , 0);
+            AstarPath.active.data.gridGraph.center = midPoint; // set the center of the grid graph to the midpoint of the rooms
+            float astarNodeSize = 0.25f;
+            float dimentionWidth = (roomWidth * (maxY - minY) + roomWidth) / astarNodeSize;
+            float dimentionDepth = (roomHeight * (maxX - minX) + roomHeight) / astarNodeSize;
+            AstarPath.active.data.gridGraph.SetDimensions(Mathf.CeilToInt( dimentionWidth), Mathf.CeilToInt(dimentionDepth), astarNodeSize); // set the dimensions of the grid graph to the size of the rooms combined
+            
+            AstarPath.active.Scan();
+        }
     }
 
     // Update is called once per frame
@@ -130,53 +164,21 @@ public class StageGenerator : MonoBehaviour
 
     }
 
-    /*
+
     private void OnDrawGizmos()
     {
+        // draw 4 lines around the area that rooms can be placed
         Gizmos.color = Color.red;
+        Vector3 bottomLeft = new Vector3(0, 0, 0) + new Vector3(- roomWidth/2, - roomHeight/2, 0);
+        Vector3 bottomRight = new Vector3(width * roomWidth, 0, 0) + new Vector3(roomWidth / 2, -roomHeight / 2, 0);
+        Vector3 topLeft = new Vector3(0, height * roomHeight, 0) + new Vector3(-roomWidth / 2, roomHeight / 2, 0);
+        Vector3 topRight = new Vector3(width * roomWidth, height * roomHeight, 0) + new Vector3(roomWidth / 2, roomHeight / 2, 0);
+        Gizmos.DrawLine(bottomLeft, bottomRight);
+        Gizmos.DrawLine(bottomRight, topRight);
+        Gizmos.DrawLine(topRight, topLeft);
+        Gizmos.DrawLine(topLeft, bottomLeft);
 
-        if (roomsList != null && roomsList.Count > 0) {
-            foreach (Transform child in transform) 
-            {
-
-                if (child.gameObject.GetComponent<RoomGenerator>())
-                {
-                    RoomGenerator roomGen = child.gameObject.GetComponent<RoomGenerator>();
-                    bool[] gateDirs = roomGen.gates; // 0: up, 1: right, 2: down, 3: left
-
-                    // draw squares of 8 by 8 sizes at the gates. so that we can see the gates
-                    if (gateDirs[0])
-                    {
-                        Gizmos.DrawWireCube(new Vector3(child.position.x, child.position.y + roomHeight / 2, 0), new Vector3(8, 8, 0));
-                        
-                    }
-                    if (gateDirs[1])
-                    {
-                        Gizmos.DrawWireCube(new Vector3(child.position.x + roomWidth / 2, child.position.y, 0), new Vector3(8, 8, 0));
-                        
-                    }
-                    if (gateDirs[2])
-                    {
-                        Gizmos.DrawWireCube(new Vector3(child.position.x, child.position.y - roomHeight / 2, 0), new Vector3(8, 8, 0));
-                        
-                    }
-                    if (gateDirs[3])
-                    {
-                        Gizmos.DrawWireCube(new Vector3(child.position.x - roomWidth / 2, child.position.y, 0), new Vector3(8, 8, 0));
-                        
-                    }
-
-
-                }
-
-
-                
-            }
-
-        }            
-        
     }
-    */
     void CalculateConnectedSides() // connected rooms
     {
         gatesList = new List<bool[]>(); // 0: up, 1: right, 2: down, 3: left
