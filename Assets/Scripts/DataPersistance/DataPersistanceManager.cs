@@ -29,7 +29,11 @@ public class DataPersistanceManager : MonoBehaviour
         {
             Debug.LogError("Found more than one data persistance manager");
         }
-        instance = this;
+        else
+        {
+            instance = this;
+        }
+        
     }
 
     private void Start()
