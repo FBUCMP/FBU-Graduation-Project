@@ -7,8 +7,8 @@ public class GameOver : MonoBehaviour
 {
     public void RestartGame() //Play Button
     {
-        SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex);// Restart Butonuna basýldýðýnda file->build settings -> kaç nolu indeks sahnesi gelsin örn: 1
-
+        //SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex);// Restart Butonuna basýldýðýnda file->build settings -> kaç nolu indeks sahnesi gelsin örn: 1
+        SceneManager.LoadScene(1);
         GameManagerScript.Instance.gameOverUI.SetActive(false);
         Time.timeScale = 1.0f;
 
