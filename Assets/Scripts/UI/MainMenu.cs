@@ -8,6 +8,7 @@ public class MainMenu : MonoBehaviour
     public void PlayGame() //Play Button
     {
         SceneManager.LoadSceneAsync(1); // Play Butonuna basýldýðýnda file->build settings -> kaç nolu indeks sahnesi gelsin örn: 1
+        Time.timeScale = 1.0f;
     }
 
     public void QuitGame() // Quit Button

@@ -54,8 +54,14 @@ public class FileDataHandler
         string fullPath = Path.Combine(dataDirPath, dataFileName);
         try
         {
-            //Yoksa kayýt dosyasýný oluþturucaz.
-            Directory.CreateDirectory(Path.GetDirectoryName(fullPath));
+            // "Data" klasörünü oluþtur
+            string dataFolderPath = Path.Combine(dataDirPath, "Data");
+            if (!Directory.Exists(dataFolderPath))
+            {
+                Directory.CreateDirectory(dataFolderPath);
+            }
+
+            string dataFilePath = Path.Combine(dataFolderPath, dataFileName);
 
             //Game Datayý C#´tan Json yapýcaz
             string dataToStore = JsonUtility.ToJson(data,true);
@@ -65,7 +71,7 @@ public class FileDataHandler
             {
                 using(StreamWriter writer = new StreamWriter(stream)) 
                 {
-                writer.Write(dataToStore);
+                    writer.Write(dataToStore);
                 }
             }
 
