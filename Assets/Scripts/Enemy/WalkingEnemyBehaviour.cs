@@ -11,7 +11,7 @@ public class WalkingEnemyBehaviour : EnemyBehaviour
 
     private float gravityScale;
 
-
+    public Transform sprites;
     List<Vector2> waypoints = new List<Vector2>(); // enemy always follows the first ([0]) waypoint
     private AIPath aiPath;
     private Seeker seeker;
@@ -37,6 +37,8 @@ public class WalkingEnemyBehaviour : EnemyBehaviour
 
     private void OnDrawGizmos()
     {
+        //Gizmos.DrawWireSphere(transform.position, 3f);
+        if (!drawDebug) return;
         Color wpColor = Color.yellow;
         Gizmos.color = wpColor;
         Gizmos.DrawWireSphere(transform.position + (Vector3)reachOffset, reachDistance);
@@ -68,14 +70,31 @@ public class WalkingEnemyBehaviour : EnemyBehaviour
         HandleStates();
         HandleWalls();
         rb.gravityScale = isTouchingWall() ? 0 : gravityScale; // if enemy is close to a wall, reduce gravity
-        if (rb.velocity.x < 0)
+        if (aiPath.velocity.x < 0)
         {
             transform.localScale = new Vector3(- Mathf.Abs(transform.localScale.x), transform.localScale.y, transform.localScale.z);
         }
-        else if (rb.velocity.x > 0)
+        else if (aiPath.velocity.x > 0)
         {
             transform.localScale = new Vector3(Mathf.Abs(transform.localScale.x), transform.localScale.y, transform.localScale.z);
         }
+        sprites.rotation = Quaternion.identity;
+        Collider2D hit = Physics2D.OverlapCircle(transform.position - transform.up*0.25f , 2f, groundLayer);
+        if (hit != null)
+        {
+            Vector2 to = hit.ClosestPoint(transform.position);
+            RaycastHit2D[] results = new RaycastHit2D[1];
+            Vector2 direction = to - (Vector2)transform.position;
+            Debug.Log("hitisnotnull");
+            enemyCollider.Raycast(direction, results, direction.magnitude + 1f, groundLayer);
+            if (results[0].collider != null)
+            {
+                Debug.Log("resultsarenotnull");
+                Debug.DrawLine(transform.position,  (Vector3)results[0].point, Color.red);
+                sprites.rotation = Quaternion.FromToRotation(Vector3.up, results[0].normal);
+            }
+        }
+        
     }
     void WatchTarget()
     {

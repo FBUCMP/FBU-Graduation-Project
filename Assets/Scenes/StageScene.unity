@@ -133,7 +133,7 @@ PrefabInstance:
     m_Modifications:
     - target: {fileID: 948263364788865795, guid: 151f1ff787f4e514988de879e942f7f3, type: 3}
       propertyPath: NumberOfEnemiesToSpawn
-      value: 2
+      value: 3
       objectReference: {fileID: 0}
     - target: {fileID: 5028629585731526745, guid: 151f1ff787f4e514988de879e942f7f3, type: 3}
       propertyPath: m_Name
@@ -218,7 +218,7 @@ MonoBehaviour:
   m_BlendStyleIndex: 0
   m_FalloffIntensity: 0.5
   m_Color: {r: 1, g: 1, b: 1, a: 1}
-  m_Intensity: 0.005
+  m_Intensity: 0.0025
   m_LightVolumeIntensity: 1
   m_LightVolumeIntensityEnabled: 0
   m_ApplyToSortingLayers: 00000000
@@ -498,6 +498,14 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 2212483709518740163, guid: 2049499703c75f94ca17eddf72a40a0a, type: 3}
+      propertyPath: litMaterial
+      value: 
+      objectReference: {fileID: 2100000, guid: d4ac1295b10bb36448367e5a2bef2000, type: 2}
+    - target: {fileID: 2212483709518740163, guid: 2049499703c75f94ca17eddf72a40a0a, type: 3}
+      propertyPath: unlitMaterial
+      value: 
+      objectReference: {fileID: 2100000, guid: 9666febed8249c349b5bf6bc497cb82f, type: 2}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []

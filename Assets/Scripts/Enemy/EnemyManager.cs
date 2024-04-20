@@ -35,20 +35,13 @@ public class EnemyManager : MonoBehaviour
                 GameObject r = new GameObject("Room " + i);
                 r.transform.parent = enemyHolder.transform;
 
-                Vector3 pos = new Vector3(stageGenerator.roomsList[i].x * stageGenerator.roomWidth, stageGenerator.roomsList[i].y * stageGenerator.roomHeight);
-                spawner.BeginProccess(EnemyDataList, NumberOfEnemiesToSpawn, pos, r); // EnemyHolder object ---child---> r
+                spawner.BeginProccess(EnemyDataList, NumberOfEnemiesToSpawn, stageGenerator.roomObjects[i], r); // EnemyHolder object ---child---> r
                 enemyHealthLists.Add(spawner.enemyHealthList);
                 
                 //Debug.Log($"Room {i}, enemy count: {enemyHealthLists[i].Count}");
             }
         }
-        else
-        {
-            Vector3 pos = new Vector3 (-30, 5, 0);
-            Debug.Log("Stage Generator Not Found!");
-            spawner.BeginProccess(EnemyDataList, NumberOfEnemiesToSpawn, pos, enemyHolder);
-            enemyHealthLists.Add(spawner.enemyHealthList);
-        }
+        
         foreach (var list in enemyHealthLists)
         {
             foreach (var health in list)

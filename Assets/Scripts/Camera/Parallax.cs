@@ -7,10 +7,14 @@ public class Parallax : MonoBehaviour
     public Vector2Int spawnPosition = new Vector2Int(202, 714); // starting room position
     [Tooltip("Order in distance to Camera (close to far)")] public List<Sprite> sprites;
     public Color bgColor;
+    public Material litMaterial;
+    public Material unlitMaterial;
+    
     public float size = 100;
 
     private List<GameObject> spriteHolders = new List<GameObject>();
     private Camera cam;
+    private List<int> fxLayers = new List<int>{ 1,3,6 };
     void Start()
     {
         cam = Camera.main;
@@ -41,6 +45,17 @@ public class Parallax : MonoBehaviour
             spriteRenderer.sprite = sprites[i];
             spriteRenderer.sortingOrder = -i - 50;
             spriteRenderer.color = bgColor;
+            // if fx layers has i
+            if (fxLayers.Contains(i))
+            {
+                spriteRenderer.material = unlitMaterial;
+                // lower alpha
+                spriteRenderer.color = new Color(spriteRenderer.color.r, spriteRenderer.color.g, spriteRenderer.color.b, 0.5f);
+            }
+            else
+            {
+                spriteRenderer.material = litMaterial;
+            }
             spriteHolder.transform.localScale = new Vector2(size, size);
             spriteHolders.Add(spriteHolder);
             /*

@@ -142,6 +142,8 @@ public class RoomGenerator : MonoBehaviour
 				
 		MeshGenerator meshGenerator = GetComponent<MeshGenerator>();
 		meshGenerator.GenerateMesh(borderedMapWithValues, squareSize); // MeshGenerator scriptinden fonksiyon. map gonderiliyor.
+		HeatMap heatMap = GetComponent<HeatMap>();
+		heatMap.GenerateHeatMap(borderedMapWithValues);
 	}
 
 
