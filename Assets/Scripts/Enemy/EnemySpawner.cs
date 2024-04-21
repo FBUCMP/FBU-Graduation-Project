@@ -3,7 +3,7 @@ using UnityEngine;
 
 public class EnemySpawner : MonoBehaviour
 {
-    [HideInInspector]public Vector2 SpawnRoomPos;
+    [HideInInspector]public GameObject SpawnRoom;
     [HideInInspector]public List<Collider2D> ValidColliders;
     [HideInInspector]public List<EnemyHealth> enemyHealthList;
     private EnemyManager enemyManager;
@@ -12,7 +12,7 @@ public class EnemySpawner : MonoBehaviour
     private GameObject enemyHolder;
     private int NumberOfEnemiesToSpawn = 5;
     
-    public void BeginProccess(List<EnemyData> EnemyDataList, int NumberOfEnemiesToSpawn, Vector2 SpawnRoomPos, GameObject enemyHolder)
+    public void BeginProccess(List<EnemyData> EnemyDataList, int NumberOfEnemiesToSpawn, GameObject SpawnRoom, GameObject enemyHolder)
     {
         //Debug.Log("BeginProcess, SpawnRoomPos: "+ SpawnRoomPos);
 
@@ -23,7 +23,7 @@ public class EnemySpawner : MonoBehaviour
 
         this.EnemyDataList = EnemyDataList;
         this.NumberOfEnemiesToSpawn = NumberOfEnemiesToSpawn;
-        this.SpawnRoomPos = SpawnRoomPos;
+        this.SpawnRoom = SpawnRoom;
         this.enemyHolder = enemyHolder;
         if(this.EnemyDataList.Count > 0)
         {
@@ -43,18 +43,12 @@ public class EnemySpawner : MonoBehaviour
             Debug.Log("Enemy Manager is found: " + enemyManager.name);
             
             DestroyChildColliders();
-            CreateColliders(NumberOfEnemiesToSpawn);
+            CreateColliders(NumberOfEnemiesToSpawn * EnemyDataList.Count);
            
             SpawnCustomEnemies(NumberOfEnemiesToSpawn);
             
         }
     }
-
-    void FindColliders()
-    {
-        //List<Vector3> edges = stageGenerator.GetRoomEdges();
-    }
-
 
 
 
@@ -69,21 +63,30 @@ public class EnemySpawner : MonoBehaviour
 
     void CreateColliders(int n)
     {
-        if (SpawnRoomPos == null)
+        if (SpawnRoom == null)
         {
-            Debug.LogWarning("Spawn room position is not set!");
+            Debug.LogWarning("Spawn room is not set!");
             return;
         }
         int s = 3;
         ValidColliders = new List<Collider2D>();
         int count = 0;
+        int attempts = 0;
+        int maxAttempts = 10000;
         while (count < n)
         {
-            int X = UnityEngine.Random.Range(-40, 40);
-            int Y = UnityEngine.Random.Range(-15, 15);
-            Vector2 pos = new Vector2(X, Y) + SpawnRoomPos;
+            if (attempts > maxAttempts)
+            {
+                Debug.LogWarning("Max attempts reached, could not create enough colliders!");
+                break;
+            }
+            int X = UnityEngine.Random.Range(-49, 49);
+            int Y = UnityEngine.Random.Range(-24, 24);
+            HeatMap heatMap = SpawnRoom.GetComponent<HeatMap>();
+            
+            Vector2 pos = new Vector3(X, Y) + SpawnRoom.transform.position;
             Collider2D col = Physics2D.OverlapBox(pos, new Vector2(s, s), 0);
-            if (col == null)
+            if (  col == null && heatMap.IsInEmpty( new Bounds(pos, new Vector3(s,s)), 0.5f )  )
             {
                 GameObject go = new GameObject("Collider");
                 go.transform.position = pos;
@@ -93,6 +96,7 @@ public class EnemySpawner : MonoBehaviour
                 bc.transform.position = pos;
 
                 ValidColliders.Add(bc);
+                heatMap.UpdateHeatMap(bc.bounds); // update heatmap turn the area enemy occupied to 1
                 //Debug.Log("Collider created at: " + pos);
                 count++;
             }
@@ -100,8 +104,9 @@ public class EnemySpawner : MonoBehaviour
             {
                 //Debug.Log("Collider collided, couldn't spawn at: " + pos);
             }
+            attempts++;
         }
-
+        Debug.Log("Created " + count + " colliders");
     }
     void SpawnCustomEnemies(int numberOfEnemies)
     {
@@ -116,24 +121,24 @@ public class EnemySpawner : MonoBehaviour
 
     void SpawnEnemy(EnemyData enemyData)
     {
-        Vector2 randomPosition = GetRandomColliderPosition();
-        SpawnEnemyAtPosition(enemyData, randomPosition);
+        if (ValidColliders.Count == 0)
+        {
+            Debug.LogWarning("No valid colliders to spawn enemy!");
+            
+        }
+        else
+        {
+            //Vector2 randomPosition = GetRandomColliderPosition();
+            Vector2 spawnpos = ValidColliders[0].transform.position;
+            ValidColliders.RemoveAt(0);
+            SpawnEnemyAtPosition(enemyData, spawnpos);
+        }
     }
 
     Vector2 GetRandomColliderPosition()
     {
         Collider2D randomCollider = ValidColliders[UnityEngine.Random.Range(0, ValidColliders.Count)];
         return randomCollider.transform.position; // valid colliders dont collide with walls, so we can use their position directly
-        /*
-        float minX = randomCollider.bounds.min.x;
-        float maxX = randomCollider.bounds.max.x;
-        float colliderTop = randomCollider.bounds.max.y;
-        float offsetY = 1.0f;
-        float randomX = UnityEngine.Random.Range(minX, maxX);
-        float randomY = colliderTop + offsetY;
-
-        return new Vector2(randomX, randomY);
-        */
     }
 
     void SpawnEnemyAtPosition(EnemyData enemyData, Vector2 position)

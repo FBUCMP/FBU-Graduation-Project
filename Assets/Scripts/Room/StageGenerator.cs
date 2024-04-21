@@ -59,6 +59,8 @@ public class StageGenerator : MonoBehaviour
                                          * orn: [4,9], [4,8], [3,8], [2,8], [4,7] ...
                                          */
 
+    [HideInInspector] public List<GameObject> roomObjects = new List<GameObject>();
+
 
     // Start is called before the first frame update
     void Awake()
@@ -348,6 +350,9 @@ public class StageGenerator : MonoBehaviour
 
             }
             spawnedRoom.transform.parent = gameObject.transform; // her bir eklenen oda stage generatorun childi oluyor
+            
+            spawnedRoom.name = $"Room{roomsList.IndexOf(roomCoord)}";
+            roomObjects.Add(spawnedRoom);
             
         }
         

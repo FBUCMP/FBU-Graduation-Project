@@ -102,13 +102,13 @@ public class SpiderLegMover : MonoBehaviour
         RaycastHit2D hit = Physics2D.Raycast(from, Vector2.down, groundCheckDistance, walkableLayer);
         if (hit.collider != null)
         {
-            Debug.DrawRay(from, Vector2.down * groundCheckDistance, Color.blue);
+            //Debug.DrawRay(from, Vector2.down * groundCheckDistance, Color.blue);
             transform.position = hit.point;// + new Vector2(0, 0.00f);
             return true;
         }
         else
         {
-            Debug.DrawRay(from, Vector2.down * groundCheckDistance, Color.red);
+            //Debug.DrawRay(from, Vector2.down * groundCheckDistance, Color.red);
             return false;
         }
     }
