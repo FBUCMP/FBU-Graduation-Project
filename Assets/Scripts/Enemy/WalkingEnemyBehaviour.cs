@@ -69,7 +69,7 @@ public class WalkingEnemyBehaviour : EnemyBehaviour
         //Debug.DrawLine(rb.position, rb.position + rb.velocity, Color.blue); // draw the velocity vector
         HandleStates();
         HandleWalls();
-        rb.gravityScale = isTouchingWall() ? 0 : gravityScale; // if enemy is close to a wall, reduce gravity
+        rb.gravityScale = isTouchingWall() ? 1 : gravityScale; // if enemy is close to a wall, reduce gravity
         if (aiPath.velocity.x < 0)
         {
             transform.localScale = new Vector3(- Mathf.Abs(transform.localScale.x), transform.localScale.y, transform.localScale.z);
@@ -85,13 +85,13 @@ public class WalkingEnemyBehaviour : EnemyBehaviour
             Vector2 to = hit.ClosestPoint(transform.position);
             RaycastHit2D[] results = new RaycastHit2D[1];
             Vector2 direction = to - (Vector2)transform.position;
-            Debug.Log("hitisnotnull");
+            //Debug.Log("hitisnotnull");
             enemyCollider.Raycast(direction, results, direction.magnitude + 1f, groundLayer);
             if (results[0].collider != null)
             {
-                Debug.Log("resultsarenotnull");
+                //Debug.Log("resultsarenotnull");
                 Debug.DrawLine(transform.position,  (Vector3)results[0].point, Color.red);
-                sprites.rotation = Quaternion.FromToRotation(Vector3.up, results[0].normal);
+                sprites.rotation = Quaternion.FromToRotation(Vector3.up, results[0].normal); //Quaternion.Slerp(sprites.rotation, Quaternion.FromToRotation(Vector3.up, results[0].normal), Time.deltaTime * 20f); 
             }
         }
         
@@ -113,7 +113,7 @@ public class WalkingEnemyBehaviour : EnemyBehaviour
 
         Vector2 direction = target.transform.position - transform.position; // direction from enemy to the target
         RaycastHit2D[] results = new RaycastHit2D[1];
-        int hitAmount = enemyCollider.Raycast(direction, results, visionDistance);
+        int hitAmount = enemyCollider.Raycast(direction, results, currentVisionDistance);
         RaycastHit2D hit = results[0];
         
         if (hit.collider != null && hit.collider.CompareTag(target.tag)) // if the raycast hits the player
@@ -127,7 +127,7 @@ public class WalkingEnemyBehaviour : EnemyBehaviour
             waypoints.Add(hit.point); // add the player's position as the first waypoint
             memoryTimer = memorySpan; // reset the memory timer
 
-            if (drawDebug) Debug.DrawLine(transform.position, transform.position + (target.transform.position - transform.position).normalized * visionDistance, Color.green);
+            if (drawDebug) Debug.DrawLine(transform.position, transform.position + (target.transform.position - transform.position).normalized * currentVisionDistance, Color.green);
 
         }
         else // hits something else (wall ...)
@@ -194,6 +194,7 @@ public class WalkingEnemyBehaviour : EnemyBehaviour
     }
     void FollowPlayer()
     {
+        currentVisionDistance = visionDistance*4;
         memoryTimer -= Time.fixedDeltaTime;
         if (waypoints.Count > 0)
         {
@@ -247,14 +248,21 @@ public class WalkingEnemyBehaviour : EnemyBehaviour
     }
     void Idle()
     {
+        currentVisionDistance = visionDistance;
         if (Time.time % 2 == 0)
         {
-            Vector3 direction = new Vector3(Random.Range(-1f,1f), Random.Range(-1f,1f));
+            Vector3 direction = new Vector3(Random.Range(-1f,1f), Random.Range(-1f,1f), 0);
             if (!isTouchingWall())
             {
                 direction.y = 0;
             }
-            
+            /*
+            if (!aiPath.pathPending && (aiPath.reachedEndOfPath || !aiPath.hasPath))
+            {
+                aiPath.destination = transform.position + direction * 2;
+                aiPath.SearchPath();
+            }
+            */
             aiPath.destination = transform.position + direction * 2; // might wanna fix this. shoudnt seperate idle move and follow move
             //seeker.CancelCurrentPathRequest();
             //seeker.StartPath(rb.position, waypoints[0]);

@@ -7041,6 +7041,8 @@ GameObject:
   - component: {fileID: 7490843405471248706}
   - component: {fileID: 8843044168257882539}
   - component: {fileID: 227033135924546136}
+  - component: {fileID: 5953678019958640425}
+  - component: {fileID: 7331354514603683936}
   m_Layer: 10
   m_Name: Spider
   m_TagString: Enemy
@@ -7079,7 +7081,7 @@ Rigidbody2D:
   m_UseFullKinematicContacts: 0
   m_UseAutoMass: 0
   m_Mass: 3
-  m_LinearDrag: 0.5
+  m_LinearDrag: 0.1
   m_AngularDrag: 0.05
   m_GravityScale: 40
   m_Material: {fileID: 6200000, guid: 3eb96229487a77740838f834d6de62e9, type: 2}
@@ -7140,7 +7142,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3c714678939c4c94bbd1fa67c369f7a7, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  drawDebug: 0
+  drawDebug: 1
   speed: 8
   power: 2
   maxSteeringForce: 4
@@ -7256,6 +7258,43 @@ MonoBehaviour:
   slowWhenNotFacingTarget: 1
   whenCloseToDestination: 0
   constrainInsideGraph: 0
+--- !u!114 &5953678019958640425
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7788685956179826834}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 77f586f285b3847808d79083bd19ef1f, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  version: 1
+  unwrap: 1
+  splitAtEveryPortal: 1
+--- !u!114 &7331354514603683936
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7788685956179826834}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: cb6a34d769a1e4ac7b0b30e433aa443c, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  version: 1
+  smoothType: 0
+  subdivisions: 2
+  iterations: 2
+  strength: 0.5
+  uniformLength: 1
+  maxSegmentLength: 2
+  bezierTangentLength: 0.4
+  offset: 0.2
+  factor: 0.1
 --- !u!1 &7950936721326178284
 GameObject:
   m_ObjectHideFlags: 0
@@ -7511,8 +7550,8 @@ MonoBehaviour:
   m_ShadowVolumeIntensityEnabled: 0
   m_ShadowVolumeIntensity: 0.75
   m_LocalBounds:
-    m_Center: {x: 0.72945, y: -0.22629997, z: 0}
-    m_Extent: {x: 1.19875, y: 1.0873, z: 0}
+    m_Center: {x: 0.73265, y: -0.21994996, z: 0}
+    m_Extent: {x: 1.18875, y: 1.08935, z: 0}
   m_PointLightInnerAngle: 360
   m_PointLightOuterAngle: 360
   m_PointLightInnerRadius: 0

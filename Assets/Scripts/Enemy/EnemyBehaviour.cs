@@ -23,6 +23,7 @@ public class EnemyBehaviour : MonoBehaviour
     public LayerMask solidLayers; // ground wall + enemy layer
 
     public EnemyState enemyState = EnemyState.Idle; // current state of the enemy
+    protected float currentVisionDistance; // current vision distance
     public enum EnemyState
     {
         Idle,
@@ -32,7 +33,7 @@ public class EnemyBehaviour : MonoBehaviour
 
     void Start()
     {
-        
+        currentVisionDistance = visionDistance;
     }
 
     // Update is called once per frame
