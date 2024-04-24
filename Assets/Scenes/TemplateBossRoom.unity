@@ -201,6 +201,18 @@ PrefabInstance:
       propertyPath: m_LocalRotation.z
       value: -0.9978427
       objectReference: {fileID: 0}
+    - target: {fileID: 2174085041229345173, guid: 38706b82ce779444e981b979785a554a, type: 3}
+      propertyPath: m_LocalRotation.x
+      value: 0.00000009362675
+      objectReference: {fileID: 0}
+    - target: {fileID: 2174085041229345173, guid: 38706b82ce779444e981b979785a554a, type: 3}
+      propertyPath: m_LocalRotation.y
+      value: 1.71813e-12
+      objectReference: {fileID: 0}
+    - target: {fileID: 2174085041229345173, guid: 38706b82ce779444e981b979785a554a, type: 3}
+      propertyPath: m_LocalRotation.z
+      value: -0.000018350845
+      objectReference: {fileID: 0}
     - target: {fileID: 3582732826915385822, guid: 38706b82ce779444e981b979785a554a, type: 3}
       propertyPath: m_AnchorMax.x
       value: 0
@@ -582,6 +594,63 @@ SpriteRenderer:
   m_WasSpriteAssigned: 1
   m_MaskInteraction: 0
   m_SpriteSortPoint: 0
+--- !u!1001 &661774185
+PrefabInstance:
+  m_ObjectHideFlags: 0
+  serializedVersion: 2
+  m_Modification:
+    serializedVersion: 3
+    m_TransformParent: {fileID: 0}
+    m_Modifications:
+    - target: {fileID: 2765704655849857578, guid: 7fbecae3373390b48af90e669939c567, type: 3}
+      propertyPath: m_Name
+      value: SinekV2
+      objectReference: {fileID: 0}
+    - target: {fileID: 3938917324544309833, guid: 7fbecae3373390b48af90e669939c567, type: 3}
+      propertyPath: m_LocalPosition.x
+      value: 716.74634
+      objectReference: {fileID: 0}
+    - target: {fileID: 3938917324544309833, guid: 7fbecae3373390b48af90e669939c567, type: 3}
+      propertyPath: m_LocalPosition.y
+      value: 624.55634
+      objectReference: {fileID: 0}
+    - target: {fileID: 3938917324544309833, guid: 7fbecae3373390b48af90e669939c567, type: 3}
+      propertyPath: m_LocalPosition.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 3938917324544309833, guid: 7fbecae3373390b48af90e669939c567, type: 3}
+      propertyPath: m_LocalRotation.w
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 3938917324544309833, guid: 7fbecae3373390b48af90e669939c567, type: 3}
+      propertyPath: m_LocalRotation.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 3938917324544309833, guid: 7fbecae3373390b48af90e669939c567, type: 3}
+      propertyPath: m_LocalRotation.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 3938917324544309833, guid: 7fbecae3373390b48af90e669939c567, type: 3}
+      propertyPath: m_LocalRotation.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 3938917324544309833, guid: 7fbecae3373390b48af90e669939c567, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 3938917324544309833, guid: 7fbecae3373390b48af90e669939c567, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 3938917324544309833, guid: 7fbecae3373390b48af90e669939c567, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.z
+      value: 0
+      objectReference: {fileID: 0}
+    m_RemovedComponents: []
+    m_RemovedGameObjects: []
+    m_AddedGameObjects: []
+    m_AddedComponents: []
+  m_SourcePrefab: {fileID: 100100000, guid: 7fbecae3373390b48af90e669939c567, type: 3}
 --- !u!1 &844028699
 GameObject:
   m_ObjectHideFlags: 0
@@ -744,12 +813,22 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: cc69135593f63e444aca213234e39c01, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  drawDebug: 0
   speed: 5
+  power: 0
   maxSteeringForce: 4
+  checkDistance: 0.9
+  minMaxWallCheckAngle: {x: 0, y: 360}
+  reachDistance: 1.2
+  reachOffset: {x: 0, y: 0}
+  visionDistance: 20
   memorySpan: 25
   groundLayer:
     serializedVersion: 2
     m_Bits: 1217
+  solidLayers:
+    serializedVersion: 2
+    m_Bits: 0
   enemyState: 0
 --- !u!58 &936220076
 CircleCollider2D:
@@ -1373,6 +1452,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 61b0bb259ec6d5a47b620aa6444c7055, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  minZoom: 8
   maxZoom: 32
 --- !u!114 &1374290050
 MonoBehaviour:
@@ -1726,3 +1806,4 @@ SceneRoots:
   - {fileID: 936220078}
   - {fileID: 1921013862}
   - {fileID: 1297298457}
+  - {fileID: 661774185}
