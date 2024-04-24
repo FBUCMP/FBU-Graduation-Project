@@ -11,6 +11,7 @@ TagManager:
   - JumpPad
   - Enemy
   - YetenekVerici
+  - Boss
   layers:
   - Default
   - TransparentFX
@@ -24,7 +25,7 @@ TagManager:
   - Player
   - Enemy
   - glow
-  - Environment
+  - 
   - 
   - 
   - 
