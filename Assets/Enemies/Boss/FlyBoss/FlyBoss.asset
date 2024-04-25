@@ -12,10 +12,10 @@ MonoBehaviour:
   m_Script: {fileID: 0}
   m_Name: FlyBoss
   m_EditorClassIdentifier: Assembly-CSharp::Boss
-  name: Fly Boss
-  health: 500
-  speed: 10
+  name: FlyBoss
+  health: 10000
+  speed: 8
   power: 10
-  prefab: {fileID: -8653719598885068355, guid: 893dfc80af3bada4780be97c297d6543, type: 3}
+  prefab: {fileID: 7027740229091438772, guid: 26291390efe6f0f4ea3d0dc2df6ae907, type: 3}
   type: 0
-  acidDamage: 0
+  acidDamage: 5
