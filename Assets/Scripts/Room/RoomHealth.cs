@@ -21,6 +21,7 @@ public class RoomHealth : MonoBehaviour, IDamageable
 
     public void TakeDamage(int damage, Vector3 hitPos, float radius)
     {
+        //Debug.Log("RoomHealth TakeDamage");
         int r = Mathf.CeilToInt(radius);
         float newDamage = damage / resistance;
         Vector2Int[] indexes = meshGen.ClosestIndexesToPos(hitPos, roomGen.squareSize, r); // closes map index to the hit position
@@ -80,6 +81,7 @@ public class RoomHealth : MonoBehaviour, IDamageable
             //Debug.Log($"Wall you try to break ({index.x}, {index.y}) is out of bounds");
         }
     }
+
     void Awake()
     {
         _health = _maxHealth;

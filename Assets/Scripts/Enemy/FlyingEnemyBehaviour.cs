@@ -214,9 +214,14 @@ public class FlyingEnemyBehaviour : EnemyBehaviour
     {
         if (Time.time % 2 == 0)
         {
-            Vector3 direction = new Vector3(Random.Range(-1f,1f), Random.Range(-1f,1f));
-            
-            
+            Vector3 direction = new Vector3(Random.Range(-1f,1f), Random.Range(-1f,1f),0);
+            /*
+            if (!aiPath.pathPending && (aiPath.reachedEndOfPath || !aiPath.hasPath))
+            {
+                aiPath.destination = transform.position + direction * 2;
+                aiPath.SearchPath();
+            }
+            */
             aiPath.destination = transform.position + direction * 2; // might wanna fix this. shoudnt seperate idle move and follow move
             //seeker.CancelCurrentPathRequest();
             //seeker.StartPath(rb.position, waypoints[0]);

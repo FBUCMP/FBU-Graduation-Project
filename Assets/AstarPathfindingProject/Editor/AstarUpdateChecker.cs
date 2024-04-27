@@ -33,11 +33,11 @@ namespace Pathfinding {
 		/// <summary>Number of days between update checks</summary>
 		const double updateCheckRate = 1F;
 
-		/// <summary>URL to the version file containing the latest version number.</summary>
-		const string updateURL = "http://www.arongranberg.com/astar/version.php";
+        /// <summary>URL to the version file containing the latest version number.</summary>
+        const string updateURL = "https://www.arongranberg.com/astar/version.php";
 
-		/// <summary>Last time an update check was made</summary>
-		public static System.DateTime lastUpdateCheck {
+        /// <summary>Last time an update check was made</summary>
+        public static System.DateTime lastUpdateCheck {
 			get {
 				try {
 					// Reading from EditorPrefs is relatively slow, avoid it

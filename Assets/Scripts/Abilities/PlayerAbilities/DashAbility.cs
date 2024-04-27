@@ -7,7 +7,8 @@ using static UnityEngine.RuleTile.TilingRuleOutput;
 public class DashAbility : AbilityManager
 {
     public float dashVelocity;
-    
+    public ParticleSystem dashEffect;
+    public Vector2 particleOffset;
     private float gravity;
     public override void Activate(GameObject parent)
     {
@@ -18,6 +19,10 @@ public class DashAbility : AbilityManager
         movement.rb.gravityScale = 0f;
         movement.rb.velocity = new Vector2(movement.movementInput * dashVelocity, 0f);
         AudioManager.Instance.PlaySFX(soundEffect);
+        ParticleSystem newDashEffect = Instantiate(dashEffect, parent.transform.position + new Vector3(particleOffset.x * (movement.isFacingRight ? 1 : -1),
+            particleOffset.y, 0f), Quaternion.Euler(0, 180, 0)); //(0, (movement.isFacingRight ? 180 : 0), 0));
+        newDashEffect.transform.SetParent(parent.transform);
+        // if facing left , flip the particle system x
     }
     public override void BeginCooldown(GameObject parent)
     {

@@ -51,14 +51,14 @@ public class AbilityHolder : MonoBehaviour
         }
     }
 
-    private void Update()
+    private void FixedUpdate()
     {
         for (int i = 0; i < abilities.Count; i++)
         {
             switch (states[i])
             {
                 case AbilityState.ready:
-                    if (Input.GetKeyDown(abilities[i].key))
+                    if (Input.GetKey(abilities[i].key))
                     {
                         abilities[i].Activate(gameObject);
                         states[i] = AbilityState.active;

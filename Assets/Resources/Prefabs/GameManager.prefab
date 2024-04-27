@@ -48,7 +48,7 @@ MonoBehaviour:
   EnemyDataList:
   - {fileID: 11400000, guid: 59920269eccd6044fbbc7f29edfb2eff, type: 2}
   - {fileID: 11400000, guid: 94335be699bf0744ca40333925b1f403, type: 2}
-  NumberOfEnemiesToSpawn: 0
+  NumberOfEnemiesToSpawn: 3
 --- !u!1 &2615094042729840737
 GameObject:
   m_ObjectHideFlags: 0
@@ -93,7 +93,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3678886d12378564881e14f3ac33e6b5, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  SpawnRoomPos: {x: 0, y: 0}
+  SpawnRoom: {fileID: 0}
   ValidColliders: []
   enemyHealthList: []
 --- !u!1 &5028629585731526745
