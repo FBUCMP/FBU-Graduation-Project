@@ -17,6 +17,7 @@ MonoBehaviour:
   cooldownTime: 1
   activeTime: 0.2
   taken: 0
-  soundEffect: {fileID: 8300000, guid: 196758a97ca448041bd6be4d714d86db, type: 3}
+  soundEffect: {fileID: 8300000, guid: dc972a5b4fd23ef43a01379cff60134e, type: 3}
   dashVelocity: 30
-  dashSound: {fileID: 0}
+  dashEffect: {fileID: 5810577681460789135, guid: 4aa7a28bbc93b4a4c8c9c26cf5f68584, type: 3}
+  particleOffset: {x: -0.35, y: 1}

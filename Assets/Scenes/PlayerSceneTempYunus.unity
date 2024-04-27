@@ -1688,6 +1688,14 @@ PrefabInstance:
       propertyPath: m_LocalRotation.z
       value: 0.2686046
       objectReference: {fileID: 0}
+    - target: {fileID: 8145619094936080059, guid: 38706b82ce779444e981b979785a554a, type: 3}
+      propertyPath: abilities.Array.size
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 8145619094936080059, guid: 38706b82ce779444e981b979785a554a, type: 3}
+      propertyPath: abilities.Array.data[1]
+      value: 
+      objectReference: {fileID: 11400000, guid: 6139bc336c2ac64419cfa44ac7e46400, type: 2}
     - target: {fileID: 9023660107612693073, guid: 38706b82ce779444e981b979785a554a, type: 3}
       propertyPath: m_Color.b
       value: 0
@@ -4681,6 +4689,14 @@ PrefabInstance:
     - target: {fileID: 8451387975870596112, guid: 2049499703c75f94ca17eddf72a40a0a, type: 3}
       propertyPath: m_Enabled
       value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 8954948516552763750, guid: 2049499703c75f94ca17eddf72a40a0a, type: 3}
+      propertyPath: maxZoom
+      value: 50
+      objectReference: {fileID: 0}
+    - target: {fileID: 8954948516552763750, guid: 2049499703c75f94ca17eddf72a40a0a, type: 3}
+      propertyPath: minZoom
+      value: 5
       objectReference: {fileID: 0}
     - target: {fileID: 2360238283738301902, guid: 01486e692bf394542a14b440a2afb7d8, type: 3}
       propertyPath: m_AnchorMax.x

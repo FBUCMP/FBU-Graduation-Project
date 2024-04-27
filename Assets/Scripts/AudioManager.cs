@@ -32,4 +32,12 @@ public class AudioManager : MonoBehaviour
     {
         sfxSource.PlayOneShot(clip); // SFX kaynaðýný çalýþtýrmamýza yarayan kod parçacýðý. 
     }
+    public bool IsPlaying()
+    {
+        return sfxSource.isPlaying;
+    }
+    public void StopSFX()
+    {
+        sfxSource.Stop();
+    }
 }

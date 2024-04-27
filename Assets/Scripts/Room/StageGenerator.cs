@@ -162,6 +162,7 @@ public class StageGenerator : MonoBehaviour
             Destroy(GameObject.FindGameObjectWithTag("Player"));
         }
         player = Instantiate(playerPrefab, new Vector3((roomsList[roomIndex].x * roomWidth), (roomsList[roomIndex].y * roomHeight), 0), Quaternion.identity); // prefabdan player instance olustur
+        roomObjects[roomIndex].GetComponent<HeatMap>().UpdateHeatMap(new Bounds(player.transform.position,new Vector3(3,3)));
         Debug.Log("Player Placed at: " + new Vector3(roomsList[roomIndex].x * roomWidth, roomsList[roomIndex].y * roomHeight, 0));
 
     }
@@ -253,10 +254,17 @@ public class StageGenerator : MonoBehaviour
             int startY = (int)height -1;//(int)(height / 2); //Random.Range(0, height);
             Vector2Int startCell = new Vector2Int(startX, startY);
 
-            tempQueue.Add(startCell);
+            //first room manually added
+            //tempQueue.Add(startCell);
             roomsList.Add(startCell); 
             roomData[startX, startY] = 1;
-            int generatedRooms = 1;
+            startCell.y--;
+            
+            //second room manually added to below the first room
+            roomData[startX, startY] = 1;
+            tempQueue.Add(startCell); 
+            roomsList.Add(startCell); 
+            int generatedRooms = 2;
             //Debug.Log($"Room Generated at: {startX},{startY}");
             while (tempQueue.Count > 0 && generatedRooms < maxRooms)
             {

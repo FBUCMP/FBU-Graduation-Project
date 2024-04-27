@@ -16,7 +16,7 @@ public class PlayerMovementNew : MonoBehaviour
     [SerializeField] public float speed = 8f;
     public float jumpHeight = 20f;
     private float jumpVelocity;
-    private bool isFacingRight = true;
+    public bool isFacingRight = true;
 
 
     public bool isDashing;
