@@ -10,7 +10,7 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 9e6daf011f01f7942bb79561a9b9c2c6, type: 3}
-  m_Name: GranadeLauncherTrailConfig
+  m_Name: ShotgunTrailConfig
   m_EditorClassIdentifier: 
   material: {fileID: 10301, guid: 0000000000000000f000000000000000, type: 0}
   widthCurve:
@@ -18,26 +18,26 @@ MonoBehaviour:
     m_Curve:
     - serializedVersion: 3
       time: 0
-      value: 1
-      inSlope: 0.04317862
-      outSlope: 0.04317862
-      tangentMode: 0
+      value: 0.5
+      inSlope: -0.25
+      outSlope: -0.25
+      tangentMode: 34
       weightedMode: 0
       inWeight: 0
-      outWeight: 0.1092437
+      outWeight: 0.33333334
     - serializedVersion: 3
       time: 1
-      value: 0.5
-      inSlope: -0.7321573
-      outSlope: -0.7321573
-      tangentMode: 0
+      value: 0.25
+      inSlope: -0.25
+      outSlope: -0.25
+      tangentMode: 34
       weightedMode: 0
-      inWeight: 0.04831934
+      inWeight: 0.33333334
       outWeight: 0
     m_PreInfinity: 2
     m_PostInfinity: 2
     m_RotationOrder: 4
-  duration: 0.15
+  duration: 0.05
   minVertexDistance: 0.1
   color:
     serializedVersion: 2
@@ -69,5 +69,5 @@ MonoBehaviour:
     m_ColorSpace: -1
     m_NumColorKeys: 2
     m_NumAlphaKeys: 2
-  missDistance: 30
+  missDistance: 20
   simulationSpeed: 100

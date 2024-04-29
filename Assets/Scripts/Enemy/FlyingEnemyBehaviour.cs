@@ -278,6 +278,18 @@ public class FlyingEnemyBehaviour : EnemyBehaviour
         
     }
 
+    public override void GetKnockedBack(Vector3 force, float maxMoveTime)
+    {
+        aiPath.enabled = false;
+        rb.AddForce(force);
+        Invoke("EnableAIPath", maxMoveTime);
+    }
+
+    private void EnableAIPath()
+    {
+        aiPath.enabled = true;
+    }
+
     bool isTouchingWall()
     {
         Collider2D hit = Physics2D.OverlapCircle(rb.position + reachOffset, reachDistance, groundLayer);

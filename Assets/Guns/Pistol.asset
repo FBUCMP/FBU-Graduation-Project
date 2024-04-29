@@ -23,3 +23,5 @@ MonoBehaviour:
   shootConfig: {fileID: 11400000, guid: b351d681a2e02cc4dbafa849c2503135, type: 2}
   trailConfig: {fileID: 11400000, guid: aa28e670f43dbc14abcaf2cc1a710cd4, type: 2}
   audioConfig: {fileID: 11400000, guid: 7a1ecc53c7e1ffb4780edd3ced14f3ab, type: 2}
+  knockbackConfig: {fileID: 11400000, guid: 4a953ae1e8f6e6e4daecf4f22c380330, type: 2}
+  model: {fileID: 0}

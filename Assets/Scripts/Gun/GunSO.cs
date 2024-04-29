@@ -17,8 +17,8 @@ public class GunSO : ScriptableObject, System.ICloneable
     public AmmoConfigurationSO ammoConfig;
     public ShootConfigurationSO shootConfig;
     public TrailConfigurationSO trailConfig;
-
     public AudioConfigurationSO audioConfig;
+    public KnockbackConfigurationSO knockbackConfig;
 
     private MonoBehaviour activeMonoBehaviour; // bullet
     [HideInInspector] public GameObject model;
@@ -57,7 +57,17 @@ public class GunSO : ScriptableObject, System.ICloneable
 
         shootSystem = model.GetComponentInChildren<ParticleSystem>();
         shootingAudioSource = model.GetComponent<AudioSource>();
+
+        if (knockbackConfig.knockbackStrength > 0)
+        {
+            ICollisionHandler[] currentHandlers = bulletImpactEffects;
+            bulletImpactEffects = new ICollisionHandler[currentHandlers.Length + 1];
+            System.Array.Copy(currentHandlers, bulletImpactEffects, currentHandlers.Length);
+            bulletImpactEffects[^1] = new Knockback();
+
+        }
     }
+
     public void Despawn()
     {
        
@@ -89,8 +99,11 @@ public class GunSO : ScriptableObject, System.ICloneable
             shootSystem.Play();
             audioConfig.PlayShootingClip(shootingAudioSource); // , ammoConfig.currentClipAmmo == 1
 
-            // controlled random amount of bullet spread
-            Vector3 spreadAmount = new Vector3(
+            ammoConfig.currentClipAmmo--;
+            for (int i = 0; i < shootConfig.bulletsPerShot; i++)
+            {
+                // controlled random amount of bullet spread
+                Vector3 spreadAmount = new Vector3(
                     Random.Range(
                         -shootConfig.spread.x,
                         shootConfig.spread.x
@@ -104,22 +117,22 @@ public class GunSO : ScriptableObject, System.ICloneable
                         shootConfig.spread.z
                     )
                 );
-            model.transform.up += model.transform.TransformDirection(spreadAmount);
-            Vector3 shootDirection = shootSystem.transform.forward + spreadAmount;                 
-            shootDirection.Normalize();
+                model.transform.up += model.transform.TransformDirection(spreadAmount);
+                Vector3 shootDirection = shootSystem.transform.forward + spreadAmount;
+                shootDirection.Normalize();
 
-            ammoConfig.currentClipAmmo--;
 
-            if (shootConfig.isHitScan)
-            {
-                HitScanShoot(shootDirection);
+                if (shootConfig.isHitScan)
+                {
+                    HitScanShoot(shootDirection);
+                }
+                else
+                {
+                    ProjectileShoot(shootDirection);
+                }
+
+                OnShoot?.Invoke(shootConfig.bulletSpawnForce);
             }
-            else
-            {
-                ProjectileShoot(shootDirection);
-            }
-            
-            OnShoot?.Invoke(shootConfig.bulletSpawnForce);
         }
     }
     private void HitScanShoot(Vector3 shootDirection) // raycast shoot 
@@ -315,7 +328,7 @@ public class GunSO : ScriptableObject, System.ICloneable
         }
         foreach (ICollisionHandler handler in bulletImpactEffects)
         {
-            handler.HandleImpact(hitCollider, hitLocation, hitNormal, this);
+            handler.HandleImpact(hitCollider, hitLocation, hitNormal, distanceTraveled, this);
         }
     }
     private IEnumerator DelayedDisableTrail(TrailRenderer trail)
@@ -363,6 +376,7 @@ public class GunSO : ScriptableObject, System.ICloneable
         config.shootConfig = shootConfig.Clone() as ShootConfigurationSO;
         config.trailConfig = trailConfig.Clone() as TrailConfigurationSO;
         config.audioConfig = audioConfig.Clone() as AudioConfigurationSO;
+        config.knockbackConfig = knockbackConfig.Clone() as KnockbackConfigurationSO;
 
         return config;
     }

@@ -318,7 +318,17 @@ public class WalkingEnemyBehaviour : EnemyBehaviour
         rb.velocity = Vector2.ClampMagnitude(rb.velocity, speed);
         
     }
+    public override void GetKnockedBack(Vector3 force, float maxMoveTime)
+    {
+        aiPath.enabled = false;
+        rb.AddForce(force);
+        Invoke("EnableAIPath", maxMoveTime);
+    }
 
+    private void EnableAIPath()
+    {
+        aiPath.enabled = true;
+    }
     bool isTouchingWall()
     {
         Collider2D hit = Physics2D.OverlapCircle(rb.position + reachOffset, reachDistance, groundLayer);
