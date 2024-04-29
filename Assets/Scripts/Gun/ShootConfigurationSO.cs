@@ -10,6 +10,7 @@ public class ShootConfigurationSO : ScriptableObject, System.ICloneable
     public LayerMask hitMask;
     public Vector3 spread = new Vector3(0.1f, 0.1f, 0f);
     public float fireRate = 0.25f;
+    public int bulletsPerShot = 1;
     public float recoilRecoverySpeed = 1f;
 
     // ICloneable interface and Clone() for using copies of scriptable objects instead

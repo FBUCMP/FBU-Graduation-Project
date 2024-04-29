@@ -2,7 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class EnemyBehaviour : MonoBehaviour
+public class EnemyBehaviour : MonoBehaviour, IKnockbackable
 {
     public bool drawDebug = false;
 
@@ -24,6 +24,9 @@ public class EnemyBehaviour : MonoBehaviour
 
     public EnemyState enemyState = EnemyState.Idle; // current state of the enemy
     protected float currentVisionDistance; // current vision distance
+
+    public float stillThreshold { get; set; } = 0.01f; // threshold for stillness
+
     public enum EnemyState
     {
         Idle,
@@ -42,5 +45,9 @@ public class EnemyBehaviour : MonoBehaviour
         
     }
 
+    public virtual void GetKnockedBack(Vector3 force, float maxMoveTime)
+    {
+        
+    }
 }
 

@@ -1,12 +1,11 @@
 using UnityEngine;
 using System.Collections;
 using System.Collections.Generic;
-using System.Linq;
 using UnityEditor;
 public class MeshGenerator : MonoBehaviour
 {
 	// kirmak icin control nodelari inactive yap. pos ile karsilastir
-	//public Material caveMaterial;
+	public PhysicsMaterial2D physicMaterial;
 	[HideInInspector] public List<Vector3> vertices; // noktalarin pozisyonlari vector2 olmasi lazim tutorial 3d diye boyle degisebilir! vertices holds active ones
     List<int> triangles;
 	Dictionary<int, List<Triangle>> triangleDict = new Dictionary<int, List<Triangle>>(); /* nokta, noktanin dahil oldugu ucgenler. amac dis hatlari bulmak*/
@@ -223,6 +222,7 @@ public class MeshGenerator : MonoBehaviour
         foreach (List<int> outline in outlines) // outlinelar icerisinden her bir outline kumesini dolas. outline noktalari tutuyor.
         {
 			EdgeCollider2D edgeCollider = gameObject.AddComponent<EdgeCollider2D>(); // unitynin duz cizgi collideri
+			edgeCollider.sharedMaterial = physicMaterial;
 			Vector2[] edgePoints = new Vector2[outline.Count]; // edge collidera verilecek nokta konumlari
 
             for (int i = 0; i < outline.Count; i++)

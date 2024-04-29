@@ -8,6 +8,7 @@ public interface ICollisionHandler
             Collider2D ImpactedObject,
             Vector3 HitPosition,
             Vector3 HitNormal,
+            float DistanceTravelled,
             GunSO Gun
         );
 }
