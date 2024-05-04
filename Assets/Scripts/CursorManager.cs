@@ -4,6 +4,9 @@ using UnityEngine;
 
 public class CursorManager : MonoBehaviour
 {
+    // sets default cursor
+
+    // has an option to animate when holding mouse button
 
     [SerializeField] private List<CursorAnimation> cursorAnimationList;
     private CursorAnimation cursorAnimation;
@@ -24,7 +27,7 @@ public class CursorManager : MonoBehaviour
 
     }
 
-    // Update is called once per frame
+
     void Update()
     {
         if (cursorAnimation.doesAnimate && Input.GetMouseButton(0))

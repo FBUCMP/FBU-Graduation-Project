@@ -7,7 +7,7 @@ public class GateManager : MonoBehaviour
     //attached to Stage gameobject
     StageGenerator stageGen;
     List<Vector2Int> roomsList;
-    private Vector2Int currentRoom;
+    private Vector2Int currentRoom; // current room player is in
     Transform player;
     Vector3 newPos;
     public AudioClip teleportSound;
@@ -39,7 +39,7 @@ public class GateManager : MonoBehaviour
     void OnGateCollide(int dir)
     {
         // 0: up, 1: right, 2: down, 3: left
-        Debug.Log("Collided with gate, dir: " + dir);
+        // set current room according to direction
         if( dir == 0)
         {
             this.currentRoom.y++;
@@ -56,7 +56,7 @@ public class GateManager : MonoBehaviour
         {
             this.currentRoom.x--;
         }
-        TeleportTo(this.currentRoom, dir);
+        TeleportTo(this.currentRoom, dir); // teleport player to new room
     }
     void TeleportTo(Vector2Int room, int dirFrom)
     {

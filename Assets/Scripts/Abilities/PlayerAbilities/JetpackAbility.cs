@@ -32,13 +32,10 @@ public class JetpackAbility : AbilityManager
     public override void Activate(GameObject parent)
     {
         movement = parent.GetComponent<PlayerMovementNew>();
-        gravity = movement.rb.gravityScale;
-
-        //movement.rb.gravityScale = -gravity;
-        movement.rb.velocity = new Vector2(movement.rb.velocity.x, Mathf.Min(movement.rb.velocity.y + 4, movement.speed*3));
+        movement.rb.velocity = new Vector2(movement.rb.velocity.x, Mathf.Min(movement.rb.velocity.y + 4, movement.speed*3)); // add upwards velocity numbers can be changed
         cooldownTime = 0;
         ParticleSystem newDashEffect = Instantiate(particleEffect, parent.transform.position + new Vector3(particleOffset.x * (movement.isFacingRight ? 1 : -1),
-            particleOffset.y, 0f), Quaternion.Euler(0, 180, 0)); //(0, (movement.isFacingRight ? 180 : 0), 0));
+            particleOffset.y, 0f), Quaternion.Euler(0, 180, 0)); // particles to the back of the player
         newDashEffect.transform.SetParent(parent.transform);
         
         if (!AudioManager.Instance.IsPlaying())
@@ -57,6 +54,5 @@ public class JetpackAbility : AbilityManager
     public override void BeginCooldown(GameObject parent)
     {
         movement = parent.GetComponent<PlayerMovementNew>();
-        movement.rb.gravityScale = gravity;
     }
 }
