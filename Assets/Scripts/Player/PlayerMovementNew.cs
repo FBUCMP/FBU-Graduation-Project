@@ -219,7 +219,7 @@ public class PlayerMovementNew : MonoBehaviour
     private bool IsGrounded()
     {
         // iki noktada daire olusturup checklemek yerine box ile daha etkili bir sekilde checkliyoruz
-        return Physics2D.OverlapBox(groundCheckM.position, new Vector2(boxCollider.size.x * transform.localScale.x * 1f, 1.5f * transform.localScale.y), 0f, groundLayer);
+        return Physics2D.OverlapBox(groundCheckM.position, new Vector2(boxCollider.size.x * transform.localScale.x * 0.9899f, 1.5f * transform.localScale.y), 0f, groundLayer);
     }
 
     private void OnDrawGizmos()
@@ -230,7 +230,7 @@ public class PlayerMovementNew : MonoBehaviour
         }
         //Physics2D.OverlapBox(groundCheck.position, new Vector2(0.2f, 0.1f), 0f, groundLayer);
         Gizmos.color = IsGrounded()? Color.green : Color.red;
-        Gizmos.DrawWireCube(groundCheckM.position, new Vector2(boxCollider.size.x * transform.localScale.x * 1f, 1.5f * transform.localScale.y));
+        Gizmos.DrawWireCube(groundCheckM.position, new Vector2(boxCollider.size.x * transform.localScale.x * 0.9899f, 1.5f * transform.localScale.y));
         if (IsWalled())
         {
             Gizmos.color = Color.magenta;

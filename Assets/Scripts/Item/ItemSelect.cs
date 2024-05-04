@@ -10,6 +10,17 @@ public class ItemSelect : MonoBehaviour
     {
         EnemyManager.OnRoomCleared += ActivatePopup;
     }
+
+    private void OnDestroy()
+    {
+        EnemyManager.OnRoomCleared -= ActivatePopup;
+    }
+
+    private void Start()
+    {
+        ItemHolder itemHolder = GameObject.FindObjectOfType<ItemHolder>();
+        itemHolder.AddItem(allItems[0]);
+    }
     public List<Item> SelectRandomItems(int n)
     {
         List<Item> selectedItems = new List<Item>();
