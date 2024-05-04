@@ -1817,12 +1817,12 @@ MonoBehaviour:
   rb: {fileID: 2300254057313476750}
   groundLayer:
     serializedVersion: 2
-    m_Bits: 192
+    m_Bits: 4288
   wallCheckR: {fileID: 2664116126168120570}
   wallCheckL: {fileID: 174278656722678466}
   wallLayer:
     serializedVersion: 2
-    m_Bits: 192
+    m_Bits: 4288
   groundCheckR: {fileID: 8891103828245098602}
   groundCheckM: {fileID: 9095605813144567861}
   groundCheckL: {fileID: 2788537209329071482}
@@ -2016,7 +2016,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   shootBlockMask:
     serializedVersion: 2
-    m_Bits: 193
+    m_Bits: 4289
   GunSelector: {fileID: 5788830053130607927}
   autoReload: 1
   gunPivot: {fileID: 4651418364107695867}
