@@ -19,7 +19,8 @@ public class FlyBossManager : MonoBehaviour
     private float attackDelay = 8;
     private float roomWidth = 85;
     private float roomHeight = 40;
-   
+    private SalivaFire salivaFire;
+    private Animator animator;
 
 
     private Rigidbody2D enemyRB;
@@ -30,8 +31,8 @@ public class FlyBossManager : MonoBehaviour
     {
      
         enemyRB = GetComponent<Rigidbody2D>();
-       
-
+        salivaFire = GetComponent<SalivaFire>();
+        animator = GetComponentInChildren<Animator>();
     }
 
     // Update is called once per frame
@@ -49,12 +50,15 @@ public class FlyBossManager : MonoBehaviour
             {
                 case BossState.UpNdownAttack:
                     StartCoroutine(UpNdownAttack());
+                    animator.Play("FlyBossIdle");
                     break;
                 case BossState.DashAttack:
                     StartCoroutine(DashAttack());
+                    animator.Play("FlyBossDash");
                     break;
                 case BossState.SwipeAttack:
                     StartCoroutine(SwipeAttack());
+                    animator.Play("FlyBossDash");
                     break;
             }
         }
@@ -92,7 +96,8 @@ public class FlyBossManager : MonoBehaviour
     IEnumerator UpNdownAttack()
     {
         isAttacking = true;
-
+        
+        
         //enemyRB.velocity = new Vector3(0, -bossSpeed, 0);
         if (isTouchingUp == true)
         {
@@ -105,10 +110,13 @@ public class FlyBossManager : MonoBehaviour
             enemyRB.velocity = new Vector3(0, bossSpeed, 0);
         }
 
+
+
         //yield return new WaitForSeconds(roomHeight / bossSpeed);
         //enemyRB.velocity = new Vector3(0, bossSpeed, 0);
 
         yield return new WaitForSeconds(roomHeight / bossSpeed);
+       
 
 
         isAttacking = false; 
@@ -143,9 +151,9 @@ public class FlyBossManager : MonoBehaviour
     {
 
         isAttacking = true;
-
+        InvokeRepeating("SpawnSaliva", 0f, 2f); // 2 saniyede bir spawn et
         enemyRB.velocity = new Vector3(-bossSpeed, 0, 0);
-
+        
         //if (isTouchingWall == true)
         //{
         //    
@@ -155,12 +163,19 @@ public class FlyBossManager : MonoBehaviour
         yield return new WaitForSeconds(roomWidth / bossSpeed);
         transform.localScale = new Vector3(-transform.localScale.x, transform.localScale.y, transform.localScale.z);
         enemyRB.velocity = new Vector3(bossSpeed, 0, 0);
+        
         yield return new WaitForSeconds(roomWidth / bossSpeed);
         transform.localScale = new Vector3(-transform.localScale.x, transform.localScale.y, transform.localScale.z);
+        salivaFire.CancelInvoke("SpawnSaliva");
         isAttacking = false;
 
     }
 
+    public void SpawnSaliva()
+    {
+        salivaFire.SpawnSaliva();
+        animator.Play("FlyBossUpDownAttack");
+    }
 
 
 
