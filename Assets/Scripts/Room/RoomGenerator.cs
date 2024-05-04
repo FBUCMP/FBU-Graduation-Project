@@ -58,7 +58,7 @@ public class RoomGenerator : MonoBehaviour
 			SmoothMap();
 		}
 
-		float[,] borderedMapWithValues = new float[width + (borderSize * 2), height + (borderSize * 2)];
+		float[,] borderedMapWithValues = new float[width + (borderSize * 2), height + (borderSize * 2)]; // larger map to include borders
 		for (int x = 0; x < borderedMapWithValues.GetLength(0); x++)
 		{
 			for (int y = 0; y < borderedMapWithValues.GetLength(1); y++)

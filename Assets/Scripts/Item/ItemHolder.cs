@@ -6,9 +6,9 @@ public class ItemHolder : MonoBehaviour
 {
     // attached to the player
 
-    public List<Item> items;
+    public List<Item> items; // items that the player has
 
-    public void AddItem(Item newItem)
+    public void AddItem(Item newItem) // add item to the player
     {
         foreach (var item in items)
         {

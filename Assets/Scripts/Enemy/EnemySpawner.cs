@@ -61,7 +61,7 @@ public class EnemySpawner : MonoBehaviour
         }
     }
 
-    void CreateColliders(int n)
+    void CreateColliders(int n) // creates n colliders to check if the area is empty and uses heatmaps to check if the area is empty
     {
         if (SpawnRoom == null)
         {
@@ -80,9 +80,9 @@ public class EnemySpawner : MonoBehaviour
                 Debug.LogWarning("Max attempts reached, could not create enough colliders!");
                 break;
             }
-            int X = UnityEngine.Random.Range(-49, 49);
+            int X = UnityEngine.Random.Range(-49, 49); // random position in the room bounds hand written
             int Y = UnityEngine.Random.Range(-24, 24);
-            HeatMap heatMap = SpawnRoom.GetComponent<HeatMap>();
+            HeatMap heatMap = SpawnRoom.GetComponent<HeatMap>(); // heatmaps are used to check if the area is empty
             
             Vector2 pos = new Vector3(X, Y) + SpawnRoom.transform.position;
             Collider2D col = Physics2D.OverlapBox(pos, new Vector2(s, s), 0);

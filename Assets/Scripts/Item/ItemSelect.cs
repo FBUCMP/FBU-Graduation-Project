@@ -4,7 +4,8 @@ using UnityEngine;
 
 public class ItemSelect : MonoBehaviour
 {
-    public List<Item> allItems;
+    // attached to the itemselect manager
+    public List<Item> allItems; // all the items in the game
 
     private void Awake()
     {
@@ -19,9 +20,9 @@ public class ItemSelect : MonoBehaviour
     private void Start()
     {
         ItemHolder itemHolder = GameObject.FindObjectOfType<ItemHolder>();
-        itemHolder.AddItem(allItems[0]);
+        itemHolder.AddItem(allItems[0]); // temporary
     }
-    public List<Item> SelectRandomItems(int n)
+    public List<Item> SelectRandomItems(int n) // select n different random items from allItems
     {
         List<Item> selectedItems = new List<Item>();
         int i = 0;
@@ -29,7 +30,7 @@ public class ItemSelect : MonoBehaviour
         {
             int randomIndex = Random.Range(0, allItems.Count);
             Item item = allItems[randomIndex];
-            if (!selectedItems.Contains(item))
+            if (!selectedItems.Contains(item)) // if item is not already in selecteditems
             {
                 selectedItems.Add(item);
                 i++;
@@ -38,7 +39,7 @@ public class ItemSelect : MonoBehaviour
         return selectedItems;
     }
 
-    public void ActivatePopup(int roomIndex)
+    public void ActivatePopup(int roomIndex) // shoud be called when room is cleared by itemselect manager object
     {
         List<Item> selectedItems = SelectRandomItems(3);
 

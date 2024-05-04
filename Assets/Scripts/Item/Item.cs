@@ -12,7 +12,7 @@ public class Item : ScriptableObject
     public int itemValue;
     public bool isActivated;
 
-    public virtual void Activate(GameObject parent)
+    public virtual void Activate(GameObject parent) // called just after added to player
     {
         if (isActivated)
         {

@@ -9,14 +9,14 @@ public class EnemyManager : MonoBehaviour
     public List<EnemyData> EnemyDataList = new List<EnemyData>();
     public int NumberOfEnemiesToSpawn = 5;
     int roomIndex;
-    private List<List<EnemyHealth>> enemyHealthLists = new List<List<EnemyHealth>>();
-    private GameObject enemyHolder;
+    private List<List<EnemyHealth>> enemyHealthLists = new List<List<EnemyHealth>>(); // list of lists of enemy health scripts
+    private GameObject enemyHolder; // parent object for all enemies
     StageGenerator stageGenerator;
     EnemySpawner spawner;
     public static AudioSource audioSource; // static so it can be accessed from enemy scripts
 
     public delegate void RoomCleared(int roomIndex);
-    public static event RoomCleared OnRoomCleared;
+    public static event RoomCleared OnRoomCleared; // event to be invoked when all enemies in a room are dead
 
     private void Start()
     {

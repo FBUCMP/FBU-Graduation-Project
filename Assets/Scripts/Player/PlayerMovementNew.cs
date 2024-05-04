@@ -214,7 +214,6 @@ public class PlayerMovementNew : MonoBehaviour
 
     }
 
-    // yunus isgrounded
 
     private bool IsGrounded()
     {
@@ -319,7 +318,7 @@ public class PlayerMovementNew : MonoBehaviour
     }
 
 
-    private void TryFlip() // calculate if flip is needed and if so call flip
+    private void TryFlip() // calculate if flip is needed and if so call flip called every frame if not dashing and not walljumping
     {
         Vector3 mousePosition = Camera.main.ScreenToWorldPoint(Input.mousePosition);
         Vector3 lookDirection = mousePosition - center.position; // karakterin ortasindan mousea dogru bir vektor
