@@ -25,7 +25,7 @@ public class Bullet : MonoBehaviour
     {
         spawnLocation = transform.position;
         transform.right = spawnForce.normalized;
-        rb.AddForce(spawnForce);
+        rb.AddForce(spawnForce); // spawn with force
         StartCoroutine(DelayedDisable(delayedDisableTime));
     }
 

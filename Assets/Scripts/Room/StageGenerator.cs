@@ -255,16 +255,18 @@ public class StageGenerator : MonoBehaviour
             Vector2Int startCell = new Vector2Int(startX, startY);
 
             //first room manually added
-            //tempQueue.Add(startCell);
+            tempQueue.Add(startCell);
             roomsList.Add(startCell); 
             roomData[startX, startY] = 1;
             startCell.y--;
-            
+            int generatedRooms = 1;
+            /*
             //second room manually added to below the first room
             roomData[startX, startY] = 1;
             tempQueue.Add(startCell); 
             roomsList.Add(startCell); 
             int generatedRooms = 2;
+            */
             //Debug.Log($"Room Generated at: {startX},{startY}");
             while (tempQueue.Count > 0 && generatedRooms < maxRooms)
             {

@@ -20,7 +20,7 @@ public class Explode : ICollisionHandler
         this.maxEnemiesAffected = maxEnemiesAffected;
         hitObjects = new Collider2D[maxEnemiesAffected];
     }
-    public void HandleImpact(Collider2D ImpactedObject, Vector3 HitPosition, Vector3 HitNormal, GunSO Gun)
+    public void HandleImpact(Collider2D ImpactedObject, Vector3 HitPosition, Vector3 HitNormal, float DistanceTravelled,GunSO Gun)
     {
         int hits = Physics2D.OverlapCircleNonAlloc(HitPosition, radius, hitObjects, Gun.shootConfig.hitMask);
         for (int i = 0; i < hits; i++)
@@ -36,6 +36,12 @@ public class Explode : ICollisionHandler
                 //Debug.Log("exploded: " + hitObjects[i].name);
 
                 damagable.TakeDamage(Mathf.CeilToInt(baseDamage * damageFalloff.Evaluate(distance / radius)), HitPosition, radius); // damage according to distance
+            }
+            if (hitObjects[i].TryGetComponent(out IKnockbackable knockbackable))
+            {
+                Vector3 knockbackForce = Gun.knockbackConfig.GetKnockbackStrength((hitObjects[i].transform.position - HitPosition), Vector2.Distance(HitPosition, hitObjects[i].transform.position));
+                float knockbackTime = Gun.knockbackConfig.maxKnockbackTime;
+                knockbackable.GetKnockedBack(knockbackForce, knockbackTime);
             }
             
 

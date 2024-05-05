@@ -58,7 +58,7 @@ public class RoomGenerator : MonoBehaviour
 			SmoothMap();
 		}
 
-		float[,] borderedMapWithValues = new float[width + (borderSize * 2), height + (borderSize * 2)];
+		float[,] borderedMapWithValues = new float[width + (borderSize * 2), height + (borderSize * 2)]; // larger map to include borders
 		for (int x = 0; x < borderedMapWithValues.GetLength(0); x++)
 		{
 			for (int y = 0; y < borderedMapWithValues.GetLength(1); y++)
@@ -77,11 +77,14 @@ public class RoomGenerator : MonoBehaviour
 		
 
 		DrawCicle(borderedMapWithValues, new Vector2Int(width / 2 * (int)squareSize, height / 2 * (int)squareSize), 0f, 5); // odanin ortasini bosalt
-		
         // 0: up, 1: right, 2: down, 3: left
-		int platformLength = (int) 5 / squareSize;
+        int platformLength = (int) 5 / squareSize;
 		int gateSpaceSize = (int)8 / squareSize;
 		float gateDistanceToWall = 1.25f * squareSize;
+
+        DrawCicle(borderedMapWithValues, new Vector2Int(width / 2, 0), 0, gateSpaceSize * 2);
+        DrawCicle(borderedMapWithValues, new Vector2Int(width / 2, 2), 0, gateSpaceSize * 2);
+
 		Vector3 roomBottomLeft = new Vector3(transform.position.x - (width/2) * squareSize, transform.position.y - (height/2) * squareSize, 0);
         if (gates[0]) // up
         {  
