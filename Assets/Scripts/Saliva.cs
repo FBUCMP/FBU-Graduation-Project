@@ -20,8 +20,7 @@ public class Saliva : MonoBehaviour
     private void OnCollisionEnter2D(Collision2D collision)
     {
         if (collision.gameObject.tag == "Bullet")
-        {
-            Debug.Log("asdf");
+        {           
             Destroy(gameObject);
             return;
         }

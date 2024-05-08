@@ -26,6 +26,7 @@ public class SalivaFire : MonoBehaviour
     // Fýrlatma iþlemini baþlatan fonksiyon
     public void SpawnSaliva()
     {
+        
         // Saliva prefab'ýný spawnlayarak yeni bir Saliva objesi oluþtur
         GameObject newSaliva = Instantiate(Saliva, salivaSpawnPoint.position, salivaSpawnPoint.rotation);
 
@@ -38,8 +39,8 @@ public class SalivaFire : MonoBehaviour
             // Saliva'yý belirli bir hýzda fýrlat
             //salivaRigidbody.velocity = salivaSpawnPoint.forward * salivaSpeed;
            
-            salivaRigidbody.AddForce(-salivaSpawnPoint.right * salivaSpeed);
-            
+            salivaRigidbody.AddForce(new Vector2(-transform.localScale.x,0) * salivaSpeed);
+         
         }
         else
         {
