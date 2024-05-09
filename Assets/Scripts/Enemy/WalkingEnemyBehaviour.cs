@@ -1,4 +1,5 @@
 using Pathfinding;
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
@@ -17,7 +18,7 @@ public class WalkingEnemyBehaviour : EnemyBehaviour
     private Seeker seeker;
     //float trackingAbility = 1f;
     float memoryTimer;
-   
+    private bool isJumping = false;
 
     private void Awake()
     {
@@ -65,11 +66,15 @@ public class WalkingEnemyBehaviour : EnemyBehaviour
     {
         
         WatchTarget();
-
         //Debug.DrawLine(rb.position, rb.position + rb.velocity, Color.blue); // draw the velocity vector
         HandleStates();
-        HandleWalls();
-        rb.gravityScale = isTouchingWall() ? 1 : gravityScale; // if enemy is close to a wall, reduce gravity
+        //HandleWalls();
+        //rb.gravityScale = isTouchingWall() ? 1 : gravityScale; // if enemy is close to a wall, reduce gravity
+        if (!isTouchingWall()) 
+        {
+            aiPath.enabled = false;
+        }
+        
         if (aiPath.velocity.x < 0)
         {
             transform.localScale = new Vector3(- Mathf.Abs(transform.localScale.x), transform.localScale.y, transform.localScale.z);
@@ -200,7 +205,7 @@ public class WalkingEnemyBehaviour : EnemyBehaviour
         {
             if (aiPath == null) // if A star is not used
             {
-            
+                Debug.LogWarning("A* is not used");
                 Vector2 desiredVelocity = (waypoints[0] - rb.position).normalized * speed;
 
                 // Calculate the steering force
@@ -215,27 +220,31 @@ public class WalkingEnemyBehaviour : EnemyBehaviour
                 // Limit the velocity to the maximum speed
                 rb.velocity = Vector2.ClampMagnitude(rb.velocity, speed);
                 
-                if (desiredVelocity.normalized.y > 0.8f && isTouchingWall())
+                if (desiredVelocity.normalized.y > 0.6f && isTouchingWall())
                 {
                     //jump 
-                    rb.AddForce(Vector2.up *5* speed, ForceMode2D.Impulse);
+                    //Jump(Vector2.up);
+                    StartCoroutine(Jump(Vector2.up));
                 }
                 
                 
 
             }
-            else
+            else // if A star is used
             {
-                aiPath.destination = waypoints[0];
-                //seeker.CancelCurrentPathRequest();
-                //seeker.StartPath(rb.position, waypoints[0]);
-                // if aipaths closest point's normalized vectors y is higher than 0.8 and isTouchingWall jump
-                
-                if (aiPath.steeringTarget.normalized.y > 0.8f && isTouchingWall())
+                if (aiPath.enabled) // if AIPath is enabled
+                {
+                    aiPath.destination = waypoints[0];
+
+                }
+
+                if ((aiPath.steeringTarget - transform.position).normalized.y > 0.6f && isTouchingWall())
                 {
                     //jump 
-                    rb.AddForce(Vector2.up * 5 * speed, ForceMode2D.Impulse);
+                    if (!isJumping) StartCoroutine(Jump((aiPath.steeringTarget - transform.position).normalized));
+                    //Jump((aiPath.steeringTarget - transform.position).normalized * 10000);
                 }
+                
                 
             }
 
@@ -324,7 +333,28 @@ public class WalkingEnemyBehaviour : EnemyBehaviour
         rb.AddForce(force);
         Invoke("EnableAIPath", maxMoveTime);
     }
-
+    
+    private IEnumerator Jump(Vector2 dir)
+    {
+        isJumping = true;
+        Debug.Log("Jumping"+ dir);
+        if (aiPath)
+        aiPath.enabled = false;
+        yield return new();
+        //Invoke("EnableAIPath", 2f); // enable AIPath after  seconds
+        rb.AddForce(dir*1000);
+        yield return new();
+        while (true)
+        {
+            yield return new();
+            if (isTouchingWall())
+            {
+                aiPath.enabled = true;
+                isJumping = false;
+                break;
+            }
+        }
+    }
     private void EnableAIPath()
     {
         aiPath.enabled = true;

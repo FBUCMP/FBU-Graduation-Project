@@ -12,7 +12,7 @@ public class EnemyBehaviour : MonoBehaviour, IKnockbackable
 
     [Header("Wall Avoidence")]
     public float maxSteeringForce = 4f;
-    public float checkDistance = 0.9f; // avoid walls(solids) distance
+    [Tooltip("Adds force to self if somethings in checkdistance")]public float checkDistance = 0.9f; // avoid walls(solids) distance
     public Vector2Int minMaxWallCheckAngle = new Vector2Int(0, 360); // angle range for wall check - raycast
     public float reachDistance = 1.2f; // isTouchingWall distance
     public Vector2 reachOffset; // offset for reachDistance
