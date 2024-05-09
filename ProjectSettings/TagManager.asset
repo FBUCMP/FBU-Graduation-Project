@@ -12,6 +12,9 @@ TagManager:
   - Enemy
   - YetenekVerici
   - Boss
+  - FxTemporaire
+  - Undefined
+  - Bullet
   layers:
   - Default
   - TransparentFX
@@ -25,8 +28,8 @@ TagManager:
   - Player
   - Enemy
   - glow
-  - 
-  - 
+  - Platform
+  - BossAttack
   - 
   - 
   - 
