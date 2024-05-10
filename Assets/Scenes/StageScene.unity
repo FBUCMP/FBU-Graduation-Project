@@ -765,10 +765,6 @@ PrefabInstance:
       propertyPath: vignetteIntensityChange
       value: 0.2
       objectReference: {fileID: 0}
-    - target: {fileID: 8097487949194869911, guid: 25c35d67dfdfbca46a15cba806755145, type: 3}
-      propertyPath: vignetteColorChangeOnDamage.r
-      value: 0.5
-      objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []

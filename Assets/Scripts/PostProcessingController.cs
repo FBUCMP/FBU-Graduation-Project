@@ -71,7 +71,8 @@ public class PostProcessingController : MonoBehaviour
     void OnPlayerTakeDamage(int damage)
     {
         StopAllCoroutines();
-        StartCoroutine(OnPlayerTakeDamageRoutine(this.damageDuration));
+        
+        StartCoroutine(OnPlayerTakeDamageRoutine(this.damageDuration, Mathf.Lerp(0, vignetteIntensityChangeOnDamage, damage / 100f)));
     }
     void OnPlayerShoot(float power) // power is not used maybe it will be used in the future
     {
@@ -82,11 +83,11 @@ public class PostProcessingController : MonoBehaviour
     {
         gun.OnShoot += OnPlayerShoot;
     }
-    IEnumerator OnPlayerTakeDamageRoutine(float duration)
+    IEnumerator OnPlayerTakeDamageRoutine(float duration, float intensity)
     {
         // might make it smoother with lerp
         vignette.color.value = vignetteColorChangeOnDamage;
-        vignette.intensity.value = initialVignetteIntensity + vignetteIntensityChangeOnDamage;
+        vignette.intensity.value = initialVignetteIntensity + intensity;
         lensDistortion.intensity.value = initialLensDistortionIntensity - lensDistortionIntensityChange;
         yield return new WaitForSeconds(duration);
 

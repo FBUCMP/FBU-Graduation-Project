@@ -211,6 +211,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _health: 0
   _maxHealth: 100
+  _explosionEffect: 1
 --- !u!114 &206514084015724580
 MonoBehaviour:
   m_ObjectHideFlags: 0

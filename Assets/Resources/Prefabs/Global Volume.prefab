@@ -62,3 +62,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 385a6043256941249a3dd71ab4aabfc5, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  damageDuration: 0.2
+  vignetteIntensityChangeOnDamage: 0.3
+  vignetteColorChangeOnDamage: {r: 0.5, g: 0, b: 0, a: 1}
+  lensDistortionIntensityChange: -0.3
+  shootDuration: 0.1
+  vignetteIntensityChangeOnShoot: 0.2
+  vignetteColorChangeOnShoot: {r: 1, g: 1, b: 1, a: 1}

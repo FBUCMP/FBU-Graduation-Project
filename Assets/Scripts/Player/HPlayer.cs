@@ -14,8 +14,13 @@ public class HPlayer : MonoBehaviour, IDataPersistance, IDamageable
     private int _health;
     [SerializeField]
     private int _maxHealth = 100;
+    [SerializeField]
+    private float _explosionEffect = 0.01f; // 0-1 value
     public int currentHealth { get => _health; set => _health = value; } // getter and setter
     public int maxHealth { get => _maxHealth; set => _maxHealth = value; } // getter and setter
+    public float explosionEffect { get => _explosionEffect; set => _explosionEffect = value; } // getter and setter
+
+    
 
     private int deathCount = 0;
 
