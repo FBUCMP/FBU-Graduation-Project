@@ -147,6 +147,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   gameOverUI: {fileID: 7064193264097599754}
   pauseMenuUI: {fileID: 2099108882040244555}
+  upgradeScreenUI: {fileID: 4920751448299131339}
 --- !u!1 &6297318150831148261
 GameObject:
   m_ObjectHideFlags: 0
@@ -402,6 +403,14 @@ PrefabInstance:
       propertyPath: m_Name
       value: PauseScreen
       objectReference: {fileID: 0}
+    - target: {fileID: 5987937852638514634, guid: d45b10c039e21f34387dfbebc9de9ce3, type: 3}
+      propertyPath: m_Name
+      value: SecondCard
+      objectReference: {fileID: 0}
+    - target: {fileID: 6874048399420635422, guid: d45b10c039e21f34387dfbebc9de9ce3, type: 3}
+      propertyPath: m_Name
+      value: FirstCard
+      objectReference: {fileID: 0}
     - target: {fileID: 6992018014681400809, guid: d45b10c039e21f34387dfbebc9de9ce3, type: 3}
       propertyPath: m_Name
       value: FailText
@@ -434,6 +443,10 @@ PrefabInstance:
       propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_MethodName
       value: RestartGame
       objectReference: {fileID: 0}
+    - target: {fileID: 8638030068894633068, guid: d45b10c039e21f34387dfbebc9de9ce3, type: 3}
+      propertyPath: m_Name
+      value: ThirdCard
+      objectReference: {fileID: 0}
     - target: {fileID: 9118170568685404243, guid: d45b10c039e21f34387dfbebc9de9ce3, type: 3}
       propertyPath: m_AnchorMax.y
       value: 0
@@ -454,6 +467,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: InGameUIManager
       objectReference: {fileID: 0}
+    - target: {fileID: 9142594204519916981, guid: d45b10c039e21f34387dfbebc9de9ce3, type: 3}
+      propertyPath: m_Name
+      value: FourthCard
+      objectReference: {fileID: 0}
     m_RemovedComponents:
     - {fileID: 8179458811322676012, guid: d45b10c039e21f34387dfbebc9de9ce3, type: 3}
     - {fileID: 1986111411391709422, guid: d45b10c039e21f34387dfbebc9de9ce3, type: 3}
@@ -470,6 +487,11 @@ GameObject:
 --- !u!4 &3527738999030692520 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 3583324173513385796, guid: d45b10c039e21f34387dfbebc9de9ce3, type: 3}
+  m_PrefabInstance: {fileID: 94449923391610348}
+  m_PrefabAsset: {fileID: 0}
+--- !u!1 &4920751448299131339 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 4973531904302779431, guid: d45b10c039e21f34387dfbebc9de9ce3, type: 3}
   m_PrefabInstance: {fileID: 94449923391610348}
   m_PrefabAsset: {fileID: 0}
 --- !u!1 &7064193264097599754 stripped

@@ -10,6 +10,7 @@ public class Item : ScriptableObject
     public Sprite itemSprite;
     public int itemID;
     public int itemValue;
+    public int rarity;
     public bool isActivated;
 
     public virtual void Activate(GameObject parent) // called just after added to player
