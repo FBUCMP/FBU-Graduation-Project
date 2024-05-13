@@ -7142,9 +7142,9 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   drawDebug: 1
-  speed: 8
+  speed: 5
   power: 2
-  maxSteeringForce: 12
+  maxSteeringForce: 20
   checkDistance: 1.3
   minMaxWallCheckAngle: {x: -90, y: 91}
   reachDistance: 1.45

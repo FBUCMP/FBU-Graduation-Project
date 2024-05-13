@@ -298,7 +298,7 @@ public class WalkingEnemyBehaviour : EnemyBehaviour
         {
             Vector2 direction = new Vector3(Random.Range(-1f,1f), Random.Range(0,2f));
             
-            rb.velocity = direction.normalized * speed;
+            //rb.velocity = direction.normalized * speed;
             
             
         }
@@ -365,15 +365,12 @@ public class WalkingEnemyBehaviour : EnemyBehaviour
         Debug.Log("Jumping"+ dir);
         
         yield return new();
-        rb.velocity = new Vector2(dir.x * gravityScale*3f,dir.y * gravityScale*3f);
+        // can play a sound for indication of jump
+        yield return new WaitForSeconds(0.1f); 
+        rb.velocity = new Vector2(dir.x * gravityScale*2.25f,dir.y * gravityScale*2.25f);
         //rb.AddForce(dir*100, ForceMode2D.Impulse);
         yield return new();
         
-        /*
-        yield return new WaitForSeconds(0.5f);
-        isJumping = false;
-        StartCoroutine(JumpCoolDown());
-        */
         while (true)
         {
             yield return new();
