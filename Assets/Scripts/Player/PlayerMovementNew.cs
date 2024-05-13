@@ -5,7 +5,7 @@ using System.IO;
 //using UnityEditor.Playables;
 using UnityEngine;
 
-public class PlayerMovementNew : MonoBehaviour
+public class PlayerMovementNew : MonoBehaviour, IKnockbackable
 {
     //Ability Dash
     public float movementInput;
@@ -20,6 +20,7 @@ public class PlayerMovementNew : MonoBehaviour
 
 
     public bool isDashing;
+    private bool isKnockedback;
 
     // 25.02.2024
     // cyoto time and jump buffering
@@ -73,7 +74,7 @@ public class PlayerMovementNew : MonoBehaviour
     //animator
     [SerializeField] private Transform center; // playerin orta noktasi
     private Animator animator;
-
+    public float stillThreshold { get; set; } = 0.01f; // threshold for stillness
 
     private void Awake()
     {
@@ -247,7 +248,7 @@ public class PlayerMovementNew : MonoBehaviour
             return;
         }
         
-        if (!isWallJumping)
+        if (!isWallJumping && !isKnockedback)
         {
             rb.velocity = new Vector2(horizontal * speed, rb.velocity.y);
         }
@@ -337,6 +338,26 @@ public class PlayerMovementNew : MonoBehaviour
         transform.localScale = localScale;
 
         OnFlipped?.Invoke();
+    }
+
+    public void GetKnockedBack(Vector3 force, float maxMoveTime)
+    {
+        int maxX = 900;
+        int maxY = 1500;
+        force.x = Mathf.Clamp(force.x, -maxX, maxX);
+        force.y = Mathf.Clamp(force.y, -maxY, maxY);
+        StartKnockback();
+        Invoke(nameof(StopKnockback), maxMoveTime*1.2f);
+        rb.AddForce(force, ForceMode2D.Impulse);
+        Debug.Log(force);
+    }
+    private void StartKnockback()
+    {
+        isKnockedback = true;
+    }
+    private void StopKnockback()
+    {
+        isKnockedback = false;
     }
 }
 

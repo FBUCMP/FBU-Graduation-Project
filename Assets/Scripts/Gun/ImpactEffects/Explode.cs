@@ -25,6 +25,7 @@ public class Explode : ICollisionHandler
         int hits = Physics2D.OverlapCircleNonAlloc(HitPosition, radius, hitObjects, Gun.shootConfig.hitMask);
         for (int i = 0; i < hits; i++)
         {
+            Debug.Log(hitObjects[i].name);
             if (hitObjects[i].TryGetComponent(out IDamageable damagable))
             {
                 float distance = Vector3.Distance(hitObjects[i].ClosestPoint(HitPosition), HitPosition); /* hitObjects[i].transform.position might cause an error because it gets center
@@ -35,7 +36,7 @@ public class Explode : ICollisionHandler
                 //Debug.Log($"closestpoint: {hitObjects[i].ClosestPoint(HitPosition)}");
                 //Debug.Log("exploded: " + hitObjects[i].name);
 
-                damagable.TakeDamage(Mathf.CeilToInt(baseDamage * damageFalloff.Evaluate(distance / radius)), HitPosition, radius); // damage according to distance
+                damagable.TakeDamage(Mathf.CeilToInt( (baseDamage * damageFalloff.Evaluate(distance / radius)) * damagable.explosionEffect), HitPosition, radius); // damage according to distance
             }
             if (hitObjects[i].TryGetComponent(out IKnockbackable knockbackable))
             {

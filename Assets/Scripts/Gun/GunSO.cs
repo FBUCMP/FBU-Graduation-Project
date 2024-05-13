@@ -100,10 +100,12 @@ public class GunSO : ScriptableObject, System.ICloneable
             audioConfig.PlayShootingClip(shootingAudioSource); // , ammoConfig.currentClipAmmo == 1
 
             ammoConfig.currentClipAmmo--;
+            Vector3 spreadAmount = Vector3.zero;
+            Vector3 shootDirection = Vector3.zero;
             for (int i = 0; i < shootConfig.bulletsPerShot; i++)
             {
                 // controlled random amount of bullet spread
-                Vector3 spreadAmount = new Vector3(
+                spreadAmount = new Vector3(
                     Random.Range(
                         -shootConfig.spread.x,
                         shootConfig.spread.x
@@ -118,7 +120,7 @@ public class GunSO : ScriptableObject, System.ICloneable
                     )
                 );
                 model.transform.up += model.transform.TransformDirection(spreadAmount);
-                Vector3 shootDirection = shootSystem.transform.forward + spreadAmount;
+                shootDirection = shootSystem.transform.forward + spreadAmount;
                 shootDirection.Normalize();
 
 
@@ -133,6 +135,7 @@ public class GunSO : ScriptableObject, System.ICloneable
 
                 OnShoot?.Invoke(shootConfig.bulletSpawnForce);
             }
+            Camera.main.GetComponent<CameraFollow>().CameraShake(spreadAmount.magnitude/2, spreadAmount.magnitude/2, -shootDirection);
         }
     }
     private void HitScanShoot(Vector3 shootDirection) // raycast shoot 

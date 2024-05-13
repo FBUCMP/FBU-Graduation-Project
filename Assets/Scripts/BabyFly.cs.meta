@@ -1,9 +1,5 @@
 fileFormatVersion: 2
-<<<<<<<< HEAD:Assets/DrawMinimap.cs.meta
-guid: b63555d48b510f441a530cc1b2f33a0e
-========
-guid: 97951b4210557714b8a26f9cd3380105
->>>>>>>> main:Assets/Residue.cs.meta
+guid: 7da8017e8d8ce6f4880a9127f279af08
 MonoImporter:
   externalObjects: {}
   serializedVersion: 2

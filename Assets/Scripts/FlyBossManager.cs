@@ -22,6 +22,13 @@ public class FlyBossManager : MonoBehaviour
     private SalivaFire salivaFire;
     private Animator animator;
     private float dashSpeed = 35;
+    public GameObject BabyFly; // Yavru sinek prefabý
+    public float rainDuration = 5f; // Sineklerin ne kadar süreyle yaðacaðý
+    public float rainInterval = 0.1f; // Sineklerin arasýndaki zaman aralýðý
+    private float rainHeight = 30f; // Bebek sinek saldýrýsýnýn nereden baþlayacaðý (yükseklik)
+
+
+
     public Rigidbody2D player;
     float distanceToCeiling;
     private Rigidbody2D enemyRB;
@@ -51,7 +58,7 @@ public class FlyBossManager : MonoBehaviour
             {
                 case BossState.UpNdownAttack:
                     StartCoroutine(UpNdownAttack());
-                    animator.Play("FlyBossIdle");
+                    animator.Play("FlyBossUpDownAttackBegin");
                     break;
                 case BossState.DashAttack:
                     StartCoroutine(DashAttack());
@@ -60,6 +67,11 @@ public class FlyBossManager : MonoBehaviour
                 case BossState.SwipeAttack:
                     StartCoroutine(SwipeAttack());
                     animator.Play("FlyBossDash");
+                    break;
+
+                case BossState.BabyFlyAttack:
+                    StartCoroutine(BabyFlyAttack());
+                    animator.Play("FlyBossIdle");
                     break;
             }
         }
@@ -104,7 +116,6 @@ public class FlyBossManager : MonoBehaviour
     IEnumerator UpNdownAttack()
     {
         isAttacking = true;
-        InvokeRepeating("SpawnSaliva", 1f, 2f);
         if (groundCheckWall == true)
         {
             transform.localScale = new Vector3(Mathf.Abs(transform.localScale.x), transform.localScale.y, transform.localScale.z);
@@ -147,7 +158,7 @@ public class FlyBossManager : MonoBehaviour
 
             
         }
-        CancelInvoke("SpawnSaliva");
+       
 
 
 
@@ -223,6 +234,29 @@ public class FlyBossManager : MonoBehaviour
 
     }
 
+
+    IEnumerator BabyFlyAttack()
+    {
+        isAttacking = true;
+        yield return new WaitForSeconds(attackDelay/2);
+
+        float timer = 0f;
+
+        while (timer < rainDuration)
+        {
+            // Yavru sinek oluþtur
+            GameObject rainDrop = Instantiate(BabyFly, new Vector3(Random.Range(-50f, 50f), rainHeight,0), Quaternion.identity);
+
+            yield return new WaitForSeconds(rainInterval); // Belirli bir süre beklet
+            timer += rainInterval;
+        }
+
+
+
+        isAttacking = false;
+
+    }
+
     public void SpawnSaliva()
     {
         salivaFire.SpawnSaliva();
@@ -237,17 +271,20 @@ public class FlyBossManager : MonoBehaviour
         UpNdownAttack,
         DashAttack,
         SwipeAttack,
+        BabyFlyAttack,
     }
    
     void ChooseAttack()
-    {
-        switch (Random.Range(0, 3))
+    {   
+        switch (Random.Range(0, 4))
         {
             case 0: ChangeState(BossState.UpNdownAttack); break;
 
             case 1: ChangeState(BossState.DashAttack); break;
 
             case 2: ChangeState(BossState.SwipeAttack); break;
+
+            case 3: ChangeState(BossState.BabyFlyAttack); break;
         }
 
     }
