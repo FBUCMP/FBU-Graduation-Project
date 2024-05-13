@@ -43,7 +43,7 @@ public class JetpackAbility : AbilityManager
             AudioManager.Instance.PlaySFX(soundEffect);
         }
         currentCapacity -= Time.deltaTime;
-        Debug.Log("Current Capacity: " + currentCapacity);
+        //Debug.Log("Current Capacity: " + currentCapacity);
         if (currentCapacity <= 0)
         {
             Debug.Log("Jetpack out of fuel");

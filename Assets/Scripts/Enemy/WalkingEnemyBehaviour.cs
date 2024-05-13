@@ -1,4 +1,5 @@
 using Pathfinding;
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
@@ -13,17 +14,24 @@ public class WalkingEnemyBehaviour : EnemyBehaviour
 
     public Transform sprites;
     List<Vector2> waypoints = new List<Vector2>(); // enemy always follows the first ([0]) waypoint
-    private AIPath aiPath;
+    [SerializeField] private float pathUpdateSeconds = 1f;
     private Seeker seeker;
+    private Path path;
     //float trackingAbility = 1f;
     float memoryTimer;
-   
+    private bool isJumping = false;
+    private bool isGrounded;
+    private bool isInAir = false;
+    private bool jumpEnabled = true;
+    private bool isOnCoolDown = false;
+    private int currentPathpoint = 0;
+    private float nextWaypointDistance = 3f;
 
+    private Vector2 normal;
     private void Awake()
     {
         enemyCollider = GetComponent<Collider2D>();
         rb = GetComponent<Rigidbody2D>();
-        aiPath = GetComponent<AIPath>();
         seeker = GetComponent<Seeker>();
     }
     void Start()
@@ -31,6 +39,7 @@ public class WalkingEnemyBehaviour : EnemyBehaviour
         target = GameObject.FindGameObjectWithTag("Player");
         memoryTimer = memorySpan;
         gravityScale = rb.gravityScale;
+        InvokeRepeating(nameof(UpdatePath), 0f, pathUpdateSeconds);
     }
 
    
@@ -42,6 +51,11 @@ public class WalkingEnemyBehaviour : EnemyBehaviour
         Color wpColor = Color.yellow;
         Gizmos.color = wpColor;
         Gizmos.DrawWireSphere(transform.position + (Vector3)reachOffset, reachDistance);
+
+        Gizmos.color = Color.blue;
+        Gizmos.DrawWireSphere(transform.position - transform.up * 0.3f, 1.25f);
+        Gizmos.color = wpColor;
+
         if (waypoints.Count > 0 && drawDebug)
         {
             for (int i = 0; i < waypoints.Count; i++)
@@ -63,23 +77,33 @@ public class WalkingEnemyBehaviour : EnemyBehaviour
     }
     private void FixedUpdate()
     {
-        
+        CheckWall();
         WatchTarget();
-
         //Debug.DrawLine(rb.position, rb.position + rb.velocity, Color.blue); // draw the velocity vector
         HandleStates();
-        HandleWalls();
-        rb.gravityScale = isTouchingWall() ? 1 : gravityScale; // if enemy is close to a wall, reduce gravity
-        if (aiPath.velocity.x < 0)
+        //HandleWalls();
+        //rb.gravityScale = isTouchingWall() ? 1 : gravityScale; // if enemy is close to a wall, reduce gravity
+        if (isGrounded) 
+        {
+            isInAir = false;
+            rb.gravityScale = 0f;
+        }
+        else
+        {
+            isInAir = true;
+            rb.gravityScale = gravityScale;
+        }
+        
+        if (rb.velocity.x < 0)
         {
             transform.localScale = new Vector3(- Mathf.Abs(transform.localScale.x), transform.localScale.y, transform.localScale.z);
         }
-        else if (aiPath.velocity.x > 0)
+        else if (rb.velocity.x > 0)
         {
             transform.localScale = new Vector3(Mathf.Abs(transform.localScale.x), transform.localScale.y, transform.localScale.z);
         }
         sprites.rotation = Quaternion.identity;
-        Collider2D hit = Physics2D.OverlapCircle(transform.position - transform.up*0.25f , 2f, groundLayer);
+        Collider2D hit = Physics2D.OverlapCircle(transform.position - transform.up*0.3f , 1.25f, groundLayer);
         if (hit != null)
         {
             Vector2 to = hit.ClosestPoint(transform.position);
@@ -91,7 +115,13 @@ public class WalkingEnemyBehaviour : EnemyBehaviour
             {
                 //Debug.Log("resultsarenotnull");
                 Debug.DrawLine(transform.position,  (Vector3)results[0].point, Color.red);
-                sprites.rotation = Quaternion.FromToRotation(Vector3.up, results[0].normal); //Quaternion.Slerp(sprites.rotation, Quaternion.FromToRotation(Vector3.up, results[0].normal), Time.deltaTime * 20f); 
+                normal = results[0].normal;
+                sprites.rotation = Quaternion.FromToRotation(Vector3.up, normal); //Quaternion.Slerp(sprites.rotation, Quaternion.FromToRotation(Vector3.up, results[0].normal), Time.deltaTime * 20f); 
+            }
+            else
+            {
+                normal = Vector2.up;
+
             }
         }
         
@@ -157,7 +187,7 @@ public class WalkingEnemyBehaviour : EnemyBehaviour
             
             for (int i = 0; i < waypoints.Count; i++)
             {
-                if (Vector2.Distance(transform.position, waypoints[i]) < 1.5f) // if enemy close to a waypoint
+                if (Vector2.Distance(transform.position, waypoints[i]) < nextWaypointDistance) // if enemy close to a waypoint
                 {
                     if (i == waypoints.Count-1) // if the last waypoint
                     {
@@ -194,50 +224,65 @@ public class WalkingEnemyBehaviour : EnemyBehaviour
     }
     void FollowPlayer()
     {
+        if (path == null)
+        {
+            //Debug.LogWarning("Path is null");
+            return;
+        }
+        else
+        {
+            //Debug.Log("Path is not null");
+        }
+        if (currentPathpoint >= path.vectorPath.Count)
+        {
+            return;
+        }
         currentVisionDistance = visionDistance*4;
         memoryTimer -= Time.fixedDeltaTime;
-        if (waypoints.Count > 0)
+        if (waypoints.Count > 0) // moves here if there are waypoints
         {
-            if (aiPath == null) // if A star is not used
-            {
             
-                Vector2 desiredVelocity = (waypoints[0] - rb.position).normalized * speed;
+            Vector2 desiredVelocity = ((Vector2)path.vectorPath[currentPathpoint] - rb.position).normalized * speed;
 
-                // Calculate the steering force
-                Vector2 steeringForce = desiredVelocity - rb.velocity;
+            // Calculate the steering force
+            Vector2 steeringForce = desiredVelocity - rb.velocity;
 
-                // Limit the steering force to prevent excessive acceleration
-                steeringForce = Vector2.ClampMagnitude(steeringForce, maxSteeringForce);
-
+            // Limit the steering force to prevent excessive acceleration
+            steeringForce = Vector2.ClampMagnitude(steeringForce, maxSteeringForce);
+            if (!isJumping && isGrounded)
+            {
                 // Apply the steering force
                 rb.velocity += steeringForce * Time.fixedDeltaTime;
 
                 // Limit the velocity to the maximum speed
                 rb.velocity = Vector2.ClampMagnitude(rb.velocity, speed);
-                
-                if (desiredVelocity.normalized.y > 0.8f && isTouchingWall())
-                {
-                    //jump 
-                    rb.AddForce(Vector2.up *5* speed, ForceMode2D.Impulse);
-                }
-                
-                
 
             }
-            else
+            Debug.DrawLine(rb.position, (rb.position + rb.velocity), Color.blue);
+            float distance = Vector2.Distance(rb.position, path.vectorPath[currentPathpoint]);
+            if (distance < nextWaypointDistance)
             {
-                aiPath.destination = waypoints[0];
-                //seeker.CancelCurrentPathRequest();
-                //seeker.StartPath(rb.position, waypoints[0]);
-                // if aipaths closest point's normalized vectors y is higher than 0.8 and isTouchingWall jump
-                
-                if (aiPath.steeringTarget.normalized.y > 0.8f && isTouchingWall())
-                {
-                    //jump 
-                    rb.AddForce(Vector2.up * 5 * speed, ForceMode2D.Impulse);
-                }
-                
+                currentPathpoint++;
             }
+
+            float dotProduct = Vector2.Dot(desiredVelocity.normalized, normal);
+
+            // Calculate the magnitude squared of the normal vector
+            float magnitudeSquared = normal.sqrMagnitude;
+
+            // Calculate the projection of desiredVel onto normal
+            Vector2 projection = (dotProduct / magnitudeSquared) * normal;
+
+            Debug.DrawLine(rb.position, rb.position + (Vector2)projection, Color.green);
+            //Debug.Log("Projection of desiredVel onto normal: " + projection);
+            if (isGrounded && (projection + desiredVelocity.normalized).magnitude/2 > 0.6f) //desiredVelocity.normalized.y > 0.6f) // if the desired velocity is upwards jump
+            {
+                if (!isJumping && !isOnCoolDown)
+                {
+                    StartCoroutine(Jump(desiredVelocity.normalized)); // call jump here
+                }
+            }
+                
 
         }
         else if (enemyState != EnemyState.Idle)
@@ -251,23 +296,14 @@ public class WalkingEnemyBehaviour : EnemyBehaviour
         currentVisionDistance = visionDistance;
         if (Time.time % 2 == 0)
         {
-            Vector3 direction = new Vector3(Random.Range(-1f,1f), Random.Range(-1f,1f), 0);
-            if (!isTouchingWall())
-            {
-                direction.y = 0;
-            }
-            /*
-            if (!aiPath.pathPending && (aiPath.reachedEndOfPath || !aiPath.hasPath))
-            {
-                aiPath.destination = transform.position + direction * 2;
-                aiPath.SearchPath();
-            }
-            */
-            aiPath.destination = transform.position + direction * 2; // might wanna fix this. shoudnt seperate idle move and follow move
-            //seeker.CancelCurrentPathRequest();
-            //seeker.StartPath(rb.position, waypoints[0]);
+            Vector2 direction = new Vector3(Random.Range(-1f,1f), Random.Range(0,2f));
+            
+            //rb.velocity = direction.normalized * speed;
+            
+            
         }
     }
+
     void Attack()
     {
         float attackRadius = 2.5f;
@@ -320,19 +356,64 @@ public class WalkingEnemyBehaviour : EnemyBehaviour
     }
     public override void GetKnockedBack(Vector3 force, float maxMoveTime)
     {
-        aiPath.enabled = false;
-        rb.AddForce(force);
-        Invoke("EnableAIPath", maxMoveTime);
+        rb.AddForce(force, ForceMode2D.Impulse);
+    }
+    
+    private IEnumerator Jump(Vector2 dir)
+    {
+        isJumping = true;
+        Debug.Log("Jumping"+ dir);
+        
+        yield return new();
+        // can play a sound for indication of jump
+        yield return new WaitForSeconds(0.1f); 
+        rb.velocity = new Vector2(dir.x * gravityScale*2.25f,dir.y * gravityScale*2.25f);
+        //rb.AddForce(dir*100, ForceMode2D.Impulse);
+        yield return new();
+        
+        while (true)
+        {
+            yield return new();
+            if (isGrounded)
+            {
+
+                yield return new WaitForSeconds(0.1f);
+                isJumping = false;
+
+                StartCoroutine(JumpCoolDown());
+                break;
+            }
+        }
+    }
+    
+
+    void UpdatePath()
+    {
+        if (seeker.IsDone() && waypoints.Count>0)
+        {
+            seeker.StartPath(rb.position, waypoints[0], OnPathComplete); // calculate the path to waypoints[0] in some cases the position of the player in others first waypoint of the bloodhound smell
+            
+        }
     }
 
-    private void EnableAIPath()
+    private void OnPathComplete(Path p)
     {
-        aiPath.enabled = true;
+        if (!p.error)
+        {
+            path = p; // set the path to the calculated path
+            currentPathpoint = 0;
+        }
     }
-    bool isTouchingWall()
+    IEnumerator JumpCoolDown()
+    {
+        isOnCoolDown = true;
+        yield return new WaitForSeconds(1f);
+        isOnCoolDown = false;
+    }
+    void CheckWall()
     {
         Collider2D hit = Physics2D.OverlapCircle(rb.position + reachOffset, reachDistance, groundLayer);
-        return hit != null;
+        isGrounded = hit != null;
     }
     void ChangeState(EnemyState newState)
     {

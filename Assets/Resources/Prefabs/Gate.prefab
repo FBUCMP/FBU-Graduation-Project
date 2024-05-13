@@ -10,7 +10,7 @@ GameObject:
   m_Component:
   - component: {fileID: 3657363907709850029}
   - component: {fileID: 2860468114759764745}
-  m_Layer: 0
+  m_Layer: 14
   m_Name: Light 2D
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -92,7 +92,7 @@ GameObject:
   m_Component:
   - component: {fileID: 9038885862603912577}
   - component: {fileID: 6883304418834086391}
-  m_Layer: 0
+  m_Layer: 14
   m_Name: GateSprite
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -177,7 +177,7 @@ GameObject:
   - component: {fileID: 67227725436471395}
   - component: {fileID: 5038430623291495194}
   - component: {fileID: 3054174300220599603}
-  m_Layer: 0
+  m_Layer: 14
   m_Name: Gate
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -272,7 +272,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 8484040112657602578}
-  m_Layer: 0
+  m_Layer: 14
   m_Name: Exit
   m_TagString: Untagged
   m_Icon: {fileID: -5442936267250999957, guid: 0000000000000000d000000000000000, type: 0}

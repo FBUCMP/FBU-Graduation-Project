@@ -13,10 +13,12 @@ public class RoomHealth : MonoBehaviour, IDamageable
     private RoomGenerator roomGen;
     private int _health;
     private int _maxHealth = 100;
+
+    private float _explosionEffect = 1f; // 0-1 value
     private float resistance = 20f; // how much ressistant the wall is to the damage
     public int currentHealth { get => _health; private set => _health = value; } // getter and setter
     public int maxHealth { get => _maxHealth; private set => _maxHealth = value; } // getter and setter
-
+    public float explosionEffect { get => _explosionEffect; set => _explosionEffect = value; } // getter and setter
 
     public event IDamageable.TakeDamageEvent OnTakeDamage;
     public event IDamageable.DeathEvent OnDeath;

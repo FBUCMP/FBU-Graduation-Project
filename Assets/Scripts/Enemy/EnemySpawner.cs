@@ -80,8 +80,8 @@ public class EnemySpawner : MonoBehaviour
                 Debug.LogWarning("Max attempts reached, could not create enough colliders!");
                 break;
             }
-            int X = UnityEngine.Random.Range(-49, 49); // random position in the room bounds hand written
-            int Y = UnityEngine.Random.Range(-24, 24);
+            int X = UnityEngine.Random.Range(-40, 40); // random position in the room bounds hand written
+            int Y = UnityEngine.Random.Range(-20, 20);
             HeatMap heatMap = SpawnRoom.GetComponent<HeatMap>(); // heatmaps are used to check if the area is empty
             
             Vector2 pos = new Vector3(X, Y) + SpawnRoom.transform.position;

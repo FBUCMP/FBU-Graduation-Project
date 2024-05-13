@@ -57,21 +57,12 @@ public class PostProcessingController : MonoBehaviour
         if(playerGunSelector != null) playerGunSelector.OnGunSetup -= OnPlayerGunSetup;
         if(playerGunSelector != null) playerGunSelector.ActiveGun.OnShoot -= OnPlayerShoot;
     }
-    void Update()
-    {
-        // get player shoot and got hit with events!
-
-        // normallay vignette color is black and intensity is 0.4
-        // if player gets hit turn vignette color to red and intensity to 0.5
-        // if player shoots turn vignette color to white and intensity to 0.5
-        // maybe lower the intensity of lens distortion when player gets hit from -0.3 to -0.4
-
-    }
 
     void OnPlayerTakeDamage(int damage)
     {
         StopAllCoroutines();
-        StartCoroutine(OnPlayerTakeDamageRoutine(this.damageDuration));
+        
+        StartCoroutine(OnPlayerTakeDamageRoutine(this.damageDuration, Mathf.Lerp(0, vignetteIntensityChangeOnDamage, damage / 100f)));
     }
     void OnPlayerShoot(float power) // power is not used maybe it will be used in the future
     {
@@ -82,11 +73,11 @@ public class PostProcessingController : MonoBehaviour
     {
         gun.OnShoot += OnPlayerShoot;
     }
-    IEnumerator OnPlayerTakeDamageRoutine(float duration)
+    IEnumerator OnPlayerTakeDamageRoutine(float duration, float intensity)
     {
         // might make it smoother with lerp
         vignette.color.value = vignetteColorChangeOnDamage;
-        vignette.intensity.value = initialVignetteIntensity + vignetteIntensityChangeOnDamage;
+        vignette.intensity.value = initialVignetteIntensity + intensity;
         lensDistortion.intensity.value = initialLensDistortionIntensity - lensDistortionIntensityChange;
         yield return new WaitForSeconds(duration);
 

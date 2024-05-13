@@ -10,11 +10,12 @@ public class CameraFollow : MonoBehaviour
     public Vector3 cameraOffset = new Vector3(0, 0, -10f);
     public Vector3 targetedPosition;
     private Vector3 velocity = Vector3.zero;
-
+    private Camera thisCam;
     public float smoothTime = 0.25f;
     [HideInInspector] public float maxX, maxY, minX, minY;
     private void Start()
     {
+        thisCam = GetComponent<Camera>();
         // baþlangýçta target objecti tag üzerinden player seçmek için 
         // cameranýn takip edeceði obje haliyle player
         if (GameObject.FindGameObjectWithTag("Player"))
@@ -47,7 +48,8 @@ public class CameraFollow : MonoBehaviour
         }
         if (target)
         {
-            targetedPosition = target.position + cameraOffset; // kameranýn hedef pozisyonunu hesaplar
+            Vector3 screenVec = thisCam.ScreenToWorldPoint(Input.mousePosition);
+            targetedPosition = (screenVec - target.position)/4f + target.position  + cameraOffset; // kameranýn hedef pozisyonunu hesaplar
             if (minX != 0 && minY != 0 && maxX != 0 && maxY != 0)
             {
                 targetedPosition.x = Mathf.Clamp(targetedPosition.x, minX, maxX); // x ekseninde kamera sýnýrlarýný belirler
@@ -65,4 +67,24 @@ public class CameraFollow : MonoBehaviour
 
         }
     }
+
+    public void CameraShake(float duration, float magnitude, Vector2 dir)
+    {
+        StopAllCoroutines();
+        StartCoroutine(Shake(duration, magnitude, dir));
+
+    }
+
+    IEnumerator Shake(float duration, float magnitude, Vector2 dir)
+    {
+        float elapsed = 0.0f;
+        while (elapsed < duration)
+        {
+            Vector2 force = dir * magnitude;
+            transform.position += new Vector3(force.x, + force.y);
+            elapsed += Time.deltaTime;
+            yield return null;
+        }
+    }
+    
 }
