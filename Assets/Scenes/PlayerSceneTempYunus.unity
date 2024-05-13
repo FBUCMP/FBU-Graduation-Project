@@ -564,12 +564,24 @@ PrefabInstance:
       value: -1.34
       objectReference: {fileID: 0}
     - target: {fileID: 3563458374894376890, guid: 272b3a5c262b48e468a8ef5916cf2432, type: 3}
+      propertyPath: drawDebug
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 3563458374894376890, guid: 272b3a5c262b48e468a8ef5916cf2432, type: 3}
       propertyPath: reachDistance
       value: 1.45
       objectReference: {fileID: 0}
     - target: {fileID: 3563458374894376890, guid: 272b3a5c262b48e468a8ef5916cf2432, type: 3}
       propertyPath: reachOffset.y
       value: 0.25
+      objectReference: {fileID: 0}
+    - target: {fileID: 3563458374894376890, guid: 272b3a5c262b48e468a8ef5916cf2432, type: 3}
+      propertyPath: maxSteeringForce
+      value: 12
+      objectReference: {fileID: 0}
+    - target: {fileID: 3563458374894376890, guid: 272b3a5c262b48e468a8ef5916cf2432, type: 3}
+      propertyPath: pathUpdateSeconds
+      value: 0.5
       objectReference: {fileID: 0}
     - target: {fileID: 4193769814778030303, guid: 272b3a5c262b48e468a8ef5916cf2432, type: 3}
       propertyPath: m_LocalPosition.x
@@ -581,7 +593,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 4672967224491039416, guid: 272b3a5c262b48e468a8ef5916cf2432, type: 3}
       propertyPath: m_GravityScale
-      value: 5
+      value: 10
       objectReference: {fileID: 0}
     - target: {fileID: 5279836079794563868, guid: 272b3a5c262b48e468a8ef5916cf2432, type: 3}
       propertyPath: m_LocalPosition.x
@@ -598,6 +610,14 @@ PrefabInstance:
     - target: {fileID: 5700602195844987640, guid: 272b3a5c262b48e468a8ef5916cf2432, type: 3}
       propertyPath: m_LocalPosition.y
       value: -0.94
+      objectReference: {fileID: 0}
+    - target: {fileID: 5953678019958640425, guid: 272b3a5c262b48e468a8ef5916cf2432, type: 3}
+      propertyPath: m_Enabled
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 7331354514603683936, guid: 272b3a5c262b48e468a8ef5916cf2432, type: 3}
+      propertyPath: m_Enabled
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 7788685956179826834, guid: 272b3a5c262b48e468a8ef5916cf2432, type: 3}
       propertyPath: m_Name

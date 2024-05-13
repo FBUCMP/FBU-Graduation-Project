@@ -20,6 +20,10 @@ public class CameraLimit : MonoBehaviour
         cameraFollow = GetComponent<CameraFollow>();
        
     }
+    private void OnDestroy()
+    {
+        GateManager.OnTeleport -= OnTeleport;
+    }
     void Start()
     {
 

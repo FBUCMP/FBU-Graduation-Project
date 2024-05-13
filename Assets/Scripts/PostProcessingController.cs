@@ -57,16 +57,6 @@ public class PostProcessingController : MonoBehaviour
         if(playerGunSelector != null) playerGunSelector.OnGunSetup -= OnPlayerGunSetup;
         if(playerGunSelector != null) playerGunSelector.ActiveGun.OnShoot -= OnPlayerShoot;
     }
-    void Update()
-    {
-        // get player shoot and got hit with events!
-
-        // normallay vignette color is black and intensity is 0.4
-        // if player gets hit turn vignette color to red and intensity to 0.5
-        // if player shoots turn vignette color to white and intensity to 0.5
-        // maybe lower the intensity of lens distortion when player gets hit from -0.3 to -0.4
-
-    }
 
     void OnPlayerTakeDamage(int damage)
     {

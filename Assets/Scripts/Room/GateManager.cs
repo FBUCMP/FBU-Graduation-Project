@@ -20,6 +20,10 @@ public class GateManager : MonoBehaviour
     {
         Gate.OnGateCollide += OnGateCollide;
     }
+    private void OnDestroy()
+    {
+        Gate.OnGateCollide -= OnGateCollide;
+    }
     void Start()
     {
         audioSource = gameObject.AddComponent<AudioSource>();
