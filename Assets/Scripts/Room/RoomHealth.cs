@@ -7,11 +7,13 @@ using Pathfinding;
 
 public class RoomHealth : MonoBehaviour, IDamageable
 {
+    // attached to the room object to make it breakable
+
     private MeshGenerator meshGen;
     private RoomGenerator roomGen;
     private int _health;
     private int _maxHealth = 100;
-    private float resistance = 20f;
+    private float resistance = 20f; // how much ressistant the wall is to the damage
     public int currentHealth { get => _health; private set => _health = value; } // getter and setter
     public int maxHealth { get => _maxHealth; private set => _maxHealth = value; } // getter and setter
 
@@ -56,13 +58,13 @@ public class RoomHealth : MonoBehaviour, IDamageable
 
     }
 
-    void ApplyDamage(float damage, Vector2Int index)
+    void ApplyDamage(float damage, Vector2Int index) // actually apply the damage to the wall
     {
         if (IsInBounds(index.x, index.y))
         {
             float damageApplied = Mathf.Min(damage, meshGen.mapWithValues[index.x, index.y]);
 
-            meshGen.mapWithValues[index.x, index.y] -= damageApplied;
+            meshGen.mapWithValues[index.x, index.y] -= damageApplied; // damage is applied here
             
 
             // rest is mendatory for the interface
@@ -75,10 +77,6 @@ public class RoomHealth : MonoBehaviour, IDamageable
             {
                 OnDeath?.Invoke(transform.position);
             }
-        }
-        else
-        {
-            //Debug.Log($"Wall you try to break ({index.x}, {index.y}) is out of bounds");
         }
     }
 
@@ -96,8 +94,7 @@ public class RoomHealth : MonoBehaviour, IDamageable
         }
     }
 
-    // Update is called once per frame
-    bool IsInBounds(int x, int y) // fix this
+    bool IsInBounds(int x, int y)
     {
         return x > roomGen.borderSize && x < (meshGen.mapWithValues.GetLength(0) - roomGen.borderSize) 
             && y > roomGen.borderSize && y < (meshGen.mapWithValues.GetLength(1) - roomGen.borderSize);

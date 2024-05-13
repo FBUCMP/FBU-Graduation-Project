@@ -17,12 +17,7 @@ public class Gate : MonoBehaviour
     public static event GateAction OnGateCollide;
     void Start()
     {
-        /*
-        if (!exit)
-        {
-            exit = GetComponentInChildren<Transform>();
-        }
-        */
+        
         boxCollider = GetComponent<BoxCollider2D>();
         spriteRenderer = GetComponentInChildren<SpriteRenderer>();
         if (isClosed)
@@ -39,11 +34,9 @@ public class Gate : MonoBehaviour
     {
         if (other.gameObject.tag == "Player")
         {
-            // if player colliders from one side , teleport to the other side of the gate
             if (!isClosed)
             {
-                //other.transform.position = exit.transform.position;
-                OnGateCollide?.Invoke(direction);
+                OnGateCollide?.Invoke(direction); // if player collides with gate invoke the event GateManager will handle the rest
             }
         }
     }

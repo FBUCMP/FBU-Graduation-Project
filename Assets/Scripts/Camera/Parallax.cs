@@ -14,7 +14,7 @@ public class Parallax : MonoBehaviour
 
     private List<GameObject> spriteHolders = new List<GameObject>();
     private Camera cam;
-    private List<int> fxLayers = new List<int>{ 1,3,6 };
+    private List<int> fxLayers = new List<int>{ 1,3,6 }; // fx layers material is unlit to make it always visible
     void Start()
     {
         cam = Camera.main;
@@ -29,13 +29,15 @@ public class Parallax : MonoBehaviour
     }
     void Execute(Vector3 roomCenter)
     {
-        //Debug.Log("Parallax Executed: "+ roomCenter);
-        spawnPosition = new Vector2Int((int)roomCenter.x, (int)roomCenter.y);
+        // when room is changed, gets executed
+        spawnPosition = new Vector2Int((int)roomCenter.x, (int)roomCenter.y); // update spawn position
         foreach(Transform child in transform)
         {
             Destroy(child.gameObject);
         }
         spriteHolders.Clear();
+
+        // set the background sprites
         for (int i = 0; i < sprites.Count; i++)
         {
             GameObject spriteHolder = new GameObject("SpriteHolder"); // create another object sprite holder, for flat color
@@ -82,6 +84,8 @@ public class Parallax : MonoBehaviour
     {
         
         // move the background with the camera this script is attached to a child of main camera
+        // checks the distance between camera and the spawn position and moves the background accordingly to the layer order
+        // when room is changed, spawn position is updated to the new room center
         for(int i = 0; i < spriteHolders.Count; i++)
         {
             Vector2 camDist = (Vector2)cam.transform.position - spawnPosition;

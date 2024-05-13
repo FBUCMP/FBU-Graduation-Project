@@ -4,6 +4,8 @@ using UnityEngine;
 
 public class HeatMap : MonoBehaviour
 {
+    // Heatmap is a 2D array of floats, where 1 is occupied place by another object such as wall and enemies and 0 is an empty space
+
     [SerializeField] private bool debugMode;
     public float[,] heatMap; // every index is 0 or 1 
     public float[,] heatMapSmooth;
@@ -14,11 +16,6 @@ public class HeatMap : MonoBehaviour
         roomGenerator = GetComponent<RoomGenerator>();
     }
     
-    // Update is called once per frame
-    void Update()
-    {
-        
-    }
 
     private void OnDrawGizmos()
     {
@@ -103,7 +100,7 @@ public class HeatMap : MonoBehaviour
     }
 
 
-    public void UpdateHeatMap(Bounds bound)
+    public void UpdateHeatMap(Bounds bound) // function to update the heatmap with new objects added to the room
     {
         foreach (Vector3 pos in GetPositionsInBounds(bound))
         {
