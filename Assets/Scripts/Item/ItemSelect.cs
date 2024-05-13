@@ -46,11 +46,6 @@ public class ItemSelect : MonoBehaviour
             float randomRarity = Random.Range(0f, 1f);
             Debug.Log(randomRarity);
 
-
-
-
-
-
             Item item = allItems[randomIndex];
             if (selectedItems.Contains(item)) // if item is not already in selecteditems
             {
@@ -63,7 +58,7 @@ public class ItemSelect : MonoBehaviour
             }
             if (randomRarity < 0.4286)
             {
-                item.rarity = 0;
+                item.rarity = 0; 
             }
             else if(randomRarity < 0.7143)
             {
@@ -71,7 +66,7 @@ public class ItemSelect : MonoBehaviour
             }
             else if (randomRarity < 0.8929)
             {
-                item.rarity = 2;
+                item.rarity = 2;   
             }
             else if (randomRarity < 0.9643)
             {
@@ -81,6 +76,7 @@ public class ItemSelect : MonoBehaviour
             {
                 item.rarity = 4;
             }
+            //item.DescriptionUpdate();
             selectedItems.Add(item);
         }
         return selectedItems;

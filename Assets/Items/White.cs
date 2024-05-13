@@ -6,7 +6,10 @@ using UnityEngine;
 public class White : Item
 {
     // 0,1 0,6 -> 0 -> desc bu item 5 güç vferir -> bu item 10 güç verir 
-
+    public override void DescriptionUpdate()
+    {
+        itemDescription = "Bu item sizlere " + rarityEffects[rarity] + " kadar güç vermektedir!";
+    }
     public override void Activate(GameObject parent)
     {
         
