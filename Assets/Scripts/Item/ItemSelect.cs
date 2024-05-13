@@ -33,7 +33,7 @@ public class ItemSelect : MonoBehaviour
         
         
         // DEBUG TEST 
-        //ActivatePopup(0);
+        ActivatePopup(0);
     }
     public List<Item> SelectRandomItems(int n) // select n different random items from allItems
     {
@@ -42,12 +42,12 @@ public class ItemSelect : MonoBehaviour
         {
             int randomIndex = Random.Range(0, allItems.Count);
             //Debug.Log("Random Index: " + randomIndex);
+            
+            float randomRarity = Random.Range(0f, 1f);
+            Debug.Log(randomRarity);
+
             Item item = allItems[randomIndex];
-            if (!selectedItems.Contains(item)) // if item is not already in selecteditems
-            {
-                selectedItems.Add(item);
-            }
-            else
+            if (selectedItems.Contains(item)) // if item is not already in selecteditems
             {
                 while (selectedItems.Contains(item))
                 {
@@ -55,9 +55,29 @@ public class ItemSelect : MonoBehaviour
                     randomIndex = Random.Range(0, allItems.Count);
                     item = allItems[randomIndex];
                 }
-                selectedItems.Add(item);
             }
-
+            if (randomRarity < 0.4286)
+            {
+                item.rarity = 0; 
+            }
+            else if(randomRarity < 0.7143)
+            {
+                item.rarity = 1;
+            }
+            else if (randomRarity < 0.8929)
+            {
+                item.rarity = 2;   
+            }
+            else if (randomRarity < 0.9643)
+            {
+                item.rarity = 3;
+            }
+            else
+            {
+                item.rarity = 4;
+            }
+            //item.DescriptionUpdate();
+            selectedItems.Add(item);
         }
         return selectedItems;
     }
