@@ -12,7 +12,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 71477f1b87f382648a989e505118bcd2, type: 3}
   m_Name: ShotgunShootConfig
   m_EditorClassIdentifier: 
-  isHitScan: 0
+  isHitScan: 1
   bulletPrefab: {fileID: 7643169906871904929, guid: d5e1edd8562a0b04a8d8b875a75270aa, type: 3}
   bulletSpawnForce: 2500
   hitMask:

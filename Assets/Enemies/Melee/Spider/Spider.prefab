@@ -7173,7 +7173,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _health: 0
-  _maxHealth: 300
+  _maxHealth: 100
   _explosionEffect: 1
 --- !u!114 &7490843405471248706
 MonoBehaviour:

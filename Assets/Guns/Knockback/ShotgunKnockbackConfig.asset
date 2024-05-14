@@ -12,7 +12,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e95dee7a003df7347af8814138b89182, type: 3}
   m_Name: ShotgunKnockbackConfig
   m_EditorClassIdentifier: 
-  knockbackStrength: 5000
+  knockbackStrength: 50
   distanceFalloff:
     m_Mode: 1
     m_CurveMultiplier: 1
@@ -48,4 +48,4 @@ MonoBehaviour:
       m_RotationOrder: 4
     m_ConstantMin: 0
     m_ConstantMax: 5
-  maxKnockbackTime: 0.3
+  maxKnockbackTime: 0.2
