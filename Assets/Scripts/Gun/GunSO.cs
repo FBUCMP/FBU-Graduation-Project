@@ -218,7 +218,8 @@ public class GunSO : ScriptableObject, System.ICloneable
             modifiedGunPivot = new Vector3(gunPivot.position.x + distX * Mathf.Abs(sinAng) * Mathf.Sign(direction.x), gunPivot.position.y + distY * sinAng, gunPivot.position.z);
         }
         Debug.DrawLine(gunPivot.position, modifiedGunPivot, Color.yellow);
-        model.transform.position = modifiedGunPivot + Quaternion.Euler(0f, 0f, angle) * new Vector3(spawnPoint.x, 0f, 0f); 
+        model.transform.position = modifiedGunPivot + Quaternion.Euler(0f, 0f, angle) * new Vector3(spawnPoint.x, 0, 0f); 
+        model.transform.position = new Vector3(model.transform.position.x, model.transform.position.y + spawnPoint.y, spawnPoint.z);
         model.transform.rotation = Quaternion.Euler(spawnRotation.x, spawnRotation.y, spawnRotation.z + angle);
         //model.transform.rotation = Quaternion.AngleAxis(angle, Vector3.forward);
         

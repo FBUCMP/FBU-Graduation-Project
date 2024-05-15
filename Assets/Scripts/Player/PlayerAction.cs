@@ -43,6 +43,10 @@ public class PlayerAction : MonoBehaviour
         {
             GunSelector.PickupGun(GunSelector.Guns[3]);
         }
+        if (Input.GetKeyDown(KeyCode.Alpha5))
+        {
+            GunSelector.PickupGun(GunSelector.Guns[4]);
+        }
     }
     private void Start()
     {

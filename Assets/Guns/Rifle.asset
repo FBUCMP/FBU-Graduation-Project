@@ -16,7 +16,7 @@ MonoBehaviour:
   type: 1
   Name: Rifle
   modelPrefab: {fileID: 9057755086822400041, guid: 856c7357687edf24d86009f8a2ea5f7e, type: 3}
-  spawnPoint: {x: 1, y: 0.25, z: 0}
+  spawnPoint: {x: 1, y: 0, z: 0}
   spawnRotation: {x: 0, y: 0, z: 0}
   damageConfig: {fileID: 11400000, guid: 862c1f20b5fa01c479bcf8ceecdc5932, type: 2}
   ammoConfig: {fileID: 11400000, guid: e49c7875186948848b78011ef20eddd6, type: 2}

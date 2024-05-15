@@ -342,14 +342,13 @@ public class PlayerMovementNew : MonoBehaviour, IKnockbackable
 
     public void GetKnockedBack(Vector3 force, float maxMoveTime)
     {
-        int maxX = 900;
-        int maxY = 1500;
+        int maxX = 1000;
+        int maxY = 2000;
         force.x = Mathf.Clamp(force.x, -maxX, maxX);
         force.y = Mathf.Clamp(force.y, -maxY, maxY);
         StartKnockback();
         Invoke(nameof(StopKnockback), maxMoveTime*1.2f);
         rb.AddForce(force, ForceMode2D.Impulse);
-        Debug.Log(force);
     }
     private void StartKnockback()
     {
