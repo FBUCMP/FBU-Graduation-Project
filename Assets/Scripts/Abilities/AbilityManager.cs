@@ -13,4 +13,9 @@ public class AbilityManager : ScriptableObject
     public virtual void Activate(GameObject parent) {
     }
     public virtual void BeginCooldown(GameObject parent) { }
+
+    private void OnDisable()
+    {
+        taken = false;
+    }
 }

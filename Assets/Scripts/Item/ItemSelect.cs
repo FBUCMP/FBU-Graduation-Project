@@ -33,7 +33,7 @@ public class ItemSelect : MonoBehaviour
         
         
         // DEBUG TEST 
-        ActivatePopup(0);
+        //ActivatePopup(0);
     }
     public List<Item> SelectRandomItems(int n) // select n different random items from allItems
     {

@@ -1690,6 +1690,7 @@ GameObject:
   - component: {fileID: 7494285914062552199}
   - component: {fileID: 7990839356388715012}
   - component: {fileID: 8145619094936080059}
+  - component: {fileID: 8488764949634539480}
   m_Layer: 9
   m_Name: Player 3
   m_TagString: Player
@@ -1735,10 +1736,10 @@ Rigidbody2D:
   m_UseFullKinematicContacts: 0
   m_UseAutoMass: 0
   m_Mass: 50
-  m_LinearDrag: 0
+  m_LinearDrag: 0.1
   m_AngularDrag: 0.05
   m_GravityScale: 4
-  m_Material: {fileID: 0}
+  m_Material: {fileID: 6200000, guid: 3eb96229487a77740838f834d6de62e9, type: 2}
   m_IncludeLayers:
     serializedVersion: 2
     m_Bits: 0
@@ -1965,6 +1966,7 @@ MonoBehaviour:
   isDead: 0
   _health: 0
   _maxHealth: 100
+  _explosionEffect: 0.01
   healthBar: {fileID: 7974941647779434527}
 --- !u!114 &1258144121625584464
 MonoBehaviour:
@@ -2072,6 +2074,19 @@ MonoBehaviour:
   abilities:
   - {fileID: 11400000, guid: 76705746fa9d8954d99e46d8a0367230, type: 2}
   - {fileID: 11400000, guid: 6139bc336c2ac64419cfa44ac7e46400, type: 2}
+--- !u!114 &8488764949634539480
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7140912594573197821}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: a56052e0729db2741a57ca06b6a7e576, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  items: []
 --- !u!1 &7279611073937030427
 GameObject:
   m_ObjectHideFlags: 0
@@ -2848,7 +2863,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 4585924729715378150, guid: 01486e692bf394542a14b440a2afb7d8, type: 3}
       propertyPath: m_Name
-      value: HealthBarCanvas
+      value: PlayerCanvas
       objectReference: {fileID: 0}
     - target: {fileID: 7731267902454371260, guid: 01486e692bf394542a14b440a2afb7d8, type: 3}
       propertyPath: m_AnchorMax.x
