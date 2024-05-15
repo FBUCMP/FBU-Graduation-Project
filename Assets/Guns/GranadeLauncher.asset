@@ -16,7 +16,7 @@ MonoBehaviour:
   type: 2
   Name: GranadeLauncher
   modelPrefab: {fileID: 9057755086822400041, guid: c2ef640714987104d9733833c3070b06, type: 3}
-  spawnPoint: {x: 1, y: 0.25, z: 0}
+  spawnPoint: {x: 1, y: -0.25, z: 0}
   spawnRotation: {x: 0, y: 0, z: 0}
   damageConfig: {fileID: 11400000, guid: c1c260620612e844db00f8440e901866, type: 2}
   ammoConfig: {fileID: 11400000, guid: 4393e5a08ae29e34f8d012dc9c9ed8e9, type: 2}

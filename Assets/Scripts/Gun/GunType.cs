@@ -3,5 +3,6 @@ public enum GunType
     Pistol,
     Rifle,
     GranadeLauncher,
-    Shotgun
+    Shotgun,
+    Machinegun
 }
