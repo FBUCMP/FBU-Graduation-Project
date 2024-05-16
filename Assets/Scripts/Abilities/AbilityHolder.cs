@@ -30,6 +30,7 @@ public class AbilityHolder : MonoBehaviour
                 return;
             }
         }
+        newAbility.taken = true;
         abilities.Add(newAbility);
         cooldownTimes.Add(0f);
         activeTimes.Add(0f);
@@ -53,30 +54,56 @@ public class AbilityHolder : MonoBehaviour
 
     private void FixedUpdate()
     {
+        
+
         for (int i = 0; i < abilities.Count; i++)
         {
             switch (states[i])
             {
+
+                // ---------------------------------- READY ----------------------------------
                 case AbilityState.ready:
-                    if (Input.GetKey(abilities[i].key))
+                    
+                    if (Input.GetKey(abilities[i].key)) // key pressed
                     {
+                        
                         abilities[i].Activate(gameObject);
                         states[i] = AbilityState.active;
                         activeTimes[i] = abilities[i].activeTime;
                     }
+
+                    else // key NOT pressed
+                    {
+                        if (abilities[i].GetType() == typeof(JetpackAbility)) // if type of jetpack
+                        {
+                            JetpackAbility jetpack = (JetpackAbility)abilities[i];
+                            RechargeJetpack(jetpack, i); // this is a special case for jetpacks to recharge
+                        }
+                    }
                     break;
+
+                // ---------------------------------- ACTIVE ----------------------------------
                 case AbilityState.active:
                     if (activeTimes[i] > 0)
                     {
                         activeTimes[i] -= Time.deltaTime;
                     }
-                    else
+                    else // when active time count is over
                     {
-                        abilities[i].BeginCooldown(gameObject);
-                        states[i] = AbilityState.cooldown;
-                        cooldownTimes[i] = abilities[i].cooldownTime;
+                        if (abilities[i].cooldownTime > 0) // if ability has cooldown
+                        {
+                            abilities[i].BeginCooldown(gameObject);
+                            states[i] = AbilityState.cooldown;
+                            cooldownTimes[i] = abilities[i].cooldownTime;
+                        }
+                        else // if ability has NO cooldown
+                        {
+                            states[i] = AbilityState.ready;
+                        }
                     }
                     break;
+                
+                // -------------------------------- COOLDOWN ----------------------------------
                 case AbilityState.cooldown:
                     if (cooldownTimes[i] > 0)
                     {
@@ -89,5 +116,16 @@ public class AbilityHolder : MonoBehaviour
                     break;
             }
         }
+    }
+
+    void RechargeJetpack(JetpackAbility jetpack, int index) // regen capacity when in cooldown
+    {
+        Debug.Log(jetpack.currentCapacity);
+        if (jetpack.cooldownTime <= 0 && jetpack.currentCapacity < jetpack.capacity)
+        {
+            jetpack.currentCapacity += Time.deltaTime* jetpack.rechargeRate;
+            jetpack.currentCapacity = Mathf.Min(jetpack.currentCapacity, jetpack.capacity); // clamp the max amount
+        }
+            
     }
 }
