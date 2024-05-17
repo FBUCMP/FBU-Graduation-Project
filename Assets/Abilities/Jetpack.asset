@@ -12,7 +12,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 5a06ffd1a9f637849a5b58df86b0109b, type: 3}
   m_Name: Jetpack
   m_EditorClassIdentifier: 
-  key: 120
+  key: 32
   name: Jetpack
   cooldownTime: 0
   activeTime: 0

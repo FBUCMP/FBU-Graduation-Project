@@ -45,7 +45,6 @@ public class HealthBar : MonoBehaviour
 
     private void Start()
     {
-        backgroundColor = new Color(0, 255, 255); // cyan
         background.color = backgroundColor;
 
         // gerekli componentler yoksa diye kontrol
