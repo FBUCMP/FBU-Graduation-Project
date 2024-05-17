@@ -5,6 +5,8 @@ public interface IDamageable
     public int currentHealth { get; }
     public int maxHealth { get; }
 
+    public float explosionEffect { get; } // 0-1 value
+
     public delegate void TakeDamageEvent(int damage);
     public event TakeDamageEvent OnTakeDamage;
 

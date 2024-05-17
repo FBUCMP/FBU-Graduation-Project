@@ -10,8 +10,18 @@ public class Item : ScriptableObject
     public Sprite itemSprite;
     public int itemID;
     public int itemValue;
+    [HideInInspector] public int rarity;
     public bool isActivated;
+    public List<int> rarityEffects;
 
+    public virtual void DescriptionUpdate()
+    {
+
+    }
+
+    // item.itemDescription = "bu item kullanýcý mavi özle güçlendirir. Sahip olduðun silahlar " + rarirtyEffects[rarity] + " artar";
+    // activate player.speed = speedUp(rarityEffect[rarity])
+    
     public virtual void Activate(GameObject parent) // called just after added to player
     {
         if (isActivated)

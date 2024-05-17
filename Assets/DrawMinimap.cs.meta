@@ -1,0 +1,15 @@
+fileFormatVersion: 2
+<<<<<<<< HEAD:Assets/DrawMinimap.cs.meta
+guid: 5c34e053663453945ba42f63c6c8408e
+========
+guid: 97951b4210557714b8a26f9cd3380105
+>>>>>>>> main:Assets/Residue.cs.meta
+MonoImporter:
+  externalObjects: {}
+  serializedVersion: 2
+  defaultReferences: []
+  executionOrder: 0
+  icon: {instanceID: 0}
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 

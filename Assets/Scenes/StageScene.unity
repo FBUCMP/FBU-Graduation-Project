@@ -131,6 +131,10 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 462687891052931097, guid: 151f1ff787f4e514988de879e942f7f3, type: 3}
+      propertyPath: upgradeScreenUI
+      value: 
+      objectReference: {fileID: 301450349}
     - target: {fileID: 1240708935970778905, guid: 151f1ff787f4e514988de879e942f7f3, type: 3}
       propertyPath: m_AnchorMax.y
       value: 1
@@ -248,6 +252,11 @@ PrefabInstance:
     m_AddedGameObjects: []
     m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 151f1ff787f4e514988de879e942f7f3, type: 3}
+--- !u!1 &301450349 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 4920751448299131339, guid: 151f1ff787f4e514988de879e942f7f3, type: 3}
+  m_PrefabInstance: {fileID: 301450348}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1 &1309388787
 GameObject:
   m_ObjectHideFlags: 0
@@ -636,6 +645,63 @@ PrefabInstance:
     m_AddedGameObjects: []
     m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 0b81370035a843041aee42e1a39c1b89, type: 3}
+--- !u!1001 &2765079044785991302
+PrefabInstance:
+  m_ObjectHideFlags: 0
+  serializedVersion: 2
+  m_Modification:
+    serializedVersion: 3
+    m_TransformParent: {fileID: 0}
+    m_Modifications:
+    - target: {fileID: 6261027010180386098, guid: 390c8e7c28b136448a1f8e94e9164cfe, type: 3}
+      propertyPath: m_Name
+      value: MinimapCamera
+      objectReference: {fileID: 0}
+    - target: {fileID: 7831162935950085759, guid: 390c8e7c28b136448a1f8e94e9164cfe, type: 3}
+      propertyPath: m_LocalPosition.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 7831162935950085759, guid: 390c8e7c28b136448a1f8e94e9164cfe, type: 3}
+      propertyPath: m_LocalPosition.y
+      value: 2000
+      objectReference: {fileID: 0}
+    - target: {fileID: 7831162935950085759, guid: 390c8e7c28b136448a1f8e94e9164cfe, type: 3}
+      propertyPath: m_LocalPosition.z
+      value: -10
+      objectReference: {fileID: 0}
+    - target: {fileID: 7831162935950085759, guid: 390c8e7c28b136448a1f8e94e9164cfe, type: 3}
+      propertyPath: m_LocalRotation.w
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 7831162935950085759, guid: 390c8e7c28b136448a1f8e94e9164cfe, type: 3}
+      propertyPath: m_LocalRotation.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 7831162935950085759, guid: 390c8e7c28b136448a1f8e94e9164cfe, type: 3}
+      propertyPath: m_LocalRotation.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 7831162935950085759, guid: 390c8e7c28b136448a1f8e94e9164cfe, type: 3}
+      propertyPath: m_LocalRotation.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 7831162935950085759, guid: 390c8e7c28b136448a1f8e94e9164cfe, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 7831162935950085759, guid: 390c8e7c28b136448a1f8e94e9164cfe, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 7831162935950085759, guid: 390c8e7c28b136448a1f8e94e9164cfe, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.z
+      value: 0
+      objectReference: {fileID: 0}
+    m_RemovedComponents: []
+    m_RemovedGameObjects: []
+    m_AddedGameObjects: []
+    m_AddedComponents: []
+  m_SourcePrefab: {fileID: 100100000, guid: 390c8e7c28b136448a1f8e94e9164cfe, type: 3}
 --- !u!1001 &3595986313865603734
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -707,10 +773,6 @@ PrefabInstance:
     - target: {fileID: 8097487949194869911, guid: 25c35d67dfdfbca46a15cba806755145, type: 3}
       propertyPath: vignetteIntensityChange
       value: 0.2
-      objectReference: {fileID: 0}
-    - target: {fileID: 8097487949194869911, guid: 25c35d67dfdfbca46a15cba806755145, type: 3}
-      propertyPath: vignetteColorChangeOnDamage.r
-      value: 0.5
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
@@ -786,3 +848,4 @@ SceneRoots:
   - {fileID: 549811296926238176}
   - {fileID: 1535272251}
   - {fileID: 1427980345}
+  - {fileID: 2765079044785991302}

@@ -36,7 +36,7 @@ public class StageGenerator : MonoBehaviour
     private GameObject playerPrefab;
     private GameObject player;
 
-    private int[,] roomData; /* orn:
+    public int[,] roomData; /* orn:
                               * 0 0 1 0 2 0 0 0 0 0
                               * 0 0 1 1 1 1 0 0 0 0
                               * 0 0 0 1 0 1 1 1 0 0
@@ -162,7 +162,7 @@ public class StageGenerator : MonoBehaviour
             Destroy(GameObject.FindGameObjectWithTag("Player"));
         }
         player = Instantiate(playerPrefab, new Vector3((roomsList[roomIndex].x * roomWidth), (roomsList[roomIndex].y * roomHeight), 0), Quaternion.identity); // prefabdan player instance olustur
-        roomObjects[roomIndex].GetComponent<HeatMap>().UpdateHeatMap(new Bounds(player.transform.position,new Vector3(3,3)));
+        roomObjects[roomIndex].GetComponent<HeatMap>().UpdateHeatMap(new Bounds(player.transform.position,new Vector3(6,6)));
         Debug.Log("Player Placed at: " + new Vector3(roomsList[roomIndex].x * roomWidth, roomsList[roomIndex].y * roomHeight, 0));
 
     }

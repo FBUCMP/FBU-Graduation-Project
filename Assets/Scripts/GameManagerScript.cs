@@ -6,6 +6,7 @@ public class GameManagerScript : MonoBehaviour
 {
     public GameObject gameOverUI;
     public GameObject pauseMenuUI;
+    public GameObject upgradeScreenUI;
     //public PauseMenu pauseMenu;
 
 
