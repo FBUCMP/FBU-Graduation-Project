@@ -46,6 +46,7 @@ public class AbilityHolder : MonoBehaviour
 
         foreach (var ability in abilities)
         {
+            ability.taken = true;
             cooldownTimes.Add(0f);
             activeTimes.Add(0f);
             states.Add(AbilityState.ready);
@@ -120,7 +121,7 @@ public class AbilityHolder : MonoBehaviour
 
     void RechargeJetpack(JetpackAbility jetpack, int index) // regen capacity when in cooldown
     {
-        Debug.Log(jetpack.currentCapacity);
+        //Debug.Log(jetpack.currentCapacity);
         if (jetpack.cooldownTime <= 0 && jetpack.currentCapacity < jetpack.capacity)
         {
             jetpack.currentCapacity += Time.deltaTime* jetpack.rechargeRate;

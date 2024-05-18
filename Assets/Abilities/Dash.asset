@@ -15,7 +15,7 @@ MonoBehaviour:
   key: 304
   name: Dash
   cooldownTime: 1
-  activeTime: 0.22
+  activeTime: 0.2
   taken: 0
   soundEffect: {fileID: 8300000, guid: dc972a5b4fd23ef43a01379cff60134e, type: 3}
   dashVelocity: 50

@@ -9,13 +9,14 @@ MonoBehaviour:
   m_GameObject: {fileID: 0}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: f41e7a2712f332d4fbac8be6058ff9a2, type: 3}
-  m_Name: Green
+  m_Script: {fileID: 11500000, guid: d7c99f490b43ef34db7cfb0efa5b955e, type: 3}
+  m_Name: HealthItem
   m_EditorClassIdentifier: 
-  itemName: "Ye\u015Fil Test Itemi"
-  itemDescription: "Bu item YE\u015E\u0130L g\xFC\xE7 sa\u011Flamakta"
-  itemSprite: {fileID: 0}
+  itemName: Health Up
+  itemDescription: 
+  itemSprite: {fileID: 21300000, guid: 871511870dbc6cf41bb205d6d6098a6f, type: 3}
   itemID: 2
-  itemValue: 123
+  itemValue: 10
   rarity: 1
   isActivated: 0
+  rarityEffects: 0a0000000f00000014000000190000001e000000
