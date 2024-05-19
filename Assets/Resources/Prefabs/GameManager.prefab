@@ -376,10 +376,10 @@ MonoBehaviour:
     animationActivationTime: 0
   - cursorType: 1
     textureArray:
-    - {fileID: 2800000, guid: c5cf83c7e0f25824184955d711c78d90, type: 3}
-    - {fileID: 2800000, guid: 01b2412758553ec4dbcc92e6708ea39c, type: 3}
-    - {fileID: 2800000, guid: 8768a1f04828aa74797d1a25039a27b9, type: 3}
-    - {fileID: 2800000, guid: 4b3fbeb720d5f7143b63869ced10e4fa, type: 3}
+    - {fileID: 2800000, guid: dcab58bb7d04bc94192b5485661d4f83, type: 3}
+    - {fileID: 2800000, guid: 6b7dcf833b3537e4eb355b7476216ddc, type: 3}
+    - {fileID: 2800000, guid: 49d8b553a82b4534392eb1f8b9f8d5f4, type: 3}
+    - {fileID: 2800000, guid: 83bb90d24f3a49849803dadc71da453b, type: 3}
     frameRate: 0.1
     offset: {x: 16, y: 16}
     doesAnimate: 1

@@ -32,7 +32,7 @@ public class JetpackAbility : AbilityManager
     
     public override void Activate(GameObject parent)
     {
-        Debug.Log(currentCapacity);
+        //Debug.Log(currentCapacity);
 
         if (currentCapacity <= 0f)
         {

@@ -360,7 +360,7 @@ public class WalkingEnemyBehaviour : EnemyBehaviour
     
     public override void GetKnockedBack(Vector3 force, float maxMoveTime)
     {
-        Debug.Log("Knocked" + force);
+        //Debug.Log("Knocked" + force);
         Vector2 clamped = Vector2.ClampMagnitude(force, 1f);
         if (isKnockedBack) return;
         if (gameObject.activeSelf)
@@ -381,7 +381,7 @@ public class WalkingEnemyBehaviour : EnemyBehaviour
     private IEnumerator Jump(Vector2 dir)
     {
         isJumping = true;
-        Debug.Log("Jumping"+ dir);
+        //Debug.Log("Jumping"+ dir);
         
         yield return new();
         // can play a sound for indication of jump

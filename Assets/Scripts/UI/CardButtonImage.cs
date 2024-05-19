@@ -5,6 +5,7 @@ using UnityEngine.UI;
 
 public class CardButtonImage : MonoBehaviour
 {
+    // attached to the card button in the item select (upgrade) screen canvas
     public Image backgroundImage; // Kart arka planý için Image bileþeni
 
     public Sprite whiteCardSprite; // Beyaz kart görseli

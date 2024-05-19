@@ -182,6 +182,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   slider: {fileID: 0}
+  fill: {fileID: 0}
   jetpackAbility: {fileID: 11400000, guid: 6139bc336c2ac64419cfa44ac7e46400, type: 2}
 --- !u!1 &8798638958185116989
 GameObject:
@@ -240,7 +241,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: fe87c0e1cc204ed48ad3b37840f39efc, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  m_Material: {fileID: 0}
+  m_Material: {fileID: 2100000, guid: 0551320ccae1e2c4abb7420d4a7a3a48, type: 2}
   m_Color: {r: 0, g: 0.45181996, b: 0.5294118, a: 1}
   m_RaycastTarget: 1
   m_RaycastPadding: {x: 0, y: 0, z: 0, w: 0}
