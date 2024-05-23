@@ -238,6 +238,7 @@ public class FlyingEnemyBehaviour : EnemyBehaviour
         if (isAttacking) return;
         isAttacking = true;
         aiPath.enabled = false;
+        rb.simulated = false;
         flashEffect.FlashBlink(Color.white, 1f, 3, 0.3f);
         Invoke("Explode", 1f);
     }

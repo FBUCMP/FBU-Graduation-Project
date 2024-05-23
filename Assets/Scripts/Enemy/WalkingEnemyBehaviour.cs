@@ -320,6 +320,7 @@ public class WalkingEnemyBehaviour : EnemyBehaviour
         isAttacking = true;
         seeker.enabled = false;
         path = null;
+        rb.simulated = false;
         flashEffect.FlashBlink(Color.white, 1f, 3, 0.3f);
         Invoke("Explode", 1f);
     }
