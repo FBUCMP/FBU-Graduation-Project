@@ -122,6 +122,7 @@ GameObject:
   - component: {fileID: 206514084015724580}
   - component: {fileID: 348099741351385211}
   - component: {fileID: 5041287770748841069}
+  - component: {fileID: 6504994755844830468}
   m_Layer: 10
   m_Name: EnemyFlying
   m_TagString: Enemy
@@ -347,6 +348,20 @@ MonoBehaviour:
   slowWhenNotFacingTarget: 1
   whenCloseToDestination: 0
   constrainInsideGraph: 0
+--- !u!114 &6504994755844830468
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6568199932609452222}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: a361f95195e2f314e80ac736385f50b2, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  flashMaterial: {fileID: 2100000, guid: dae3d9b1191fc67498c7a41cadcc5c37, type: 2}
+  spriteRenderer: {fileID: 3794467175038845116}
 --- !u!1 &8834066191104746816
 GameObject:
   m_ObjectHideFlags: 0
@@ -413,8 +428,8 @@ MonoBehaviour:
   m_ShadowVolumeIntensityEnabled: 0
   m_ShadowVolumeIntensity: 0.75
   m_LocalBounds:
-    m_Center: {x: 0.67625, y: -0.56925, z: 0}
-    m_Extent: {x: 2.68255, y: 2.6493502, z: 0}
+    m_Center: {x: 0.68140006, y: -0.5653, z: 0}
+    m_Extent: {x: 2.684, y: 2.6524, z: 0}
   m_PointLightInnerAngle: 360
   m_PointLightOuterAngle: 360
   m_PointLightInnerRadius: 0

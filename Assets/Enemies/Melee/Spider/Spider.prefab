@@ -7042,6 +7042,7 @@ GameObject:
   - component: {fileID: 8843044168257882539}
   - component: {fileID: 5953678019958640425}
   - component: {fileID: 7331354514603683936}
+  - component: {fileID: 6698246763154784338}
   m_Layer: 10
   m_Name: Spider
   m_TagString: Enemy
@@ -7254,6 +7255,20 @@ MonoBehaviour:
   bezierTangentLength: 0.4
   offset: 0.2
   factor: 0.1
+--- !u!114 &6698246763154784338
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7788685956179826834}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: a361f95195e2f314e80ac736385f50b2, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  flashMaterial: {fileID: 2100000, guid: dae3d9b1191fc67498c7a41cadcc5c37, type: 2}
+  spriteRenderer: {fileID: 8860295011453016000}
 --- !u!1 &7950936721326178284
 GameObject:
   m_ObjectHideFlags: 0
@@ -7509,8 +7524,8 @@ MonoBehaviour:
   m_ShadowVolumeIntensityEnabled: 0
   m_ShadowVolumeIntensity: 0.75
   m_LocalBounds:
-    m_Center: {x: 0.7303, y: -0.22740003, z: 0}
-    m_Extent: {x: 1.2008, y: 1.0861, z: 0}
+    m_Center: {x: 0.7329, y: -0.22905001, z: 0}
+    m_Extent: {x: 1.1947, y: 1.08085, z: 0}
   m_PointLightInnerAngle: 360
   m_PointLightOuterAngle: 360
   m_PointLightInnerRadius: 0

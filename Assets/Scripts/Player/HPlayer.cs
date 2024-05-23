@@ -104,5 +104,21 @@ public class HPlayer : MonoBehaviour, IDataPersistance, IDamageable
         healthBar.SetHealth(currentHealth, maxHealth);
     }
 
+    public void IncreaseMaxHealth(int amount)
+    {
+        if (!isDead)
+        {
+            maxHealth += amount;
+           
+            healthBar.SetMaxHealth(currentHealth, maxHealth);
+        }
+    }
+
+    public void Heal(int healAmount)
+    {
+        currentHealth += healAmount;
+        currentHealth = Mathf.Clamp(currentHealth, 0, maxHealth);
+        healthBar.SetHealth(currentHealth, maxHealth);
+    }
     
 }
