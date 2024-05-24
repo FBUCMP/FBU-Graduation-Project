@@ -10,6 +10,7 @@ public class ItemHolder : MonoBehaviour
 
     public void AddItem(Item newItem) // add item to the player
     {
+        /*
         foreach (var item in items)
         {
             if (item == newItem)
@@ -17,6 +18,7 @@ public class ItemHolder : MonoBehaviour
                 return;
             }
         }
+        */
         items.Add(newItem);
         Debug.Log("Item Added" + newItem.itemName);
         newItem.Activate(gameObject);

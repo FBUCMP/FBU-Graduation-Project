@@ -154,7 +154,7 @@ public class WalkingEnemyBehaviour : EnemyBehaviour
         
         if (hit.collider != null && hit.collider.CompareTag(target.tag)) // if the raycast hits the player
         {
-            if (Vector3.Distance(rb.position, hit.collider.transform.position) < 2f)
+            if (Vector3.Distance(rb.position, hit.collider.transform.position) < 3f) // if the player is close enough to attack
             {
                 ChangeState(EnemyState.Attack);
                 return;

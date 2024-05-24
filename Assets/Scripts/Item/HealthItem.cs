@@ -10,6 +10,8 @@ public class HealthItem : Item
         {
             playerHealth.IncreaseMaxHealth(rarityEffects[rarity]); // increase the player's max health
             playerHealth.Heal(rarityEffects[rarity]); // heal player the same amount as the max health increase
+            Debug.Log("NewMaxHealth: " + playerHealth.maxHealth);
+            Debug.Log("NewHealth: " + playerHealth.currentHealth);
         }
     }
 

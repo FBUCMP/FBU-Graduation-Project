@@ -9,6 +9,7 @@ public class JumpItem : Item
         if (parent.TryGetComponent(out PlayerMovementNew playerMovement))
         {
             playerMovement.jumpHeight += rarityEffects[rarity]; // increase jump height
+            Debug.Log("NewJumpHeight: " + playerMovement.jumpHeight);
         }
     }
 

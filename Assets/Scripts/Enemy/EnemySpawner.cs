@@ -40,7 +40,7 @@ public class EnemySpawner : MonoBehaviour
         }
         else
         {
-            Debug.Log("Enemy Manager is found: " + enemyManager.name);
+            //Debug.Log("Enemy Manager is found: " + enemyManager.name);
             
             DestroyChildColliders();
             CreateColliders(NumberOfEnemiesToSpawn * EnemyDataList.Count);

@@ -104,6 +104,10 @@ public class ItemSelect : MonoBehaviour
     void CreateCards()
     {
         //Debug.Log("CreateCard activated with selectedItemNumber: " + selectedItemNumber);
+        foreach (Transform child in container)
+        {
+            Destroy(child.gameObject); // destroy all the cards of the previous room
+        }
         List<Item> selectedItems = SelectRandomItems(selectedItemNumber);
         
         for (int i = 0; i < selectedItemNumber; i++)

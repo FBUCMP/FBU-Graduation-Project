@@ -19,13 +19,15 @@ public class Explode : ICollisionHandler
         this.baseDamage = baseDamage;
         this.maxEnemiesAffected = maxEnemiesAffected;
         hitObjects = new Collider2D[maxEnemiesAffected];
+        //Debug.Log("Explode Created");
     }
     public void HandleImpact(Collider2D ImpactedObject, Vector3 HitPosition, Vector3 HitNormal, float DistanceTravelled,GunSO Gun)
     {
         int hits = Physics2D.OverlapCircleNonAlloc(HitPosition, radius, hitObjects, Gun.shootConfig.hitMask);
+        //Debug.Log("hits");
         for (int i = 0; i < hits; i++)
         {
-            Debug.Log(hitObjects[i].name);
+            //Debug.Log(hitObjects[i].name);
             if (hitObjects[i].TryGetComponent(out IDamageable damagable))
             {
                 float distance = Vector3.Distance(hitObjects[i].ClosestPoint(HitPosition), HitPosition); /* hitObjects[i].transform.position might cause an error because it gets center
