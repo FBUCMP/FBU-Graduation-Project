@@ -4,7 +4,6 @@ using UnityEngine;
 
 public class HomingSaliva : MonoBehaviour, IDamageable
 {
-    public ParticleSystem homingDestroyedParticle;
     public float speed = 5f;
     private Rigidbody2D rb;
     private Rigidbody2D playerRB;
@@ -46,19 +45,10 @@ public class HomingSaliva : MonoBehaviour, IDamageable
         if (collision.gameObject.tag == "Player")
         {
             Vector3 hitPos = collision.GetContact(0).point;
-            collision.gameObject.GetComponent<HPlayer>().TakeDamage(10, hitPos, 1);
-
-            Instantiate(homingDestroyedParticle, transform.position, Quaternion.identity);
-
-            Destroy(gameObject);
-        }
-        else
-        {
-            Instantiate(homingDestroyedParticle, transform.position, Quaternion.identity);
-
-            Destroy(gameObject);
+            collision.gameObject.GetComponent<HPlayer>().TakeDamage(10, hitPos, 1);       
         }
 
+        OnDeath?.Invoke(transform.position);
     }
 
 

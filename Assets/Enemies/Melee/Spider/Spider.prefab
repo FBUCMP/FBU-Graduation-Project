@@ -7189,7 +7189,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   deathParticle: {fileID: 2675300400477456816, guid: 9d63d16f3d494e24ba92a43fb4fafaa3, type: 3}
-  deathSound: {fileID: 8300000, guid: e2ef13590109348d19c2566f7381c2f5, type: 3}
+  deathSound: {fileID: 8300000, guid: d53a2ced6a6377a45953015cb4ff0f6f, type: 3}
 --- !u!114 &8843044168257882539
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -7524,8 +7524,8 @@ MonoBehaviour:
   m_ShadowVolumeIntensityEnabled: 0
   m_ShadowVolumeIntensity: 0.75
   m_LocalBounds:
-    m_Center: {x: 0.7329, y: -0.22905001, z: 0}
-    m_Extent: {x: 1.1947, y: 1.08085, z: 0}
+    m_Center: {x: 0.732, y: -0.22355002, z: 0}
+    m_Extent: {x: 1.1887, y: 1.0854499, z: 0}
   m_PointLightInnerAngle: 360
   m_PointLightOuterAngle: 360
   m_PointLightInnerRadius: 0

@@ -120,6 +120,7 @@ MonoBehaviour:
   EnemyDataList:
   - {fileID: 11400000, guid: 59920269eccd6044fbbc7f29edfb2eff, type: 2}
   - {fileID: 11400000, guid: 94335be699bf0744ca40333925b1f403, type: 2}
+  - {fileID: 11400000, guid: dcb567d36f3c2394185de996231dc263, type: 2}
   NumberOfEnemiesToSpawn: 3
 --- !u!1 &2615094042729840737
 GameObject:
@@ -742,7 +743,7 @@ PrefabInstance:
     - target: {fileID: 8448493488274672026, guid: 4c32ade72d6bcb6499620ec877589126, type: 3}
       propertyPath: background
       value: 
-      objectReference: {fileID: 0}
+      objectReference: {fileID: 8300000, guid: b2d694a757422a64e8af97f609afa529, type: 3}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []

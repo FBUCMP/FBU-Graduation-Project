@@ -12,11 +12,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 5a06ffd1a9f637849a5b58df86b0109b, type: 3}
   m_Name: Jetpack
   m_EditorClassIdentifier: 
-  key: 32
+  key: 306
   name: Jetpack
   cooldownTime: 0
   activeTime: 0
-  taken: 0
+  taken: 1
   soundEffect: {fileID: 8300000, guid: 370ae70847d877c4fb92acc62b1d2a96, type: 3}
   capacity: 1
   currentCapacity: 1

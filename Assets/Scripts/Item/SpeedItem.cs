@@ -9,6 +9,7 @@ public class SpeedItem : Item
         if (parent.TryGetComponent(out PlayerMovementNew playerMovement))
         {
             playerMovement.speed += rarityEffects[rarity]; // increase the player's speed
+            Debug.Log("NewSpeed: " + playerMovement.speed);
         }
     }
 

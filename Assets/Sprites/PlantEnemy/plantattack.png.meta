@@ -1,5 +1,5 @@
 fileFormatVersion: 2
-guid: 674ab5d236fc7f242bc0770998d1ae22
+guid: cf0763de2249df248a0fe426dbab576a
 TextureImporter:
   internalIDToNameTable: []
   externalObjects: {}
@@ -48,7 +48,7 @@ TextureImporter:
   spriteMeshType: 1
   alignment: 0
   spritePivot: {x: 0.5, y: 0.5}
-  spritePixelsToUnits: 100
+  spritePixelsToUnits: 1000
   spriteBorder: {x: 0, y: 0, z: 0, w: 0}
   spriteGenerateFallbackPhysicsShape: 1
   alphaUsage: 1
@@ -69,6 +69,19 @@ TextureImporter:
   platformSettings:
   - serializedVersion: 3
     buildTarget: DefaultTexturePlatform
+    maxTextureSize: 2048
+    resizeAlgorithm: 0
+    textureFormat: -1
+    textureCompression: 1
+    compressionQuality: 50
+    crunchedCompression: 0
+    allowsAlphaSplitting: 0
+    overridden: 0
+    ignorePlatformSupport: 0
+    androidETC2FallbackOverride: 0
+    forceMaximumCompressionQuality_BC6H_BC7: 0
+  - serializedVersion: 3
+    buildTarget: WebGL
     maxTextureSize: 2048
     resizeAlgorithm: 0
     textureFormat: -1
@@ -110,148 +123,106 @@ TextureImporter:
     serializedVersion: 2
     sprites:
     - serializedVersion: 2
-      name: Plant1_0
+      name: plantattack_0
       rect:
         serializedVersion: 2
         x: 0
-        y: 1
+        y: 0
         width: 500
         height: 500
       alignment: 0
-      pivot: {x: 0.5, y: 0.5}
+      pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 9e0e21e29f17f0b4ebfdf82fc16368cf
-      internalID: 1389832710
+      spriteID: 6f658dcc0e2eec4479ffc1019dfae91d
+      internalID: 156200452
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: Plant1_1
+      name: plantattack_1
       rect:
         serializedVersion: 2
         x: 500
-        y: 1
+        y: 0
         width: 500
         height: 500
       alignment: 0
-      pivot: {x: 0.5, y: 0.5}
+      pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 32cb40e8eb265bf40b96c34196afb052
-      internalID: 833965176
+      spriteID: b9e818d5ae2cf554784f141ebfbcd122
+      internalID: -2136014779
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: Plant1_2
+      name: plantattack_2
       rect:
         serializedVersion: 2
         x: 1000
-        y: 1
+        y: 0
         width: 500
         height: 500
       alignment: 0
-      pivot: {x: 0.5, y: 0.5}
+      pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: b4e4c0235275c8d4abd112e3e3538dd9
-      internalID: 682351558
+      spriteID: 5c519bc533e848748a02430fe2cfbfcf
+      internalID: -1410566380
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: Plant1_3
+      name: plantattack_3
       rect:
         serializedVersion: 2
         x: 1500
-        y: 1
+        y: 0
         width: 500
         height: 500
       alignment: 0
-      pivot: {x: 0.5, y: 0.5}
+      pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 7db743799634c1d43b84992285ea2fcc
-      internalID: -272772531
+      spriteID: b8355765a005c0b4ba91ba8dccd2320c
+      internalID: 1153089070
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: Plant1_4
+      name: plantattack_4
       rect:
         serializedVersion: 2
         x: 2000
-        y: 1
+        y: 0
         width: 500
         height: 500
       alignment: 0
-      pivot: {x: 0.5, y: 0.5}
+      pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 8c2154dd75711494097baeabee67120d
-      internalID: -2027583639
-      vertices: []
-      indices: 
-      edges: []
-      weights: []
-    - serializedVersion: 2
-      name: Plant1_5
-      rect:
-        serializedVersion: 2
-        x: 2500
-        y: 1
-        width: 500
-        height: 500
-      alignment: 0
-      pivot: {x: 0.5, y: 0.5}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      outline: []
-      physicsShape: []
-      tessellationDetail: 0
-      bones: []
-      spriteID: 8bc0c10ca9a3eb344a9d6a9cdb999796
-      internalID: 1802525915
-      vertices: []
-      indices: 
-      edges: []
-      weights: []
-    - serializedVersion: 2
-      name: Plant1_6
-      rect:
-        serializedVersion: 2
-        x: 3000
-        y: 1
-        width: 500
-        height: 500
-      alignment: 0
-      pivot: {x: 0.5, y: 0.5}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      outline: []
-      physicsShape: []
-      tessellationDetail: 0
-      bones: []
-      spriteID: 8bfdd4c695c920e4aa228b1d5244377b
-      internalID: -451097762
+      spriteID: 8c4ee4d24c81458419cf4a8a18371ef7
+      internalID: 241789832
       vertices: []
       indices: 
       edges: []
@@ -267,13 +238,11 @@ TextureImporter:
     weights: []
     secondaryTextures: []
     nameFileIdTable:
-      Plant1_0: 1389832710
-      Plant1_1: 833965176
-      Plant1_2: 682351558
-      Plant1_3: -272772531
-      Plant1_4: -2027583639
-      Plant1_5: 1802525915
-      Plant1_6: -451097762
+      plantattack_0: 156200452
+      plantattack_1: -2136014779
+      plantattack_2: -1410566380
+      plantattack_3: 1153089070
+      plantattack_4: 241789832
   mipmapLimitGroupName: 
   pSDRemoveMatte: 0
   userData: 
