@@ -73,8 +73,8 @@ SpriteRenderer:
   m_SortingLayerID: 0
   m_SortingLayer: 0
   m_SortingOrder: 0
-  m_Sprite: {fileID: 21300000, guid: 67ece9ab638a2b944a2f59e7f7a3e412, type: 3}
-  m_Color: {r: 0.3962264, g: 0.3962264, b: 0.3962264, a: 1}
+  m_Sprite: {fileID: 21300000, guid: e1a591dcaee14114c95c9e58c354b3c3, type: 3}
+  m_Color: {r: 0.1981132, g: 0.1981132, b: 0.1981132, a: 1}
   m_FlipX: 1
   m_FlipY: 0
   m_DrawMode: 0
@@ -96,6 +96,7 @@ GameObject:
   - component: {fileID: 6177319635444513060}
   - component: {fileID: 6386470337091622921}
   - component: {fileID: 6024946125573439681}
+  - component: {fileID: -1860032008935203267}
   m_Layer: 13
   m_Name: HomingSaliva
   m_TagString: Untagged
@@ -193,8 +194,21 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c843fc28207f41449893b4632cd33aaf, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  homingDestroyedParticle: {fileID: 19800004, guid: 0c4713285f5f8cf40b37e4764abdbcbe, type: 3}
   speed: 10
   _health: 0
   _maxHealth: 80
   _explosionEffect: 1
+--- !u!114 &-1860032008935203267
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7419935205344192073}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 0b68a7e903d6619459e3201638bb4000, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  deathParticle: {fileID: 19800004, guid: 0c4713285f5f8cf40b37e4764abdbcbe, type: 3}
+  deathSound: {fileID: 8300000, guid: d53a2ced6a6377a45953015cb4ff0f6f, type: 3}

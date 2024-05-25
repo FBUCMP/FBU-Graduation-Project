@@ -62,8 +62,4 @@ public class DamageItem : Item
         return itemDescription;
     }
 
-    private void OnDisable()
-    {
-        gunSelect.OnGunPicked -= Apply;
-    }
 }
