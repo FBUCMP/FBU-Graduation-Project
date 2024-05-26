@@ -17,3 +17,4 @@ MonoBehaviour:
   - {fileID: 8300000, guid: 2695360a8abba31449431951a39b38bc, type: 3}
   emptyClip: {fileID: 0}
   reloadClip: {fileID: 8300000, guid: 2b5c9c0076c9ea34084e9caedbcacc3f, type: 3}
+  reloadEndClip: {fileID: 8300000, guid: a5ca32ea196011142b71f52426e2ba2e, type: 3}
