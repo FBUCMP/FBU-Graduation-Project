@@ -9,6 +9,7 @@ public class AudioConfigurationSO : ScriptableObject, System.ICloneable
     public AudioClip[] fireClips;
     public AudioClip emptyClip;
     public AudioClip reloadClip;
+    public AudioClip reloadEndClip;
     //public AudioClip lastBulletClip;
 
     public void PlayShootingClip(AudioSource AudioSource) // , bool isLastBullet = false
@@ -42,6 +43,16 @@ public class AudioConfigurationSO : ScriptableObject, System.ICloneable
         if (reloadClip != null)
         {
             AudioSource.PlayOneShot(reloadClip, Volume);
+            Debug.Log("Playing reload clip");
+        }
+    }
+
+    public void PlayReloadEndClip(AudioSource AudioSource)
+    {
+        if (reloadEndClip != null)
+        {
+            AudioSource.PlayOneShot(reloadEndClip, Volume);
+            Debug.Log("Playing reload end clip");
         }
     }
 

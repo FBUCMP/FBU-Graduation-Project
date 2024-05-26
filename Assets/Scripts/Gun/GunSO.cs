@@ -240,8 +240,9 @@ public class GunSO : ScriptableObject, System.ICloneable
     }
 
   
-    public void EndReload()
+    public void EndReloading()
     {
+        audioConfig.PlayReloadEndClip(shootingAudioSource);
         ammoConfig.Reload(); // actual ammo reload
     }
 
