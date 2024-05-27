@@ -17,7 +17,6 @@ public class GunModifierApplier : MonoBehaviour
     }
     void AssignModifiers()
     {
-
         if (GunSelector == null) { return; }
         if (ImpactTypeOverride != null)
         {

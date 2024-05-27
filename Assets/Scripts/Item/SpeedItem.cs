@@ -6,7 +6,11 @@ public class SpeedItem : Item
 {
     public override void Activate(GameObject parent)
     {
-        // Increase the player's speed
+        if (parent.TryGetComponent(out PlayerMovementNew playerMovement))
+        {
+            playerMovement.speed += rarityEffects[rarity]; // increase the player's speed
+            Debug.Log("NewSpeed: " + playerMovement.speed);
+        }
     }
 
     public override string DescriptionUpdate()

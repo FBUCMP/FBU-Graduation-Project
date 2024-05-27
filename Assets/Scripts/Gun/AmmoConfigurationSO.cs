@@ -5,7 +5,7 @@ public class AmmoConfigurationSO : ScriptableObject, System.ICloneable
 {
     public int clipSize = 30;
     public int currentClipAmmo = 30;
-
+    public float reloadTime = 1.5f;
     
     public void Reload()
     {

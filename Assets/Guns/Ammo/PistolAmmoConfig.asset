@@ -14,3 +14,4 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   clipSize: 20
   currentClipAmmo: 20
+  reloadTime: 1

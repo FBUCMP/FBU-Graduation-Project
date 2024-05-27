@@ -9,12 +9,12 @@ MonoBehaviour:
   m_GameObject: {fileID: 0}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: f41e7a2712f332d4fbac8be6058ff9a2, type: 3}
-  m_Name: NewItem
+  m_Script: {fileID: 11500000, guid: b6ea6958151f37c4bbb91b95d3cc2856, type: 3}
+  m_Name: Plant
   m_EditorClassIdentifier: 
-  itemName: Test
-  itemDescription: This is a test.
-  itemSprite: {fileID: 21300000, guid: 1ed0fc27afbc4224888eb3de22ab58d6, type: 3}
-  itemID: 0
-  itemValue: 0
-  isActivated: 0
+  name: Plant
+  health: 200
+  speed: 0
+  power: 4
+  prefab: {fileID: 9178568920440023412, guid: 723fc8b77cfccec4f8a3abee5a4c09eb, type: 3}
+  type: 3

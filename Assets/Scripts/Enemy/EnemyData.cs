@@ -4,9 +4,11 @@ using UnityEngine;
 public enum EnemyType
 {
     Boss,
-    Goblin,
-    Spider
+    Fly,
+    Spider,
+    Plant
 }
+[CreateAssetMenu(fileName = "NewGoblinData", menuName = "Enemy Data", order = 53)]
 public class EnemyData : ScriptableObject
 {
     public string name;
@@ -18,18 +20,3 @@ public class EnemyData : ScriptableObject
 
 }
 
-[CreateAssetMenu(fileName = "NewGoblinData", menuName = "Enemy Data/Goblin", order = 53)]
-public class GoblinData : EnemyData
-{
-    public float iceDamage;
-}
-[CreateAssetMenu(fileName = "NewSpiderData", menuName = "Enemy Data/Spider", order = 53)]
-public class SpiderData : EnemyData
-{
-    public float webDamage;
-}
-[CreateAssetMenu(fileName = "NewBossData", menuName = "Enemy Data/Boss", order = 53)]
-public class Boss : EnemyData
-{
-    public float acidDamage;
-}
