@@ -14,9 +14,9 @@ public class Item : ScriptableObject
     public bool isActivated;
     public List<int> rarityEffects;
 
-    public virtual void DescriptionUpdate()
+    public virtual string DescriptionUpdate()
     {
-
+        return itemDescription;
     }
 
     // item.itemDescription = "bu item kullanýcý mavi özle güçlendirir. Sahip olduðun silahlar " + rarirtyEffects[rarity] + " artar";

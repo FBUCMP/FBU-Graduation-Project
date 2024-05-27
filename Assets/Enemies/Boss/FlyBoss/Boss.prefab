@@ -106,6 +106,7 @@ GameObject:
   - component: {fileID: 2678757505481635034}
   - component: {fileID: 8596761788060958608}
   - component: {fileID: 4014756865599825937}
+  - component: {fileID: 687287799737893177}
   m_Layer: 10
   m_Name: Boss
   m_TagString: Boss
@@ -217,18 +218,27 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 0bb5abde750efb84bad9ac4141cd1dc3, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  groundCheckUp: {fileID: 8221959786917480815}
-  groundCheckDown: {fileID: 5178668014484382394}
-  groundCheckWall: {fileID: 395839058252496545}
-  groundCheckRadius: 2
+  TopLeft: {fileID: 0}
+  TopRight: {fileID: 0}
+  BottomLeft: {fileID: 0}
+  BottomRight: {fileID: 0}
   groundLayer:
     serializedVersion: 2
     m_Bits: 192
-  BabyFly: {fileID: 6935687670116460757, guid: baf4e95f25d145a40806069f8b8c1b87, type: 3}
+  screamClip: {fileID: 8300000, guid: 030ba6e3eea965e42b28d0468aa96cb8, type: 3}
+  attackClip: {fileID: 8300000, guid: 47a67d791622117418b8270f99ab8d58, type: 3}
+  hitClip: {fileID: 8300000, guid: cb9c02cc4f4cf3c43a1a13e8c53fdb90, type: 3}
+  dashClip: {fileID: 8300000, guid: 23521bf6cf1e34f51ba1a86ec9553326, type: 3}
+  gooClip: {fileID: 8300000, guid: f31647dfda51f194293fafd711e65cc1, type: 3}
   rainDuration: 5
-  rainInterval: 0.1
+  rainInterval: 0.25
+  BabyFly: {fileID: 6935687670116460757, guid: baf4e95f25d145a40806069f8b8c1b87, type: 3}
+  BabySpawnPoints: {fileID: 0}
   player: {fileID: 0}
-  currentState: 0
+  currentState: 4
+  _health: 0
+  _maxHealth: 8000
+  _explosionEffect: 1
 --- !u!114 &4014756865599825937
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -242,8 +252,23 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   Saliva: {fileID: 7016767042156870914, guid: 6898c370eb3265046a24151c8b080f94, type: 3}
+  HomingSaliva: {fileID: 7419935205344192073, guid: f8a41b83083b94a4d8e5993a8b30e047, type: 3}
   salivaSpawnPoint: {fileID: 8849591606173686941}
-  salivaSpeed: 1000
+  salivaSpeed: 1500
+--- !u!114 &687287799737893177
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5507181632697698502}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 0b68a7e903d6619459e3201638bb4000, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  deathParticle: {fileID: 2675300400477456816, guid: 9d63d16f3d494e24ba92a43fb4fafaa3, type: 3}
+  deathSound: {fileID: 8300000, guid: e2ef13590109348d19c2566f7381c2f5, type: 3}
 --- !u!1 &7554444968571032491
 GameObject:
   m_ObjectHideFlags: 0

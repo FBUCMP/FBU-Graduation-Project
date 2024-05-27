@@ -10,4 +10,8 @@ public class SpitHandler : MonoBehaviour
     {
         flyBossManager.SpawnSaliva();
     }
+    void OnHomingSpitEvent()
+    {
+        flyBossManager.SpawnHomingSaliva();
+    }
 }

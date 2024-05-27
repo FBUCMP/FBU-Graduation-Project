@@ -5,10 +5,21 @@ using UnityEngine;
 
 public class Residue : MonoBehaviour
 {
-    float hitTimer = 1;
+    float hitTimerSec = 0.5f;
+    float hitTimer;
     private void Awake()
     {
+        hitTimer = hitTimerSec;
         Invoke("DestroySelf",5f);
+    }
+
+    private void OnTriggerEnter2D(Collider2D collision)
+    {
+        if (collision.gameObject.tag == "Player")
+        {
+            Vector3 hitPos = collision.ClosestPoint(transform.position);
+            collision.gameObject.GetComponent<HPlayer>().TakeDamage(10, hitPos, 1);
+        }
     }
     private void OnTriggerStay2D(Collider2D collision)
     {
@@ -20,13 +31,13 @@ public class Residue : MonoBehaviour
             {
                 Vector3 hitPos = collision.ClosestPoint(transform.position);
                 collision.gameObject.GetComponent<HPlayer>().TakeDamage(5, hitPos, 1);
-                hitTimer = 1;
+                hitTimer = hitTimerSec;
             }
         }
     }
-        void DestroySelf()
+    void DestroySelf()
     {
-        Destroy(gameObject);
+        if (isActiveAndEnabled) Destroy(gameObject);
     }
 
 

@@ -22,6 +22,7 @@ public class WalkingEnemyBehaviour : EnemyBehaviour
     private bool isJumping = false;
     private bool isGrounded;
     private bool isInAir = false;
+    private bool isKnockedBack = false;
     private bool jumpEnabled = true;
     private bool isOnCoolDown = false;
     private int currentPathpoint = 0;
@@ -244,18 +245,20 @@ public class WalkingEnemyBehaviour : EnemyBehaviour
             
             Vector2 desiredVelocity = ((Vector2)path.vectorPath[currentPathpoint] - rb.position).normalized * speed;
 
-            // Calculate the steering force
-            Vector2 steeringForce = desiredVelocity - rb.velocity;
+            
+            Vector2 steeringForce = desiredVelocity - rb.velocity; // Calculate the steering force
 
-            // Limit the steering force to prevent excessive acceleration
-            steeringForce = Vector2.ClampMagnitude(steeringForce, maxSteeringForce);
-            if (!isJumping && isGrounded)
+            
+            steeringForce = Vector2.ClampMagnitude(steeringForce, maxSteeringForce); // Limit the steering force to prevent excessive acceleration
+            if (!isJumping && isGrounded && !isKnockedBack)
             {
-                // Apply the steering force
-                rb.velocity += steeringForce * Time.fixedDeltaTime;
+                // -------------------------- MOVE --------------------------
 
-                // Limit the velocity to the maximum speed
-                rb.velocity = Vector2.ClampMagnitude(rb.velocity, speed);
+                rb.velocity += steeringForce * Time.fixedDeltaTime; // Apply the steering force
+
+                rb.velocity = Vector2.ClampMagnitude(rb.velocity, speed); // Limit the velocity to the maximum speed
+
+                // -------------------------- MOVE --------------------------
 
             }
             Debug.DrawLine(rb.position, (rb.position + rb.velocity), Color.blue);
@@ -267,11 +270,11 @@ public class WalkingEnemyBehaviour : EnemyBehaviour
 
             float dotProduct = Vector2.Dot(desiredVelocity.normalized, normal);
 
-            // Calculate the magnitude squared of the normal vector
-            float magnitudeSquared = normal.sqrMagnitude;
+            
+            float magnitudeSquared = normal.sqrMagnitude; // Calculate the magnitude squared of the normal vector
 
-            // Calculate the projection of desiredVel onto normal
-            Vector2 projection = (dotProduct / magnitudeSquared) * normal;
+            
+            Vector2 projection = (dotProduct / magnitudeSquared) * normal; // Calculate the projection of desiredVel onto normal
 
             Debug.DrawLine(rb.position, rb.position + (Vector2)projection, Color.green);
             //Debug.Log("Projection of desiredVel onto normal: " + projection);
@@ -354,15 +357,31 @@ public class WalkingEnemyBehaviour : EnemyBehaviour
         rb.velocity = Vector2.ClampMagnitude(rb.velocity, speed);
         
     }
+    
     public override void GetKnockedBack(Vector3 force, float maxMoveTime)
     {
-        rb.AddForce(force, ForceMode2D.Impulse);
+        //Debug.Log("Knocked" + force);
+        Vector2 clamped = Vector2.ClampMagnitude(force, 1f);
+        if (isKnockedBack) return;
+        if (gameObject.activeSelf)
+        {
+            StartCoroutine(KnockBack(clamped, maxMoveTime));
+        }
+        
     }
     
+    private IEnumerator KnockBack(Vector3 force, float maxMoveTime)
+    {
+        isKnockedBack = true;
+        //rb.AddForce(force, ForceMode2D.Impulse);
+        rb.velocity = new Vector2(force.x * gravityScale * 2.25f, force.y * gravityScale * 2.25f);
+        yield return new WaitForSeconds(maxMoveTime);
+        isKnockedBack = false;
+    }
     private IEnumerator Jump(Vector2 dir)
     {
         isJumping = true;
-        Debug.Log("Jumping"+ dir);
+        //Debug.Log("Jumping"+ dir);
         
         yield return new();
         // can play a sound for indication of jump

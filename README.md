@@ -1,6 +1,4 @@
-# Proje MYME
-
-![Proje MYME Logo](link_to_logo.png) (GAME LOGO)
+# FBU-Graduation-Project
 
 ## Project Type
 
@@ -8,7 +6,7 @@
 
 ## Game Description
 
-Proje MYME invites players to explore a procedurally generated labyrinth of rooms, eliminate monsters, and complete objectives with their chosen character. Players earn points and accomplish missions to enhance their characters' abilities and collect powerful items. To win the game, you'll need to venture deep into the dungeon, defeat fierce foes, and conquer challenging boss battles.
+FBU-Graduation-Project invites players to explore a procedurally generated labyrinth of rooms, eliminate monsters, and complete objectives with their chosen character. Players earn points and accomplish missions to enhance their characters' abilities and collect powerful items. To win the game, you'll need to venture deep into the dungeon, defeat fierce foes, and conquer challenging boss battles.
 
 ## Player Mechanics
 
@@ -39,19 +37,12 @@ Proje MYME invites players to explore a procedurally generated labyrinth of room
 
 ## Room Types
 
-- Starting Room: A safe room where players make initial choices before embarking on their adventure.
 - Boss Room: The ultimate challenge room, typically located furthest from the starting room.
-- Loot Room: Safe rooms with chests containing valuable items and no enemies.
 - Monster Room: The majority of the game is spent in these rooms, fighting off various creatures.
 
 ## Game Story
 
 Unfortunately, we can't reveal the game's story just yet.
-
-## Screenshots (Optional)
-
-![Game Screenshot 1](screenshot1.png)
-![Game Screenshot 2](screenshot2.png)
 
 ## How to Play
 

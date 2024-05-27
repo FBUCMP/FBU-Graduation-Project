@@ -12,13 +12,15 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 5a06ffd1a9f637849a5b58df86b0109b, type: 3}
   m_Name: Jetpack
   m_EditorClassIdentifier: 
-  key: 120
+  key: 32
   name: Jetpack
   cooldownTime: 0
   activeTime: 0
   taken: 0
-  soundEffect: {fileID: 8300000, guid: 117034ba3f7a60b4a8fb0a463712b2c0, type: 3}
+  soundEffect: {fileID: 8300000, guid: 370ae70847d877c4fb92acc62b1d2a96, type: 3}
   capacity: 1
+  currentCapacity: 1
+  rechargeRate: 0.22
   particleEffect: {fileID: 5810577681460789135, guid: 4aa7a28bbc93b4a4c8c9c26cf5f68584, type: 3}
   particleOffset: {x: -0.35, y: 1}
-  maxCooldownTime: 5
+  maxCooldownTime: 1

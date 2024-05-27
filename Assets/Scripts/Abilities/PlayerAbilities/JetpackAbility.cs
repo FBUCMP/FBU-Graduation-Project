@@ -15,7 +15,8 @@ public class JetpackAbility : AbilityManager
     public AudioClip soundEffect;
      */
     public float capacity; // if not 0 cooldown will be 0 so always ready-active
-    private float currentCapacity;
+    public float currentCapacity;
+    public float rechargeRate; // speed of recharge
     public ParticleSystem particleEffect;
     public Vector2 particleOffset;
     private float gravity;
@@ -31,6 +32,12 @@ public class JetpackAbility : AbilityManager
     
     public override void Activate(GameObject parent)
     {
+        //Debug.Log(currentCapacity);
+
+        if (currentCapacity <= 0f)
+        {
+            return;
+        }
         movement = parent.GetComponent<PlayerMovementNew>();
         movement.rb.velocity = new Vector2(movement.rb.velocity.x, Mathf.Min(movement.rb.velocity.y + 4, movement.speed*3)); // add upwards velocity numbers can be changed
         cooldownTime = 0;
@@ -47,12 +54,14 @@ public class JetpackAbility : AbilityManager
         if (currentCapacity <= 0)
         {
             Debug.Log("Jetpack out of fuel");
-            cooldownTime = maxCooldownTime;
-            currentCapacity = capacity;
+            //cooldownTime = maxCooldownTime;
+            //currentCapacity = capacity;
+            currentCapacity = 0;
         }
     }
     public override void BeginCooldown(GameObject parent)
     {
         movement = parent.GetComponent<PlayerMovementNew>();
     }
+    
 }

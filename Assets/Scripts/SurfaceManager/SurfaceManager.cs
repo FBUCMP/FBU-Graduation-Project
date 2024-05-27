@@ -186,7 +186,7 @@ public class SurfaceManager : MonoBehaviour
         //Debug.Log(surfaceType == null);
         if (surfaceType != null)
         {
-            Debug.Log("Surface type found: " + surfaceType.Surface.name);
+            //Debug.Log("Surface type found: " + surfaceType.Surface.name);
             foreach (Surface.SurfaceImpactTypeEffect typeEffect in surfaceType.Surface.ImpactTypeEffects)
             {
                 if (typeEffect.ImpactType == Impact)
