@@ -74,6 +74,8 @@ public class BabyFly : MonoBehaviour, IDamageable
 
         if (currentHealth == 0 && damageTaken != 0)
         {
+            HPlayer hPlayer = GameObject.FindObjectOfType<HPlayer>();
+            hPlayer.Heal(5);
             OnDeath?.Invoke(transform.position);
         }
     }
