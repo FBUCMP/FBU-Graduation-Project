@@ -20,6 +20,10 @@ public class FireRateItem : Item
 
     private void Apply()
     {
+        if (gunSelect.ActiveGun.type == GunType.GranadeLauncher)
+        {
+            return;
+        }
         gunSelect.ApplyModifiers(new IModifier[]
         {
                 new FireRateModifier()

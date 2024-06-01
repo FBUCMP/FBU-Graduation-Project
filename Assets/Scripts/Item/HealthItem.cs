@@ -9,7 +9,7 @@ public class HealthItem : Item
         if (parent.TryGetComponent(out HPlayer playerHealth))
         {
             playerHealth.IncreaseMaxHealth(rarityEffects[rarity]); // increase the player's max health
-            playerHealth.Heal(rarityEffects[rarity]); // heal player the same amount as the max health increase
+            playerHealth.Heal(playerHealth.maxHealth); // heal player to the max health 
             Debug.Log("NewMaxHealth: " + playerHealth.maxHealth);
             Debug.Log("NewHealth: " + playerHealth.currentHealth);
         }
@@ -17,7 +17,7 @@ public class HealthItem : Item
 
     public override string DescriptionUpdate()
     {
-        itemDescription = $"Increases the health by {rarityEffects[rarity]}";
+        itemDescription = $"Increases the health by {rarityEffects[rarity]} and restores health";
         return itemDescription;
     }
 }

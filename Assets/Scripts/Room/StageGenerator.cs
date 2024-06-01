@@ -335,6 +335,8 @@ public class StageGenerator : MonoBehaviour
         }
         foreach (Vector2Int roomCoord in roomsList) // odalari yerlestir
         {
+            
+            
             GameObject spawnedRoom = (GameObject)Instantiate(roomPrefab, new Vector3(roomCoord.x * roomWidth, roomCoord.y * roomHeight,0), Quaternion.identity);
             if (spawnedRoom.GetComponent<RoomGenerator>())
             {
@@ -346,15 +348,17 @@ public class StageGenerator : MonoBehaviour
                 // // can do changes to the first generated room HERE with roomsList.IndexOf(roomCoord) == 0
                 
                 roomsGen.GenerateMap(); // generate mapi elle cagiriyoruz.
+                spawnedRoom.transform.parent = gameObject.transform; // her bir eklenen oda stage generatorun childi oluyor
 
+                spawnedRoom.name = $"Room{roomsList.IndexOf(roomCoord)}";
+                roomObjects.Add(spawnedRoom);
 
 
             }
-            spawnedRoom.transform.parent = gameObject.transform; // her bir eklenen oda stage generatorun childi oluyor
             
-            spawnedRoom.name = $"Room{roomsList.IndexOf(roomCoord)}";
-            roomObjects.Add(spawnedRoom);
-            
+
+
+
         }
         
     }

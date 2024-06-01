@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
 public class GateManager : MonoBehaviour
 {
@@ -36,6 +37,7 @@ public class GateManager : MonoBehaviour
         player = GameObject.FindGameObjectWithTag("Player").transform;
 
         TeleportTo(currentRoom, 0);
+        HandleEnemies();
 
     }
     private void Update()
@@ -62,7 +64,35 @@ public class GateManager : MonoBehaviour
         {
             this.currentRoom.x--;
         }
-        TeleportTo(this.currentRoom, dir); // teleport player to new room
+        
+        // if current room is the room at the end of the list, change scene
+        if (currentRoom == roomsList[roomsList.Count - 1])
+        {
+            // change scene
+            GameObject playerObject = GameObject.FindGameObjectWithTag("Player");
+            playerObject.transform.position = new Vector3(0, 0, 0);
+            DontDestroyOnLoad(playerObject);
+
+            SceneManager.LoadSceneAsync(2);
+        }
+        else
+        {
+            TeleportTo(this.currentRoom, dir); // teleport player to the new room
+            // activate enemies in the new room          
+            
+            HandleEnemies();
+        }
+
+    }
+
+    void HandleEnemies()
+    {
+        EnemyManager enemyManager = FindObjectOfType<EnemyManager>();// find enemy manager
+        if (enemyManager != null)
+        {
+            Debug.Log("Call: Activate enemies in room: " + currentRoom);
+            enemyManager.ActivateEnemies(currentRoom);
+        }
     }
     void TeleportTo(Vector2Int room, int dirFrom)
     {
