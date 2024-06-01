@@ -14,15 +14,6 @@ public class StageGenerator : MonoBehaviour
     public float randomness;
     public int stageDifficulty = 1;
 
-    /*
-    public Tilemap tilemap;
-    public TileBase emptyRoomTile;
-    public TileBase filledRoomTile;
-    public TileBase startRoomTile;
-    public TileBase chestRoomTile;
-    public TileBase bossRoomTile;
-    public TileBase selectedRoomTile;
-    */
     [Header("------- Room Prefab ------------")]
     public GameObject roomPrefab;
     private int squareSize = 1;
