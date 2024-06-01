@@ -47,14 +47,12 @@ public class ItemSelect : MonoBehaviour
             Debug.Log(randomRarity);
 
             Item item = allItems[randomIndex];
-            if (selectedItems.Contains(item)) // if item is not already in selecteditems
+
+            while (selectedItems.Contains(item))
             {
-                while (selectedItems.Contains(item))
-                {
-                    //Debug.Log("Random Index Yeniden Seciliyor: " + randomIndex);
-                    randomIndex = Random.Range(0, allItems.Count);
-                    item = allItems[randomIndex];
-                }
+                //Debug.Log("Random Index Yeniden Seciliyor: " + randomIndex);
+                randomIndex = Random.Range(0, allItems.Count);
+                item = allItems[randomIndex];
             }
             if (randomRarity < 0.4286)
             {
