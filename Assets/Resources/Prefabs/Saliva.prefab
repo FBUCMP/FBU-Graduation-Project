@@ -52,7 +52,7 @@ SpriteRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 2100000, guid: a97c105638bdf8b4a8650670310a4cd3, type: 2}
+  - {fileID: 2100000, guid: 9666febed8249c349b5bf6bc497cb82f, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -195,3 +195,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   residue: {fileID: 7714100548169372721, guid: 1a7301812dbeba54d96983288ea44c22, type: 3}
   spriteHolder: {fileID: 1572669128784643184}
+  _health: 0
+  _maxHealth: 1
+  _explosionEffect: 1

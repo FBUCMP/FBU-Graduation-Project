@@ -61,6 +61,7 @@ public class FlyBossManager : MonoBehaviour, IDamageable
 
     void Start()
     {
+        player = GameObject.FindGameObjectWithTag("Player").GetComponent<Rigidbody2D>();
         roomHeight = ( (TopLeft.position.y - BottomLeft.position.y) + (TopRight.position.y - BottomRight.position.y) ) / 2;
         roomWidth = ( (TopRight.position.x - TopLeft.position.x) + (BottomRight.position.x - BottomLeft.position.x) ) / 2;
         

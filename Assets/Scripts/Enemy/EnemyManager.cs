@@ -88,4 +88,19 @@ public class EnemyManager : MonoBehaviour
         }
     }
     
+    public void ActivateEnemies(Vector2Int roomCoord)
+    {
+        Debug.Log("Activate enemies in room: " + roomCoord);
+        roomIndex = stageGenerator.roomsList.IndexOf(roomCoord);
+        if (roomIndex != -1)
+        {
+            foreach (Transform child in enemyHolder.transform)
+            {
+                Debug.Log("Deactivating room: " + child.name);
+                child.gameObject.SetActive(false);
+            }
+            Debug.Log("Activating room: " + enemyHolder.transform.GetChild(roomIndex).name);
+            enemyHolder.transform.GetChild(roomIndex).gameObject.SetActive(true);
+        }
+    }
 }

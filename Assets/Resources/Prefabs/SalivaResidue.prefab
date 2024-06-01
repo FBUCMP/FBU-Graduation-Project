@@ -56,7 +56,7 @@ SpriteRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 2100000, guid: a97c105638bdf8b4a8650670310a4cd3, type: 2}
+  - {fileID: 2100000, guid: 9666febed8249c349b5bf6bc497cb82f, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -121,7 +121,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b63555d48b510f441a530cc1b2f33a0e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  hurtClip: {fileID: 8300000, guid: ffdf84a92e256434a96500c837c1c691, type: 3}
 --- !u!61 &7047355980357550047
 BoxCollider2D:
   m_ObjectHideFlags: 0
