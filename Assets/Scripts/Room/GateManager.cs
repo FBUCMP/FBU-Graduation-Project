@@ -37,6 +37,7 @@ public class GateManager : MonoBehaviour
         player = GameObject.FindGameObjectWithTag("Player").transform;
 
         TeleportTo(currentRoom, 0);
+        HandleEnemies();
 
     }
     private void Update()
@@ -79,14 +80,19 @@ public class GateManager : MonoBehaviour
             TeleportTo(this.currentRoom, dir); // teleport player to the new room
             // activate enemies in the new room          
             
-            EnemyManager enemyManager = FindObjectOfType<EnemyManager>();// find enemy manager
-            if (enemyManager != null)
-            {
-                Debug.Log("Call: Activate enemies in room: " + currentRoom);
-                enemyManager.ActivateEnemies(currentRoom);
-            }
+            HandleEnemies();
         }
 
+    }
+
+    void HandleEnemies()
+    {
+        EnemyManager enemyManager = FindObjectOfType<EnemyManager>();// find enemy manager
+        if (enemyManager != null)
+        {
+            Debug.Log("Call: Activate enemies in room: " + currentRoom);
+            enemyManager.ActivateEnemies(currentRoom);
+        }
     }
     void TeleportTo(Vector2Int room, int dirFrom)
     {
