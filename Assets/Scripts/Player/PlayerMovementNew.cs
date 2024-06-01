@@ -107,7 +107,7 @@ public class PlayerMovementNew : MonoBehaviour, IKnockbackable
         {
             Time.timeScale = 0.1f;
         }
-        playerAction.isStopped = false;
+        //playerAction.isStopped = false;
 
         movementInput = horizontal;
 
@@ -150,6 +150,7 @@ public class PlayerMovementNew : MonoBehaviour, IKnockbackable
         {
             if (coyoteCounter > 0f || doubleJump)
             {
+                jumpVelocity = Mathf.Sqrt(-2f * jumpHeight * Physics2D.gravity.y); // initial vel^2 = -2 * g * h
                 rb.velocity = new Vector2(rb.velocity.x, jumpVelocity);
 
                 doubleJump = !doubleJump;
@@ -302,7 +303,7 @@ public class PlayerMovementNew : MonoBehaviour, IKnockbackable
             isWallJumping = true;
             rb.velocity = new Vector2(wallJumpingDirection * walljumpVelocity.x, walljumpVelocity.y);
             wallJumpingCounter = 0f;
-            playerAction.isStopped = true;
+            //playerAction.isStopped = true;
             //if (transform.localScale.x != wallJumpingDirection)
             //{
             //    Flip();
@@ -314,7 +315,7 @@ public class PlayerMovementNew : MonoBehaviour, IKnockbackable
 
     private void StopWallJumping()
     {
-        playerAction.isStopped = false;
+        //playerAction.isStopped = false;
         isWallJumping = false;
     }
 

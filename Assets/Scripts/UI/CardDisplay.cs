@@ -17,12 +17,28 @@ public class CardDisplay : MonoBehaviour
     public Sprite purpleCardSprite; // Purple card image
     public Sprite redCardSprite; // Red card image
 
+    private Button button;
+    private ItemSelect itemSelect;
+    private Item item;
+    private void Awake()
+    {
+        button = GetComponent<Button>();
+        itemSelect = FindObjectOfType<ItemSelect>();
+        button.onClick.AddListener(SelectItem);
+    }
+
+    private void SelectItem()
+    {
+        itemSelect.SelectItem(item);
+    }
     public void DisplayCard(Item item)
     {
         //Debug.Log("Item Name: " + item.itemName);
         nameText.text = item.itemName;
-        descriptionText.text = item.itemDescription;
+        descriptionText.text = item.DescriptionUpdate(); // updates and returns the description
         itemSprite.sprite = item.itemSprite;
+
+        this.item = item;
 
         switch(item.rarity)
         {

@@ -2,10 +2,15 @@ using Pathfinding;
 using System.Collections.Generic;
 using UnityEngine;
 
+[RequireComponent(typeof(Rigidbody2D))]
+[RequireComponent(typeof(Collider2D))]
+[RequireComponent(typeof(AIPath))]
+[RequireComponent(typeof(FlashEffect))]
 public class FlyingEnemyBehaviour : EnemyBehaviour
 {
     private Rigidbody2D rb; // rigidbody of the enemy
     private Collider2D enemyCollider; // collider of the enemy
+    private FlashEffect flashEffect; // flash effect turn on when enemy gets hit or about to explode
 
     private GameObject target; // the player
 
@@ -17,13 +22,14 @@ public class FlyingEnemyBehaviour : EnemyBehaviour
     private Seeker seeker;
     //float trackingAbility = 1f;
     float memoryTimer;
-
+    private bool isAttacking = false;
     private void Awake()
     {
         enemyCollider = GetComponent<Collider2D>();
         rb = GetComponent<Rigidbody2D>();
         aiPath = GetComponent<AIPath>();
         seeker = GetComponent<Seeker>();
+        flashEffect = GetComponent<FlashEffect>();
     }
     void Start()
     {
@@ -66,11 +72,11 @@ public class FlyingEnemyBehaviour : EnemyBehaviour
         HandleStates();
         HandleWalls();
         //rb.gravityScale = isTouchingWall() ? gravityScale / 10 : gravityScale; // if enemy is close to a wall, reduce gravity
-        if (rb.velocity.x < 0)
+        if (aiPath.velocity.x > 0)
         {
             transform.localScale = new Vector3(- Mathf.Abs(transform.localScale.x), transform.localScale.y, transform.localScale.z);
         }
-        else if (rb.velocity.x > 0)
+        else if (aiPath.velocity.x < 0)
         {
             transform.localScale = new Vector3(Mathf.Abs(transform.localScale.x), transform.localScale.y, transform.localScale.z);
         }
@@ -97,7 +103,7 @@ public class FlyingEnemyBehaviour : EnemyBehaviour
         
         if (hit.collider != null && hit.collider.CompareTag(target.tag)) // if the raycast hits the player
         {
-            if (Vector3.Distance(rb.position, hit.collider.transform.position) < 2f)
+            if (Vector3.Distance(rb.position, hit.collider.transform.position) < 3f) // if the player is close enough to attack
             {
                 ChangeState(EnemyState.Attack);
                 return;
@@ -229,8 +235,17 @@ public class FlyingEnemyBehaviour : EnemyBehaviour
     }
     void Attack()
     {
+        if (isAttacking) return;
+        isAttacking = true;
+        aiPath.enabled = false;
+        rb.simulated = false;
+        flashEffect.FlashBlink(Color.white, 1f, 3, 0.3f);
+        Invoke("Explode", 1f);
+    }
+
+    void Explode()
+    {
         float attackRadius = 2.5f;
-        if (drawDebug) Debug.Log(gameObject.name + " is Attacking");
         Collider2D[] hitObjects = new Collider2D[10];
         int hits = Physics2D.OverlapCircleNonAlloc(rb.position, attackRadius, hitObjects);
         for (int i = 0; i < hits; i++)
@@ -241,11 +256,10 @@ public class FlyingEnemyBehaviour : EnemyBehaviour
                 damagable.TakeDamage(10 * (int)power, transform.position, attackRadius);
             }
         }
-        if(TryGetComponent(out IDamageable selfDamagable))
+        if (TryGetComponent(out IDamageable selfDamagable))
         {
             selfDamagable.TakeDamage(selfDamagable.currentHealth, transform.position, 1f);
         }
-        
     }
     void HandleWalls()
     {

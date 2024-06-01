@@ -245,7 +245,6 @@ GameObject:
   - component: {fileID: 2477867989980574458}
   - component: {fileID: 6924135688263184036}
   - component: {fileID: 9061112791943994816}
-  - component: {fileID: 524953735188813531}
   - component: {fileID: 1981174937765317688}
   m_Layer: 0
   m_Name: Card Template
@@ -358,24 +357,6 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls: []
---- !u!114 &524953735188813531
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 6353924355877213465}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: d8992cd87a8d79a4f8541d84ee5862f8, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  backgroundImage: {fileID: 6924135688263184036}
-  whiteCardSprite: {fileID: 21300000, guid: 62f60b3f1eff4ae4689b5f897beb5af0, type: 3}
-  greenCardSprite: {fileID: 21300000, guid: d40882b556ff1d3429c9688dbaae6636, type: 3}
-  blueCardSprite: {fileID: 21300000, guid: bda3705131d91fd40bcfb8cd0e5b660e, type: 3}
-  purpleCardSprite: {fileID: 21300000, guid: 5bb1b3a2722290741910926cd7fdf894, type: 3}
-  redCardSprite: {fileID: 21300000, guid: 05f6cb91ee44d3940a8dc5b23a88d768, type: 3}
 --- !u!114 &1981174937765317688
 MonoBehaviour:
   m_ObjectHideFlags: 0

@@ -19,10 +19,12 @@ public class GateManager : MonoBehaviour
     private void Awake()
     {
         Gate.OnGateCollide += OnGateCollide;
+        EnemyManager.OnRoomCleared += OnRoomCleared;
     }
     private void OnDestroy()
     {
         Gate.OnGateCollide -= OnGateCollide;
+        EnemyManager.OnRoomCleared -= OnRoomCleared;
     }
     void Start()
     {
@@ -76,6 +78,18 @@ public class GateManager : MonoBehaviour
         {
             player.position = newPos; // tppoints[room] -> gives array with 4 vectors. 0: down, 1: left, 2: up, 3: right (opposites of gates)
             OnTeleport?.Invoke(new Vector3(currentRoom.x * stageGen.roomWidth , currentRoom.y * stageGen.roomHeight, 0));
+        }
+    }
+
+    void OnRoomCleared(int roomIndex)
+    {
+        // every gate is set to closed at the beginning of the game
+        // when all enemies in a room are dead, open all gates in that room
+        Gate[] gates = stageGen.roomObjects[roomIndex].GetComponentsInChildren<Gate>();
+        foreach (Gate gate in gates)
+        {
+            gate.isClosed = false;
+            gate.UpdateColor();
         }
     }
 }

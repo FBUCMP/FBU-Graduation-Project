@@ -151,6 +151,14 @@ PrefabInstance:
       propertyPath: m_AnchoredPosition.y
       value: -275.19476
       objectReference: {fileID: 0}
+    - target: {fileID: 1299585608332190022, guid: 151f1ff787f4e514988de879e942f7f3, type: 3}
+      propertyPath: m_Volume
+      value: 0.05
+      objectReference: {fileID: 0}
+    - target: {fileID: 1299585608332190022, guid: 151f1ff787f4e514988de879e942f7f3, type: 3}
+      propertyPath: m_audioClip
+      value: 
+      objectReference: {fileID: 0}
     - target: {fileID: 2598828147511737148, guid: 151f1ff787f4e514988de879e942f7f3, type: 3}
       propertyPath: m_AnchorMax.y
       value: 1
@@ -190,6 +198,22 @@ PrefabInstance:
     - target: {fileID: 5028629585731526745, guid: 151f1ff787f4e514988de879e942f7f3, type: 3}
       propertyPath: m_Name
       value: GameManager
+      objectReference: {fileID: 0}
+    - target: {fileID: 7233492023694931072, guid: 151f1ff787f4e514988de879e942f7f3, type: 3}
+      propertyPath: m_AnchorMax.y
+      value: 0.5
+      objectReference: {fileID: 0}
+    - target: {fileID: 7233492023694931072, guid: 151f1ff787f4e514988de879e942f7f3, type: 3}
+      propertyPath: m_AnchorMin.y
+      value: 0.5
+      objectReference: {fileID: 0}
+    - target: {fileID: 7233492023694931072, guid: 151f1ff787f4e514988de879e942f7f3, type: 3}
+      propertyPath: m_SizeDelta.y
+      value: 951.416
+      objectReference: {fileID: 0}
+    - target: {fileID: 7233492023694931072, guid: 151f1ff787f4e514988de879e942f7f3, type: 3}
+      propertyPath: m_AnchoredPosition.y
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 7413391713096177310, guid: 151f1ff787f4e514988de879e942f7f3, type: 3}
       propertyPath: m_LocalPosition.x
@@ -291,7 +315,7 @@ MonoBehaviour:
   m_BlendStyleIndex: 0
   m_FalloffIntensity: 0.5
   m_Color: {r: 1, g: 1, b: 1, a: 1}
-  m_Intensity: 0.0025
+  m_Intensity: 0.01
   m_LightVolumeIntensity: 1
   m_LightVolumeIntensityEnabled: 0
   m_ApplyToSortingLayers: 00000000

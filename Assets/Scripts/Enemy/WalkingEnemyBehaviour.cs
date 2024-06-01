@@ -3,15 +3,19 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
+[RequireComponent(typeof(Rigidbody2D))]
+[RequireComponent(typeof(Collider2D))]
+[RequireComponent(typeof(Seeker))]
+[RequireComponent(typeof(FlashEffect))]
 public class WalkingEnemyBehaviour : EnemyBehaviour
 {
     private Rigidbody2D rb; // rigidbody of the enemy
     private Collider2D enemyCollider; // collider of the enemy
-
+    private FlashEffect flashEffect; // flash effect turn on when enemy gets hit or about to explode
     private GameObject target; // the player
 
     private float gravityScale;
-
+    private bool isAttacking = false;
     public Transform sprites;
     List<Vector2> waypoints = new List<Vector2>(); // enemy always follows the first ([0]) waypoint
     [SerializeField] private float pathUpdateSeconds = 1f;
@@ -34,6 +38,7 @@ public class WalkingEnemyBehaviour : EnemyBehaviour
         enemyCollider = GetComponent<Collider2D>();
         rb = GetComponent<Rigidbody2D>();
         seeker = GetComponent<Seeker>();
+        flashEffect = GetComponent<FlashEffect>();
     }
     void Start()
     {
@@ -149,7 +154,7 @@ public class WalkingEnemyBehaviour : EnemyBehaviour
         
         if (hit.collider != null && hit.collider.CompareTag(target.tag)) // if the raycast hits the player
         {
-            if (Vector3.Distance(rb.position, hit.collider.transform.position) < 2f)
+            if (Vector3.Distance(rb.position, hit.collider.transform.position) < 3f) // if the player is close enough to attack
             {
                 ChangeState(EnemyState.Attack);
                 return;
@@ -307,10 +312,22 @@ public class WalkingEnemyBehaviour : EnemyBehaviour
         }
     }
 
+    
+    
     void Attack()
     {
+        if (isAttacking) return;
+        isAttacking = true;
+        seeker.enabled = false;
+        path = null;
+        rb.simulated = false;
+        flashEffect.FlashBlink(Color.white, 1f, 3, 0.3f);
+        Invoke("Explode", 1f);
+    }
+
+    void Explode()
+    {
         float attackRadius = 2.5f;
-        if (drawDebug) Debug.Log(gameObject.name + " is Attacking");
         Collider2D[] hitObjects = new Collider2D[10];
         int hits = Physics2D.OverlapCircleNonAlloc(rb.position, attackRadius, hitObjects);
         for (int i = 0; i < hits; i++)
@@ -321,11 +338,10 @@ public class WalkingEnemyBehaviour : EnemyBehaviour
                 damagable.TakeDamage(10 * (int)power, transform.position, attackRadius);
             }
         }
-        if(TryGetComponent(out IDamageable selfDamagable))
+        if (TryGetComponent(out IDamageable selfDamagable))
         {
             selfDamagable.TakeDamage(selfDamagable.currentHealth, transform.position, 1f);
         }
-        
     }
     void HandleWalls()
     {
@@ -360,7 +376,7 @@ public class WalkingEnemyBehaviour : EnemyBehaviour
     
     public override void GetKnockedBack(Vector3 force, float maxMoveTime)
     {
-        Debug.Log("Knocked" + force);
+        //Debug.Log("Knocked" + force);
         Vector2 clamped = Vector2.ClampMagnitude(force, 1f);
         if (isKnockedBack) return;
         if (gameObject.activeSelf)
@@ -381,7 +397,7 @@ public class WalkingEnemyBehaviour : EnemyBehaviour
     private IEnumerator Jump(Vector2 dir)
     {
         isJumping = true;
-        Debug.Log("Jumping"+ dir);
+        //Debug.Log("Jumping"+ dir);
         
         yield return new();
         // can play a sound for indication of jump

@@ -20,14 +20,7 @@ public class Gate : MonoBehaviour
         
         boxCollider = GetComponent<BoxCollider2D>();
         spriteRenderer = GetComponentInChildren<SpriteRenderer>();
-        if (isClosed)
-        {
-            spriteRenderer.color = closedColor;       
-        }
-        else
-        {
-            spriteRenderer.color = openColor;
-        }
+        UpdateColor();
     }
 
     void OnTriggerEnter2D(Collider2D other)
@@ -41,4 +34,15 @@ public class Gate : MonoBehaviour
         }
     }
 
+    public void UpdateColor()
+    {
+        if (isClosed)
+        {
+            spriteRenderer.color = closedColor;
+        }
+        else
+        {
+            spriteRenderer.color = openColor;
+        }
+    }
 }

@@ -7,6 +7,7 @@ using UnityEngine;
 public class HPlayer : MonoBehaviour, IDataPersistance, IDamageable
 
 {
+    public AudioClip damageClip;
     [SerializeField] private bool isDead = false;
     //[SerializeField] private GameManagerScript gameManager; //Death Screen için gameManager çaðýrýyoruz
 
@@ -20,7 +21,7 @@ public class HPlayer : MonoBehaviour, IDataPersistance, IDamageable
     public int maxHealth { get => _maxHealth; set => _maxHealth = value; } // getter and setter
     public float explosionEffect { get => _explosionEffect; set => _explosionEffect = value; } // getter and setter
 
-    
+    private AudioSource audioSource;
 
     private int deathCount = 0;
 
@@ -67,6 +68,16 @@ public class HPlayer : MonoBehaviour, IDataPersistance, IDamageable
         currentHealth = maxHealth;
         healthBar.SetMaxHealth(currentHealth, maxHealth);
         healthBar.SetHealth(currentHealth, maxHealth); // baþlangýçta texti maxhp/maxhp yazsýn diye
+
+        if (TryGetComponent(out AudioSource audio))
+        {
+            audioSource = audio;
+        }
+        else
+        {
+            audioSource = gameObject.AddComponent<AudioSource>();
+            audioSource.volume = 0.1f;
+        }
     }
 
     // Update is called once per frame
@@ -86,6 +97,7 @@ public class HPlayer : MonoBehaviour, IDataPersistance, IDamageable
         if (damage != 0)
         {
             OnTakeDamage?.Invoke(damage);
+            audioSource.PlayOneShot(damageClip);
         }
         if (currentHealth <= 0)
         {
@@ -104,5 +116,21 @@ public class HPlayer : MonoBehaviour, IDataPersistance, IDamageable
         healthBar.SetHealth(currentHealth, maxHealth);
     }
 
+    public void IncreaseMaxHealth(int amount)
+    {
+        if (!isDead)
+        {
+            maxHealth += amount;
+           
+            healthBar.SetMaxHealth(currentHealth, maxHealth);
+        }
+    }
+
+    public void Heal(int healAmount)
+    {
+        currentHealth += healAmount;
+        currentHealth = Mathf.Clamp(currentHealth, 0, maxHealth);
+        healthBar.SetHealth(currentHealth, maxHealth);
+    }
     
 }

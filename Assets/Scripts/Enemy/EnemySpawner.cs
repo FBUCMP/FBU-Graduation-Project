@@ -27,7 +27,7 @@ public class EnemySpawner : MonoBehaviour
         this.enemyHolder = enemyHolder;
         if(this.EnemyDataList.Count > 0)
         {
-            Debug.Log("EnemyDataList: " + this.EnemyDataList);
+            //Debug.Log("EnemyDataList: " + this.EnemyDataList);
         } else
         {
             Debug.Log("EnemyDataList is Empty");
@@ -40,7 +40,7 @@ public class EnemySpawner : MonoBehaviour
         }
         else
         {
-            Debug.Log("Enemy Manager is found: " + enemyManager.name);
+            //Debug.Log("Enemy Manager is found: " + enemyManager.name);
             
             DestroyChildColliders();
             CreateColliders(NumberOfEnemiesToSpawn * EnemyDataList.Count);
@@ -106,7 +106,7 @@ public class EnemySpawner : MonoBehaviour
             }
             attempts++;
         }
-        Debug.Log("Created " + count + " colliders");
+        //Debug.Log("Created " + count + " colliders");
     }
     void SpawnCustomEnemies(int numberOfEnemies)
     {

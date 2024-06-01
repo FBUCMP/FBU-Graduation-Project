@@ -9,9 +9,9 @@ public class ItemSelect : MonoBehaviour
     public Transform container;
     [SerializeField] private int selectedItemNumber = 0;
 
-    // attached to the itemselect manager
+    // attached to the itemselect manager or pausescreen 
     public List<Item> allItems; // all the items in the game
-
+    private ItemHolder itemHolder;
     // Card Objects UI
     //public List<GameObject> cardTemplates;
 
@@ -28,7 +28,7 @@ public class ItemSelect : MonoBehaviour
 
     private void Start()
     {
-        ItemHolder itemHolder = GameObject.FindObjectOfType<ItemHolder>();
+        itemHolder = GameObject.FindObjectOfType<ItemHolder>();
         //itemHolder.AddItem(allItems[0]); // temporary
         
         
@@ -44,7 +44,7 @@ public class ItemSelect : MonoBehaviour
             //Debug.Log("Random Index: " + randomIndex);
             
             float randomRarity = Random.Range(0f, 1f);
-            Debug.Log(randomRarity);
+            //Debug.Log(randomRarity);
 
             Item item = allItems[randomIndex];
 
@@ -83,16 +83,29 @@ public class ItemSelect : MonoBehaviour
     public void ActivatePopup(int roomIndex) // shoud be called when room is cleared by itemselect manager object
     {
         //Debug.Log("ActivePopup:");
+        Invoke("ShowPopup", 0.5f);
+        
+    }
+    private void ShowPopup()
+    {
         // show items in popup
         GameManagerScript.Instance.upgradeScreenUI.SetActive(true);
 
         // Create Cards
         CreateCards();
     }
-
+    public void SelectItem(Item item)
+    {
+        itemHolder.AddItem(item);
+        GameManagerScript.Instance.upgradeScreenUI.SetActive(false);
+    }
     void CreateCards()
     {
         //Debug.Log("CreateCard activated with selectedItemNumber: " + selectedItemNumber);
+        foreach (Transform child in container)
+        {
+            Destroy(child.gameObject); // destroy all the cards of the previous room
+        }
         List<Item> selectedItems = SelectRandomItems(selectedItemNumber);
         
         for (int i = 0; i < selectedItemNumber; i++)

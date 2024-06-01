@@ -44,7 +44,7 @@ AudioSource:
   OutputAudioMixerGroup: {fileID: 0}
   m_audioClip: {fileID: 0}
   m_PlayOnAwake: 1
-  m_Volume: 1
+  m_Volume: 0.25
   m_Pitch: 1
   Loop: 1
   Mute: 0
@@ -178,7 +178,6 @@ MonoBehaviour:
   sfxSource: {fileID: 5128972824197693748}
   background: {fileID: 8300000, guid: 089f1ccfc0af9244b881132ea8199080, type: 3}
   death: {fileID: 8300000, guid: abf19601b0fa71248834d29cf88123cd, type: 3}
-  dash: {fileID: 8300000, guid: 196758a97ca448041bd6be4d714d86db, type: 3}
   wallTouch: {fileID: 0}
   jump: {fileID: 0}
 --- !u!1 &7302505220972130787
