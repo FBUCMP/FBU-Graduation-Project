@@ -135,6 +135,10 @@ PrefabInstance:
       propertyPath: upgradeScreenUI
       value: 
       objectReference: {fileID: 301450349}
+    - target: {fileID: 948263364788865795, guid: 151f1ff787f4e514988de879e942f7f3, type: 3}
+      propertyPath: NumberOfEnemiesToSpawn
+      value: 2
+      objectReference: {fileID: 0}
     - target: {fileID: 1240708935970778905, guid: 151f1ff787f4e514988de879e942f7f3, type: 3}
       propertyPath: m_AnchorMax.y
       value: 1
@@ -660,6 +664,10 @@ PrefabInstance:
       propertyPath: teleportSound
       value: 
       objectReference: {fileID: 8300000, guid: 9f15991bdf0dd3a4a8c145cb20eb9b8f, type: 3}
+    - target: {fileID: 7747977750887983077, guid: 0b81370035a843041aee42e1a39c1b89, type: 3}
+      propertyPath: bossRoomPrefab
+      value: 
+      objectReference: {fileID: 8006042295493208226, guid: cf1584fdc78aaf6429b764bdc899a7e9, type: 3}
     - target: {fileID: 9029359101999925491, guid: 0b81370035a843041aee42e1a39c1b89, type: 3}
       propertyPath: m_Name
       value: Stage

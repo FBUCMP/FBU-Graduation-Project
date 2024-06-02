@@ -83,12 +83,12 @@ public class HealthBar : MonoBehaviour
     // max health ayarý
     public void SetMaxHealth(int health, int maxHealth)
     {
-        slider.maxValue = (float)health / maxHealth * 100;
-        slider.value = (float)health / maxHealth * 100;
+        slider.maxValue = maxHealth;
+        slider.value = health;
 
 
         // max can olduðunda gradient 1fde ayarlý olan rengi ayarlar
-        fill.color = gradient.Evaluate(1f);
+        //fill.color = gradient.Evaluate(1f);
     }
 
 
@@ -96,7 +96,7 @@ public class HealthBar : MonoBehaviour
     {
 
         // canýn %liðine göre slider kayýyor
-        slider.value = (float)health / maxHealth * 100;
+        slider.value = (float)health;
         //Debug.Log("slider.value: " + slider.value);
         //Debug.Log("slider.normalizedValue " + slider.normalizedValue);
 
